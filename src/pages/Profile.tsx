@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Listing } from '../types';
 import { 
-  ArrowLeft,
   ChevronLeft, 
   Megaphone,
   GraduationCap,
@@ -27,7 +26,6 @@ import {
   Facebook,
   Mail
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../lib/AuthContext';
 import { supabase } from '../mocks/supabase';
@@ -37,7 +35,6 @@ import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
 
 export default function Profile() {
-  const navigate = useNavigate();
   const { user } = useAuth();
   const [isLandlord, setIsLandlord] = useState(false);
   const [hasLandlordAccount, setHasLandlordAccount] = useState(false);
@@ -124,10 +121,6 @@ export default function Profile() {
     
     setGalleryImages(imgs);
     setIsPhotoGalleryOpen(true);
-  };
-
-  const handleBack = () => {
-    navigate(-1);
   };
 
   const checkLandlordAccount = async () => {
@@ -246,10 +239,7 @@ export default function Profile() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
 
         {/* Top Bar */}
-        <div className="absolute top-0 w-full p-4 md:p-6 md:px-12 xl:px-20 flex justify-between items-center z-50 text-white pointer-events-none">
-          <button onClick={handleBack} className="p-2 -ml-2 text-white hover:bg-white/10 rounded-full transition pointer-events-auto cursor-pointer">
-             <ArrowLeft size={24} className="md:w-8 md:h-8" />
-          </button>
+        <div className="absolute top-0 w-full p-4 md:p-6 md:px-12 xl:px-20 flex justify-end items-center z-50 text-white pointer-events-none">
           <button 
             onClick={() => setIsAnnouncementsOpen(true)}
             className="p-2 -mr-2 text-white hover:bg-white/10 rounded-full transition pointer-events-auto cursor-pointer"
@@ -259,7 +249,7 @@ export default function Profile() {
         </div>
 
         {/* Content Container */}
-        <div className="relative md:absolute md:inset-0 max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 flex flex-col md:flex-row items-center justify-between z-10 pt-24 pb-8 md:pb-12">
+        <div className="relative md:absolute md:inset-0 max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 flex flex-col md:flex-row items-center justify-between z-10 pt-16 pb-2 md:pt-24 md:pb-12 gap-4 md:gap-0">
           
           {/* Left Card: Profile Info */}
           <div className="bg-black/30 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 md:p-8 w-full md:w-[60%] lg:w-[45%] text-white shadow-2xl">
@@ -349,10 +339,10 @@ export default function Profile() {
           </div>
 
           {/* Right Quote */}
-          <div className="hidden md:block w-full md:w-[45%] lg:w-[40%] text-white text-xl lg:text-2xl font-semibold leading-relaxed drop-shadow-sm p-6 group">
+          <div className="w-full md:w-[45%] lg:w-[40%] text-white/80 md:text-white text-sm md:text-xl lg:text-2xl font-normal md:font-semibold leading-relaxed drop-shadow-sm px-2 pb-0 pt-0 md:p-6 group text-center md:text-left mt-0">
              <div className="relative cursor-pointer hover:bg-white/10 p-2 rounded-xl transition" onClick={handleOpenEditProfile} title="Edit Quote/Bio">
-               {profileBio}
-               <button className="absolute -top-4 right-0 opacity-0 group-hover:opacity-100 transition p-1 hover:bg-white/20 rounded-full cursor-pointer">
+               <span className="italic">{profileBio}</span>
+               <button className="absolute -top-4 right-0 opacity-0 group-hover:opacity-100 transition p-1 hover:bg-white/20 rounded-full cursor-pointer md:block hidden">
                  <Edit2 size={16} className="text-white" />
                </button>
              </div>
@@ -361,7 +351,7 @@ export default function Profile() {
       </div>
 
       {/* Main Content Body */}
-      <div className="max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 relative z-20 mt-6 md:mt-8">
+      <div className="max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 relative z-20 mt-2 md:mt-8">
         {/* 4 Stat Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 drop-shadow-sm">
            {(isLandlord ? [
@@ -826,9 +816,9 @@ export default function Profile() {
              initial={{ opacity: 0, scale: 0.95, y: 20 }}
              animate={{ opacity: 1, scale: 1, y: 0 }}
              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-             className="relative w-full max-w-md bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10"
+             className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
           >
-            <div className="flex items-center justify-between p-6 border-b border-neutral-100">
+            <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
                 <h2 className="text-xl font-bold text-neutral-900">{selectedStatModal}</h2>
                 <button 
                   onClick={() => setSelectedStatModal(null)}
@@ -837,7 +827,7 @@ export default function Profile() {
                   <X size={20} />
                 </button>
             </div>
-            <div className="p-6 h-[250px] overflow-y-auto">
+            <div className="p-6 flex-1 overflow-y-auto">
               <div className="flex flex-col items-center justify-center h-full text-center text-neutral-500 space-y-4">
                  <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center">
                     <ArrowUpRight className="w-8 h-8 text-neutral-400" />

@@ -291,7 +291,7 @@ export default function RoommateHero({
                     setIsSearchActive(true);
                     setActiveDropdown(null);
                   }}
-                  className="bg-[#17294F] p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0"
+                  className="bg-[#17294F] p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                 >
                   <Search size={16} className="text-white group-hover:stroke-[3px] transition-all md:hidden" />
                   <Search size={22} className="text-white group-hover:stroke-[3px] transition-all hidden md:block" />

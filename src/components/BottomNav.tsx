@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Home, MessageSquare, Users, Compass, User } from 'lucide-react';
+import { Home, MessageSquare, Users, Map, User } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext';
@@ -54,14 +54,9 @@ export default function BottomNav() {
     { icon: Home, label: 'Home', path: '/' },
     { icon: MessageSquare, label: 'Messages', path: '/messages', badge: unreadCount },
     { icon: Users, label: 'Roommate', path: '/roommate' },
-    { icon: Compass, label: 'Discover', path: '/search-discovery' },
+    { icon: Map, label: 'Maps', path: '/maps' },
     { icon: User, label: 'Profile', path: '/profile' },
   ];
-
-  // Do not surface navigation when in fullscreen states like Design System playground
-  if (location.pathname === '/design-system') {
-    return null;
-  }
 
   return (
     <div 

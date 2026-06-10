@@ -256,11 +256,10 @@ export default function Home() {
                               addSearch(searchQuery);
                               setIsStickySearchActive(false);
                             }}
-                            className="bg-[#17294F] p-1.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                            className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                             aria-label="Search"
                           >
-                            <Search size={12} className="text-white group-hover:stroke-[3px] transition-all md:hidden" />
-                            <Search size={16} className="text-white group-hover:stroke-[3px] transition-all hidden md:block" />
+                            <Search size={16} className="text-white group-hover:stroke-[3px] transition-all" />
                           </button>
                         </div>
                         {!hideStickyDropdown && (
@@ -460,10 +459,9 @@ export default function Home() {
                             setStickyActiveDropdown(null);
                           }}
                           aria-label="Search" 
-                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0"
+                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                         >
-                          <Search size={16} className="text-white group-hover:stroke-[3px] transition-all md:hidden" />
-                          <Search size={16} className="text-white group-hover:stroke-[3px] transition-all hidden md:block" />
+                          <Search size={16} className="text-white group-hover:stroke-[3px] transition-all" />
                         </button>
                       </>
                     )}

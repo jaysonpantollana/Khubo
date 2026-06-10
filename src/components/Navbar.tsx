@@ -4,10 +4,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../lib/AuthContext';
 import { AuthModal } from './AuthModal';
 import { CreateListingModal } from './CreateListingModal';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
-  const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
@@ -42,8 +41,7 @@ export default function Navbar() {
             role="button"
             tabIndex={0}
             aria-label="Khubo Home"
-            onClick={() => navigate('/')}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), navigate('/'))}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && e.preventDefault()}
             className="flex items-center gap-1 text-[#17294F] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] rounded-lg px-2"
           >
             <svg
@@ -66,8 +64,7 @@ export default function Navbar() {
             role="button"
             tabIndex={0}
             aria-label="Open search menu"
-            onClick={() => navigate('/search-discovery')}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), navigate('/search-discovery'))}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && e.preventDefault()}
             className="border border-[#dddddd] h-[48px] rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-md transition cursor-pointer flex items-center px-2 pl-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
           >
             <div className="flex flex-row items-center justify-between gap-4">
@@ -155,9 +152,6 @@ export default function Navbar() {
                         </Link>
                       </div>
                       <div className="py-2 border-t border-neutral-100">
-                        <Link to="/design-system" className="block w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition" onClick={() => setIsMenuOpen(false)}>
-                          UI Components Sandbox
-                        </Link>
                         <button
                           onClick={() => {
                             signOut();

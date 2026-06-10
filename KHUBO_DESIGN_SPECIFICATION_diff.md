@@ -409,6 +409,76 @@ KHUBO uses generous whitespace to create a sense of luxury and trust. Cards brea
 
 **`footer`** — Page footer. Background `{colors.white}` or `{colors.neutral-50}`, top border 1px `{colors.border-light}`. Contains links (About, Careers, Press, Policies), social icons, copyright. Padding `{spacing.section}` (64px) vertical.
 
+### Form & Input Components
+
+**`counter-stepper`** — Numeric input with plus/minus controls. Background `{colors.neutral-100}`, rounded `{rounded.full}`, buttons use subtle hover `{colors.neutral-200}`. Typography `{typography.body}`.
+
+**`file-upload-dropzone`** — Drag-and-drop file upload area. Border 2px dashed `{colors.border-medium}`, background `{colors.neutral-50}`, rounded `{rounded.xl}`. Drag active state changes border to `{colors.accent}` and background to `{colors.accent}` with 5% opacity.
+
+**`image-cropper`** — Image cropping interface for avatars and photos. Uses a modal container `{modal-content}`. Contains image preview, crop grid with `{colors.white}` 1px borders, and a slider for zoom using `{colors.primary}`.
+
+**`rich-text-editor`** — Editor for property descriptions. Toolbar background `{colors.neutral-50}`, border 1px `{colors.border-medium}`, rounded `{rounded.lg}`. Text area background `{colors.white}`.
+
+**`auto-complete-search`** — Search input with real-time suggestions dropdown. Input uses `{components.input-field}`. Dropdown uses `{components.dropdown-menu}` with `{colors.shadow-md}`.
+
+**`multi-select`** — Dropdown supporting multiple selections. Uses `{colors.white}` background, rounded `{rounded.lg}`. Selected tags appear as chips within the input, rounded `{rounded.full}`, background `{colors.neutral-100}`.
+
+**`toggle-switch`** — Animated toggle switch. Track background `{colors.neutral-300}` (off) to `{colors.accent}` (on). Handle `{colors.white}` rounded `{rounded.full}` with `{colors.shadow-sm}`.
+
+**`checkbox-group`** — Group of custom checkboxes. Box is 20x20px, rounded `{rounded.sm}`, border 1px `{colors.border-medium}`. Checked state uses `{colors.accent}` background with `{colors.white}` check icon.
+
+**`radio-group`** — Group of custom radio buttons. Circle is 20x20px, border 1px `{colors.border-medium}`. Selected state shows inner circle in `{colors.accent}`.
+
+**`form-error-state`** — Input validation error presentation. Input border turns red (e.g., `#ef4444`). Error message below input uses `{typography.caption}` and red color.
+
+**`message-banner`** — Success/error/warning alerts. Background soft tinted (e.g., red-50 for error, green-50 for success), border 1px matching tint, rounded `{rounded.lg}`. Icon and text layout.
+
+### Feedback Components
+
+**`loading-skeleton`** — Placeholder blocks during data fetch. Background `{colors.neutral-200}` with animated shimmer effect sliding left to right. Rounded to match the component it replaces (e.g., `{rounded.xl}` for cards).
+
+**`progress-bar`** — Linear progress indicator. Track background `{colors.neutral-100}`, fill `{colors.accent}`, rounded `{rounded.full}`. Height 8px or 4px.
+
+**`empty-state`** — Illustration and message for empty views. Centers content vertically and horizontally. Uses a custom illustration, `{typography.heading-md}` for title, `{typography.body-sm}` for description in `{colors.neutral-500}`.
+
+**`error-boundary`** — Fallback UI for crashed components. Minimal clear layout, `{colors.neutral-50}` background, includes "Retry" `{button-secondary}`.
+
+**`offline-banner`** — Sticky top banner for network disconnection. Background `#ef4444` (red), text `{colors.white}`, `{typography.body-sm}`.
+
+**`connection-indicator`** — Small dot or pulse showing real-time socket connection. Green for online, `{colors.neutral-400}` for connecting/offline.
+
+### Navigation Components
+
+**`breadcrumb`** — Hierarchical text navigation. Text `{colors.neutral-500}`, current page `{colors.neutral-900}`. Separator icon (chevron-right) `{colors.neutral-400}`. Typography `{typography.body-sm}`.
+
+**`pagination`** — Page list controller. Buttons rounded `{rounded.md}`, inactive text `{colors.neutral-600}`, active background `{colors.primary}` with `{colors.white}` text.
+
+**`tab-navigation`** — Horizontal or vertical content switcher. Active tab uses bottom border 2px `{colors.primary}` for horizontal, or background `{colors.neutral-100}` for vertical. Text switches from `{colors.neutral-500}` to `{colors.primary}`.
+
+**`stepper-indicator`** — Multi-step wizard layout. Circles with numbers, connected by lines. Active step `{colors.accent}`, completed `{colors.primary}`, pending `{colors.neutral-200}`.
+
+**`mobile-bottom-nav`** — Persistent navigation for mobile screens. Background `{colors.white}`, top border `{colors.border-light}`. Icon-first design, active icon `{colors.primary}`.
+
+**`sidebar-dashboard`** — Vertical navigation for settings/hosts. Background `{colors.neutral-50}`, border right `{colors.border-light}`. Menu items rounded `{rounded.md}` on hover.
+
+**`mega-menu`** — Expansive desktop dropdown for complex categories. Uses `{components.dropdown-menu}` structure but spans wider, structured with grid layouts internally.
+
+### Communication
+
+**`chat-interface`** — Real-time messaging window. Message bubbles use `{colors.primary}` for sent (text `{colors.white}`), `{colors.neutral-100}` for received (text `{colors.neutral-900}`). Rounded `{rounded.2xl}` but less rounded on the tail corner.
+
+**`message-templates`** — Quick-reply chips. Rounded `{rounded.full}`, background `{colors.white}`, border `{colors.border-medium}`, horizontal scrollable list above input area.
+
+**`typing-indicator`** — Animated three-dot pulse inside a `{colors.neutral-100}` received bubble.
+
+**`read-receipt`** — Small icon below sent messages (e.g., checkmarks, turning blue when read).
+
+**`file-attachment`** — Embedded file/image preview in chat bubbles. Blurred during upload, rounded inner `{rounded.xl}`.
+
+**`notification-bell`** — Header icon with red dot or pill for unread count. Dropdown uses `{components.dropdown-menu}` displaying notification items.
+
+**`announcement-banner`** — Top-of-page alert for site-wide events. Typically `{colors.accent}` background, `{colors.white}` text, close button on the right.
+
 ## Do's and Don'ts
 
 ### Do

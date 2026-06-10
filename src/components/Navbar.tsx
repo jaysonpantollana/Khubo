@@ -155,6 +155,9 @@ export default function Navbar() {
                         </Link>
                       </div>
                       <div className="py-2 border-t border-neutral-100">
+                        <Link to="/design-system" className="block w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition" onClick={() => setIsMenuOpen(false)}>
+                          UI Components Sandbox
+                        </Link>
                         <button
                           onClick={() => {
                             signOut();

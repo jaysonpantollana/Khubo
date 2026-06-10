@@ -58,6 +58,11 @@ export default function BottomNav() {
     { icon: User, label: 'Profile', path: '/profile' },
   ];
 
+  // Do not surface navigation when in fullscreen states like Design System playground
+  if (location.pathname === '/design-system') {
+    return null;
+  }
+
   return (
     <div 
       className="fixed bottom-[calc(12px+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-50 w-[calc(100%-24px)] max-w-[420px] pointer-events-none"

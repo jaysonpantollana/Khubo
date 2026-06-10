@@ -1,0 +1,160 @@
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, Mail, Globe, Eye, EyeOff, Lock, Facebook, Chrome } from 'lucide-react';
+import { useAuth } from '../lib/AuthContext';
+
+export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClose: () => void, onLogin?: () => void }) {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { signIn } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
+
+    // Mock authentication
+    setTimeout(() => {
+      setIsLoading(false);
+      signIn(email);
+      if (onLogin) onLogin();
+      onClose();
+    }, 1000);
+  };
+
+  const modalContent = (
+    <AnimatePresence>
+      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+        <motion.div
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           exit={{ opacity: 0 }}
+           onClick={onClose}
+           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        />
+        <motion.div
+           initial={{ opacity: 0, scale: 0.95, y: 20 }}
+           animate={{ opacity: 1, scale: 1, y: 0 }}
+           exit={{ opacity: 0, scale: 0.95, y: 20 }}
+           className="relative w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl z-10"
+        >
+          <button 
+             onClick={onClose}
+             className="absolute top-4 right-4 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20"
+          >
+             <X size={20} className="text-neutral-500" />
+          </button>
+          
+          <div className="p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold font-display text-[#17294F] mb-2">{isLogin ? "Welcome back" : "Create an account"}</h2>
+              <p className="text-sm text-neutral-500 font-medium">
+                {isLogin ? "Sign in to access your properties." : "Sign up to start finding properties."}
+              </p>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+               {error && (
+                 <div className="p-3 bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl">
+                   {error}
+                 </div>
+               )}
+               <div className="flex flex-col gap-3">
+                 <div className="relative">
+                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
+                     <Mail size={18} />
+                   </div>
+                   <input 
+                     type="email" 
+                     placeholder="Email" 
+                     value={email}
+                     onChange={(e) => setEmail(e.target.value)}
+                     required
+                     className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium"
+                   />
+                 </div>
+                 <div className="relative">
+                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
+                     <Lock size={18} />
+                   </div>
+                   <input 
+                     type={showPassword ? "text" : "password"} 
+                     placeholder="Password"
+                     value={password}
+                     onChange={(e) => setPassword(e.target.value)}
+                     required
+                     minLength={6}
+                     className="w-full pl-10 pr-12 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium"
+                   />
+                   <button 
+                     type="button" 
+                     onClick={() => setShowPassword(!showPassword)}
+                     className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 focus:outline-none p-1"
+                     aria-label={showPassword ? "Hide password" : "Show password"}
+                   >
+                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                   </button>
+                 </div>
+               </div>
+               
+               <button 
+                 type="submit"
+                 disabled={isLoading}
+                 className="w-full bg-[#2252D6] text-white py-3 rounded-xl font-bold text-sm tracking-wide mt-2 hover:bg-[#1a41aa] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+               >
+                 {isLoading ? 'Processing...' : (isLogin ? 'Sign in to dashboard' : 'Create account')}
+               </button>
+            </form>
+            
+            <div className="flex items-center gap-4 mt-8 mb-6">
+              <div className="h-[1px] bg-neutral-200 flex-1"></div>
+              <span className="text-xs font-semibold text-neutral-400">or continue with</span>
+              <div className="h-[1px] bg-neutral-200 flex-1"></div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
+                <Chrome size={20} />
+              </button>
+              <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
+                <Facebook size={20} />
+              </button>
+              <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
+                <Globe size={20} />
+              </button>
+            </div>
+          </div>
+          
+          <div className="bg-neutral-50/50 p-6 flex flex-col items-center justify-center gap-2 text-sm text-neutral-500 font-medium">
+            <div className="flex items-center gap-2">
+              {isLogin ? "Need access?" : "Already have an account?"}
+              <button 
+                 onClick={() => {
+                   setIsLogin(!isLogin);
+                   setError(null);
+                 }}
+                 className="font-bold text-[#2252D6] hover:underline"
+              >
+                {isLogin ? 'Request an account' : 'Sign in'}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </AnimatePresence>
+  );
+
+  return mounted && typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
+}

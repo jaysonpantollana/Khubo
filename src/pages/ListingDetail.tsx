@@ -1,6 +1,6 @@
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
-import { X, Star, ShieldCheck, MapPin, ChevronLeft, ChevronRight, Calendar as CalendarIcon, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Search, Layers, Navigation, Home, Maximize, Heart, Loader2, BadgeCheck, Repeat2, MessageCircle } from 'lucide-react';
+import { X, Star, ShieldCheck, MapPin, ChevronLeft, ChevronRight, Calendar as CalendarIcon, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Search, Layers, Navigation, Home, Maximize, Heart, Loader2, BadgeCheck, Repeat2, MessageCircle, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -149,9 +149,11 @@ export default function ListingDetail() {
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
   const [initialGalleryIndex, setInitialGalleryIndex] = useState(0);
   const [showAllAmenities, setShowAllAmenities] = useState(false);
+  const [showAllRules, setShowAllRules] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Simulated auth state
+  const [selectedReview, setSelectedReview] = useState<{userName: string; userImage: string; comment: string; date: string} | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -423,6 +425,73 @@ export default function ListingDetail() {
               </button>
             </div>
 
+            <div className="py-12 border-b border-gray-100">
+              <h3 className="text-2xl font-semibold text-neutral-900 mb-6">House Rules</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-6">
+                <div className="flex items-center gap-4">
+                  <Clock size={24} className="text-[#17294F] shrink-0" />
+                  <span className="text-[16px] text-neutral-800">Curfew at 10:00 PM</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Users size={24} className="text-[#17294F] shrink-0" />
+                  <span className="text-[16px] text-neutral-800">No visitors allowed after 9:00 PM</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Ban size={24} className="text-[#17294F] shrink-0" />
+                  <span className="text-[16px] text-neutral-800">No smoking indoors</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Moon size={24} className="text-[#17294F] shrink-0" />
+                  <span className="text-[16px] text-neutral-800">Quiet hours from 10:00 PM - 7:00 AM</span>
+                </div>
+                
+                {showAllRules && (
+                  <>
+                    <div className="flex items-center gap-4">
+                      <Coffee size={24} className="text-[#17294F] shrink-0" />
+                      <span className="text-[16px] text-neutral-800">Clean up after cooking in shared kitchen</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <VolumeX size={24} className="text-[#17294F] shrink-0" />
+                      <span className="text-[16px] text-neutral-800">No loud music</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Trash2 size={24} className="text-[#17294F] shrink-0" />
+                      <span className="text-[16px] text-neutral-800">Dispose garbage properly in designated bins</span>
+                    </div>
+                  </>
+                )}
+              </div>
+              <button 
+                onClick={() => setShowAllRules(!showAllRules)}
+                className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
+              >
+                {showAllRules ? 'Show less' : 'Show more rules'}
+              </button>
+            </div>
+
+            <div className="py-12 border-b border-gray-100">
+              <h3 className="text-2xl font-semibold text-neutral-900 mb-6">Pre-contractual Document</h3>
+              <p className="text-neutral-600 mb-6 leading-relaxed">
+                Review the terms and conditions before you proceed with booking. This document outlines the house rules, payment schedules, and other important agreements.
+              </p>
+
+              <div className="flex items-center justify-between p-5 border border-neutral-200 rounded-2xl bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer" onClick={() => window.open('#', '_blank')}>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm border border-neutral-100 shrink-0">
+                    <FileText size={24} className="text-[#17294F]" />
+                  </div>
+                  <div>
+                    <h4 className="text-[16px] font-semibold text-neutral-900">Standard Lease Agreement</h4>
+                    <p className="text-[13px] text-neutral-500 mt-0.5">PDF • 2.4 MB</p>
+                  </div>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#17294F] hover:bg-[#17294F] hover:text-white transition-colors border border-neutral-200">
+                  <Download size={18} />
+                </div>
+              </div>
+            </div>
+
             <div className="py-10">
                <div className="flex items-center gap-3 mb-8">
                   <Star size={24} className="fill-amber-400 text-amber-400" />
@@ -430,7 +499,7 @@ export default function ListingDetail() {
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {listing.reviews.map((rev, idx) => (
-                    <div key={idx} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div key={idx} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer" onClick={() => setSelectedReview(rev)}>
                        <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
                              <img src={rev.userImage} className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
@@ -443,7 +512,6 @@ export default function ListingDetail() {
                              </div>
                           </div>
                           <div className="flex items-center gap-1 text-neutral-400">
-                              <X size={18} className="text-neutral-400 hover:text-neutral-600 cursor-pointer pointer-events-auto" />
                           </div>
                        </div>
                        
@@ -747,6 +815,42 @@ export default function ListingDetail() {
         initialIndex={initialGalleryIndex}
         onClose={() => setIsPhotoGalleryOpen(false)}
       />
+
+      {selectedReview && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4" onClick={() => setSelectedReview(null)}>
+          <div className="bg-white rounded-3xl p-6 w-full max-w-lg shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-center gap-3">
+                 <img src={selectedReview.userImage} className="w-[50px] h-[50px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={selectedReview.userName} />
+                 <div className="flex flex-col">
+                    <div className="flex items-center gap-1.5">
+                       <span className="font-bold text-neutral-900 text-[16px] leading-tight">{selectedReview.userName}</span>
+                       <BadgeCheck size={18} className="text-[#2252D6]" />
+                    </div>
+                    <span className="text-neutral-500 text-[14px] font-medium leading-tight mt-0.5">@{selectedReview.userName.toLowerCase().replace(/\s+/g, '_')}</span>
+                 </div>
+              </div>
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedReview(null);
+                }}
+                className="p-2 bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors focus:outline-none"
+              >
+                <X size={20} className="text-neutral-600" />
+              </button>
+            </div>
+            
+            <p className="text-neutral-800 leading-relaxed text-[16px] md:text-[18px]">
+               {selectedReview.comment}
+            </p>
+
+            <div className="mt-8 text-neutral-500 text-[14px] font-medium">
+               {selectedReview.date}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

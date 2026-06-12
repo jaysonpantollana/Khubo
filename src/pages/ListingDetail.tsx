@@ -154,6 +154,7 @@ export default function ListingDetail() {
   const [isSaved, setIsSaved] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Simulated auth state
   const [selectedReview, setSelectedReview] = useState<{userName: string; userImage: string; comment: string; date: string} | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -351,6 +352,55 @@ export default function ListingDetail() {
               <p className="text-neutral-700 leading-relaxed text-lg whitespace-pre-wrap">
                 {listing.description}
               </p>
+            </div>
+
+            <div className="py-12 border-b border-gray-100">
+              <h2 className="text-[28px] font-bold text-neutral-900 mb-2">Available Rooms</h2>
+              <p className="text-[13px] font-bold text-neutral-500 uppercase tracking-widest mb-8">SELECT A LAYOUT TO CONFIGURE LEASE PRICING</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                {[
+                  {
+                    name: 'Room 1 (Single Bed)',
+                    badge: 'BEST VALUE',
+                    badgeColor: 'bg-[#17294F] text-white',
+                    desc: 'Single bed space. Includes shared study desk, locker, and shared bathroom access.',
+                    price: '₱4,700'
+                  },
+                  {
+                    name: 'Room 2 (Double Bed)',
+                    badge: 'SPACIOUS',
+                    badgeColor: 'bg-[#F59E0B] text-white',
+                    desc: 'Queen/Double bed space. Study desk, private wardrobe, and private balcony.',
+                    price: '₱5,875'
+                  }
+                ].map((room, idx) => (
+                  <div 
+                    key={idx}
+                    onClick={() => setSelectedRoom(idx)}
+                    className={cn(
+                      "rounded-2xl p-6 cursor-pointer transition-all duration-200 border flex flex-col h-[180px]",
+                      selectedRoom === idx 
+                        ? "border-[#17294F] bg-white shadow-[0_8px_16px_rgba(23,41,79,0.08)] ring-1 ring-[#17294F]" 
+                        : "border-neutral-200 bg-white hover:border-neutral-300"
+                    )}
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-[17px] font-extrabold text-neutral-900">{room.name}</h3>
+                      <span className={cn("text-[9px] font-black px-2.5 py-1 rounded-md tracking-widest uppercase", room.badgeColor)}>
+                        {room.badge}
+                      </span>
+                    </div>
+                    <p className="text-[13px] font-medium text-neutral-500 line-clamp-2 leading-relaxed pr-2">
+                      {room.desc}
+                    </p>
+                    <div className="flex items-baseline gap-1 mt-auto self-start">
+                      <span className="text-[22px] font-black text-neutral-900 tracking-tight">{room.price}</span>
+                      <span className="text-[9px] font-extrabold text-neutral-400 uppercase tracking-widest">/month</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="py-12 border-b border-gray-100">
@@ -603,10 +653,12 @@ export default function ListingDetail() {
 
           {/* Booking Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-[100px] border border-gray-200 rounded-[2.5rem] py-8 px-8 shadow-2xl flex flex-col gap-5 bg-white max-h-[calc(100vh-120px)] overflow-hidden">
-              <div className="flex justify-between items-center bg-neutral-50 px-5 py-3 rounded-[2rem] border border-neutral-100 flex-shrink-0">
+            <div className="sticky top-[100px] flex flex-col gap-4 max-h-[calc(100vh-120px)]">
+
+               <div className="border border-gray-200 rounded-[2.5rem] py-8 px-8 shadow-2xl flex flex-col gap-5 bg-white overflow-y-auto min-h-0">
+                 <div className="flex justify-between items-center bg-neutral-50 px-5 py-3 rounded-[2rem] border border-neutral-100 flex-shrink-0">
                 <div className="flex items-baseline gap-1">
-                   <span className="text-xl font-black text-[#17294F]">P{listing.price}</span>
+                   <span className="text-xl font-black text-[#17294F]">{selectedRoom === 0 ? '₱4,700' : '₱5,875'}</span>
                    <span className="text-neutral-500 text-[10px] font-bold uppercase tracking-tight">/month</span>
                 </div>
                 <div className="flex items-center gap-1 text-[10px] font-bold text-neutral-800">
@@ -692,23 +744,24 @@ export default function ListingDetail() {
                   <div className="flex flex-col gap-2 pt-4 border-t border-neutral-100">
                      <div className="flex justify-between items-center text-neutral-600">
                         <span className="text-[10px] font-bold uppercase tracking-tight">Monthly Rent</span>
-                        <span className="font-black text-neutral-900 text-[10px]">P{listing.price}</span>
+                        <span className="font-black text-neutral-900 text-[10px]">{selectedRoom === 0 ? '₱4,700' : '₱5,875'}</span>
                      </div>
                      <div className="flex justify-between items-center text-neutral-600">
                         <span className="text-[10px] font-bold uppercase tracking-tight">Cleaning fee</span>
-                        <span className="font-black text-neutral-900 text-[10px]">P150</span>
+                        <span className="font-black text-neutral-900 text-[10px]">₱150</span>
                      </div>
                      <div className="flex justify-between items-center text-neutral-600">
                         <span className="text-[10px] font-bold uppercase tracking-tight">Service fee</span>
-                        <span className="font-black text-neutral-900 text-[10px]">P100</span>
+                        <span className="font-black text-neutral-900 text-[10px]">₱100</span>
                      </div>
                      <div className="pt-3 mt-1 border-t border-neutral-200 flex justify-between items-center text-[#17294F]">
                         <span className="text-[10px] font-black uppercase tracking-widest">Grand Total</span>
-                        <span className="text-xl font-black">P{listing.price + 150 + 100}</span>
+                        <span className="text-xl font-black">{selectedRoom === 0 ? '₱4,950' : '₱6,125'}</span>
                      </div>
                   </div>
                 )}
               </div>
+            </div>
             </div>
           </div>
         </div>

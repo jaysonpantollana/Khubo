@@ -336,6 +336,16 @@ export default function Profile() {
                    </button>
                  )}
               </div>
+              
+              {/* Roommate Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-center sm:justify-start gap-3 mt-6">
+                 <button className="w-full sm:w-auto px-6 py-2.5 bg-white text-neutral-900 text-sm font-bold rounded-full hover:bg-neutral-100 transition-colors shadow-lg">
+                    Find Roommate Request
+                 </button>
+                 <button className="w-full sm:w-auto px-6 py-2.5 bg-transparent border-[1.5px] border-white/60 text-white text-sm font-bold rounded-full hover:bg-white/10 hover:border-white transition-colors">
+                    Apply Roommate Request
+                 </button>
+              </div>
           </div>
 
           {/* Right Quote */}
@@ -385,8 +395,20 @@ export default function Profile() {
            ))}
         </div>
 
+        {/* Roommate Action Buttons */}
+        {!isLandlord && (
+          <div className="flex flex-col sm:flex-row items-center justify-end gap-3 mt-6 mb-2 px-1">
+            <button className="w-full sm:w-auto px-6 py-2.5 border-[1.5px] border-[#17294F] text-[#17294F] text-sm font-bold rounded-full hover:bg-neutral-50 transition-colors">
+               Apply Roommate Request
+            </button>
+            <button className="w-full sm:w-auto px-6 py-2.5 bg-[#17294F] text-white text-sm font-bold rounded-full hover:bg-[#1e3466] shadow-md transition-colors">
+               Find Roommate Request
+            </button>
+          </div>
+        )}
+
         {/* Section Title */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-16 mb-6 px-1 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-12 mb-6 px-1 gap-4">
           <h2 className="text-2xl md:text-3xl font-bold text-black">
             {isLandlord ? 'My Properties' : 'My Reservation'}
           </h2>

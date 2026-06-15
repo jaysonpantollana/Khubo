@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import RoommateModal from '../components/RoommateModal';
 import { Roommate } from '../types';
 import RoommateSearchDropdown from '../components/RoommateSearchDropdown';
+import CreatePostModal from '../components/CreatePostModal';
 
 const TAGS = [
   'ALL', 'Near MSU-IIT', 'All Female', 'Solo Room', 'Shared Room', 'All Male', 
@@ -31,6 +32,7 @@ export default function RoommateFinder() {
   const [isStickySearchActive, setIsStickySearchActive] = useState(false);
   const [hideStickyDropdown, setHideStickyDropdown] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
   React.useEffect(() => {
     setLoading(true);
@@ -445,26 +447,28 @@ export default function RoommateFinder() {
               <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200" alt="Profile" className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shrink-0 shadow-sm border border-neutral-200" />
               <input
                 type="text"
-                className="flex-1 bg-white border border-neutral-200 rounded-full px-5 py-3 md:py-3.5 font-medium text-neutral-800 placeholder:text-neutral-500 hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/20 focus:border-[#2252D6] transition shadow-sm text-sm md:text-base"
+                className="flex-1 bg-white border border-neutral-200 rounded-full px-5 py-3 md:py-3.5 font-medium text-neutral-800 placeholder:text-neutral-500 hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/20 focus:border-[#2252D6] transition shadow-sm text-sm md:text-base cursor-pointer"
                 placeholder={postMode === 'finding' ? 'What kind of roommate are you looking for, Micheal?' : 'Tell us about yourself, Micheal?'}
+                readOnly
+                onClick={() => setIsCreatePostOpen(true)}
               />
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
-              <div className="grid grid-cols-2 bg-white rounded-full p-1 sm:p-1.5 shadow-sm border border-neutral-200 w-full md:w-auto">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-center gap-3 w-full overflow-x-auto pb-2 sm:pb-0 hide-scrollbar">
+              <div className="inline-flex bg-white rounded-full p-1 shadow-sm border border-neutral-200">
                  <button 
                    onClick={() => setPostMode('applying')}
-                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-2 sm:px-6 py-2.5 rounded-full whitespace-nowrap overflow-hidden ${postMode === 'applying' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
+                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === 'applying' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
                  >
-                    <UserPlus size={16} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'applying' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
-                    <span className="font-semibold text-xs sm:text-[15px] truncate">Applying as Roommate</span>
+                    <UserPlus size={14} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'applying' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
+                    <span className="font-semibold text-[11px] sm:text-[15px]">Applying as Roommate</span>
                  </button>
                  <button 
                    onClick={() => setPostMode('finding')}
-                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-2 sm:px-6 py-2.5 rounded-full whitespace-nowrap overflow-hidden ${postMode === 'finding' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
+                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === 'finding' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
                  >
-                    <Search size={16} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'finding' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
-                    <span className="font-semibold text-xs sm:text-[15px] truncate">Finding Roommate</span>
+                    <Search size={14} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'finding' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
+                    <span className="font-semibold text-[11px] sm:text-[15px]">Finding Roommate</span>
                  </button>
               </div>
             </div>
@@ -593,6 +597,12 @@ export default function RoommateFinder() {
         roommate={selectedRoommate} 
         isOpen={isModalOpen} 
         onClose={closeProfile} 
+      />
+
+      <CreatePostModal 
+        isOpen={isCreatePostOpen} 
+        onClose={() => setIsCreatePostOpen(false)} 
+        postMode={postMode} 
       />
     </div>
   );

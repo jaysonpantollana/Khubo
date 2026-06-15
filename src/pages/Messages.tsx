@@ -399,7 +399,7 @@ export default function Messages() {
                 <div className="flex items-center shrink-0">
                   <button 
                     onClick={() => setIsAttachmentsExpanded(!isAttachmentsExpanded)}
-                    className={`p-2 rounded-full transition text-[#2252D6] flex-shrink-0 ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                    className={`p-2 rounded-full transition flex-shrink-0 ${isDarkMode ? 'text-white hover:bg-[#3A3B3C]' : 'text-black hover:bg-neutral-100'}`}
                   >
                     {!isAttachmentsExpanded ? (
                       messageInput.trim() ? <ChevronRight size={22} /> : <MoreHorizontal size={22} />
@@ -411,19 +411,19 @@ export default function Messages() {
                   <div className={`flex items-center overflow-hidden transition-all duration-300 ease-in-out ${isAttachmentsExpanded ? 'max-w-[200px] opacity-100' : 'max-w-0 opacity-0'}`}>
                     <button 
                       onClick={() => setIsCameraOpen(true)}
-                      className={`p-2 rounded-full transition shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                      className={`p-2 rounded-full transition shrink-0 ${isDarkMode ? 'text-white hover:bg-[#3A3B3C]' : 'text-black hover:bg-neutral-100'}`}
                     >
                       <Camera size={22} />
                     </button>
                     <button 
                       onClick={() => { setUploadAcceptedTypes('image/*,video/*'); setIsUploadModalOpen(true); }}
-                      className={`p-2 rounded-full transition shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                      className={`p-2 rounded-full transition shrink-0 ${isDarkMode ? 'text-white hover:bg-[#3A3B3C]' : 'text-black hover:bg-neutral-100'}`}
                     >
                       <ImageIcon size={22} />
                     </button>
                     <button 
                       onClick={() => { setUploadAcceptedTypes('*'); setIsUploadModalOpen(true); }}
-                      className={`p-2 rounded-full transition shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                      className={`p-2 rounded-full transition shrink-0 ${isDarkMode ? 'text-white hover:bg-[#3A3B3C]' : 'text-black hover:bg-neutral-100'}`}
                     >
                        <FileText size={22} />
                     </button>
@@ -438,18 +438,14 @@ export default function Messages() {
                     placeholder="Message"
                     className={`flex-1 w-full bg-transparent border-none outline-none text-[15px] focus:ring-0 py-1 px-1 min-w-0 ${isDarkMode ? 'text-white placeholder-[#B0B3B8]' : 'text-neutral-800 placeholder-neutral-500'}`}
                   />
-                  <button type="button" className={`p-1 ml-1 rounded-full transition flex-shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#4E4F50]' : 'hover:bg-neutral-200'}`}>
+                  <button type="button" className={`p-1 ml-1 rounded-full transition flex-shrink-0 ${isDarkMode ? 'text-white hover:bg-[#4E4F50]' : 'text-black hover:bg-neutral-200'}`}>
                     <Smile size={20} />
                   </button>
                 </form>
 
-                {messageInput.trim() || attachments.length > 0 ? (
-                  <button onClick={handleSendMessage} className={`p-2 rounded-full transition flex-shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}>
+                {(messageInput.trim() || attachments.length > 0) && (
+                  <button onClick={handleSendMessage} className={`p-2 rounded-full transition flex-shrink-0 ${isDarkMode ? 'text-white hover:bg-[#3A3B3C]' : 'text-black hover:bg-neutral-100'}`}>
                     <Send size={22} />
-                  </button>
-                ) : (
-                  <button className={`p-2 rounded-full transition flex-shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}>
-                    <Mic size={22} />
                   </button>
                 )}
               </div>

@@ -1,57 +1,103 @@
-import React from 'react';
-import { Globe, Facebook, Instagram } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear();
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section);
+  };
 
   return (
-    <footer className="bg-[#F7F7F7] border-t border-neutral-200 py-6 mt-12 pb-24 md:pb-6">
-      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 flex flex-col-reverse md:flex-row justify-between items-center gap-4 text-[13px] md:text-sm text-neutral-600">
+    <footer className="bg-[#F7F7F7] border-t border-neutral-200 py-12 md:py-16 md:pb-16 pb-28">
+      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 flex flex-col lg:flex-row justify-between gap-8 lg:gap-20">
         
-        {/* Left Side */}
-        <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 md:gap-2">
-          <span>© {currentYear} Khubo, Inc.</span>
-          <span className="hidden md:inline font-bold">·</span>
-          <a href="#" className="hover:underline">Privacy</a>
-          <span className="hidden md:inline font-bold">·</span>
-          <a href="#" className="hover:underline">Terms</a>
-          <span className="hidden md:inline font-bold">·</span>
-          <a href="#" className="hover:underline">Sitemap</a>
-          <span className="hidden md:inline font-bold">·</span>
-          <a href="#" className="hover:underline flex items-center gap-1.5">
-            Your Privacy Choices
-            <svg width="26" height="12" fill="none" viewBox="0 0 26 12">
-              <rect width="26" height="12" fill="#0072FF" rx="6" />
-              <path fill="#fff" d="M18.5 3h-1.6l-1 2.8-1-2.8h-1.6l1.8 4.2v2h1.6V7.2l1.8-4.2zM8.2 4.4l-1.9 2-1.2-1.2-1 1.1 2.2 2.3 3-3-1.1-1.2z" />
-            </svg>
-          </a>
+        {/* Newsletter Section */}
+        <div className="max-w-md w-full lg:w-1/3 flex flex-col gap-6">
+          <h3 className="text-xl md:text-2xl font-bold text-[#17294F] tracking-tight leading-snug">
+            Keep up to date with our quarterly newsletter, "You've got mail."
+          </h3>
+          <div className="flex flex-col gap-4">
+            <input 
+              type="email" 
+              placeholder="Enter Your Email"
+              className="w-full bg-white border border-neutral-200 text-[#17294F] placeholder:text-neutral-400 rounded-xl px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-all font-medium shadow-sm"
+            />
+            <button className="self-start flex items-center gap-2 bg-[#17294F] text-white hover:bg-[#17294F]/90 px-6 py-3 rounded-full font-medium transition-all shadow-sm active:scale-95">
+              <span>Subscribe</span>
+              <ArrowRight size={18} />
+            </button>
+          </div>
         </div>
 
-        {/* Right Side */}
-        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 font-medium text-neutral-800">
-          <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 hover:underline">
-              <Globe size={16} />
-              <span>English (US)</span>
+        {/* Links Grid / Accordion */}
+        <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4 mt-2 lg:mt-0 border-t border-neutral-200 md:border-t-0">
+          
+          <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
+            <button 
+              onClick={() => toggleSection('solutions')}
+              className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
+            >
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Solutions</h4>
+              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'solutions' ? 'rotate-180' : ''}`} size={18} />
             </button>
-            <button className="flex items-center gap-2 hover:underline">
-              <span className="font-sans font-bold">₱</span>
-              <span>PHP</span>
+            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'solutions' ? 'flex' : 'hidden md:flex'}`}>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Transactional Emails</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Marketing Emails</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Email Automation</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Email Builder</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">SMTP</a>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
+            <button 
+              onClick={() => toggleSection('docs')}
+              className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
+            >
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Docs</h4>
+              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'docs' ? 'rotate-180' : ''}`} size={18} />
             </button>
+            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'docs' ? 'flex' : 'hidden md:flex'}`}>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Getting Started</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">API Reference</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Guides</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Transactional Emails</a>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-black transition" aria-label="Facebook">
-              <Facebook size={18} />
-            </a>
-            <a href="#" className="hover:text-black transition flex items-center" aria-label="X (Twitter)">
-              <svg width="15" height="15" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="currentColor"/>
-              </svg>
-            </a>
-            <a href="#" className="hover:text-black transition" aria-label="Instagram">
-              <Instagram size={18} />
-            </a>
+
+          <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
+            <button 
+              onClick={() => toggleSection('resources')}
+              className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
+            >
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Resources</h4>
+              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'resources' ? 'rotate-180' : ''}`} size={18} />
+            </button>
+            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'resources' ? 'flex' : 'hidden md:flex'}`}>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">FAQ</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Blog</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Glossary</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Changelog</a>
+            </div>
           </div>
+
+          <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
+            <button 
+              onClick={() => toggleSection('legal')}
+              className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
+            >
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Legal</h4>
+              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'legal' ? 'rotate-180' : ''}`} size={18} />
+            </button>
+            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'legal' ? 'flex' : 'hidden md:flex'}`}>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Fair Use</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Terms & Conditions</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Subprocessors</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</a>
+            </div>
+          </div>
+
         </div>
       </div>
     </footer>

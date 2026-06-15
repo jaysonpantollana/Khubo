@@ -440,6 +440,36 @@ export default function RoommateFinder() {
       
       <main className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 pt-10">
         <div className="flex flex-col gap-10 md:gap-16">
+          <div className="w-full flex flex-col gap-5 pt-2">
+            <div className="flex items-center gap-3 w-full">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200" alt="Profile" className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shrink-0 shadow-sm border border-neutral-200" />
+              <input
+                type="text"
+                className="flex-1 bg-white border border-neutral-200 rounded-full px-5 py-3 md:py-3.5 font-medium text-neutral-800 placeholder:text-neutral-500 hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/20 focus:border-[#2252D6] transition shadow-sm text-sm md:text-base"
+                placeholder={postMode === 'finding' ? 'What kind of roommate are you looking for, Micheal?' : 'Tell us about yourself, Micheal?'}
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+              <div className="grid grid-cols-2 bg-white rounded-full p-1 sm:p-1.5 shadow-sm border border-neutral-200 w-full md:w-auto">
+                 <button 
+                   onClick={() => setPostMode('applying')}
+                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-2 sm:px-6 py-2.5 rounded-full whitespace-nowrap overflow-hidden ${postMode === 'applying' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
+                 >
+                    <UserPlus size={16} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'applying' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
+                    <span className="font-semibold text-xs sm:text-[15px] truncate">Applying as Roommate</span>
+                 </button>
+                 <button 
+                   onClick={() => setPostMode('finding')}
+                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-2 sm:px-6 py-2.5 rounded-full whitespace-nowrap overflow-hidden ${postMode === 'finding' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
+                 >
+                    <Search size={16} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'finding' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
+                    <span className="font-semibold text-xs sm:text-[15px] truncate">Finding Roommate</span>
+                 </button>
+              </div>
+            </div>
+          </div>
+
           {/* Recommended Section */}
           <div className="flex flex-col gap-5 md:gap-6">
             <div className="flex items-center justify-between">
@@ -538,44 +568,6 @@ export default function RoommateFinder() {
             </div>
           </div>
           
-          <div 
-            className="rounded-[1.5rem] w-full relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] bg-cover bg-center group"
-            style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1600")' }}
-          >
-            <div className="absolute inset-0 bg-black/40 transition-all group-hover:bg-black/50"></div>
-            
-            <div className="relative z-10 p-4 md:p-5 flex flex-col gap-4 w-full">
-              <h3 className="text-center font-black text-white text-lg md:text-2xl uppercase tracking-[0.2em] hidden sm:block drop-shadow-md">Post</h3>
-              <div className="flex items-center gap-3 w-full px-1">
-                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200" alt="Profile" className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shrink-0 shadow-sm border border-white/20" />
-                <div className="flex-1 bg-white/10 backdrop-blur-md rounded-full px-5 py-3 md:py-3.5 font-medium text-white cursor-pointer hover:bg-white/20 transition shadow-sm border border-white/20 text-sm md:text-base truncate">
-                  {postMode === 'finding' ? 'What kind of roommate are you looking for, Micheal?' : 'Tell us about yourself, Micheal?'}
-                </div>
-              </div>
-
-              <div className="border-t border-white/20 w-full" />
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full px-1">
-                <div className="flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-[14px] p-1.5 gap-1 sm:gap-2 shadow-sm">
-                   <button 
-                     onClick={() => setPostMode('applying')}
-                     className={`flex items-center gap-2 transition-all px-4 py-2 rounded-[10px] whitespace-nowrap ${postMode === 'applying' ? 'bg-[#17294F] text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white'}`}
-                   >
-                      <UserPlus size={18} />
-                      <span className="font-medium text-sm">Applying as Roommate</span>
-                   </button>
-                   <button 
-                     onClick={() => setPostMode('finding')}
-                     className={`flex items-center gap-2 transition-all px-4 py-2 rounded-[10px] whitespace-nowrap ${postMode === 'finding' ? 'bg-[#17294F] text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white'}`}
-                   >
-                      <Search size={18} />
-                      <span className="font-medium text-sm">Finding Roommate</span>
-                   </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {!loading && filteredRoommates.length === 0 && (
             <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-3xl shadow-sm border border-neutral-100">
               <div className="bg-neutral-100 p-8 rounded-full mb-4">

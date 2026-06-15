@@ -1,34 +1,137 @@
-import React, { useState } from 'react';
-import { Search, Edit, MoreHorizontal, Phone, Video, Info, ChevronLeft, ArrowLeft, Send, Image as ImageIcon, Smile, Mic, Moon, Sun, Megaphone } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, Edit, MoreHorizontal, Phone, Video, Info, ChevronLeft, ArrowLeft, Send, Image as ImageIcon, Smile, Mic, Moon, Sun, Megaphone, Plus, Camera, FileText, ChevronRight, X, Play, File as FileIcon, Paperclip } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { DUMMY_CONVERSATIONS, DUMMY_MESSAGES } from '../mocks/messages';
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
+import { UploadModal } from '../components/UploadModal';
+import { CameraOverlay } from '../components/CameraOverlay';
+
+import BottomNav from '../components/BottomNav';
+
+export type Attachment = {
+  id: string;
+  type: 'image' | 'video' | 'file';
+  url: string;
+  name?: string;
+  file?: File;
+};
 
 export default function Messages() {
+  const [conversations, setConversations] = useState(DUMMY_CONVERSATIONS);
   const [selectedConversation, setSelectedConversation] = useState<typeof DUMMY_CONVERSATIONS[0] | null>(null);
   const [messageInput, setMessageInput] = useState('');
   const [messages, setMessages] = useState(DUMMY_MESSAGES);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
+  const [isAttachmentsExpanded, setIsAttachmentsExpanded] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [uploadAcceptedTypes, setUploadAcceptedTypes] = useState('*');
+  
+  // Phase 1, 2: Attachments state and refs
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const navigate = useNavigate();
 
   const filterOptions = ['All', 'Landlord', 'Friends', 'Admin'];
 
+  const handleSelectConversation = (conv: typeof DUMMY_CONVERSATIONS[0]) => {
+    setSelectedConversation(conv);
+    setConversations(prev => prev.map(c => c.id === conv.id ? { ...c, unread: 0 } : c));
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>, type: 'image' | 'video' | 'file') => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const newAttachments = Array.from(files).map(file => {
+      // Determine more specific type base on mime
+      let actualType = type;
+      if (file.type.startsWith('image/')) actualType = 'image';
+      else if (file.type.startsWith('video/')) actualType = 'video';
+      else actualType = 'file';
+
+      return {
+        id: Date.now().toString() + Math.random().toString(36).substring(7),
+        type: actualType,
+        url: URL.createObjectURL(file),
+        name: file.name,
+        file
+      };
+    });
+
+    setAttachments(prev => [...prev, ...newAttachments]);
+    // Reset inputs so the same file can be chosen again
+    if (e.target) e.target.value = '';
+  };
+
+  const handleModalUpload = (files: File[]) => {
+    const newAttachments = files.map(file => {
+      let actualType: 'image' | 'video' | 'file' = 'file';
+      if (file.type.startsWith('image/')) actualType = 'image';
+      else if (file.type.startsWith('video/')) actualType = 'video';
+
+      return {
+        id: Date.now().toString() + Math.random().toString(36).substring(7),
+        type: actualType,
+        url: URL.createObjectURL(file),
+        name: file.name,
+        file
+      };
+    });
+
+    setAttachments(prev => [...prev, ...newAttachments]);
+  };
+
+  const handleCameraCapture = (file: File) => {
+    const newAttachment = {
+      id: Date.now().toString() + Math.random().toString(36).substring(7),
+      type: 'image' as const,
+      url: URL.createObjectURL(file),
+      name: file.name,
+      file
+    };
+    setAttachments(prev => [...prev, newAttachment]);
+  };
+
+  const removeAttachment = (id: string) => {
+    setAttachments(prev => {
+      const index = prev.findIndex(a => a.id === id);
+      if (index !== -1) {
+        URL.revokeObjectURL(prev[index].url);
+      }
+      return prev.filter(a => a.id !== id);
+    });
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!messageInput.trim()) return;
+    if (!messageInput.trim() && attachments.length === 0) return;
     
+    // Use type 'any' to extend the mock messages
+    const newMessage: any = {
+      id: Date.now().toString(),
+      text: messageInput.trim(),
+      sender: 'me',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    if (attachments.length > 0) {
+      newMessage.attachments = [...attachments];
+    }
+
     setMessages([
       ...messages,
-      {
-        id: Date.now().toString(),
-        text: messageInput,
-        sender: 'me',
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }
+      newMessage
     ]);
+    
     setMessageInput('');
+    setAttachments([]);
+    setIsAttachmentsExpanded(false);
   };
 
   return (
@@ -91,10 +194,10 @@ export default function Messages() {
 
         {/* Conversation List */}
         <div className="flex-1 overflow-y-auto px-2 pb-24">
-          {DUMMY_CONVERSATIONS.map((conv) => (
+          {conversations.map((conv) => (
             <button
               key={conv.id}
-              onClick={() => setSelectedConversation(conv)}
+              onClick={() => handleSelectConversation(conv)}
               className={`w-full flex items-center p-2 rounded-xl transition gap-3 ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-50'} ${selectedConversation?.id === conv.id ? (isDarkMode ? 'md:bg-[#3A3B3C]' : 'md:bg-neutral-100') : ''}`}
             >
               <div className="relative flex-shrink-0">
@@ -123,7 +226,9 @@ export default function Messages() {
           ))}
         </div>
         
-        {/* We removed BottomNav from the list view */}
+        <div className="md:hidden">
+          <BottomNav />
+        </div>
       </div>
 
       {/* Main Chat Area */}
@@ -153,7 +258,6 @@ export default function Messages() {
                 </div>
               </div>
               <div className="flex items-center text-[#2252D6] gap-4 sm:gap-6">
-                <Megaphone size={20} className="cursor-pointer hover:opacity-80 transition" onClick={() => setIsAnnouncementsOpen(true)} />
                 <Phone size={20} className="cursor-pointer hover:opacity-80 transition" />
                 <Video size={24} className="cursor-pointer hover:opacity-80 transition" />
               </div>
@@ -191,54 +295,161 @@ export default function Messages() {
                       </div>
                     )}
                     
-                    <div className={`max-w-[75%] px-4 py-2 ${isMe ? 'bg-[#2252D6] text-white rounded-2xl rounded-tr-md' : (isDarkMode ? 'bg-[#3A3B3C] text-white rounded-2xl rounded-tl-md' : 'bg-neutral-100 text-neutral-900 rounded-2xl rounded-tl-md')}`}>
-                      <p className="text-[14.5px] leading-relaxed">{msg.text}</p>
+                    <div className={`max-w-[75%] flex flex-col gap-1 ${isMe ? 'items-end' : 'items-start'}`}>
+                      {/* Render Attachments */}
+                      {(msg as any).attachments && (msg as any).attachments.length > 0 && (
+                        <div className={`flex flex-wrap gap-1 ${isMe ? 'justify-end' : 'justify-start'}`}>
+                          {(msg as any).attachments.map((attach: Attachment) => (
+                            <div key={attach.id} className="relative group overflow-hidden rounded-xl border border-black/5" style={{ maxWidth: '240px' }}>
+                              {attach.type === 'image' && (
+                                <img src={attach.url} alt="attachment" className="max-w-full rounded-xl" style={{ maxHeight: '300px', objectFit: 'cover' }} />
+                              )}
+                              {attach.type === 'video' && (
+                                <div className="relative bg-black/10 rounded-xl" style={{ minWidth: '200px', minHeight: '150px' }}>
+                                  <video src={attach.url} className="max-w-full rounded-xl" style={{ maxHeight: '300px' }} />
+                                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div className="w-10 h-10 bg-black/40 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
+                                      <Play size={20} fill="currentColor" />
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              {attach.type === 'file' && (
+                                <div className={`flex items-center gap-3 p-3 rounded-xl max-w-[240px] border ${isMe ? 'bg-[#2252D6]/10 border-[#2252D6]/20' : (isDarkMode ? 'bg-[#3A3B3C] border-[#4E4F50]' : 'bg-neutral-100 border-neutral-200')}`}>
+                                  <div className={`p-2 rounded-lg ${isMe ? 'bg-[#2252D6]/20' : (isDarkMode ? 'bg-[#4E4F50]' : 'bg-white shadow-sm')}`}>
+                                    <FileIcon size={20} className={isMe ? 'text-[#2252D6]' : (isDarkMode ? 'text-white' : 'text-neutral-600')} />
+                                  </div>
+                                  <div className="flex-1 min-w-0 overflow-hidden">
+                                    <p className={`text-sm font-medium truncate ${isMe ? 'text-white' : (isDarkMode ? 'text-white' : 'text-neutral-900')}`}>
+                                      {attach.name || 'File attachment'}
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {/* Message Text */}
+                      {msg.text && (
+                        <div className={`px-4 py-2 ${isMe ? 'bg-[#2252D6] text-white rounded-2xl rounded-tr-md' : (isDarkMode ? 'bg-[#3A3B3C] text-white rounded-2xl rounded-tl-md' : 'bg-neutral-100 text-neutral-900 rounded-2xl rounded-tl-md')}`}>
+                          <p className="text-[14.5px] leading-relaxed">{msg.text}</p>
+                        </div>
+                      )}
+                      {isMe && i === messages.length - 1 && (
+                        <span className={`text-[11px] flex items-center gap-1 mt-0.5 ${isDarkMode ? 'text-neutral-400' : 'text-neutral-500'}`}>
+                          Delivered
+                        </span>
+                      )}
                     </div>
-
-                    {isMe && (
-                      <div className="w-4 h-4 text-neutral-300 flex items-center justify-center">
-                        {i === messages.length - 1 && (
-                          <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${isDarkMode ? 'border-[#4E4F50]' : 'border-[#2252D6]'}`}>
-                             <div className={`w-2.5 h-2.5 rounded-full ${isDarkMode ? 'bg-[#B0B3B8]' : 'bg-[#2252D6]'}`}></div>
-                          </div>
-                        )}
-                      </div>
-                    )}
                   </div>
                 );
               })}
             </div>
 
+            {/* Hidden Input Elements */}
+            <input type="file" ref={imageInputRef} accept="image/*,video/*" multiple className="hidden" onChange={(e) => handleFileSelect(e, 'image')} />
+            <input type="file" ref={fileInputRef} accept="*" multiple className="hidden" onChange={(e) => handleFileSelect(e, 'file')} />
+
+            {/* Attachments Preview Area Before Input */}
+            <AnimatePresence>
+              {attachments.length > 0 && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0, y: 10 }}
+                  animate={{ opacity: 1, height: 'auto', y: 0 }}
+                  exit={{ opacity: 0, height: 0, y: 10 }}
+                  className={`p-3 border-t overflow-x-auto flex items-center gap-2 ${isDarkMode ? 'bg-[#242526] border-[#3A3B3C]' : 'bg-white border-neutral-100'}`}
+                >
+                  {attachments.map(attach => (
+                    <div key={attach.id} className="relative flex-shrink-0 group">
+                      <div className={`w-16 h-16 rounded-xl overflow-hidden border ${isDarkMode ? 'border-[#3A3B3C] bg-[#3A3B3C]' : 'border-neutral-200 bg-neutral-100'}`}>
+                        {attach.type === 'image' && (
+                          <img src={attach.url} alt="preview" className="w-full h-full object-cover" />
+                        )}
+                        {attach.type === 'video' && (
+                          <div className="w-full h-full bg-black/20 flex items-center justify-center relative">
+                            <video src={attach.url} className="w-full h-full object-cover absolute inset-0 text-transparent" />
+                            <Play size={16} fill="white" className="text-white z-10" />
+                          </div>
+                        )}
+                        {attach.type === 'file' && (
+                          <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-500">
+                            <FileIcon size={24} />
+                          </div>
+                        )}
+                      </div>
+                      <button 
+                        onClick={() => removeAttachment(attach.id)}
+                        className="absolute -top-2 -right-2 w-6 h-6 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-700 shadow-sm hover:bg-gray-50 transition drop-shadow-sm"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Message Input - Bottom */}
-            <div className={`p-3 border-t pb-safe relative z-20 ${isDarkMode ? 'bg-[#242526] border-[#3A3B3C]' : 'bg-white border-neutral-100'}`}>
-              <div className="flex items-center gap-2">
-                <button className={`p-2 rounded-full transition text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}>
-                  <MoreHorizontal size={20} />
-                </button>
-                <button className={`p-2 rounded-full lg:hidden hidden sm:block transition text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}>
-                  <ImageIcon size={20} />
-                </button>
+            <div className={`p-2 sm:p-3 pb-safe relative z-20 ${attachments.length === 0 ? 'border-t' : ''} ${isDarkMode ? 'bg-[#242526] border-[#3A3B3C]' : 'bg-white border-neutral-100'}`}>
+              <div className="flex items-center gap-1 sm:gap-2 w-full">
                 
-                <form onSubmit={handleSendMessage} className={`flex-1 flex items-center rounded-full px-3 py-1.5 focus-within:ring-2 ring-[#2252D6]/20 transition-all border ${isDarkMode ? 'bg-[#3A3B3C] border-transparent' : 'bg-neutral-100 border-neutral-300'}`}>
+                {/* Expanded/Collapsible Actions */}
+                <div className="flex items-center shrink-0">
+                  <button 
+                    onClick={() => setIsAttachmentsExpanded(!isAttachmentsExpanded)}
+                    className={`p-2 rounded-full transition text-[#2252D6] flex-shrink-0 ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                  >
+                    {!isAttachmentsExpanded ? (
+                      messageInput.trim() ? <ChevronRight size={22} /> : <MoreHorizontal size={22} />
+                    ) : (
+                      <ChevronRight size={22} />
+                    )}
+                  </button>
+
+                  <div className={`flex items-center overflow-hidden transition-all duration-300 ease-in-out ${isAttachmentsExpanded ? 'max-w-[200px] opacity-100' : 'max-w-0 opacity-0'}`}>
+                    <button 
+                      onClick={() => setIsCameraOpen(true)}
+                      className={`p-2 rounded-full transition shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                    >
+                      <Camera size={22} />
+                    </button>
+                    <button 
+                      onClick={() => { setUploadAcceptedTypes('image/*,video/*'); setIsUploadModalOpen(true); }}
+                      className={`p-2 rounded-full transition shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                    >
+                      <ImageIcon size={22} />
+                    </button>
+                    <button 
+                      onClick={() => { setUploadAcceptedTypes('*'); setIsUploadModalOpen(true); }}
+                      className={`p-2 rounded-full transition shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}
+                    >
+                       <FileText size={22} />
+                    </button>
+                  </div>
+                </div>
+
+                <form onSubmit={handleSendMessage} className={`flex-1 flex items-center min-w-0 rounded-full px-3 py-1.5 focus-within:ring-2 ring-[#2252D6]/20 transition-all border ${isDarkMode ? 'bg-[#3A3B3C] border-transparent' : 'bg-neutral-100 border-neutral-300'}`}>
                   <input
                     type="text"
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                     placeholder="Message"
-                    className={`flex-1 bg-transparent border-none outline-none text-[15px] focus:ring-0 py-1 px-1 min-w-0 ${isDarkMode ? 'text-white placeholder-[#B0B3B8]' : 'text-neutral-800 placeholder-neutral-500'}`}
+                    className={`flex-1 w-full bg-transparent border-none outline-none text-[15px] focus:ring-0 py-1 px-1 min-w-0 ${isDarkMode ? 'text-white placeholder-[#B0B3B8]' : 'text-neutral-800 placeholder-neutral-500'}`}
                   />
                   <button type="button" className={`p-1 ml-1 rounded-full transition flex-shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#4E4F50]' : 'hover:bg-neutral-200'}`}>
                     <Smile size={20} />
                   </button>
                 </form>
 
-                {messageInput.trim() ? (
+                {messageInput.trim() || attachments.length > 0 ? (
                   <button onClick={handleSendMessage} className={`p-2 rounded-full transition flex-shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}>
-                    <Send size={20} />
+                    <Send size={22} />
                   </button>
                 ) : (
                   <button className={`p-2 rounded-full transition flex-shrink-0 text-[#2252D6] ${isDarkMode ? 'hover:bg-[#3A3B3C]' : 'hover:bg-neutral-100'}`}>
-                    <Mic size={20} />
+                    <Mic size={22} />
                   </button>
                 )}
               </div>
@@ -256,6 +467,20 @@ export default function Messages() {
       </div>
 
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />
+      
+      <CameraOverlay 
+        isOpen={isCameraOpen} 
+        onClose={() => setIsCameraOpen(false)} 
+        onCapture={handleCameraCapture} 
+      />
+
+      <UploadModal 
+        isOpen={isUploadModalOpen} 
+        onClose={() => setIsUploadModalOpen(false)} 
+        onUpload={handleModalUpload} 
+        isDarkMode={isDarkMode} 
+        acceptedTypes={uploadAcceptedTypes} 
+      />
     </div>
   );
 }

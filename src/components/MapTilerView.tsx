@@ -13,7 +13,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maptilersdk.Map | null>(null);
 
-  const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || 'JNCQIsX7HW4jPDQX491R';
+  const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
 
   useEffect(() => {
     if (map.current) return; // stops map from initializing more than once

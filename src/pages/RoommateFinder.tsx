@@ -472,7 +472,7 @@ export default function RoommateFinder() {
               />
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-center gap-3 w-full overflow-x-auto pb-2 sm:pb-0 hide-scrollbar">
+            <div className="flex items-center justify-center w-full pb-2 sm:pb-0">
               <div className="inline-flex bg-white rounded-full p-1 shadow-sm border border-neutral-200">
                   <button 
                     onClick={() => setPostMode('applying')}

@@ -166,7 +166,7 @@ export default function Maps() {
   useEffect(() => {
     if (map.current) return;
 
-    const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || 'JNCQIsX7HW4jPDQX491R';
+    const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
     maptilersdk.config.apiKey = apiKey || '';
 
     map.current = new maptilersdk.Map({

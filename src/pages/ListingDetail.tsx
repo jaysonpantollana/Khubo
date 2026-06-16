@@ -155,6 +155,7 @@ export default function ListingDetail() {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Simulated auth state
   const [selectedReview, setSelectedReview] = useState<{userName: string; userImage: string; comment: string; date: string} | null>(null);
   const [selectedRoom, setSelectedRoom] = useState(0);
+  const [showAllReviewsMobile, setShowAllReviewsMobile] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -250,22 +251,35 @@ export default function ListingDetail() {
       </div>
 
       {/* Mobile Header Image */}
-      <div className="md:hidden relative h-[55vh] w-full overflow-hidden">
-        <motion.img
-          key={currentIndex}
-          initial={{ opacity: 0.8 }}
-          animate={{ opacity: 1 }}
-          src={images[currentIndex]}
-          className="w-full h-full object-cover cursor-zoom-in"
-          alt={listing.title}
-          referrerPolicy="no-referrer"
-          onClick={() => openGallery(currentIndex)}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10 pointer-events-none" />
+      <div className="md:hidden relative h-[55vh] w-full bg-neutral-100">
+        <div 
+          className="w-full h-full flex overflow-x-auto snap-x snap-mandatory no-scrollbar"
+          onScroll={(e) => {
+            const scrollLeft = e.currentTarget.scrollLeft;
+            const width = e.currentTarget.clientWidth;
+            const newIndex = Math.round(scrollLeft / width);
+            if (newIndex !== currentIndex) {
+              setCurrentIndex(newIndex);
+            }
+          }}
+        >
+          {images.map((img, idx) => (
+            <div key={idx} className="w-full h-full shrink-0 snap-center relative">
+              <img
+                src={img}
+                className="w-full h-full object-cover cursor-zoom-in"
+                alt={`${listing.title} - ${idx + 1}`}
+                referrerPolicy="no-referrer"
+                onClick={() => openGallery(idx)}
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10 pointer-events-none" />
+            </div>
+          ))}
+        </div>
         
         {/* Mobile Image Indicator */}
-        <div className="absolute bottom-14 right-6 z-20">
-          <div className="bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-md text-[10px] font-black tracking-widest uppercase">
+        <div className="absolute bottom-14 right-6 z-20 pointer-events-none">
+          <div className="bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-md text-[10px] font-black tracking-widest uppercase shadow-sm">
             {currentIndex + 1} / {images.length}
           </div>
         </div>
@@ -471,7 +485,7 @@ export default function ListingDetail() {
                 onClick={() => setShowAllAmenities(!showAllAmenities)}
                 className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
               >
-                {showAllAmenities ? 'Show less' : 'Show all 28 amenities'}
+                {showAllAmenities ? 'Show less' : 'Show all'}
               </button>
             </div>
 
@@ -549,7 +563,7 @@ export default function ListingDetail() {
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {listing.reviews.map((rev, idx) => (
-                    <div key={idx} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer" onClick={() => setSelectedReview(rev)}>
+                    <div key={idx} className={`bg-white border border-neutral-200 rounded-3xl p-6 flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer ${idx > 0 && !showAllReviewsMobile ? 'hidden md:flex' : 'flex'}`} onClick={() => setSelectedReview(rev)}>
                        <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
                              <img src={rev.userImage} className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
@@ -587,6 +601,17 @@ export default function ListingDetail() {
                     </div>
                   ))}
                </div>
+
+               {listing.reviews.length > 1 && (
+                 <div className="mt-6 md:hidden">
+                    <button 
+                       onClick={() => setShowAllReviewsMobile(!showAllReviewsMobile)}
+                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
+                    >
+                       {showAllReviewsMobile ? 'Show less' : 'Show all'}
+                    </button>
+                 </div>
+               )}
             </div>
 
             <div className="py-12 border-t border-gray-100 flex flex-col gap-8 mt-10">

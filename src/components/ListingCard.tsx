@@ -32,6 +32,7 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
           <img
             src={listing.image}
             alt={listing.title}
+            loading="lazy"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800';
@@ -89,6 +90,7 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
           <img
             src={listing.image}
             alt={listing.title}
+            loading="lazy"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800';

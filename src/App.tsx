@@ -15,6 +15,8 @@ import { MotionConfig } from 'motion/react';
 import { ThemeProvider } from './lib/ThemeContext';
 import { AuthProvider } from './lib/AuthContext';
 import { ToastProvider } from './components/ToastProvider';
+import ErrorBoundary from './components/errors/ErrorBoundary';
+import PageError from './components/ui/ErrorScreen';
 
 // Lazy loaded pages
 const Home = lazy(() => import('./pages/Home'));
@@ -41,18 +43,20 @@ export default function App() {
           <MotionConfig reducedMotion="user">
             <Router>
               <ScrollToTop />
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/listing/:id" element={<ListingDetail />} />
-                  <Route path="/category/:categoryId" element={<CategoryListings />} />
-                  <Route path="/maps" element={<Maps />} />
-                  <Route path="/messages" element={<Messages />} />
-                  <Route path="/roommate" element={<RoommateFinder />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/manage-listings" element={<ManageListings />} />
-                </Routes>
-              </Suspense>
+              <ErrorBoundary fallback={<PageError />}>
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/listing/:id" element={<ListingDetail />} />
+                    <Route path="/category/:categoryId" element={<CategoryListings />} />
+                    <Route path="/maps" element={<Maps />} />
+                    <Route path="/messages" element={<Messages />} />
+                    <Route path="/roommate" element={<RoommateFinder />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/manage-listings" element={<ManageListings />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
             </Router>
           </MotionConfig>
         </ToastProvider>

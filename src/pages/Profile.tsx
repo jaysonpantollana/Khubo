@@ -113,7 +113,7 @@ export default function Profile() {
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
   
-  const handleOpenGallery = (listing: Listing, fallbackSrc: string = '') => {
+  const handleOpenGallery = (listing: Listing | null, fallbackSrc: string = '') => {
     const fallbackImages = [
       'https://images.unsplash.com/photo-1555819485-99aaa4aee26b?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800',

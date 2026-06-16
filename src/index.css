@@ -30,13 +30,7 @@
   }
 }
 
-*,
-::before,
-::after {
-  animation: none !important;
-  transition: none !important;
-  scroll-behavior: auto !important;
-}
+/* Reduced motion handled by MotionConfig in App.tsx */
 
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {

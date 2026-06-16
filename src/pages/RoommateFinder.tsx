@@ -34,6 +34,24 @@ export default function RoommateFinder() {
   const [loading, setLoading] = useState(true);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
+  const [roommates, setRoommates] = useState<Roommate[]>(() => {
+    const saved = localStorage.getItem('custom_roommates');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.warn('Error reloading custom roommates list:', e);
+      }
+    }
+    return ROOMMATES;
+  });
+
+  const handlePostCreated = (newPost: Roommate) => {
+    const updated = [newPost, ...roommates];
+    setRoommates(updated);
+    localStorage.setItem('custom_roommates', JSON.stringify(updated));
+  };
+
   React.useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
@@ -139,7 +157,7 @@ export default function RoommateFinder() {
   };
 
   const filteredRoommates = useMemo(() => {
-    let result = [...ROOMMATES];
+    let result = [...roommates];
     
     if (selectedTag !== 'ALL') {
       result = result.filter(roommate => 
@@ -162,7 +180,7 @@ export default function RoommateFinder() {
     }
 
     return result;
-  }, [selectedTag, searchQuery]);
+  }, [selectedTag, searchQuery, roommates]);
 
   const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
@@ -456,20 +474,20 @@ export default function RoommateFinder() {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-center gap-3 w-full overflow-x-auto pb-2 sm:pb-0 hide-scrollbar">
               <div className="inline-flex bg-white rounded-full p-1 shadow-sm border border-neutral-200">
-                 <button 
-                   onClick={() => setPostMode('applying')}
-                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === 'applying' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
-                 >
-                    <UserPlus size={14} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'applying' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
-                    <span className="font-semibold text-[11px] sm:text-[15px]">Applying as Roommate</span>
-                 </button>
-                 <button 
-                   onClick={() => setPostMode('finding')}
-                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === 'finding' ? 'bg-[#2252D6] text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
-                 >
-                    <Search size={14} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'finding' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
-                    <span className="font-semibold text-[11px] sm:text-[15px]">Finding Roommate</span>
-                 </button>
+                  <button 
+                    onClick={() => setPostMode('applying')}
+                    className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === 'applying' ? 'bg-neutral-900 text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
+                  >
+                     <UserPlus size={14} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'applying' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
+                     <span className="font-semibold text-[11px] sm:text-[15px]">Applying as Roommate</span>
+                  </button>
+                  <button 
+                    onClick={() => setPostMode('finding')}
+                    className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === 'finding' ? 'bg-neutral-900 text-white shadow-sm' : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50'}`}
+                  >
+                     <Search size={14} className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === 'finding' ? 'text-white' : 'text-neutral-400 group-hover:text-neutral-600'}`} />
+                     <span className="font-semibold text-[11px] sm:text-[15px]">Finding Roommate</span>
+                  </button>
               </div>
             </div>
           </div>
@@ -603,6 +621,7 @@ export default function RoommateFinder() {
         isOpen={isCreatePostOpen} 
         onClose={() => setIsCreatePostOpen(false)} 
         postMode={postMode} 
+        onPostCreated={handlePostCreated}
       />
     </div>
   );

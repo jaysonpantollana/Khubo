@@ -62,7 +62,22 @@ export default function Profile() {
   const [profileDetails, setProfileDetails] = useState('MSU-IIT | 20yrs old | Female');
   const [profileLocation, setProfileLocation] = useState('Tibanga, Iligan City');
   const [profileBio, setProfileBio] = useState('"Clean and organized. Looking for a place near the city center. I cook often and enjoy a shared meal!"');
-  const [profileTags, setProfileTags] = useState(['Introvert', 'Pet-friendly', 'Night owl', 'Studious', 'Non-smoker']);
+  const [profileTags, setProfileTags] = useState<string[]>(() => {
+    const saved = localStorage.getItem('user_profile_tags');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {
+        console.warn('Error loading tags in profile:', e);
+      }
+    }
+    return ['Introvert', 'Pet-friendly', 'Night owl', 'Studious', 'Non-smoker'];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('user_profile_tags', JSON.stringify(profileTags));
+  }, [profileTags]);
   const [isEditingTags, setIsEditingTags] = useState(false);
   const [newTagInput, setNewTagInput] = useState('');
   const [selectedStatModal, setSelectedStatModal] = useState<string | null>(null);

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from "react";
 
 interface DateScrollPickerProps {
   viewportHeight: number; // e.g. 156 or 180
@@ -6,23 +6,50 @@ interface DateScrollPickerProps {
   onMonthClick?: (month: string) => void;
 }
 
-const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+const ALL_MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
-
-const DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
-const YEARS = ['2025', '2026', '2027', '2028', '2029'];
 
 export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
   viewportHeight,
   onDateChange,
-  onMonthClick
+  onMonthClick,
 }) => {
-  // Set default initial selection to April 04, 2028 (matching original layout request)
-  const [selectedMonth, setSelectedMonth] = useState('April');
-  const [selectedDay, setSelectedDay] = useState('04');
-  const [selectedYear, setSelectedYear] = useState('2028');
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonthIdx = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+
+  const tomorrowDate = new Date(currentDate);
+  tomorrowDate.setDate(currentDay + 1);
+  const tomorrowYear = tomorrowDate.getFullYear();
+  const tomorrowMonthIdx = tomorrowDate.getMonth();
+  const tomorrowDay = tomorrowDate.getDate();
+
+  const YEARS = useMemo(
+    () => [String(currentYear), String(currentYear + 1)],
+    [currentYear],
+  );
+
+  // Set default initial selection to tomorrow
+  const [selectedYear, setSelectedYear] = useState(String(tomorrowYear));
+  const [selectedMonth, setSelectedMonth] = useState(
+    ALL_MONTHS[tomorrowMonthIdx],
+  );
+  const [selectedDay, setSelectedDay] = useState(
+    String(tomorrowDay).padStart(2, "0"),
+  );
 
   // Scroll container refs
   const monthRef = useRef<HTMLDivElement>(null);
@@ -33,16 +60,62 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const MONTHS = useMemo(() => {
+    if (selectedYear === String(currentYear)) {
+      return ALL_MONTHS.slice(currentMonthIdx);
+    }
+    return ALL_MONTHS;
+  }, [selectedYear, currentYear, currentMonthIdx]);
+
+  const DAYS = useMemo(() => {
+    const monthIdx = ALL_MONTHS.indexOf(selectedMonth);
+    const yearNum = parseInt(selectedYear, 10);
+    // Number of days in the month (monthIdx + 1, day 0 gets the last day of monthIdx)
+    const daysInMonth = new Date(yearNum, monthIdx + 1, 0).getDate();
+
+    let startDay = 1;
+    if (selectedYear === String(currentYear) && monthIdx === currentMonthIdx) {
+      startDay = currentDay;
+    }
+
+    return Array.from({ length: daysInMonth - startDay + 1 }, (_, i) =>
+      String(startDay + i).padStart(2, "0"),
+    );
+  }, [selectedYear, selectedMonth, currentYear, currentMonthIdx, currentDay]);
+
+  useEffect(() => {
+    if (!MONTHS.includes(selectedMonth)) {
+      setSelectedMonth(MONTHS[0]);
+    }
+  }, [MONTHS, selectedMonth]);
+
+  useEffect(() => {
+    if (!DAYS.includes(selectedDay)) {
+      const selectedDayNum = parseInt(selectedDay, 10);
+      if (DAYS.length > 0) {
+        const firstAvailableDay = parseInt(DAYS[0], 10);
+        const lastAvailableDay = parseInt(DAYS[DAYS.length - 1], 10);
+        if (selectedDayNum < firstAvailableDay) {
+          setSelectedDay(DAYS[0]);
+        } else if (selectedDayNum > lastAvailableDay) {
+          setSelectedDay(DAYS[DAYS.length - 1]);
+        } else {
+          setSelectedDay(DAYS[0]);
+        }
+      }
+    }
+  }, [DAYS, selectedDay]);
 
   // Standard high precision target row sizing
   const itemHeight = isMobile ? 42 : 44;
-  
-  // To display exactly 3 rows (prev, selected, next) inside the viewportHeight:
-  // We calculate the dynamic spacerHeight so that the active item is perfectly centered.
-  const spacerHeight = (viewportHeight - itemHeight) / 2;
+
+  // To display the highlight at the top:
+  const topSpacerHeight = 8;
+  const bottomSpacerHeight = viewportHeight - itemHeight - topSpacerHeight;
 
   // Use a Ref lock to block programmatic layout scrolls from triggering state updates
   const isInitializing = useRef(true);
@@ -53,7 +126,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
     const scrollToCenter = (
       ref: React.RefObject<HTMLDivElement | null>,
       items: string[],
-      targetValue: string
+      targetValue: string,
     ) => {
       const container = ref.current;
       if (!container) return;
@@ -76,14 +149,29 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
     }, 120);
 
     return () => clearTimeout(timer);
-  }, [itemHeight, viewportHeight, selectedMonth, selectedDay, selectedYear]);
+  }, [
+    itemHeight,
+    viewportHeight,
+    selectedMonth,
+    selectedDay,
+    selectedYear,
+    MONTHS,
+    DAYS,
+    YEARS,
+  ]);
+
+  useEffect(() => {
+    if (onDateChange) {
+      onDateChange(selectedMonth, selectedDay, selectedYear);
+    }
+  }, [selectedMonth, selectedDay, selectedYear, onDateChange]);
 
   // Handle Scroll to update selection state
   const handleScrollColumn = (
     ref: React.RefObject<HTMLDivElement | null>,
     items: string[],
     updateState: (val: string) => void,
-    type: 'month' | 'day' | 'year'
+    type: "month" | "day" | "year",
   ) => {
     // Ignore updates during programmatic initial scrolling
     if (isInitializing.current) return;
@@ -97,46 +185,50 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
     if (items[index] !== undefined) {
       const selectedValue = items[index];
       updateState(selectedValue);
-      
+
       if (onDateChange) {
-        const m = type === 'month' ? selectedValue : selectedMonth;
-        const d = type === 'day' ? selectedValue : selectedDay;
-        const y = type === 'year' ? selectedValue : selectedYear;
+        const m = type === "month" ? selectedValue : selectedMonth;
+        const d = type === "day" ? selectedValue : selectedDay;
+        const y = type === "year" ? selectedValue : selectedYear;
         onDateChange(m, d, y);
       }
     }
   };
 
   return (
-    <div 
-      className="relative flex justify-between bg-white py-0 px-4 shadow-[inset_0_1px_3px_rgba(0,0,0,0.02)] select-none" 
-      style={{ 
-        height: `${viewportHeight}px`
+    <div
+      className="relative flex justify-between bg-white py-0 px-4 shadow-[inset_0_1px_3px_rgba(0,0,0,0.02)] select-none"
+      style={{
+        height: `${viewportHeight}px`,
       }}
     >
       {/* Visual Selection Highlight box - pill bar matching the grey background in reference */}
-      <div 
-        className="absolute left-2 right-2 bg-neutral-100 pointer-events-none rounded-[16px] border-0 outline-none ring-0 select-none" 
+      <div
+        className="absolute left-2 right-2 bg-neutral-100 pointer-events-none rounded-[16px] border-0 outline-none ring-0 select-none"
         style={{
-          top: '50%',
-          transform: 'translateY(-50%)',
-          height: `${itemHeight}px`
+          top: `${topSpacerHeight}px`,
+          height: `${itemHeight}px`,
         }}
       />
-      
+
       {/* Month Column */}
-      <div 
+      <div
         ref={monthRef}
-        onScroll={() => handleScrollColumn(monthRef, MONTHS, setSelectedMonth, 'month')}
+        onScroll={() =>
+          handleScrollColumn(monthRef, MONTHS, setSelectedMonth, "month")
+        }
         className="flex-[1.2] h-full overflow-y-auto no-scrollbar snap-y snap-mandatory relative z-10 scroll-smooth"
       >
-        <div style={{ height: `${spacerHeight}px` }} className="shrink-0 pointer-events-none" />
+        <div
+          style={{ height: `${topSpacerHeight}px` }}
+          className="shrink-0 pointer-events-none"
+        />
         {MONTHS.map((m) => {
           const isActive = m === selectedMonth;
           return (
-            <div 
-              key={m} 
-              style={{ height: `${itemHeight}px` }} 
+            <div
+              key={m}
+              style={{ height: `${itemHeight}px` }}
               onClick={() => {
                 if (isInitializing.current) return;
                 setSelectedMonth(m);
@@ -146,31 +238,37 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
                 if (onMonthClick) onMonthClick(m);
               }}
               className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
-                isActive 
-                  ? 'text-neutral-800 text-[15px] md:text-[17px] scale-100' 
-                  : 'text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98'
+                isActive
+                  ? "text-neutral-800 text-[15px] md:text-[17px] scale-100"
+                  : "text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98"
               }`}
             >
               {m}
             </div>
           );
         })}
-        <div style={{ height: `${spacerHeight}px` }} className="shrink-0 pointer-events-none" />
+        <div
+          style={{ height: `${bottomSpacerHeight}px` }}
+          className="shrink-0 pointer-events-none"
+        />
       </div>
-      
+
       {/* Day Column */}
-      <div 
+      <div
         ref={dayRef}
-        onScroll={() => handleScrollColumn(dayRef, DAYS, setSelectedDay, 'day')}
+        onScroll={() => handleScrollColumn(dayRef, DAYS, setSelectedDay, "day")}
         className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-mandatory relative z-10 scroll-smooth text-center"
       >
-        <div style={{ height: `${spacerHeight}px` }} className="shrink-0 pointer-events-none" />
+        <div
+          style={{ height: `${topSpacerHeight}px` }}
+          className="shrink-0 pointer-events-none"
+        />
         {DAYS.map((d) => {
           const isActive = d === selectedDay;
           return (
-            <div 
-              key={d} 
-              style={{ height: `${itemHeight}px` }} 
+            <div
+              key={d}
+              style={{ height: `${itemHeight}px` }}
               onClick={() => {
                 if (isInitializing.current) return;
                 setSelectedDay(d);
@@ -179,31 +277,39 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
                 }
               }}
               className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
-                isActive 
-                  ? 'text-neutral-800 text-[15px] md:text-[17px] scale-100' 
-                  : 'text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98'
+                isActive
+                  ? "text-neutral-800 text-[15px] md:text-[17px] scale-100"
+                  : "text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98"
               }`}
             >
               {d}
             </div>
           );
         })}
-        <div style={{ height: `${spacerHeight}px` }} className="shrink-0 pointer-events-none" />
+        <div
+          style={{ height: `${bottomSpacerHeight}px` }}
+          className="shrink-0 pointer-events-none"
+        />
       </div>
 
       {/* Year Column */}
-      <div 
+      <div
         ref={yearRef}
-        onScroll={() => handleScrollColumn(yearRef, YEARS, setSelectedYear, 'year')}
+        onScroll={() =>
+          handleScrollColumn(yearRef, YEARS, setSelectedYear, "year")
+        }
         className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-mandatory relative z-10 scroll-smooth text-center"
       >
-        <div style={{ height: `${spacerHeight}px` }} className="shrink-0 pointer-events-none" />
+        <div
+          style={{ height: `${topSpacerHeight}px` }}
+          className="shrink-0 pointer-events-none"
+        />
         {YEARS.map((y) => {
           const isActive = y === selectedYear;
           return (
-            <div 
-              key={y} 
-              style={{ height: `${itemHeight}px` }} 
+            <div
+              key={y}
+              style={{ height: `${itemHeight}px` }}
               onClick={() => {
                 if (isInitializing.current) return;
                 setSelectedYear(y);
@@ -212,16 +318,19 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
                 }
               }}
               className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
-                isActive 
-                  ? 'text-neutral-800 text-[15px] md:text-[17px] scale-100' 
-                  : 'text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98'
+                isActive
+                  ? "text-neutral-800 text-[15px] md:text-[17px] scale-100"
+                  : "text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98"
               }`}
             >
               {y}
             </div>
           );
         })}
-        <div style={{ height: `${spacerHeight}px` }} className="shrink-0 pointer-events-none" />
+        <div
+          style={{ height: `${bottomSpacerHeight}px` }}
+          className="shrink-0 pointer-events-none"
+        />
       </div>
     </div>
   );

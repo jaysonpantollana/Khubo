@@ -30,6 +30,11 @@ export default function RoommateHero({
   const [hideDropdown, setHideDropdown] = useState(false);
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
 
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+
+  const hasSelections = selectedLocation || selectedBudget;
+
   useEffect(() => {
     if (suppressDropdown) {
       setActiveDropdown(null);
@@ -184,7 +189,9 @@ export default function RoommateHero({
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
                       <MapPin className="text-[#2252D6] flex-shrink-0 w-3 h-3 md:w-[16px] md:h-[16px]" />
-                      <span className={`text-[10px] md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'location' ? 'text-neutral-900' : 'text-white'}`}>Location</span>
+                      <span className={`text-[10px] md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'location' ? 'text-neutral-900' : 'text-white'}`}>
+                        {selectedLocation ? selectedLocation : 'Location'}
+                      </span>
                     </div>
                     <ChevronDown className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'location' ? 'rotate-180 text-neutral-900' : ''}`} />
                   </div>
@@ -209,10 +216,10 @@ export default function RoommateHero({
                                 />
                               </div>
                             <div className="space-y-1">
-                              {['Iligan City', 'Cagayan de Oro', 'Butuan City'].map((loc) => (
+                              {['Iligan City'].map((loc) => (
                                 <button 
                                   key={loc}
-                                  onClick={() => { setActiveDropdown(null); navigate('/roommate-finder'); }}
+                                  onClick={() => { setSelectedLocation(loc); setActiveDropdown(null); }}
                                   className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 transition-colors group"
                                 >
                                   <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all">
@@ -246,7 +253,9 @@ export default function RoommateHero({
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
                       <Wallet className="text-[#2252D6] flex-shrink-0 w-3 h-3 md:w-[16px] md:h-[16px]" />
-                      <span className={`text-[10px] md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'budget' ? 'text-neutral-900' : 'text-white'}`}>Budget</span>
+                      <span className={`text-[10px] md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'budget' ? 'text-neutral-900' : 'text-white'}`}>
+                        {selectedBudget ? selectedBudget : 'Budget'}
+                      </span>
                     </div>
                     <ChevronDown className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'budget' ? 'rotate-180 text-neutral-900' : ''}`} />
                   </div>
@@ -269,7 +278,7 @@ export default function RoommateHero({
                             ].map((range) => (
                               <button 
                                 key={range.label}
-                                onClick={() => { setActiveDropdown(null); navigate('/roommate'); }}
+                                onClick={() => { setSelectedBudget(range.label); setActiveDropdown(null); }}
                                 className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
                               >
                                 <span className="font-medium text-neutral-900 text-sm">{range.label}</span>
@@ -287,9 +296,21 @@ export default function RoommateHero({
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    setSearchQuery('');
-                    setIsSearchActive(true);
-                    setActiveDropdown(null);
+                    if (hasSelections) {
+                      const terms = [];
+                      if (selectedLocation) terms.push(selectedLocation);
+                      if (selectedBudget) terms.push(selectedBudget);
+                      setSearchQuery(terms.join(' '));
+                      setActiveDropdown(null);
+                      const searchAnchor = document.getElementById('roommate-results-anchor');
+                      if (searchAnchor) {
+                        searchAnchor.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    } else {
+                      setSearchQuery('');
+                      setIsSearchActive(true);
+                      setActiveDropdown(null);
+                    }
                   }}
                   className="bg-[#17294F] p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                 >

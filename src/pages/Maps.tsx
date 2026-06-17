@@ -1,25 +1,48 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { useListings } from '../hooks/useListings';
-import ListingCard from '../components/ListingCard';
-import ListingCardSkeleton from '../components/ListingCardSkeleton';
-import Navbar from '../components/Navbar';
-import { Search, MapPin, SlidersHorizontal, ChevronLeft, ChevronRight, ArrowLeft, MoreHorizontal, Map as MapIcon, X, Calendar as CalendarIcon, Wallet, ChevronDown } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import * as maptilersdk from '@maptiler/sdk';
+import React, { useState, useMemo, useRef, useEffect } from "react";
+import { useListings } from "../hooks/useListings";
+import ListingCard from "../components/ListingCard";
+import ListingCardSkeleton from "../components/ListingCardSkeleton";
+import Navbar from "../components/Navbar";
+import {
+  Search,
+  MapPin,
+  SlidersHorizontal,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft,
+  MoreHorizontal,
+  Map as MapIcon,
+  X,
+  Calendar as CalendarIcon,
+  Wallet,
+  ChevronDown,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import * as maptilersdk from "@maptiler/sdk";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
-import { Listing } from '../types';
-import { motion, AnimatePresence } from 'motion/react';
-import { DateScrollPicker } from '../components/DateScrollPicker';
-import SearchDropdown from '../components/SearchDropdown';
-import Filters, { FilterState } from '../components/Filters';
+import { Listing } from "../types";
+import { motion, AnimatePresence } from "motion/react";
+import { DateScrollPicker } from "../components/DateScrollPicker";
+import SearchDropdown from "../components/SearchDropdown";
+import Filters, { FilterState } from "../components/Filters";
 
 export default function Maps() {
   const { listings: LISTINGS, loading } = useListings();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [selectedListing, setSelectedListing] = useState<string | null>(null);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(window.innerWidth < 768);
-  const [activeDropdown, setActiveDropdown] = useState<'location' | 'dates' | 'budget' | 'general' | null>(null);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
+    window.innerWidth < 768,
+  );
+  const [activeDropdown, setActiveDropdown] = useState<
+    "location" | "dates" | "budget" | "general" | null
+  >(null);
+
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
+  const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+
+  const hasSelections = selectedLocation || selectedDateStr || selectedBudget;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -28,13 +51,16 @@ export default function Maps() {
   const [filters, setFilters] = useState<FilterState>({
     minPrice: 0,
     maxPrice: 50000,
-    sortBy: 'relevance',
-    minRating: 0
+    sortBy: "relevance",
+    minRating: 0,
   });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setActiveDropdown(null);
         setIsSearchActive(false);
       }
@@ -43,12 +69,14 @@ export default function Maps() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleDropdown = (dropdown: 'location' | 'dates' | 'budget' | 'general') => {
+  const toggleDropdown = (
+    dropdown: "location" | "dates" | "budget" | "general",
+  ) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
   const handleSelectListing = (id: string) => {
-    const listing = LISTINGS?.find(l => l.id === id);
+    const listing = LISTINGS?.find((l) => l.id === id);
     if (listing) {
       handleListingClick(listing);
     }
@@ -58,54 +86,57 @@ export default function Maps() {
 
   const filteredListings = useMemo(() => {
     let dataListings = LISTINGS || [];
-    
+
     // Apply search query
     if (searchQuery) {
-      dataListings = dataListings.filter(listing => 
-        listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        listing.location.toLowerCase().includes(searchQuery.toLowerCase())
+      dataListings = dataListings.filter(
+        (listing) =>
+          listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          listing.location.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
-    
+
     // Apply filter state
-    dataListings = dataListings.filter(listing => {
+    dataListings = dataListings.filter((listing) => {
       if (listing.price < filters.minPrice) return false;
       if (listing.price > filters.maxPrice) return false;
       if (listing.rating < filters.minRating) return false;
       return true;
     });
-    
+
     // Apply sorting
     dataListings = [...dataListings].sort((a, b) => {
       switch (filters.sortBy) {
-        case 'price-low':
+        case "price-low":
           return a.price - b.price;
-        case 'price-high':
+        case "price-high":
           return b.price - a.price;
-        case 'rating':
+        case "rating":
           return b.rating - a.rating;
-        case 'relevance':
+        case "relevance":
         default:
           return 0; // Or standard order
       }
     });
 
-    return dataListings.filter(l => l.lat && l.lng); // Only show listings with coordinates
+    return dataListings.filter((l) => l.lat && l.lng); // Only show listings with coordinates
   }, [searchQuery, LISTINGS, filters]);
 
   const updateMarkers = React.useCallback(() => {
     if (!map.current) return;
 
     // Remove existing markers
-    (Object.values(markers.current) as maptilersdk.Marker[]).forEach(marker => marker.remove());
+    (Object.values(markers.current) as maptilersdk.Marker[]).forEach((marker) =>
+      marker.remove(),
+    );
     markers.current = {};
 
-    filteredListings.forEach(listing => {
+    filteredListings.forEach((listing) => {
       if (listing.lat && listing.lng) {
-        const el = document.createElement('div');
-        el.className = 'custom-marker';
+        const el = document.createElement("div");
+        el.className = "custom-marker";
         const isActive = selectedListing === listing.id;
-        
+
         el.innerHTML = `
           <div style="cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;">
             <div style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
@@ -114,15 +145,15 @@ export default function Maps() {
                 <path d="M22 1C10.4 1 1 10.4 1 22C1 34.5 22 51 22 51C22 51 43 34.5 43 22C43 10.4 33.6 1 22 1Z" fill="white" fill-opacity="0.2"/>
                 <path d="M22 2C11 2 2 11 2 22C2 34 22 50 22 50C22 50 42 34 42 22C42 11 33 2 22 2Z" fill="white" stroke="white" stroke-width="2"/>
                 <!-- Main Navy Background -->
-                <path d="M22 3C11.5 3 3 11.5 3 22C3 33.5 22 49 22 49C22 49 41 33.5 41 22C41 11.5 32.5 3 22 3Z" fill="${isActive ? '#000' : '#17294F'}"/>
+                <path d="M22 3C11.5 3 3 11.5 3 22C3 33.5 22 49 22 49C22 49 41 33.5 41 22C41 11.5 32.5 3 22 3Z" fill="${isActive ? "#000" : "#17294F"}"/>
                 <!-- Center White Circle -->
                 <circle cx="22" cy="22" r="13" fill="white"/>
                 <!-- House Icon -->
-                <path d="M22 14L15 19.5V28.5H19.5V23.5H24.5V28.5H29V19.5L22 14Z" fill="${isActive ? '#000' : '#17294F'}"/>
+                <path d="M22 14L15 19.5V28.5H19.5V23.5H24.5V28.5H29V19.5L22 14Z" fill="${isActive ? "#000" : "#17294F"}"/>
               </svg>
             </div>
             <div style="
-              background: ${isActive ? '#000' : '#17294F'};
+              background: ${isActive ? "#000" : "#17294F"};
               color: white;
               padding: 4px 10px;
               border-radius: 12px;
@@ -142,14 +173,20 @@ export default function Maps() {
           .setLngLat([listing.lng, listing.lat])
           .addTo(map.current!);
 
-        el.addEventListener('click', () => {
+        el.addEventListener("click", () => {
           setSelectedListing(listing.id);
           if (window.innerWidth >= 768) {
             const element = document.getElementById(`listing-${listing.id}`);
-            element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            element?.scrollIntoView({ behavior: "smooth", block: "center" });
           } else {
-            const element = document.getElementById(`mobile-listing-${listing.id}`);
-            element?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            const element = document.getElementById(
+              `mobile-listing-${listing.id}`,
+            );
+            element?.scrollIntoView({
+              behavior: "smooth",
+              inline: "center",
+              block: "nearest",
+            });
           }
         });
 
@@ -166,8 +203,8 @@ export default function Maps() {
   useEffect(() => {
     if (map.current) return;
 
-    const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
-    maptilersdk.config.apiKey = apiKey || '';
+    const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
+    maptilersdk.config.apiKey = apiKey || "";
 
     map.current = new maptilersdk.Map({
       container: mapContainer.current!,
@@ -179,7 +216,7 @@ export default function Maps() {
     });
 
     // Intercept and resolve missing style images to suppress MapTiler road/space warnings in console
-    map.current.on('styleimagemissing', (e: any) => {
+    map.current.on("styleimagemissing", (e: any) => {
       try {
         if (e && e.id && map.current) {
           const width = 1;
@@ -192,7 +229,7 @@ export default function Maps() {
       }
     });
 
-    map.current.on('load', () => {
+    map.current.on("load", () => {
       updateMarkersRef.current();
     });
   }, []);
@@ -216,14 +253,14 @@ export default function Maps() {
       map.current.flyTo({
         center: [listing.lng, listing.lat],
         zoom: 16,
-        duration: 1500
+        duration: 1500,
       });
     }
   };
 
   return (
     <div className="flex flex-col h-screen bg-white relative">
-      <button 
+      <button
         onClick={() => navigate(-1)}
         className="md:hidden absolute top-[76px] left-3 z-30 w-10 h-10 flex items-center justify-center bg-white shadow-md pointer-events-auto active:scale-90 transition-transform rounded-full border border-neutral-100"
         aria-label="Go back"
@@ -233,10 +270,9 @@ export default function Maps() {
 
       {/* Search Header */}
       <div className="flex items-center justify-center md:justify-between px-3 md:px-8 py-2.5 border-b border-neutral-100/50 bg-white/80 backdrop-blur-xl sticky top-0 z-40 shadow-sm gap-2 sm:gap-3">
-        
         {/* Back Button */}
         <div className="hidden md:flex flex-1 justify-start">
-          <button 
+          <button
             onClick={() => navigate(-1)}
             className="p-2 -ml-1 md:-ml-2 rounded-full hover:bg-neutral-100 transition-colors"
             aria-label="Go back"
@@ -244,9 +280,12 @@ export default function Maps() {
             <ArrowLeft size={24} className="text-neutral-900" />
           </button>
         </div>
-        
+
         <div className="flex-[3] flex justify-center min-w-0 w-full">
-          <div ref={dropdownRef} className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 rounded-full flex items-center h-[46px] sm:h-[52px] md:h-[56px] text-neutral-800 shadow-lg w-full sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] transition-all relative z-40 pointer-events-auto cursor-default">
+          <div
+            ref={dropdownRef}
+            className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 rounded-full flex items-center h-[46px] sm:h-[52px] md:h-[56px] text-neutral-800 shadow-lg w-full sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] transition-all relative z-40 pointer-events-auto cursor-default"
+          >
             {isSearchActive ? (
               <>
                 <div className="flex-1 flex items-center pl-4 md:pl-5 pr-0 py-0 w-full min-w-0">
@@ -259,8 +298,8 @@ export default function Maps() {
                     autoFocus
                   />
                   {searchQuery && (
-                    <button 
-                      onClick={() => setSearchQuery('')} 
+                    <button
+                      onClick={() => setSearchQuery("")}
                       className="p-1 hover:bg-neutral-100 rounded-full transition-colors flex-shrink-0 mr-2"
                       aria-label="Clear search"
                     >
@@ -268,7 +307,7 @@ export default function Maps() {
                     </button>
                   )}
                 </div>
-                <button 
+                <button
                   onClick={() => {
                     setIsSearchActive(false);
                   }}
@@ -288,52 +327,78 @@ export default function Maps() {
               <>
                 {/* Location Section */}
                 <div className="flex-[1.2] min-w-0">
-                  <div 
-                    role="button" 
-                    onClick={() => toggleDropdown('location')}
+                  <div
+                    role="button"
+                    onClick={() => toggleDropdown("location")}
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 transition cursor-pointer group text-black focus-visible:outline-none ${
-                        activeDropdown === 'location' 
-                        ? 'bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]' 
-                        : 'hover:bg-neutral-50 rounded-full'
+                      activeDropdown === "location"
+                        ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
+                        : "hover:bg-neutral-50 rounded-full"
                     }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
                       <MapPin className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#2252D6] flex-shrink-0" />
-                      <span className="text-[10px] sm:text-sm md:text-base font-semibold truncate">Location</span>
+                      <span className="text-[10px] sm:text-sm md:text-base font-semibold truncate">
+                        {selectedLocation ? selectedLocation : "Location"}
+                      </span>
                     </div>
-                    <ChevronDown className={`w-3 h-3 md:w-3.5 md:h-3.5 opacity-40 group-hover:opacity-100 flex-shrink-0 ml-0.5 md:ml-1 transition-all ${activeDropdown === 'location' ? 'rotate-180 opacity-100' : ''}`} />
+                    <ChevronDown
+                      className={`w-3 h-3 md:w-3.5 md:h-3.5 opacity-40 group-hover:opacity-100 flex-shrink-0 ml-0.5 md:ml-1 transition-all ${activeDropdown === "location" ? "rotate-180 opacity-100" : ""}`}
+                    />
                   </div>
-                  
+
                   <AnimatePresence>
-                    {activeDropdown === 'location' && (
+                    {activeDropdown === "location" && (
                       <motion.div
-                        initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                        exit={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+                        initial={{
+                          opacity: 0,
+                          clipPath: "inset(0% 0% 100% 0%)",
+                        }}
+                        animate={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+                        exit={{ opacity: 0, clipPath: "inset(0% 0% 100% 0%)" }}
+                        transition={{
+                          type: "tween",
+                          ease: "easeOut",
+                          duration: 0.2,
+                        }}
                         className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-50 text-left"
                       >
                         <div className="space-y-4">
                           <div>
-                              <div className="flex items-center px-4 py-2 bg-neutral-100 rounded-xl mb-3 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text" onClick={(e) => { e.stopPropagation(); (e.currentTarget.querySelector('input') as HTMLInputElement)?.focus(); }}>
-                                <Search className="w-4 h-4 text-neutral-400 mr-2 flex-shrink-0" />
-                                <input 
-                                  type="text"
-                                  placeholder="Search location..."
-                                  className="w-full bg-transparent border-none outline-none text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                                />
-                              </div>
+                            <div
+                              className="flex items-center px-4 py-2 bg-neutral-100 rounded-xl mb-3 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                (
+                                  e.currentTarget.querySelector(
+                                    "input",
+                                  ) as HTMLInputElement
+                                )?.focus();
+                              }}
+                            >
+                              <Search className="w-4 h-4 text-neutral-400 mr-2 flex-shrink-0" />
+                              <input
+                                type="text"
+                                placeholder="Search location..."
+                                className="w-full bg-transparent border-none outline-none text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
+                              />
+                            </div>
                             <div className="space-y-1">
-                              {['Iligan City', 'Cagayan de Oro', 'Butuan City'].map((loc) => (
-                                <button 
+                              {["Iligan City"].map((loc) => (
+                                <button
                                   key={loc}
-                                  onClick={() => setActiveDropdown(null)}
+                                  onClick={() => {
+                                    setSelectedLocation(loc);
+                                    setActiveDropdown(null);
+                                  }}
                                   className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 transition-colors group/item"
                                 >
                                   <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover/item:bg-[#2252D6] group-hover/item:text-white transition-all">
                                     <MapPin size={14} />
                                   </div>
-                                  <span className="font-bold text-neutral-800 text-sm">{loc}</span>
+                                  <span className="font-bold text-neutral-800 text-sm">
+                                    {loc}
+                                  </span>
                                 </button>
                               ))}
                             </div>
@@ -348,32 +413,48 @@ export default function Maps() {
 
                 {/* Dates Section */}
                 <div className="flex-1 min-w-0">
-                  <div 
-                    role="button" 
-                    onClick={() => toggleDropdown('dates')}
+                  <div
+                    role="button"
+                    onClick={() => toggleDropdown("dates")}
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 transition cursor-pointer group text-black focus-visible:outline-none ${
-                        activeDropdown === 'dates' 
-                        ? 'bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]' 
-                        : 'hover:bg-neutral-50 rounded-full'
+                      activeDropdown === "dates"
+                        ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
+                        : "hover:bg-neutral-50 rounded-full"
                     }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
                       <CalendarIcon className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#2252D6] flex-shrink-0" />
-                      <span className="text-[10px] sm:text-sm md:text-base font-semibold truncate">Dates</span>
+                      <span className="text-[10px] sm:text-sm md:text-base font-semibold truncate">
+                        {selectedDateStr ? selectedDateStr : "Dates"}
+                      </span>
                     </div>
-                    <ChevronDown className={`w-3 h-3 md:w-3.5 md:h-3.5 opacity-40 group-hover:opacity-100 flex-shrink-0 ml-0.5 md:ml-1 transition-all ${activeDropdown === 'dates' ? 'rotate-180 opacity-100' : ''}`} />
+                    <ChevronDown
+                      className={`w-3 h-3 md:w-3.5 md:h-3.5 opacity-40 group-hover:opacity-100 flex-shrink-0 ml-0.5 md:ml-1 transition-all ${activeDropdown === "dates" ? "rotate-180 opacity-100" : ""}`}
+                    />
                   </div>
 
                   <AnimatePresence>
-                    {activeDropdown === 'dates' && (
+                    {activeDropdown === "dates" && (
                       <motion.div
-                        initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                        exit={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+                        initial={{
+                          opacity: 0,
+                          clipPath: "inset(0% 0% 100% 0%)",
+                        }}
+                        animate={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+                        exit={{ opacity: 0, clipPath: "inset(0% 0% 100% 0%)" }}
+                        transition={{
+                          type: "tween",
+                          ease: "easeOut",
+                          duration: 0.2,
+                        }}
                         className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 overflow-hidden z-50 text-left"
                       >
-                        <DateScrollPicker viewportHeight={132} />
+                        <DateScrollPicker
+                          viewportHeight={132}
+                          onDateChange={(m, d, y) =>
+                            setSelectedDateStr(`${m} ${d}, ${y}`)
+                          }
+                        />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -383,44 +464,60 @@ export default function Maps() {
 
                 {/* Budget Section */}
                 <div className="flex-1 min-w-0">
-                  <div 
-                    role="button" 
-                    onClick={() => toggleDropdown('budget')}
+                  <div
+                    role="button"
+                    onClick={() => toggleDropdown("budget")}
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 transition cursor-pointer group text-black focus-visible:outline-none ${
-                        activeDropdown === 'budget' 
-                        ? 'bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]' 
-                        : 'hover:bg-neutral-50 rounded-full'
+                      activeDropdown === "budget"
+                        ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
+                        : "hover:bg-neutral-50 rounded-full"
                     }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
                       <Wallet className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#2252D6] flex-shrink-0" />
-                      <span className="text-[10px] sm:text-sm md:text-base font-semibold truncate">Budget</span>
+                      <span className="text-[10px] sm:text-sm md:text-base font-semibold truncate">
+                        {selectedBudget ? selectedBudget : "Budget"}
+                      </span>
                     </div>
-                    <ChevronDown className={`w-3 h-3 md:w-3.5 md:h-3.5 opacity-40 group-hover:opacity-100 flex-shrink-0 ml-0.5 md:ml-1 transition-all ${activeDropdown === 'budget' ? 'rotate-180 opacity-100' : ''}`} />
+                    <ChevronDown
+                      className={`w-3 h-3 md:w-3.5 md:h-3.5 opacity-40 group-hover:opacity-100 flex-shrink-0 ml-0.5 md:ml-1 transition-all ${activeDropdown === "budget" ? "rotate-180 opacity-100" : ""}`}
+                    />
                   </div>
 
                   <AnimatePresence>
-                    {activeDropdown === 'budget' && (
+                    {activeDropdown === "budget" && (
                       <motion.div
-                        initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                        exit={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+                        initial={{
+                          opacity: 0,
+                          clipPath: "inset(0% 0% 100% 0%)",
+                        }}
+                        animate={{ opacity: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+                        exit={{ opacity: 0, clipPath: "inset(0% 0% 100% 0%)" }}
+                        transition={{
+                          type: "tween",
+                          ease: "easeOut",
+                          duration: 0.2,
+                        }}
                         className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-50 text-left"
                       >
                         <div className="space-y-3">
                           <div className="grid grid-cols-1 gap-1">
                             {[
-                              { label: '₱1k - ₱3k' },
-                              { label: '₱3k - ₱5k' },
-                              { label: '₱5k+' }
+                              { label: "₱1k - ₱3k" },
+                              { label: "₱3k - ₱5k" },
+                              { label: "₱5k+" },
                             ].map((range) => (
-                              <button 
+                              <button
                                 key={range.label}
-                                onClick={() => setActiveDropdown(null)}
+                                onClick={() => {
+                                  setSelectedBudget(range.label);
+                                  setActiveDropdown(null);
+                                }}
                                 className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
                               >
-                                <span className="font-bold text-neutral-900 text-sm">{range.label}</span>
+                                <span className="font-bold text-neutral-900 text-sm">
+                                  {range.label}
+                                </span>
                               </button>
                             ))}
                           </div>
@@ -430,13 +527,22 @@ export default function Maps() {
                   </AnimatePresence>
                 </div>
 
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setSearchQuery('');
-                    setIsSearchActive(true);
-                    setActiveDropdown(null);
-                  }} 
+                    if (hasSelections) {
+                      const terms = [];
+                      if (selectedLocation) terms.push(selectedLocation);
+                      if (selectedDateStr) terms.push(selectedDateStr);
+                      if (selectedBudget) terms.push(selectedBudget);
+                      setSearchQuery(terms.join(" "));
+                      setActiveDropdown(null);
+                    } else {
+                      setSearchQuery("");
+                      setIsSearchActive(true);
+                      setActiveDropdown(null);
+                    }
+                  }}
                   className="bg-[#17294F] p-2 sm:p-3 md:p-3 rounded-full transition-all duration-200 shadow-md ml-1 sm:ml-2 md:ml-2 group flex-shrink-0 flex items-center justify-center cursor-pointer relative z-[70]"
                   aria-label="Search"
                 >
@@ -446,34 +552,41 @@ export default function Maps() {
             )}
           </div>
         </div>
-        
+
         <div className="hidden sm:flex flex-1 justify-end min-w-0 pl-2">
-          <Filters currentFilters={filters} onFilterChange={setFilters} hideIndicator={true} />
+          <Filters
+            currentFilters={filters}
+            onFilterChange={setFilters}
+            hideIndicator={true}
+          />
         </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden relative">
         {/* Left Sidebar - Scrollable Listings */}
-        <div className={`hidden md:block transition-all duration-300 h-full overflow-hidden border-r border-neutral-100 bg-white z-20 flex-shrink-0 ${isSidebarCollapsed ? 'w-0' : 'md:portrait:w-[330px] md:landscape:w-[420px] lg:w-[480px]'}`}>
+        <div
+          className={`hidden md:block transition-all duration-300 h-full overflow-hidden border-r border-neutral-100 bg-white z-20 flex-shrink-0 ${isSidebarCollapsed ? "w-0" : "md:portrait:w-[330px] md:landscape:w-[420px] lg:w-[480px]"}`}
+        >
           <div className="w-full md:portrait:w-[330px] md:landscape:w-[420px] lg:w-[480px] h-full overflow-y-auto p-4 flex flex-col gap-6">
-
-
             <div className="flex flex-col gap-3">
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => (
-                  <div key={`skeleton-map-${i}`} className="transition-all duration-300 rounded-xl">
+                  <div
+                    key={`skeleton-map-${i}`}
+                    className="transition-all duration-300 rounded-xl"
+                  >
                     <ListingCardSkeleton compact={true} />
                   </div>
                 ))
               ) : filteredListings.length > 0 ? (
                 filteredListings.map((listing) => (
-                  <div 
-                    key={listing.id} 
+                  <div
+                    key={listing.id}
                     id={`listing-${listing.id}`}
-                    className={`transition-all duration-300 rounded-xl cursor-pointer ${selectedListing === listing.id ? 'ring-2 ring-[#17294F] ring-offset-2' : ''}`}
+                    className={`transition-all duration-300 rounded-xl cursor-pointer ${selectedListing === listing.id ? "ring-2 ring-[#17294F] ring-offset-2" : ""}`}
                     onClick={() => handleListingClick(listing)}
                   >
-                    <ListingCard 
+                    <ListingCard
                       listing={listing}
                       onClick={() => navigate(`/listing/${listing.id}`)}
                       compact={true}
@@ -481,24 +594,36 @@ export default function Maps() {
                   </div>
                 ))
               ) : (
-                <div className="py-20 text-center">
-                  <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
+                  <div className="bg-neutral-50 p-6 rounded-full mb-4">
                     <Search size={32} className="text-neutral-400" />
                   </div>
-                  <h3 className="text-lg font-bold">No listings here</h3>
-                  <p className="text-neutral-500 text-sm mt-1">Try adjusting your filters or area</p>
+                  <h3 className="text-lg font-bold text-black mb-2">
+                    No listings here
+                  </h3>
+                  <p className="text-neutral-500 text-sm mb-6">
+                    Try adjusting your filters or area.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSearchQuery("");
+                    }}
+                    className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800 transition text-sm"
+                  >
+                    Clear all filters
+                  </button>
                 </div>
               )}
             </div>
-            
+
             <div className="h-12" />
           </div>
         </div>
 
         {/* Desktop Collapse Toggle Button */}
-        <button 
+        <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className={`hidden md:flex items-center justify-center absolute top-1/2 z-30 bg-white border border-neutral-200 w-6 h-14 rounded-r-xl shadow-md hover:bg-neutral-50 transition-all duration-300 -translate-y-1/2 transform ${isSidebarCollapsed ? 'left-0' : 'md:portrait:left-[330px] md:landscape:left-[420px] lg:left-[480px]'}`}
+          className={`hidden md:flex items-center justify-center absolute top-1/2 z-30 bg-white border border-neutral-200 w-6 h-14 rounded-r-xl shadow-md hover:bg-neutral-50 transition-all duration-300 -translate-y-1/2 transform ${isSidebarCollapsed ? "left-0" : "md:portrait:left-[330px] md:landscape:left-[420px] lg:left-[480px]"}`}
         >
           {isSidebarCollapsed ? (
             <ChevronRight size={16} className="text-neutral-500" />
@@ -510,11 +635,21 @@ export default function Maps() {
         {/* Right Map */}
         <div className="flex-1 h-full relative">
           <div ref={mapContainer} className="w-full h-full" />
-          
+
           <div className="hidden md:flex absolute bottom-10 right-10 flex-col gap-2 z-10">
             <div className="bg-white rounded-2xl shadow-xl border border-neutral-100 overflow-hidden divide-y divide-neutral-100 flex flex-col">
-               <button className="p-3 hover:bg-neutral-50 transition font-bold text-neutral-600" onClick={() => map.current?.zoomIn()}>+</button>
-               <button className="p-3 hover:bg-neutral-50 transition font-bold text-neutral-600" onClick={() => map.current?.zoomOut()}>−</button>
+              <button
+                className="p-3 hover:bg-neutral-50 transition font-bold text-neutral-600"
+                onClick={() => map.current?.zoomIn()}
+              >
+                +
+              </button>
+              <button
+                className="p-3 hover:bg-neutral-50 transition font-bold text-neutral-600"
+                onClick={() => map.current?.zoomOut()}
+              >
+                −
+              </button>
             </div>
           </div>
         </div>
@@ -523,19 +658,24 @@ export default function Maps() {
         <div className="md:hidden absolute bottom-6 left-0 right-0 z-40 px-4 pb-0">
           <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {filteredListings.map((listing) => (
-              <div 
-                key={listing.id} 
+              <div
+                key={listing.id}
                 id={`mobile-listing-${listing.id}`}
                 className="snap-center shrink-0 w-full flex justify-center"
                 onClick={() => {
                   setSelectedListing(listing.id);
                   if (listing.lat && listing.lng && map.current) {
-                    map.current.flyTo({ center: [listing.lng, listing.lat], zoom: 16 });
+                    map.current.flyTo({
+                      center: [listing.lng, listing.lat],
+                      zoom: 16,
+                    });
                   }
                 }}
               >
-                <div className={`w-full [@media(max-height:600px)_and_(orientation:landscape)]:max-w-[340px] transition-all duration-300 rounded-[1.5rem] bg-white shadow-2xl ${selectedListing === listing.id ? 'ring-2 ring-[#17294F] scale-[1.02]' : 'scale-100'}`}>
-                  <ListingCard 
+                <div
+                  className={`w-full [@media(max-height:600px)_and_(orientation:landscape)]:max-w-[340px] transition-all duration-300 rounded-[1.5rem] bg-white shadow-2xl ${selectedListing === listing.id ? "ring-2 ring-[#17294F] scale-[1.02]" : "scale-100"}`}
+                >
+                  <ListingCard
                     listing={listing}
                     onClick={() => navigate(`/listing/${listing.id}`)}
                     compact={true}

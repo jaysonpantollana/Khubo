@@ -27,7 +27,7 @@ interface AnalyticsModalProps {
 }
 
 export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModalProps) {
-  const [timeframe, setTimeframe] = useState<'7d' | '14d' | '30d'>('14d');
+  const [timeframe, setTimeframe] = useState<'Daily' | 'Weekly' | 'Monthly'>('Weekly');
 
   if (!isOpen) return null;
 
@@ -58,13 +58,13 @@ export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModal
               </button>
           </div>
 
-          <div className="p-6 flex-1 overflow-y-auto flex justify-center">
-            <div className="w-full max-w-[360px] flex flex-col">
+          <div className="p-6 flex-1 flex flex-col overflow-hidden">
+            <div className="w-full flex-1 flex flex-col h-full">
               {/* Header */}
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-neutral-500 font-medium tracking-tight">Total Revenue</h3>
                 <div className="flex bg-neutral-100 rounded-full p-1 border border-neutral-200/50 shadow-inner">
-                  {(['7d', '14d', '30d'] as const).map((t) => (
+                  {(['Daily', 'Weekly', 'Monthly'] as const).map((t) => (
                     <button
                       key={t}
                       onClick={() => setTimeframe(t)}
@@ -90,9 +90,9 @@ export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModal
               </div>
 
               {/* Chart placeholder with Recharts */}
-              <div className="h-[200px] w-full mb-2">
+              <div className="flex-1 w-full min-h-[200px] mb-2">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
+                  <LineChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 20 }}>
                     <defs>
                        <linearGradient id="colorGreen" x1="0" y1="0" x2="0" y2="1">
                          <stop offset="5%" stopColor="#2252D6" stopOpacity={0.3}/>
@@ -104,7 +104,7 @@ export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModal
                       axisLine={false}
                       tickLine={false}
                       tick={{ fill: '#A3A3A3', fontSize: 11 }}
-                      dy={10}
+                      dy={15}
                       interval="preserveStartEnd"
                       minTickGap={20}
                     />
@@ -120,10 +120,8 @@ export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModal
                 </ResponsiveContainer>
               </div>
 
-              <div className="w-full h-8 bg-gradient-to-t from-white to-transparent -mt-10 relative z-10 pointer-events-none" />
-
               {/* Stats Breakdown */}
-              <div className="space-y-3 mt-4 mb-6">
+              <div className="space-y-3 mt-2 mb-2">
                 <div className="flex justify-between items-center text-sm">
                   <div className="flex items-center gap-2 text-neutral-500">
                     <TrendingUp size={16} />
@@ -139,12 +137,6 @@ export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModal
                   <span className="text-[#0A2B4E] font-bold">₱5,000</span>
                 </div>
               </div>
-
-              {/* Call to action */}
-              <button className="w-full py-3.5 bg-[#0A2B4E] hover:bg-[#153a66] text-white rounded-xl font-bold font-sans tracking-tight flex items-center justify-center gap-2 transition-colors active:scale-[0.98]">
-                Full Report
-                <ArrowUpRight size={18} strokeWidth={3} />
-              </button>
             </div>
           </div>
         </motion.div>

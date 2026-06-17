@@ -24,6 +24,9 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
   const [location, setLocation] = useState('');
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
+  const [availableAmenities, setAvailableAmenities] = useState<string[]>(AMENITIES);
+  const [isAddingAmenity, setIsAddingAmenity] = useState(false);
+  const [newAmenityInput, setNewAmenityInput] = useState('');
   
   // For images, we track existing URL strings and new File objects separately
   const [existingImages, setExistingImages] = useState<string[]>([]);
@@ -40,6 +43,15 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
       setLocation(listing.location || '');
       setCategory(listing.category || CATEGORIES[0]);
       setSelectedAmenities(listing.amenities || []);
+      
+      // Ensure any existing amenities not in the default list are added to availableAmenities
+      if (listing.amenities && listing.amenities.length > 0) {
+          const uniqueAmenities = Array.from(new Set([...AMENITIES, ...listing.amenities]));
+          setAvailableAmenities(uniqueAmenities);
+      } else {
+          setAvailableAmenities(AMENITIES);
+      }
+      
       setExistingImages(listing.gallery || (listing.image ? [listing.image] : []));
       setNewImages([]);
       setError(null);
@@ -263,7 +275,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
               <div>
                 <label className="block text-sm font-semibold text-neutral-800 mb-2">Amenities</label>
                 <div className="flex flex-wrap gap-2">
-                  {AMENITIES.map(amenity => (
+                  {availableAmenities.map(amenity => (
                     <button
                       key={amenity}
                       type="button"
@@ -273,6 +285,47 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       {amenity}
                     </button>
                   ))}
+                  {isAddingAmenity ? (
+                     <div className="flex items-center gap-2">
+                       <input 
+                         autoFocus
+                         type="text" 
+                         value={newAmenityInput} 
+                         onChange={(e) => setNewAmenityInput(e.target.value)}
+                         onKeyDown={(e) => {
+                           if (e.key === 'Enter') {
+                             e.preventDefault();
+                             if (newAmenityInput.trim() && !availableAmenities.includes(newAmenityInput.trim())) {
+                               setAvailableAmenities([...availableAmenities, newAmenityInput.trim()]);
+                               setSelectedAmenities([...selectedAmenities, newAmenityInput.trim()]);
+                             }
+                             setNewAmenityInput('');
+                             setIsAddingAmenity(false);
+                           } else if (e.key === 'Escape') {
+                             setIsAddingAmenity(false);
+                           }
+                         }}
+                         className="px-3 py-[7px] border border-neutral-300 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#17294F] w-32"
+                         placeholder="New..."
+                         onBlur={() => {
+                             if (newAmenityInput.trim() && !availableAmenities.includes(newAmenityInput.trim())) {
+                               setAvailableAmenities([...availableAmenities, newAmenityInput.trim()]);
+                               setSelectedAmenities([...selectedAmenities, newAmenityInput.trim()]);
+                             }
+                             setNewAmenityInput('');
+                             setIsAddingAmenity(false);
+                         }}
+                       />
+                     </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setIsAddingAmenity(true)}
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50"
+                    >
+                      + Add
+                    </button>
+                  )}
                 </div>
               </div>
 

@@ -562,8 +562,8 @@ export default function ListingDetail() {
                   <h3 className="text-2xl font-semibold text-neutral-900">{listing.rating.toFixed(2)} · {listing.reviews.length} reviews</h3>
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {listing.reviews.map((rev, idx) => (
-                    <div key={idx} className={`bg-white border border-neutral-200 rounded-3xl p-6 flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer ${idx > 0 && !showAllReviewsMobile ? 'hidden md:flex' : 'flex'}`} onClick={() => setSelectedReview(rev)}>
+                  {listing.reviews.slice(0, showAllReviewsMobile ? undefined : 4).map((rev, idx) => (
+                    <div key={idx} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer" onClick={() => setSelectedReview(rev)}>
                        <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
                              <img src={rev.userImage} className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
@@ -602,13 +602,13 @@ export default function ListingDetail() {
                   ))}
                </div>
 
-               {listing.reviews.length > 1 && (
-                 <div className="mt-6 md:hidden">
+               {listing.reviews.length > 4 && (
+                 <div className="mt-8 flex">
                     <button 
                        onClick={() => setShowAllReviewsMobile(!showAllReviewsMobile)}
-                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
+                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 flex items-center justify-center"
                     >
-                       {showAllReviewsMobile ? 'Show less' : 'Show all'}
+                       {showAllReviewsMobile ? 'Show less' : `Show all ${listing.reviews.length} reviews`}
                     </button>
                  </div>
                )}

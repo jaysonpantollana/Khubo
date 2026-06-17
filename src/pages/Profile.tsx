@@ -37,6 +37,8 @@ import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
 import { AnalyticsModal } from '../components/AnalyticsModal';
 import { TenantsModal } from '../components/TenantsModal';
+import { PropertiesModal } from '../components/PropertiesModal';
+import { InquiriesModal } from '../components/InquiriesModal';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -46,10 +48,12 @@ export default function Profile() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false);
   const [isTenantsModalOpen, setIsTenantsModalOpen] = useState(false);
+  const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
 
   
   const menuItems = [
-    { title: 'Notifications', icon: Bell, action: () => alert('Notifications clicked') },
+    { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
     { title: 'Account settings', icon: Settings, action: () => alert('Account settings clicked') },
     { title: 'Help Center', icon: HelpCircle, action: () => alert('Help Center clicked') },
   ];
@@ -169,6 +173,8 @@ export default function Profile() {
       showSignupModal || 
       isAnalyticsModalOpen || 
       isTenantsModalOpen || 
+      isPropertiesModalOpen ||
+      isInquiriesModalOpen ||
       isEditProfileOpen || 
       selectedStatModal !== null || 
       editingListing !== null || 
@@ -190,6 +196,8 @@ export default function Profile() {
     showSignupModal,
     isAnalyticsModalOpen,
     isTenantsModalOpen,
+    isPropertiesModalOpen,
+    isInquiriesModalOpen,
     isEditProfileOpen,
     selectedStatModal,
     editingListing,
@@ -276,7 +284,7 @@ export default function Profile() {
       setMyListings(data || []);
     }
     setLoadingListings(false);
-  }, [user]);
+  }, [user, setLoadingListings, setMyListings]);
 
   useEffect(() => {
     if (user && isLandlord) {
@@ -434,6 +442,10 @@ export default function Profile() {
                    setIsAnalyticsModalOpen(true);
                  } else if (stat.title === 'Tenants') {
                    setIsTenantsModalOpen(true);
+                 } else if (stat.title === 'Properties') {
+                   setIsPropertiesModalOpen(true);
+                 } else if (stat.title === 'Inquiries') {
+                   setIsInquiriesModalOpen(true);
                  } else {
                    setSelectedStatModal(stat.title);
                  }
@@ -646,7 +658,7 @@ export default function Profile() {
                   </div>
                 </div>
                 <div className="flex items-center justify-end gap-3 w-full md:w-auto">
-                  <button className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold hover:bg-neutral-50 transition active:scale-95 text-sm md:text-base whitespace-nowrap">
+                  <button className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-red-500 text-red-500 rounded-full font-bold hover:bg-red-50 transition active:scale-95 text-sm md:text-base whitespace-nowrap">
                     Cancel Reservation
                   </button>
                   <button className="flex-1 md:flex-none px-8 py-3 bg-[#4CAF50] text-white rounded-full font-bold hover:bg-[#43A047] shadow-lg shadow-[#4CAF50]/30 transition active:scale-95 text-sm md:text-base whitespace-nowrap">
@@ -1090,6 +1102,8 @@ export default function Profile() {
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />
       <AnalyticsModal isOpen={isAnalyticsModalOpen} onClose={() => setIsAnalyticsModalOpen(false)} />
       <TenantsModal isOpen={isTenantsModalOpen} onClose={() => setIsTenantsModalOpen(false)} />
+      <PropertiesModal isOpen={isPropertiesModalOpen} onClose={() => setIsPropertiesModalOpen(false)} listings={myListings} />
+      <InquiriesModal isOpen={isInquiriesModalOpen} onClose={() => setIsInquiriesModalOpen(false)} />
     </div>
   );
 }

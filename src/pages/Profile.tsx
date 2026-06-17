@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Listing } from '../types';
 import { 
@@ -24,7 +25,8 @@ import {
   Lock,
   Chrome,
   Facebook,
-  Mail
+  Mail,
+  TrendingUp
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../lib/AuthContext';
@@ -33,17 +35,22 @@ import { EditListingModal } from '../components/EditListingModal';
 import { CreateListingModal } from '../components/CreateListingModal';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
+import { AnalyticsModal } from '../components/AnalyticsModal';
+import { TenantsModal } from '../components/TenantsModal';
 
 export default function Profile() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const [isLandlord, setIsLandlord] = useState(false);
   const [hasLandlordAccount, setHasLandlordAccount] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false);
+  const [isTenantsModalOpen, setIsTenantsModalOpen] = useState(false);
+
   
   const menuItems = [
     { title: 'Notifications', icon: Bell, action: () => alert('Notifications clicked') },
     { title: 'Account settings', icon: Settings, action: () => alert('Account settings clicked') },
-    { title: 'Languages & currency', icon: Globe, action: () => alert('Languages & currency clicked') },
     { title: 'Help Center', icon: HelpCircle, action: () => alert('Help Center clicked') },
   ];
   
@@ -112,6 +119,7 @@ export default function Profile() {
   const [isPhotoGalleryOpen, setIsPhotoGalleryOpen] = useState(false);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   
   const handleOpenGallery = (listing: Listing | null, fallbackSrc: string = '') => {
     const fallbackImages = [
@@ -154,6 +162,41 @@ export default function Profile() {
   useEffect(() => {
     checkLandlordAccount();
   }, [user]);
+
+  useEffect(() => {
+    const isAnyModalOpen = 
+      isCreateListingOpen || 
+      showSignupModal || 
+      isAnalyticsModalOpen || 
+      isTenantsModalOpen || 
+      isEditProfileOpen || 
+      selectedStatModal !== null || 
+      editingListing !== null || 
+      isPhotoGalleryOpen || 
+      isAnnouncementsOpen ||
+      isLogoutModalOpen;
+
+    if (isAnyModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [
+    isCreateListingOpen,
+    showSignupModal,
+    isAnalyticsModalOpen,
+    isTenantsModalOpen,
+    isEditProfileOpen,
+    selectedStatModal,
+    editingListing,
+    isPhotoGalleryOpen,
+    isAnnouncementsOpen,
+    isLogoutModalOpen,
+  ]);
 
   const handleSignupAsLandlord = async () => {
     setIsSigningUp(true);
@@ -248,18 +291,19 @@ export default function Profile() {
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&q=80&w=2000")', opacity: 0.6 }}
+          style={{ backgroundImage: 'url("/bg_2.png")', opacity: 0.6 }}
         />
         {/* Dark Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
 
         {/* Top Bar */}
-        <div className="absolute top-0 w-full p-4 md:p-6 md:px-12 xl:px-20 flex justify-end items-center z-50 text-white pointer-events-none">
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-end py-4 md:py-6 px-4 md:px-12 gap-4 z-50 text-white pointer-events-none">
           <button 
+            aria-label="Announcements"
             onClick={() => setIsAnnouncementsOpen(true)}
-            className="p-2 -mr-2 text-white hover:bg-white/10 rounded-full transition pointer-events-auto cursor-pointer"
+            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full pointer-events-auto cursor-pointer"
           >
-             <Megaphone className="w-6 h-6 md:w-7 md:h-7" />
+             <Megaphone className="w-5 h-5 md:w-8 md:h-8" />
           </button>
         </div>
 
@@ -385,7 +429,15 @@ export default function Profile() {
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: i * 0.1 }}
-               onClick={() => setSelectedStatModal(stat.title)}
+               onClick={() => {
+                 if (stat.title === 'Revenue') {
+                   setIsAnalyticsModalOpen(true);
+                 } else if (stat.title === 'Tenants') {
+                   setIsTenantsModalOpen(true);
+                 } else {
+                   setSelectedStatModal(stat.title);
+                 }
+               }}
                className="bg-white rounded-[1.5rem] p-5 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col relative group cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300"
              >
                <div className="absolute top-5 right-5 md:top-6 md:right-6">
@@ -453,14 +505,9 @@ export default function Profile() {
           ) : (
             <div className="flex flex-col gap-6 mb-16">
               {myListings.length === 0 ? (
-                <div className="text-center py-10 text-neutral-500 bg-white rounded-[1.5rem] md:rounded-[2rem] border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] px-4">
-                 <p className="mb-8">You haven't added any properties yet. Here's a mock listing preview:</p>
-                 
-                 {/* Mock Listing */}
-                 <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-200 mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden shadow-sm">
-                   <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-10 flex items-center justify-center">
-                     <span className="bg-[#17294F] text-white px-6 py-2 rounded-full font-bold shadow-lg">Mock Preview</span>
-                   </div>
+                 <div
+                   className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors"
+                 >
                    <img 
                      src={'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800'} 
                      alt={"Mock Title"} 
@@ -469,7 +516,7 @@ export default function Profile() {
                    <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
                      <div>
                        <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
-                          <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">Mock Premium Apartment</h3>
+                          <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">Premium Apartment</h3>
                           <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto shrink-0">
                             Active Listing
                           </span>
@@ -500,8 +547,6 @@ export default function Profile() {
                      </div>
                    </div>
                  </div>
-
-                </div>
               ) : myListings.map(listing => (
                   <div key={listing.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full">
                   <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] shrink-0 relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in" onClick={() => handleOpenGallery(listing)}>
@@ -619,11 +664,7 @@ export default function Profile() {
 
             {/* Landlord Toggle */}
             <div className="flex items-center justify-between w-full group cursor-pointer" onClick={() => {
-              if (hasLandlordAccount) {
-                setIsLandlord(!isLandlord);
-              } else {
-                setShowSignupModal(true);
-              }
+              setIsLandlord(!isLandlord);
             }}>
               <div className="flex items-center gap-5">
                 <div className={`transition-colors duration-200 ${isLandlord ? 'text-[#2252D6]' : 'text-neutral-800 group-hover:text-[#2252D6]'}`}>
@@ -666,7 +707,10 @@ export default function Profile() {
             <div className="h-px bg-neutral-100 my-2" />
 
             {/* Log out */}
-            <button className="flex items-center gap-5 text-left w-full group cursor-pointer">
+            <button 
+              onClick={() => setIsLogoutModalOpen(true)}
+              className="flex items-center gap-5 text-left w-full group cursor-pointer"
+            >
               <div className="text-red-500 group-hover:text-red-600 transition-colors duration-200">
                 <LogOut className="w-6 h-6 stroke-[1.8]" />
               </div>
@@ -995,6 +1039,48 @@ export default function Profile() {
         </div>
       )}
 
+      {/* Log out Pop-up Overlay Modal */}
+      {isLogoutModalOpen && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+          <motion.div
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             exit={{ opacity: 0 }}
+             onClick={() => setIsLogoutModalOpen(false)}
+             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          />
+          <motion.div
+             initial={{ opacity: 0, scale: 0.95, y: 20 }}
+             animate={{ opacity: 1, scale: 1, y: 0 }}
+             exit={{ opacity: 0, scale: 0.95, y: 20 }}
+             className="relative w-full max-w-[400px] bg-white p-6 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl z-10 flex flex-col"
+          >
+             <h2 className="text-xl md:text-2xl font-bold text-neutral-900 mb-2">Are you absolutely sure?</h2>
+             <p className="text-neutral-500 mb-8 text-sm md:text-base">
+               This action cannot be undone. This will permanently log you out of your account and remove your active session from our servers.
+             </p>
+             <div className="flex gap-3 mt-auto">
+               <button 
+                 onClick={() => setIsLogoutModalOpen(false)}
+                 className="flex-1 py-3 px-4 bg-neutral-100 hover:bg-neutral-200 text-neutral-900 rounded-xl font-bold transition-colors"
+               >
+                 Cancel
+               </button>
+               <button 
+                 onClick={() => {
+                   signOut();
+                   setIsLogoutModalOpen(false);
+                   navigate('/');
+                 }}
+                 className="flex-1 py-3 px-4 bg-[#0A2B4E] hover:bg-[#153a66] text-white rounded-xl font-bold transition-colors"
+               >
+                 Continue
+               </button>
+             </div>
+          </motion.div>
+        </div>
+      )}
+
       <PhotoCarouselOverlay 
         isOpen={isPhotoGalleryOpen}
         images={galleryImages}
@@ -1002,6 +1088,8 @@ export default function Profile() {
         onClose={() => setIsPhotoGalleryOpen(false)}
       />
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />
+      <AnalyticsModal isOpen={isAnalyticsModalOpen} onClose={() => setIsAnalyticsModalOpen(false)} />
+      <TenantsModal isOpen={isTenantsModalOpen} onClose={() => setIsTenantsModalOpen(false)} />
     </div>
   );
 }

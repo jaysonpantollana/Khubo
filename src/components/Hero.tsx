@@ -58,11 +58,11 @@ export default function Hero({
   };
 
   return (
-    <div className="relative h-[22vh] sm:h-[45vh] min-h-[240px] sm:min-h-[350px] w-full z-50">
+    <div className="relative min-h-[440px] md:h-[500px] w-full z-50">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=1600')" }}
+        style={{ backgroundImage: "url('/bg_1.png')" }}
       >
         <div className="absolute inset-0 bg-black/40" />
       </div>

@@ -1,0 +1,154 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, ArrowUpRight, TrendingUp, Calendar, DollarSign } from 'lucide-react';
+import { LineChart, Line, XAxis, ResponsiveContainer } from 'recharts';
+
+const data = [
+  { name: 'Apr 25', value: 4000 },
+  { name: 'Apr 26', value: 8000 },
+  { name: 'Apr 27', value: 5000 },
+  { name: 'Apr 28', value: 9000 },
+  { name: 'Apr 29', value: 7000 },
+  { name: 'Apr 30', value: 6500 },
+  { name: 'May 1', value: 8500 },
+  { name: 'May 2', value: 6000 },
+  { name: 'May 3', value: 8000 },
+  { name: 'May 4', value: 5500 },
+  { name: 'May 5', value: 9500 },
+  { name: 'May 6', value: 6500 },
+  { name: 'May 7', value: 7500 },
+  { name: 'May 8', value: 10000 },
+];
+
+interface AnalyticsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  listingTitle?: string;
+}
+
+export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModalProps) {
+  const [timeframe, setTimeframe] = useState<'7d' | '14d' | '30d'>('14d');
+
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ type: "spring", duration: 0.5, bounce: 0 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
+        >
+          <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
+              <h2 className="text-xl font-bold text-neutral-900">Revenue</h2>
+              <button 
+                onClick={onClose}
+                className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900"
+              >
+                <X size={20} />
+              </button>
+          </div>
+
+          <div className="p-6 flex-1 overflow-y-auto flex justify-center">
+            <div className="w-full max-w-[360px] flex flex-col">
+              {/* Header */}
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-neutral-500 font-medium tracking-tight">Total Revenue</h3>
+                <div className="flex bg-neutral-100 rounded-full p-1 border border-neutral-200/50 shadow-inner">
+                  {(['7d', '14d', '30d'] as const).map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setTimeframe(t)}
+                      className={`px-3 py-1 rounded-full text-xs font-bold font-sans transition-all ${
+                        timeframe === t
+                          ? 'bg-white text-neutral-900 shadow-sm'
+                          : 'text-neutral-500 hover:text-neutral-900'
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Value and Trend */}
+              <div className="flex items-end gap-3 mb-6">
+                <span className="text-4xl text-[#0A2B4E] font-bold tracking-tight">₱42,000</span>
+                <div className="flex items-center text-green-700 font-bold text-sm bg-green-100 px-2 py-0.5 rounded-full mb-1">
+                  <ArrowUpRight size={16} className="mr-0.5" strokeWidth={3} />
+                  +14.2%
+                </div>
+              </div>
+
+              {/* Chart placeholder with Recharts */}
+              <div className="h-[200px] w-full mb-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={data}>
+                    <defs>
+                       <linearGradient id="colorGreen" x1="0" y1="0" x2="0" y2="1">
+                         <stop offset="5%" stopColor="#2252D6" stopOpacity={0.3}/>
+                         <stop offset="95%" stopColor="#2252D6" stopOpacity={0}/>
+                       </linearGradient>
+                    </defs>
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#A3A3A3', fontSize: 11 }}
+                      dy={10}
+                      interval="preserveStartEnd"
+                      minTickGap={20}
+                    />
+                    <Line 
+                      type="linear" 
+                      dataKey="value" 
+                      stroke="#2252D6" 
+                      strokeWidth={3}
+                      dot={false}
+                      isAnimationActive={true}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="w-full h-8 bg-gradient-to-t from-white to-transparent -mt-10 relative z-10 pointer-events-none" />
+
+              {/* Stats Breakdown */}
+              <div className="space-y-3 mt-4 mb-6">
+                <div className="flex justify-between items-center text-sm">
+                  <div className="flex items-center gap-2 text-neutral-500">
+                    <TrendingUp size={16} />
+                    <span>Avg. daily revenue</span>
+                  </div>
+                  <span className="text-[#0A2B4E] font-bold">₱3,000</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <div className="flex items-center gap-2 text-neutral-500">
+                    <DollarSign size={16} />
+                    <span>Top earning day</span>
+                  </div>
+                  <span className="text-[#0A2B4E] font-bold">₱5,000</span>
+                </div>
+              </div>
+
+              {/* Call to action */}
+              <button className="w-full py-3.5 bg-[#0A2B4E] hover:bg-[#153a66] text-white rounded-xl font-bold font-sans tracking-tight flex items-center justify-center gap-2 transition-colors active:scale-[0.98]">
+                Full Report
+                <ArrowUpRight size={18} strokeWidth={3} />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}

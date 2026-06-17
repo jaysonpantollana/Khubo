@@ -13,7 +13,7 @@ try {
        window.location.hash = '#/';
     }
   }
-} catch (e) {
+} catch {
   // Ignore iframe DOM exception
   if (!window.location.hash || window.location.hash.includes('profile') || window.location.hash.includes('roommate')) {
      window.location.hash = '#/';

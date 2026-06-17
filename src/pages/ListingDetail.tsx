@@ -1,6 +1,6 @@
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
-import { X, Star, ShieldCheck, MapPin, ChevronLeft, ChevronRight, Calendar as CalendarIcon, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Search, Layers, Navigation, Home, Maximize, Heart, Loader2, BadgeCheck, Repeat2, MessageCircle, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2 } from 'lucide-react';
+import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -181,10 +181,6 @@ export default function ListingDetail() {
     );
   }
 
-  const handleDateSelect = (date: Date) => {
-    setStartDate(date);
-  };
-
   const fallbackImages = [
     'https://images.unsplash.com/photo-1555819485-99aaa4aee26b?auto=format&fit=crop&q=80&w=800',
     'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800',
@@ -201,14 +197,6 @@ export default function ListingDetail() {
   const openGallery = (index: number = 0) => {
     setInitialGalleryIndex(index);
     setIsPhotoGalleryOpen(true);
-  };
-
-  const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
   const defaultHost = {

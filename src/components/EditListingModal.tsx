@@ -148,8 +148,8 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
       if (onSuccess) onSuccess();
       onClose();
 
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while updating listing.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred while updating listing.');
     } finally {
       setIsSubmitting(false);
     }

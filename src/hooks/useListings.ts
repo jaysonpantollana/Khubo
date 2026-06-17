@@ -1,27 +1,38 @@
 import { useState, useEffect } from 'react';
-import { LISTINGS as MOCK_LISTINGS } from '../mocks/listings';
+import { getListings } from '../lib/api/listings';
 import { Listing } from '../types';
 
-/**
- * Custom hook to fetch and manage a list of property listings.
- * Currently simulates an API fetch delay and returns local mock data.
- * Ready to be swapped with real API calls using Supabase.
- *
- * @returns {{ listings: Listing[], loading: boolean }} The fetched listings and loading state
- */
-export function useListings() {
-  const [listings, setListings] = useState<Listing[]>(MOCK_LISTINGS);
+export function useListings(params?: {
+  category?: string;
+  search?: string;
+  minPrice?: number;
+  maxPrice?: number;
+}) {
+  const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulate API delay
-    const timer = setTimeout(() => {
-      setListings(MOCK_LISTINGS);
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+
+    getListings(params).then(({ data, error: err }) => {
+      if (cancelled) return;
+      if (err) {
+        setError(err);
+      } else {
+        setListings(data);
+      }
       setLoading(false);
-    }, 500);
+    });
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => { cancelled = true; };
+  }, [params?.category, params?.search, params?.minPrice, params?.maxPrice]);
 
-  return { listings, loading };
+  return { listings, loading, error };
+}
+
+export function useAllListings() {
+  return useListings();
 }

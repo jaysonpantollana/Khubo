@@ -12,7 +12,6 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const [stream, setStream] = useState<MediaStream | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +28,6 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
         audio: false
       });
       streamRef.current = newStream;
-      setStream(newStream);
       if (videoRef.current) {
         videoRef.current.srcObject = newStream;
       }
@@ -47,7 +45,6 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
       streamRef.current = null;
-      setStream(null);
     }
   };
 

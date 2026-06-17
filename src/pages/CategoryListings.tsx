@@ -3,7 +3,7 @@ import { useListings } from '../hooks/useListings';
 import ListingCard from '../components/ListingCard';
 import ListingCardSkeleton from '../components/ListingCardSkeleton';
 import Footer from '../components/Footer';
-import { ChevronLeft, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useMemo } from 'react';
 
 export default function CategoryListings() {

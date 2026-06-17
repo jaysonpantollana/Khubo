@@ -74,7 +74,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
       console.error('Error initializing MapTiler map:', error);
     }
 
-  }, [lat, lng, title]);
+  }, [lat, lng, title, apiKey]);
 
   const handleOpenGoogleMaps = () => {
     window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');

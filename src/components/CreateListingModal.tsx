@@ -123,8 +123,8 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setSelectedAmenities([]);
       setImages([]);
 
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while creating listing.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred while creating listing.');
     } finally {
       setIsSubmitting(false);
     }

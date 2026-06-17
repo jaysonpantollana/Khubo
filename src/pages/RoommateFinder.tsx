@@ -251,7 +251,6 @@ export default function RoommateFinder() {
         setSearchQuery={setSearchQuery}
         isSearchActive={isSearchActive}
         setIsSearchActive={setIsSearchActive}
-        onOpenMobileSearch={() => setIsSearchActive(true)}
         onSelectRoommate={openProfile}
         suppressDropdown={displaySearch}
       />

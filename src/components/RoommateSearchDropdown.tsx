@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Search, MapPin, TrendingUp, Users, Award, ShieldCheck } from 'lucide-react';
+import { Search, MapPin, TrendingUp, Users, ShieldCheck } from 'lucide-react';
 import { ROOMMATES } from '../mocks/roommates';
 import { Roommate } from '../types';
 

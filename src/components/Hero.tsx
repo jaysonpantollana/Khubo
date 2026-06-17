@@ -7,8 +7,6 @@ import {
   ChevronDown,
   Wallet,
   X,
-  Clock,
-  Navigation,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router-dom";

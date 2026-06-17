@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, MapPin, GraduationCap, Wallet, Heart, MessageSquare, ShieldCheck, Instagram, Twitter, Facebook, Star, User, Zap, Sparkles } from 'lucide-react';
+import { X, MapPin, GraduationCap, Wallet, Heart, MessageSquare, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles } from 'lucide-react';
 import { Roommate } from '../types';
 
 interface RoommateModalProps {

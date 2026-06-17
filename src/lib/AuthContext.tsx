@@ -4,12 +4,10 @@ import React, { createContext, useContext, useState } from 'react';
 export interface MockUser {
   id?: string;
   email?: string;
-  [key: string]: any;
 }
 
 export interface MockSession {
   user: MockUser;
-  [key: string]: any;
 }
 
 interface AuthContextType {

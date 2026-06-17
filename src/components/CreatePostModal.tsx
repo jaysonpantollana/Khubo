@@ -36,10 +36,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
   React.useEffect(() => {
     if (isOpen) {
       loadProfilePersonality();
-    } else {
-      // Clean up when closed if needed, but handlePostSubmit already clears it
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   const handlePostSubmit = () => {

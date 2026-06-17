@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Bell, Megaphone } from 'lucide-react';
+import { X, Megaphone } from 'lucide-react';
 
 interface AnnouncementsOverlayProps {
   isOpen: boolean;

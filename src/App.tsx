@@ -1,17 +1,7 @@
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import React, { Suspense, lazy, useEffect } from 'react';
-
-// Component to scroll to top on route change
-function ScrollToTop() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-}
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
 import { MotionConfig } from 'motion/react';
+import { ScrollToTop } from './components/ScrollToTop';
 import { ThemeProvider } from './lib/ThemeContext';
 import { AuthProvider } from './lib/AuthContext';
 import { ToastProvider } from './components/ToastProvider';

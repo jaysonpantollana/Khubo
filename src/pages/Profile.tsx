@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Listing } from '../types';
 import { 
-  ChevronLeft, 
   Megaphone,
   GraduationCap,
   MapPin,
@@ -11,14 +10,12 @@ import {
   ArrowUpRight,
   Star,
   Settings,
-  Shield,
   HelpCircle,
   LogOut,
   Bell,
   Globe,
   Building,
   Check,
-  Loader2,
   X,
   Eye,
   EyeOff,
@@ -26,7 +23,6 @@ import {
   Chrome,
   Facebook,
   Mail,
-  TrendingUp
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../lib/AuthContext';
@@ -44,7 +40,6 @@ export default function Profile() {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const [isLandlord, setIsLandlord] = useState(false);
-  const [hasLandlordAccount, setHasLandlordAccount] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false);
   const [isTenantsModalOpen, setIsTenantsModalOpen] = useState(false);
@@ -52,15 +47,17 @@ export default function Profile() {
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
 
   
+  const [hasLandlordAccount, setHasLandlordAccount] = useState(false);
+  
   const menuItems = [
     { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
     { title: 'Account settings', icon: Settings, action: () => alert('Account settings clicked') },
     { title: 'Help Center', icon: HelpCircle, action: () => alert('Help Center clicked') },
   ];
   
-  const [myListings, setMyListings] = useState<any[]>([]);
+  const [myListings, setMyListings] = useState<Listing[]>([]);
   const [loadingListings, setLoadingListings] = useState(false);
-  const [editingListing, setEditingListing] = useState<any | null>(null);
+  const [editingListing, setEditingListing] = useState<Listing | null>(null);
   const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
 
   const [isSigningUp, setIsSigningUp] = useState(false);
@@ -125,6 +122,23 @@ export default function Profile() {
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   
+  const checkLandlordAccount = useCallback(async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from('landlord_profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .maybeSingle();
+      
+    if (!error && data) {
+      setHasLandlordAccount(true);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    checkLandlordAccount();
+  }, [checkLandlordAccount]);
+
   const handleOpenGallery = (listing: Listing | null, fallbackSrc: string = '') => {
     const fallbackImages = [
       'https://images.unsplash.com/photo-1555819485-99aaa4aee26b?auto=format&fit=crop&q=80&w=800',
@@ -150,22 +164,7 @@ export default function Profile() {
     setIsPhotoGalleryOpen(true);
   };
 
-  const checkLandlordAccount = async () => {
-    if (!user) return;
-    const { data, error } = await supabase
-      .from('landlord_profiles')
-      .select('id')
-      .eq('user_id', user.id)
-      .maybeSingle();
-      
-    if (!error && data) {
-      setHasLandlordAccount(true);
-    }
-  };
 
-  useEffect(() => {
-    checkLandlordAccount();
-  }, [user]);
 
   useEffect(() => {
     const isAnyModalOpen = 
@@ -231,7 +230,6 @@ export default function Profile() {
             .maybeSingle();
 
           if (existing) {
-            setHasLandlordAccount(true);
             setIsLandlord(true);
             setShowSignupModal(false);
           } else {
@@ -259,13 +257,12 @@ export default function Profile() {
              console.error("Error creating landlord profile", insertError);
           }
 
-          setHasLandlordAccount(true);
           setIsLandlord(true);
           setShowSignupModal(false);
         }
       }
-    } catch (e: any) {
-      alert(e.message);
+    } catch (e: unknown) {
+      alert(e instanceof Error ? e.message : 'An error occurred');
     }
 
     setIsSigningUp(false);
@@ -281,7 +278,7 @@ export default function Profile() {
       .order('created_at', { ascending: false });
 
     if (!error) {
-      setMyListings(data || []);
+      setMyListings((data || []) as Listing[]);
     }
     setLoadingListings(false);
   }, [user, setLoadingListings, setMyListings]);

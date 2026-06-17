@@ -1,4 +1,4 @@
-import { Search, MapPin, Megaphone, Calendar as CalendarIcon, ChevronDown, Wallet, X } from 'lucide-react';
+import { Search, MapPin, Megaphone, ChevronDown, Wallet, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
@@ -11,7 +11,6 @@ interface RoommateHeroProps {
   setSearchQuery?: (query: string) => void;
   isSearchActive?: boolean;
   setIsSearchActive?: (active: boolean) => void;
-  onOpenMobileSearch?: () => void;
   onSelectRoommate?: (roommate: Roommate) => void;
   suppressDropdown?: boolean;
 }
@@ -21,7 +20,6 @@ export default function RoommateHero({
   setSearchQuery = () => {},
   isSearchActive = false,
   setIsSearchActive = () => {},
-  onOpenMobileSearch = () => {},
   onSelectRoommate,
   suppressDropdown = false
 }: RoommateHeroProps) {

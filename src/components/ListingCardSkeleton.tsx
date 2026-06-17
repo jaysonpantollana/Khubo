@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 
 interface ListingCardSkeletonProps {
   key?: string | number;

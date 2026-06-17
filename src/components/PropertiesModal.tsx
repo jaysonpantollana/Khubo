@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useMemo } from 'react';
 import { X, Building } from 'lucide-react';
 import { Listing } from '../types';
+import { Modal } from './ui/Modal';
 
 interface PropertiesModalProps {
   isOpen: boolean;
@@ -9,26 +9,25 @@ interface PropertiesModalProps {
   listings: Listing[];
 }
 
+const statuses = ['Active', 'Review', 'Maintenance'];
+
+function seededRandom(seed: number) {
+  const x = Math.sin(seed * 9301 + 49297) * 49297;
+  return x - Math.floor(x);
+}
+
 export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalProps) {
-  if (!isOpen) return null;
+  const propertyStats = useMemo(() =>
+    listings.map((_, index) => {
+      const occupied = Math.floor(seededRandom(index * 2) * 10);
+      const total = occupied + Math.floor(seededRandom(index * 2 + 1) * 5) + 1;
+      return { status: statuses[index % 3], occupied, total };
+    }),
+    [listings]
+  );
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ type: "spring", duration: 0.5, bounce: 0 }}
-          onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
-        >
+    <Modal isOpen={isOpen} onClose={onClose} maxWidth="max-w-5xl" className="h-[80vh] flex flex-col">
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
               <h2 className="text-xl font-bold text-neutral-900">Properties</h2>
               <button 
@@ -70,10 +69,7 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
                 </thead>
                 <tbody>
                   {listings.map((listing, index) => {
-                    const statuses = ['Active', 'Review', 'Maintenance'];
-                    const status = statuses[index % 3];
-                    const occupied = Math.floor(Math.random() * 10);
-                    const total = occupied + Math.floor(Math.random() * 5) + 1;
+                    const { status, occupied, total } = propertyStats[index];
                     
                     return (
                       <tr 
@@ -130,8 +126,6 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
               </table>
             </div>
           </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+    </Modal>
   );
 }

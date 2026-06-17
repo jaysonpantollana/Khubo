@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
-import { Star, MapPin, Edit, Users, Loader2 } from 'lucide-react';
+import { Star, MapPin, Edit, Users } from 'lucide-react';
 import { EditListingModal } from '../components/EditListingModal';
 import { useNavigate } from 'react-router-dom';
+import { Listing } from '../types';
 
 export default function ManageListings() {
   const { user, isLoading: authLoading } = useAuth();
-  const [listings, setListings] = useState<any[]>([]);
+  const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingListing, setEditingListing] = useState<any | null>(null);
+  const [editingListing, setEditingListing] = useState<Listing | null>(null);
   const navigate = useNavigate();
 
   const fetchMyListings = async () => {

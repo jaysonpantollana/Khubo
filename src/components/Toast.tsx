@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { CheckCircle, Info, X } from 'lucide-react';
 
 export type ToastType = 'success' | 'info';

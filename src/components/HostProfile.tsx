@@ -1,6 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Star, Briefcase, Globe, MessageCircle, BadgeCheck } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Star, Briefcase, Globe, MessageCircle, BadgeCheck } from 'lucide-react';
 
 interface HostProfileProps {
   name: string;

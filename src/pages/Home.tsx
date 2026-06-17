@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
   ChevronRight,
-  ArrowRight,
   Search,
   MapPin,
   Calendar as CalendarIcon,

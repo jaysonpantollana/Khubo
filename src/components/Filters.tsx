@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { SlidersHorizontal, ChevronDown, Check, X } from 'lucide-react';
+import { SlidersHorizontal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 
@@ -86,7 +86,7 @@ export default function Filters({ onFilterChange, currentFilters, hideIndicator 
                       ].map((option) => (
                         <button
                           key={option.id}
-                          onClick={() => onFilterChange({ ...currentFilters, sortBy: option.id as any })}
+                          onClick={() => onFilterChange({ ...currentFilters, sortBy: option.id as FilterState['sortBy'] })}
                           className={cn(
                             "px-4 py-3 rounded-xl border text-sm font-bold transition-all text-center",
                             currentFilters.sortBy === option.id 

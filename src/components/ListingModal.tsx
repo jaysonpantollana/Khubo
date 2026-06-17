@@ -1,10 +1,8 @@
 import React from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   format, 
-  startOfToday,
-  startOfDay,
   getMonth,
   getYear,
   getDate,
@@ -12,8 +10,6 @@ import {
   setMonth as setDateMonth,
   setYear as setDateYear,
   setDate as setDateDay,
-  isSameDay,
-  isBefore
 } from 'date-fns';
 import { cn } from '../lib/utils';
 
@@ -31,9 +27,9 @@ const WheelPicker = ({
   onChange,
   label
 }: { 
-  items: string[] | number[], 
+  items: readonly string[] | readonly number[], 
   value: string | number, 
-  onChange: (val: any) => void,
+  onChange: (val: string | number) => void,
   label: string
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -49,7 +45,7 @@ const WheelPicker = ({
   }, []);
 
   React.useEffect(() => {
-    const index = (items as any[]).indexOf(value);
+    const index = (items as readonly (string | number)[]).indexOf(value);
     if (index !== -1 && containerRef.current) {
       containerRef.current.scrollTop = index * itemHeight;
     }
@@ -130,17 +126,19 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   const daysInMonth = getDaysInMonth(tempDate);
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
-  const handleYearChange = (year: number) => {
-    setTempDate(setDateYear(tempDate, year));
+  const handleYearChange = (year: string | number) => {
+    const y = typeof year === 'string' ? parseInt(year, 10) : year;
+    setTempDate(setDateYear(tempDate, y));
   };
 
-  const handleMonthChange = (monthName: string) => {
-    const monthIndex = months.indexOf(monthName);
-    setTempDate(setDateMonth(tempDate, monthIndex));
+  const handleMonthChange = (monthName: string | number) => {
+    const m = typeof monthName === 'number' ? monthName : months.indexOf(monthName);
+    setTempDate(setDateMonth(tempDate, m));
   };
 
-  const handleDayChange = (day: number) => {
-    setTempDate(setDateDay(tempDate, day));
+  const handleDayChange = (day: string | number) => {
+    const d = typeof day === 'string' ? parseInt(day, 10) : day;
+    setTempDate(setDateDay(tempDate, d));
   };
 
   const handleConfirm = () => {

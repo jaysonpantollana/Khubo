@@ -2,16 +2,12 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useListings } from "../hooks/useListings";
 import ListingCard from "../components/ListingCard";
 import ListingCardSkeleton from "../components/ListingCardSkeleton";
-import Navbar from "../components/Navbar";
 import {
   Search,
   MapPin,
-  SlidersHorizontal,
   ChevronLeft,
   ChevronRight,
   ArrowLeft,
-  MoreHorizontal,
-  Map as MapIcon,
   X,
   Calendar as CalendarIcon,
   Wallet,
@@ -224,7 +220,7 @@ export default function Maps() {
           const data = new Uint8Array([0, 0, 0, 0]);
           map.current.addImage(e.id, { width, height, data });
         }
-      } catch (err) {
+      } catch {
         // ignore any errors adding dummy fallback
       }
     });

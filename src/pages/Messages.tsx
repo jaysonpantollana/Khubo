@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Edit, MoreHorizontal, Phone, Video, Info, ChevronLeft, ArrowLeft, Send, Image as ImageIcon, Smile, Mic, Moon, Sun, Megaphone, Plus, Camera, FileText, ChevronRight, X, Play, File as FileIcon, Paperclip } from 'lucide-react';
+import { Search, MoreHorizontal, Phone, Video, ArrowLeft, Send, Image as ImageIcon, Smile, Moon, Sun, Camera, FileText, ChevronRight, X, Play, File as FileIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { DUMMY_CONVERSATIONS, DUMMY_MESSAGES } from '../mocks/messages';
@@ -8,6 +8,14 @@ import { UploadModal } from '../components/UploadModal';
 import { CameraOverlay } from '../components/CameraOverlay';
 
 import BottomNav from '../components/BottomNav';
+
+type ChatMessage = {
+  id: string;
+  text: string;
+  sender: 'me' | 'them';
+  time: string;
+  attachments?: Attachment[];
+};
 
 export type Attachment = {
   id: string;
@@ -21,7 +29,7 @@ export default function Messages() {
   const [conversations, setConversations] = useState(DUMMY_CONVERSATIONS);
   const [selectedConversation, setSelectedConversation] = useState<typeof DUMMY_CONVERSATIONS[0] | null>(null);
   const [messageInput, setMessageInput] = useState('');
-  const [messages, setMessages] = useState(DUMMY_MESSAGES);
+  const [messages, setMessages] = useState<ChatMessage[]>(DUMMY_MESSAGES as ChatMessage[]);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
@@ -34,6 +42,14 @@ export default function Messages() {
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Cleanup object URLs on unmount
+  useEffect(() => {
+    return () => {
+      attachments.forEach(a => URL.revokeObjectURL(a.url));
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const navigate = useNavigate();
 
@@ -112,8 +128,7 @@ export default function Messages() {
     e.preventDefault();
     if (!messageInput.trim() && attachments.length === 0) return;
     
-    // Use type 'any' to extend the mock messages
-    const newMessage: any = {
+    const newMessage: ChatMessage = {
       id: Date.now().toString(),
       text: messageInput.trim(),
       sender: 'me',
@@ -130,6 +145,7 @@ export default function Messages() {
     ]);
     
     setMessageInput('');
+    attachments.forEach(a => URL.revokeObjectURL(a.url));
     setAttachments([]);
     setIsAttachmentsExpanded(false);
   };
@@ -297,9 +313,9 @@ export default function Messages() {
                     
                     <div className={`max-w-[75%] flex flex-col gap-1 ${isMe ? 'items-end' : 'items-start'}`}>
                       {/* Render Attachments */}
-                      {(msg as any).attachments && (msg as any).attachments.length > 0 && (
+                      {msg.attachments && msg.attachments.length > 0 && (
                         <div className={`flex flex-wrap gap-1 ${isMe ? 'justify-end' : 'justify-start'}`}>
-                          {(msg as any).attachments.map((attach: Attachment) => (
+                          {msg.attachments.map((attach: Attachment) => (
                             <div key={attach.id} className="relative group overflow-hidden rounded-xl border border-black/5" style={{ maxWidth: '240px' }}>
                               {attach.type === 'image' && (
                                 <img src={attach.url} alt="attachment" className="max-w-full rounded-xl" style={{ maxHeight: '300px', objectFit: 'cover' }} />

@@ -737,6 +737,26 @@ export default function Home() {
 
       <Footer />
       <BottomNav />
+
+      {/* Hidden map preloader container — renders off-screen so MapTiler initializes fully */}
+      {apiKey && (
+        <div
+          ref={(node) => {
+            mapPreloadRef.current = node;
+            mapContainerCallback(node);
+          }}
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            bottom: 0,
+            right: 0,
+            width: "1200px",
+            height: "800px",
+            zIndex: -1,
+            pointerEvents: "none",
+          }}
+        />
+      )}
     </div>
   );
 }

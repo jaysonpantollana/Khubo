@@ -1,5 +1,5 @@
 import { apiGet, apiPost } from './client';
-import { MESSAGES as MOCK_MESSAGES } from '../../mocks/messages';
+import { DUMMY_MESSAGES as MOCK_MESSAGES } from '../../mocks/messages';
 
 export interface Message {
   id: string;
@@ -36,7 +36,7 @@ export async function getMessages(conversationId: string) {
   const { data, error } = await apiGet<Message[]>(`/messages/${conversationId}`);
   if (error) {
     await delay(300);
-    const messages = MOCK_MESSAGES[conversationId] || [];
+    const messages = MOCK_MESSAGES as any || [];
     return { data: messages, error: null };
   }
   return { data: data || [], error };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Mail, Globe, Eye, EyeOff, Lock, Facebook, Chrome } from 'lucide-react';
+import { X, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 
 export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClose: () => void, onLogin?: () => void }) {
@@ -117,29 +117,11 @@ export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClo
                  {isLoading ? 'Processing...' : (isLogin ? 'Sign in to dashboard' : 'Create account')}
                </button>
             </form>
-            
-            <div className="flex items-center gap-4 mt-8 mb-6">
-              <div className="h-[1px] bg-neutral-200 flex-1"></div>
-              <span className="text-xs font-semibold text-neutral-400">or continue with</span>
-              <div className="h-[1px] bg-neutral-200 flex-1"></div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-3">
-              <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
-                <Chrome size={20} />
-              </button>
-              <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
-                <Facebook size={20} />
-              </button>
-              <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
-                <Globe size={20} />
-              </button>
-            </div>
           </div>
           
           <div className="bg-neutral-50/50 p-6 flex flex-col items-center justify-center gap-2 text-sm text-neutral-500 font-medium">
             <div className="flex items-center gap-2">
-              {isLogin ? "Need access?" : "Already have an account?"}
+              {isLogin ? "Don't have an account?" : "Already have an account?"}
               <button 
                  onClick={() => {
                    setIsLogin(!isLogin);
@@ -147,7 +129,7 @@ export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClo
                  }}
                  className="font-bold text-[#2252D6] hover:underline"
               >
-                {isLogin ? 'Request an account' : 'Sign in'}
+                {isLogin ? 'Sign up' : 'Sign in'}
               </button>
             </div>
           </div>

@@ -13,15 +13,12 @@ import {
   HelpCircle,
   LogOut,
   Bell,
-  Globe,
   Building,
   Check,
   X,
   Eye,
   EyeOff,
   Lock,
-  Chrome,
-  Facebook,
   Mail,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
@@ -813,35 +810,17 @@ export default function Profile() {
                  >
                    {isSigningUp ? 'Processing...' : (isLandlordLogin ? 'Sign in to dashboard' : 'Create account')}
                  </button>
-              </form>
-              
-              <div className="flex items-center gap-4 mt-8 mb-6">
-                <div className="h-[1px] bg-neutral-200 flex-1"></div>
-                <span className="text-xs font-semibold text-neutral-400">or continue with</span>
-                <div className="h-[1px] bg-neutral-200 flex-1"></div>
-              </div>
-  
-              <div className="grid grid-cols-3 gap-3">
-                <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
-                  <Chrome size={20} />
-                </button>
-                <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
-                  <Facebook size={20} />
-                </button>
-                <button className="flex items-center justify-center p-3 border border-neutral-200 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors text-[#17294F]">
-                  <Globe size={20} />
-                </button>
-              </div>
+               </form>
             </div>
             
             <div className="bg-neutral-50/50 p-6 flex flex-col items-center justify-center gap-2 text-sm text-neutral-500 font-medium border-t border-neutral-100">
               <div className="flex items-center gap-2">
-                {isLandlordLogin ? "Need access?" : "Already have an account?"}
+                {isLandlordLogin ? "Don't have an account?" : "Already have an account?"}
                 <button 
                    onClick={() => setIsLandlordLogin(!isLandlordLogin)}
                    className="font-bold text-[#2252D6] hover:underline"
                 >
-                  {isLandlordLogin ? 'Request an account' : 'Sign in'}
+                  {isLandlordLogin ? 'Sign up' : 'Sign in'}
                 </button>
               </div>
             </div>

@@ -101,10 +101,10 @@ export default function Maps() {
   }, [selectedListing]);
 
   const updateMarkers = React.useCallback(() => {
-    if (!map.current) return;
+    if (!map.current || !sdkRef.current) return;
 
     // Remove existing markers
-    (Object.values(markers.current) as maptilersdk.Marker[]).forEach((marker) =>
+    (Object.values(markers.current) as any[]).forEach((marker) =>
       marker.remove(),
     );
     markers.current = {};
@@ -124,7 +124,7 @@ export default function Maps() {
           </div>
         `;
 
-        const marker = new maptilersdk.Marker({ element: el, anchor: 'bottom' })
+        const marker = new sdkRef.current.Marker({ element: el, anchor: 'bottom' })
           .setLngLat([listing.lng, listing.lat])
           .addTo(map.current!);
 

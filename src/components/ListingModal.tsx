@@ -1,3 +1,10 @@
+// @context: Listing booking modal — date selection and reserve
+// @purpose: Calendar-based date picker for move-in date selection; shows monthly calendar with navigation
+// @behavior: Inline calendar with prev/next month; selects start date; calls onSelect callback
+// @behavior: Uses date-fns for all date calculations; styled to match listing detail design
+// @dependencies: motion, date-fns, cn utility, lucide-react
+// @known-issues: Only supports single date selection (no range); inline version in ListingDetail duplicates this
+
 import React from 'react';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';

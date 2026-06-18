@@ -1,3 +1,10 @@
+// @context: Roommate profile modal — full detail view
+// @purpose: Displays full roommate profile: avatar, name, details, bio, budget, tags, social links, message button
+// @behavior: Opens as overlay modal with backdrop; shows all roommate fields; "Send Message" button
+// @behavior: Social media link icons (Instagram, Twitter, Facebook) — currently non-functional
+// @dependencies: motion, lucide-react, Roommate type
+// @known-issues: Social media buttons have no href or onClick; send message is a placeholder
+
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, MapPin, GraduationCap, Wallet, Heart, MessageSquare, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles } from 'lucide-react';

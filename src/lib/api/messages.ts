@@ -1,13 +1,3 @@
-// @context: Messaging API
-// @purpose: getConversations, getMessages, sendMessage - all with mock fallback
-// @behavior: Mock conversations always return empty array; messages return from DUMMY_MESSAGES
-// @behavior: sendMessage creates a new Message with URL.createObjectURL for file attachments
-// @security: No message encryption; no sender verification on mock
-// @performance: No pagination on messages; all returned at once
-// @side-effects: sendMessage creates blob URLs (URL.createObjectURL) that are never revoked = memory leak
-// @known-issues: URL.createObjectURL memory leak in sendMessage (cleanup missing in Messages.tsx)
-// @dependencies: mocks/messages.ts, client.ts
-
 import { apiGet, apiPost } from './client';
 import { DUMMY_MESSAGES as MOCK_MESSAGES } from '../../mocks/messages';
 import { delay } from '../utils';

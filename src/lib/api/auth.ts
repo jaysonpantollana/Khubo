@@ -1,15 +1,3 @@
-// @context: Authentication API
-// @purpose: signIn, signUp, signOut, getSession with mock backend fallback
-// @purpose: Credentials stored in localStorage under 'khubo_mock_users' key
-// @behavior: Tries real API first; falls back to mock on error (always uses mock since no real backend)
-// @behavior: signIn: checks stored credentials, returns {data: AuthSession, error} | {data: null, error: string}
-// @behavior: signUp: creates new user in localStorage, returns session
-// @behavior: signOut: removes auth_token from sessionStorage
-// @security: Passwords stored in PLAIN TEXT in localStorage - no hashing
-// @security: Auth token stored in sessionStorage, cleared on signOut only
-// @known-issues: UI only calls AuthContext.signIn(email), not this password-based signIn
-// @side-effects: Writes 'khubo_mock_users' to localStorage, writes 'auth_token' to sessionStorage
-
 import { apiPost, apiGet } from './client';
 import { delay } from '../utils';
 export interface AuthUser {

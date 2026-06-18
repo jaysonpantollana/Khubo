@@ -1,3 +1,10 @@
+// @context: Tenants modal — property tenant management
+// @purpose: Shows list of current tenants with room, payment status, tenancy status, contact info
+// @behavior: Static mock data with status badges (Paid/Review/Pending/Draft) and tenancy status indicators
+// @behavior: Each row shows client name, room number, email, payment status, and tenancy status
+// @dependencies: motion, lucide-react
+// @known-issues: All tenant data is static mock; no edit/action functionality
+
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';

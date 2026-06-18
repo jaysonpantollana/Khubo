@@ -1,12 +1,3 @@
-// @context: Global styles and Tailwind theme
-// @purpose: Tailwind CSS v4 directives, custom brand theme (primary #17294F, accent #2252D6), fonts, loader animation
-// @config: Fonts: Roboto (primary), Inter, Outfit, Playfair Display, Noto Serif via Google Fonts
-// @config: Dark mode via Tailwind 'class' strategy (toggled by ThemeContext on <html>)
-// @config: Custom --radius-* tokens from xs (0.125rem) to 4xl (2rem)
-// @known-issue: Global * { animation: none !important; transition: none !important } — DISABLES all CSS transitions/animations
-// @known-issue: Contradicts Motion library usage; all animations come from JS-based Motion, not CSS
-// @known-issue: .loader uses animation: flash despite the global override (uses !important on itself)
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800&family=Playfair+Display:ital,wght@1,700&family=Noto+Serif:ital,wght@1,400&family=Roboto:wght@300;400;500;700;900&display=swap');
 @import "tailwindcss";
 

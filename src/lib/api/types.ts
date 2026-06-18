@@ -1,7 +1,3 @@
-// @context: API response contracts
-// @purpose: Standardized response wrappers for all API calls; consumed by client.ts and all api/* modules
-// @security: ApiError.code could leak internal error codes if not sanitized
-// @dependencies: None
 export interface ApiResponse<T> {
   data: T;
   error: string | null;

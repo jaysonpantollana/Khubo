@@ -1,3 +1,9 @@
+// @context: Search history display — recent search chips
+// @purpose: Shows recent search queries as removable chips; each item clickable to re-search
+// @behavior: Renders history array as horizontal list of chips with remove (X) button
+// @behavior: Empty state (no history) returns null
+// @dependencies: motion, lucide-react
+
 import React from 'react';
 import { History, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';

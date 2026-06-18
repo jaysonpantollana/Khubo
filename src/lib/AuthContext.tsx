@@ -1,17 +1,3 @@
-// @context: Authentication state
-// @purpose: Provides mock auth context with session/user state, signIn (email-only), signOut
-// @purpose: No real authentication - all state is ephemeral React state
-// @behavior: State transitions:
-// @behavior:   ANONYMOUS (user=null) ──signIn(email)──► AUTHENTICATED (user={email})
-// @behavior:   AUTHENTICATED ──signOut()──► ANONYMOUS
-// @behavior: signIn sets user + session with email only; no password validation
-// @performance: No side effects from auth state changes
-// @security: NO REAL AUTH - mock only. User identity is just {email} stored in React state
-// @security: No tokens, no password, no session persistence across page reloads
-// @dependencies: None
-// @known-issues: signIn from api/auth.ts (password-based) is NOT wired to UI; UI uses this context's signIn(email) directly
-// @known-issues: setIsLoading is assigned but never referenced
-
 import React, { createContext, useContext, useState } from 'react';
 
 export interface MockUser {

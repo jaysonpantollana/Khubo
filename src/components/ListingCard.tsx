@@ -1,3 +1,10 @@
+// @context: Listing card — property preview card used in grids and carousels
+// @purpose: Displays listing image, title, location, price, rating, amenities, and host badge
+// @behavior: Supports compact layout (map sidebar) and full layout (grid); keyboard accessible (Enter/Space)
+// @behavior: Entrance animation via motion (opacity + y translate); optional disableInitialAnimation
+// @dependencies: Listing type, motion, lucide-react
+// @code-template: Pattern for listing display items: forward onClick + keyboard handlers
+
 import { Star, ShieldCheck } from 'lucide-react';
 import { Listing } from '../types';
 import { motion } from 'motion/react';

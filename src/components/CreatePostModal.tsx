@@ -1,3 +1,11 @@
+// @context: Create roommate post modal — form for roommate listing
+// @purpose: Form to create roommate post (applying or finding mode); includes personality traits/tags selection
+// @behavior: Loads user profile tags from localStorage; lets user write description and select traits
+// @behavior: Custom tag input with add functionality; creates Roommate-compatible post object
+// @side-effects: Reads localStorage for user_profile_tags; calls onPostCreated with new Roommate
+// @dependencies: Roommate type, motion, lucide-react
+// @known-issues: New post ID uses Math.random() (not stable stable for SSR)
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';

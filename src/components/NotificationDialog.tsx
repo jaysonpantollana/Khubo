@@ -1,3 +1,10 @@
+// @context: Notification history dialog — persistent notification list
+// @purpose: Shows all past toast notifications with timestamps and type icons; clear-all button
+// @behavior: Renders NotificationItem list; each item shows icon, message, and timestamp
+// @behavior: onClear empties all notifications; "No notifications yet" empty state
+// @dependencies: Toast type definitions, motion, lucide-react
+// @known-issues: IconMap uses Record<ToastType, ...> but assumes all types exist (they do)
+
 import { motion, AnimatePresence } from 'motion/react';
 import { Bell, X, CheckCircle, Info, AlertTriangle, XCircle, Clock } from 'lucide-react';
 import { ToastType } from './Toast';

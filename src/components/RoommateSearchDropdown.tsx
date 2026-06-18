@@ -1,3 +1,10 @@
+// @context: Roommate search dropdown — autocomplete for roommate search
+// @purpose: Real-time filtered roommate suggestions based on search query; matches name, university, tags, location
+// @behavior: useMemo filters ROOMMATES by search query; highlights matching text in results
+// @behavior: Click result → calls setSearchQuery + onSelectRoommate; "No results" empty state
+// @performance: useMemo prevents re-filtering on unrelated re-renders
+// @dependencies: ROOMMATES mock data, Roommate type, lucide-react
+
 import React, { useMemo } from 'react';
 import { Search, MapPin, TrendingUp, Users, ShieldCheck } from 'lucide-react';
 import { ROOMMATES } from '../mocks/roommates';

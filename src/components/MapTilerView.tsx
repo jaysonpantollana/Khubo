@@ -1,3 +1,12 @@
+// @context: MapTiler map display — interactive map component
+// @purpose: Renders a single-location MapTiler map with marker; lazy-loaded on demand
+// @behavior: Map loads when shouldLoadMap is true (or loadImmediately prop); shows marker at lat/lng
+// @behavior: When API key missing, shows fallback message with "Get a free key" link
+// @behavior: Handles missing style images via styleimagemissing event (silently adds transparent pixel)
+// @side-effects: MapTiler SDK initialization; DOM marker creation
+// @dependencies: @maptiler/sdk, lucide-react
+// @known-issues: apiKey not included in useEffect deps (stale closure if key changes); silent error handling for style images
+
 import React, { useEffect, useRef, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import "@maptiler/sdk/dist/maptiler-sdk.css";

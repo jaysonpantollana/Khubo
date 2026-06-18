@@ -1,3 +1,9 @@
+// @context: Theme toggle button — dark/light mode switch
+// @purpose: Button that toggles between light and dark theme via ThemeContext
+// @behavior: Shows Sun or Moon icon based on current theme; calls toggleTheme on click
+// @side-effects: Theme changes stored in localStorage via ThemeContext
+// @dependencies: ThemeContext (useTheme), lucide-react
+
 import React from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../lib/ThemeContext';

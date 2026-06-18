@@ -1,3 +1,10 @@
+// @context: Revenue analytics modal — line chart of daily revenue
+// @purpose: Shows property revenue trends with recharts LineChart; cycle types (Week/Month/Year) and property filter
+// @behavior: Static mock data; tab switching between cycle types; property dropdown filter
+// @performance: Uses recharts lightweight chart; static data — no API calls
+// @dependencies: Modal (ui/Modal), recharts, lucide-react
+// @known-issues: All data is static mock (no real API integration)
+
 import React, { useState } from 'react';
 import { X, ArrowUpRight, TrendingUp, DollarSign } from 'lucide-react';
 import { LineChart, Line, XAxis, ResponsiveContainer } from 'recharts';

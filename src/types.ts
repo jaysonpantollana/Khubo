@@ -1,11 +1,3 @@
-// @context: Core domain models + error registry + type flow map
-// @purpose: Defines all shared domain entities used across pages, components, API, and mocks
-// @purpose: Serves as single source of truth for all data shapes in the application
-// @security: None - no PII or secrets in these types
-// @performance: All interfaces are plain objects, no runtime cost; erased at compile time
-// @dependencies: None
-// @owner: Core team
-// @known-issues: No discriminated union for listing categories; category is free-text string
 //
 // @typeflow: UI (string input) → Validation (none) → Hook params → API layer → Mock data → Component state → Render
 // @typeflow: SearchDropdown string → useSearchHistory.storeSearch() → localStorage (JSON.stringify)

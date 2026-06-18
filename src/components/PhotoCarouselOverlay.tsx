@@ -1,3 +1,11 @@
+// @context: Photo gallery overlay — full-screen image carousel
+// @purpose: Full-screen image viewer with left/right navigation, keyboard controls, and image counter
+// @behavior: Opens with specified initialIndex; left/right arrows navigate; keyboard arrows + Escape supported
+// @behavior: Image counter display (e.g. "3 / 10"); click outside to close
+// @side-effects: useEffect for keyboard event listener
+// @dependencies: motion, lucide-react
+// @known-issues: useEffect deps may miss nextImage/prevImage/onClose (stale closure risk)
+
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';

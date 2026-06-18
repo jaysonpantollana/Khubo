@@ -1,3 +1,11 @@
+// @context: Edit listing modal — update existing property listing
+// @purpose: Pre-filled form with existing listing data; updates via supabase mock on submit
+// @behavior: Pre-populates all fields from listing prop; same field set as CreateListingModal
+// @behavior: Image shows current URL with preview; loading state during submit
+// @side-effects: Calls supabase.from('listings').update() on submit; calls onSuccess on completion
+// @dependencies: supabase mock, useAuth, Listing type, motion, lucide-react
+// @known-issues: Mock supabase update returns success without actual persistence
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Upload, XCircle, Loader2 } from 'lucide-react';

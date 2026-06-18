@@ -1,3 +1,11 @@
+// @context: Properties modal — landlord's property overview
+// @purpose: Shows property statistics with seeded random status/occupancy data for each listing
+// @behavior: Uses seededRandom for deterministic pseudo-random values per listing ID
+// @behavior: Shows listing status badge (Active/Review/Maintenance) and occupancy info
+// @performance: useMemo ensures stats are computed only when listings change
+// @dependencies: Modal (ui/Modal), Listing type, lucide-react
+// @known-issues: Uses Math.sin for seeded random (was previously Math.random during render)
+
 import React, { useMemo } from 'react';
 import { X, Building } from 'lucide-react';
 import { Listing } from '../types';

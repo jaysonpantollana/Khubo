@@ -1,3 +1,11 @@
+// @context: Home page hero section — search banner with dropdowns
+// @purpose: Full-width hero with background image, search bar, location/date/budget dropdowns, announcements toggle
+// @behavior: Search bar toggles between idle and active input states; dropdowns for location, dates, budget
+// @behavior: External click closes dropdowns; announcements overlay trigger; responsive layout
+// @side-effects: useEffect for click-outside handler and window resize listener
+// @dependencies: SearchDropdown, DateScrollPicker, AnnouncementsOverlay, motion, lucide-react
+// @known-issues: window.innerWidth initial check not reactive to resize (separate useEffect handles it)
+
 import React, { useState, useRef, useEffect } from "react";
 import {
   Search,

@@ -1,3 +1,10 @@
+// @context: Toast notification component — individual toast message
+// @purpose: Renders a single toast with type-specific icon, message, and close button
+// @behavior: Icon and colors depend on toast type (success/info/error/warning); close button calls onClose
+// @performance: Stateless display component — no re-render concerns
+// @dependencies: motion, lucide-react
+// @code-template: Pattern for type-specific UI config maps (icon, bg, textColor per type)
+
 import React from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle, Info, AlertTriangle, XCircle, X } from 'lucide-react';

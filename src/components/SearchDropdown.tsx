@@ -1,3 +1,10 @@
+// @context: Listing search dropdown — autocomplete for listing search
+// @purpose: Real-time filtered listing suggestions based on search query; matches title, location, category
+// @behavior: useMemo filters listings; shows top results with popularity indicator; click navigates to listing
+// @behavior: "Show all results" option to close dropdown and show full filtered results
+// @performance: useMemo prevents re-filtering on unrelated re-renders
+// @dependencies: useListings, Listing type, lucide-react, react-router-dom
+
 import React, { useMemo } from 'react';
 import { Search, MapPin, TrendingUp, Building, Star } from 'lucide-react';
 import { useListings } from '../hooks/useListings';

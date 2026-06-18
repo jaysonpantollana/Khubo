@@ -1,3 +1,11 @@
+// @context: Filter panel — price range, rating, sort controls
+// @purpose: Portal-based filter modal with min/max price sliders, minimum rating, and sort by dropdown
+// @behavior: Opens a floating filter panel on click; has Reset button to restore defaults
+// @behavior: Shows active filter indicator when non-default values selected (unless hideIndicator)
+// @side-effects: createPortal to document.body for overlay
+// @dependencies: motion, lucide-react, cn utility
+// @code-template: Pattern for adding filter UIs: define FilterState interface, emit changes via onFilterChange
+
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { SlidersHorizontal, X } from 'lucide-react';

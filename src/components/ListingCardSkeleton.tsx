@@ -1,3 +1,9 @@
+// @context: Listing card skeleton — loading placeholder
+// @purpose: Animated pulse skeleton matching ListingCard layout; supports compact variant
+// @behavior: Shows gray placeholder shapes with CSS animate-pulse; compact mode for map sidebar
+// @performance: Zero JS animation — pure CSS animate-pulse
+// @dependencies: None (pure divs)
+
 import React from 'react';
 
 interface ListingCardSkeletonProps {

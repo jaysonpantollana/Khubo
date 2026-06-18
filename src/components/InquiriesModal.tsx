@@ -1,3 +1,10 @@
+// @context: Inquiries modal — list of property inquiries from potential tenants
+// @purpose: Shows DUMMY_INQUIRIES with status, contact info, property reference, and reply action
+// @behavior: Tab-based filtering (All/Unread/Replied); status badges with color coding
+// @behavior: "Reply via Khubo" button placeholder; "View Property" link to navigate
+// @dependencies: motion, lucide-react, react-router-dom (useNavigate)
+// @known-issues: All data is static mock; reply button has no actual action
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Home } from 'lucide-react';

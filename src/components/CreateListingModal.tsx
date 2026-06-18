@@ -1,3 +1,11 @@
+// @context: Create listing modal — form for new property listing
+// @purpose: Multi-field form (title, description, price, category, image, amenities); submits to supabase mock
+// @behavior: Fields include title, description, price, category select, image upload, amenity checkboxes
+// @behavior: Image upload via URL input; form validation on required fields; loading spinner during submit
+// @side-effects: Calls supabase.from('listings').insert() on submit; creates portal-based modal
+// @dependencies: supabase mock, useAuth, motion, lucide-react
+// @known-issues: Mock supabase insert returns success without actual persistence
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Upload, XCircle, Loader2 } from 'lucide-react';

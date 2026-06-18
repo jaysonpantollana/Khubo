@@ -1,20 +1,3 @@
-// @context: Mock messaging seed data for development
-// @purpose: 5 dummy conversations + 5 dummy messages for Messages.tsx development
-// @purpose: Serves as seed data until real messaging backend is integrated
-// @schema: DUMMY_CONVERSATIONS[]: {id, name, avatar, lastMessage, time, unread, online}
-// @schema: DUMMY_MESSAGES[]: {id, text, sender (me | them), time}
-// @behavior: Messages.tsx reads both arrays directly (not through API layer)
-// @behavior: DUMMY_CONVERSATIONS shown in conversation sidebar; DUMMY_MESSAGES for active chat
-// @performance: In-memory; no async loading — instant access
-// @side-effects: None
-// @migration: When real backend arrives, replace with API calls from lib/api/messages.ts
-// @tests: None
-// @dependencies: None
-// @owner: Core team
-// @known-issues: No conversation list is returned from getConversations() mock (returns empty array)
-// @known-issues: DUMMY_CONVERSATIONS does NOT match Conversation interface (different field names — no participantId/participantName/participantAvatar)
-// @known-issues: No unread count updates, no real-time message delivery
-
 export const DUMMY_CONVERSATIONS = [
   {
     id: '1',

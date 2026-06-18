@@ -1,3 +1,8 @@
+// @context: Host profile card — displayed on listing detail page
+// @purpose: Shows host avatar, name, rating, review count, hosting duration, work, location; message button
+// @behavior: Displays host stats inline; "Message host" button triggers onMessageClick callback
+// @dependencies: lucide-react (Star, Briefcase, Globe, MessageCircle, BadgeCheck)
+
 import React from 'react';
 import { Star, Briefcase, Globe, MessageCircle, BadgeCheck } from 'lucide-react';
 

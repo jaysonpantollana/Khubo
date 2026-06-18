@@ -1,3 +1,9 @@
+// @context: Site footer — links, newsletter signup, mobile accordion
+// @purpose: Footer with newsletter signup, site links (Support, Community, Hosting, Khubo), copyright
+// @behavior: Mobile: accordion sections (click to expand/collapse); Desktop: all sections visible inline
+// @behavior: Newsletter email input with submit button
+// @dependencies: lucide-react (ArrowRight, ChevronDown)
+
 import React, { useState } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 

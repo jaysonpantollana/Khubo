@@ -1,3 +1,9 @@
+// @context: Roommate profile card — used in carousels
+// @purpose: Displays roommate avatar, name, age, gender, university, location, tags, budget; action button
+// @behavior: Click opens profile modal via onProfileClick; hover lift animation via motion
+// @dependencies: Roommate type, lucide-react, motion
+// @code-template: Pattern for new card components: forward props + onClick; use motion for lift animation
+
 import React from 'react';
 import { MapPin, GraduationCap } from 'lucide-react';
 import { Roommate } from '../types';

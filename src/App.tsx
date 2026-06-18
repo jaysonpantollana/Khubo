@@ -1,15 +1,3 @@
-// @context: Root application layout — provider hierarchy, routing, lazy loading, code splitting
-// @purpose: Assembles the entire app from providers → router → error boundary → lazy pages
-// @purpose: Every page is code-split; 8 chunks total (1 per page) + vendor chunks
-// @security: AuthProvider provides useAuth() context; NO routes are actually protected (all render)
-// @security: No CSRF, no CSP headers configured at this layer
-// @performance: 8 lazy chunks via React.lazy + Suspense; spinner fallback shown while chunk loads
-// @performance: Bundle split: maptiler (~500KB), recharts+d3, lucide, motion, vendor (everything else)
-// @dependencies: ThemeContext → AuthContext → ToastProvider → MotionConfig → HashRouter → pages
-// @owner: Core team
-// @tests: None yet — no integration tests for routing behavior
-// @config: HashRouter selected for static hosting compat (ADR-001)
-// @config: Feature flags: dark mode (ThemeContext), mock auth (AuthContext), mock data (API fallback)
 //
 // @adr: ADR-001 — HashRouter over BrowserRouter: chosen for static hosting without server URL rewriting
 // @adr: ADR-003 — Context API over Redux: only 3 global concerns, no complex state interactions

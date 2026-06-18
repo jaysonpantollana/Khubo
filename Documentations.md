@@ -67,6 +67,19 @@ Every technique below is annotated directly in the source code as context-aware 
 | 49 | Capacity Planning Documentation | `vite.config.ts:1` (chunkSizeWarningLimit: 2000KB) |
 | 50 | Communication Patterns Documentation | `src/lib/api/*.ts` (all modules document sync/async patterns) |
 
+### Coverage
+
+All 50 source files are now annotated with `@context`, `@purpose`, and domain-specific tags:
+
+- **Pages (8)**: Home, CategoryListings, ListingDetail, Messages, Maps, Profile, RoommateFinder, ManageListings
+- **Components (38)**: AuthModal, BottomNav, CameraOverlay, AnnouncementsOverlay, AnalyticsModal, Categories, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, ErrorBoundary, ErrorScreen, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailSkeleton, ListingModal, MapTilerView, Modal, Navbar, NotificationDialog, PhotoCarouselOverlay, PropertiesModal, ReviewBreakdown, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommateSearchDropdown, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, ThemeToggle, Toast, ToastProvider, UploadModal, ErrorExample
+- **Hooks (6)**: useListings, useListing, useSearchHistory, useReducedMotion, useErrorHandler, useListingsFilter, useFocusTrap
+- **API (6)**: client, auth, listings, messages, roommates, types
+- **Lib (5)**: AuthContext, ThemeContext, animations, utils, api/index
+- **Mocks (4)**: listings, messages, roommates, supabase
+- **Config (5)**: App, main, index.css, vite.config, eslint.config
+- **Root (3)**: types, package.json, .env.example
+
 ### Quick Navigation
 
 - **All annotated source files**: See `@context` comments in `src/*.ts`, `vite.config.ts`

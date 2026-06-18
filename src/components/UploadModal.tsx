@@ -1,3 +1,11 @@
+// @context: File upload modal — drag-and-drop file picker
+// @purpose: Modal for uploading files (images, videos, documents) with drag-and-drop, file type validation, and size display
+// @behavior: Drag-and-drop zone with click-to-browse fallback; file type filtering via acceptedTypes prop
+// @behavior: Shows selected file name, type, and size; max file size check (default 10MB)
+// @side-effects: FileReader for preview (not currently used); creates portal
+// @dependencies: motion, lucide-react
+// @known-issues: MAX_FILE_SIZE is hardcoded at 10MB; no image/video preview before upload
+
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Upload, X, Shield, FileText } from 'lucide-react';

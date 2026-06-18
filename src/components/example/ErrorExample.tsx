@@ -1,3 +1,10 @@
+// @context: Error handling example component (development only)
+// @purpose: Demonstrates useErrorHandler hook and ErrorBoundary pattern with async and sync error scenarios
+// @behavior: AsyncErrorComponent simulates a failed API call; SyncErrorComponent throws during render
+// @behavior: Both errors are caught by ErrorBoundary which shows ErrorScreen
+// @dependencies: useErrorHandler, ErrorBoundary, lucide-react
+// @known-issues: This file is for demo purposes only — not used in production routes
+
 import React, { useState } from 'react';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import ErrorBoundary from '../errors/ErrorBoundary';

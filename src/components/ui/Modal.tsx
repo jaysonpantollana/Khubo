@@ -1,13 +1,3 @@
-// @context: Reusable modal wrapper — code generation template pattern
-// @purpose: Standard modal backdrop + content with animation presets from lib/animations.ts
-// @purpose: Eliminates ~30 lines of duplicate code across 10+ modal components
-// @purpose: Serves as the canonical template for all new modal implementations
-// @behavior: Shows/hides with AnimatePresence; backdrop click closes modal
-// @behavior: Props: isOpen, onClose, children, maxWidth (default max-w-lg), className
-// @behavior: Children render inside the white rounded-2xl container with shadow
-// @performance: Returns null when not open (no DOM overhead — tree is fully unmounted)
-// @performance: AnimatePresence handles exit animations even when parent unmounts children
-// @code-template: Copy this pattern for new modals:
 //   <Modal isOpen={isOpen} onClose={handleClose} maxWidth="max-w-md">
 //     <div className="p-6">{content}</div>
 //   </Modal>

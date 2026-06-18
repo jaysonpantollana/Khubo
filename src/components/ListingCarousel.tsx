@@ -1,3 +1,10 @@
+// @context: Horizontal listing carousel — scrollable row of ListingCards
+// @purpose: Reusable carousel component with title, arrows, and skeleton loading; used on Home page for sections
+// @behavior: Renders listings in horizontal scrollable container; uses sliceStart/sliceEnd for chunking
+// @behavior: Shows skeleton cards during loading; prev/next scroll buttons for desktop
+// @dependencies: ListingCard, ListingCardSkeleton, Listing type, lucide-react
+// @code-template: Pattern for adding new listing sections: <ListingCarousel title="..." listings={...} loading={...} />
+
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Listing } from '../types';

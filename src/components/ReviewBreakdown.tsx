@@ -1,3 +1,8 @@
+// @context: Review breakdown component — rating dimension bars
+// @purpose: Shows detailed rating breakdown across 6 dimensions (cleanliness, accuracy, check-in, communication, location, value)
+// @behavior: Displays overall rating with total count; progress bars for each dimension
+// @dependencies: None (pure JSX with inline styles for bar widths)
+
 import React from 'react';
 
 interface ReviewBreakdownProps {

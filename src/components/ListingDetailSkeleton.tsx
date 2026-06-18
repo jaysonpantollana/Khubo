@@ -1,3 +1,9 @@
+// @context: Listing detail page skeleton — full-page loading placeholder
+// @purpose: Matches ListingDetail layout: header, gallery grid, info columns, booking sidebar
+// @behavior: Uses CSS animate-pulse; mirrors the full responsive layout of ListingDetail
+// @performance: Pure CSS — no JS animation overhead
+// @dependencies: None
+
 import React from 'react';
 
 export default function ListingDetailSkeleton() {

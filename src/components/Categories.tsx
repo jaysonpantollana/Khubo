@@ -1,3 +1,11 @@
+// @context: Horizontal scrollable category selector
+// @purpose: Displays category icons in a horizontal scroll list; tracks click counts for popularity-based reordering
+// @behavior: Categories randomize on mount (except "ALL" which stays first); click tracking stored in localStorage
+// @behavior: Clicking a category sets it as selected; scrollable with dot indicators
+// @side-effects: localStorage read/write for click counts; Math.random during render for shuffle
+// @dependencies: lucide-react (dynamic icon), CATEGORIES mock data, cn utility
+// @known-issues: Math.random() during render (seed not stable — will re-randomize on re-render)
+
 import React, { useState, useEffect, useMemo } from 'react';
 import * as Icons from 'lucide-react';
 import { CATEGORIES } from '../mocks/listings';

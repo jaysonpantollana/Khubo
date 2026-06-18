@@ -1,16 +1,3 @@
-// @context: Centralized Motion animation presets — shared across all components
-// @purpose: Shared transition + variant objects for all Motion components in the app
-// @purpose: Includes reduced-motion variants for accessibility (consumed by useReducedMotion hook or MotionConfig)
-// @purpose: Shared modalBackdrop/modalContent/dropdownReveal eliminate ~30 lines of duplication per modal (10+ modal components)
-// @behavior: Usage: <motion.div {...modalBackdrop} /> or <motion.div {...FADE_UP} transition={TRANSITIONS.SPRING}>
-// @performance: All objects are module-level constants — zero runtime allocation, compiled once
-// @performance: EASE_OUT cubic-bezier [0.23, 1, 0.32, 1] optimized for natural-feeling UI transitions
-// @performance: Reduced variants set duration to 0.01s for near-instant transitions (accessibility compliance)
-// @dependencies: motion/react (types only — runtime values, not imports)
-// @owner: Core team
-// @tests: None — visual regression tests would capture animation timing regressions
-// @code-template: Pattern for new modals: import { modalBackdrop, modalContent } from 'lib/animations' — see Modal.tsx
-
 export const EASE_OUT = [0.23, 1, 0.32, 1];
 
 export const TRANSITIONS = {

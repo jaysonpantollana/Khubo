@@ -1,11 +1,3 @@
-// @context: Application entry point
-// @purpose: Mounts React app, applies global error boundary, handles session redirect on fresh loads
-// @security: No security measures at this level
-// @performance: Error boundary wraps entire tree - any uncaught error shows ErrorScreen
-// @dependencies: App.tsx, index.css, ErrorBoundary
-// @config: sessionStorage 'currentRunId' key used for fresh-run detection
-// @owner: Core team
-
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';

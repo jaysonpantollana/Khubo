@@ -1,3 +1,11 @@
+// @context: Roommate page hero — search banner with location/budget dropdowns
+// @purpose: Visual hero section for roommate finder; contains search bar, announcements, and filter dropdowns
+// @behavior: Search bar toggles between idle and active states; location/budget dropdowns
+// @behavior: Announcements overlay toggle; external event click handling for dropdown close
+// @side-effects: useEffect for click-outside handling
+// @dependencies: RoommateSearchDropdown, AnnouncementsOverlay, motion, lucide-react, react-router-dom
+// @known-issues: window.innerWidth check on render (not reactive without resize listener)
+
 import { Search, MapPin, Megaphone, ChevronDown, Wallet, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router-dom';

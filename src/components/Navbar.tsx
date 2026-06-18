@@ -1,3 +1,10 @@
+// @context: Top navigation bar — logo, search, user menu, notifications
+// @purpose: Main navigation with logo link, "Khubo your home" CTA, notifications bell, user profile menu
+// @behavior: Click-outside to close user menu dropdown; AuthModal for unauthenticated users
+// @behavior: Notifications bell shows unread count and opens NotificationDialog via ToastProvider
+// @behavior: User menu shows profile link, notifications, and logout options
+// @dependencies: useAuth, useToast, AuthModal, CreateListingModal, react-router-dom, motion, lucide-react
+
 import { useState, useRef, useEffect } from 'react';
 import { Search, Globe, Menu, User, LogOut, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';

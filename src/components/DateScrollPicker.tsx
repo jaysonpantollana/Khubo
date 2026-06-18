@@ -1,3 +1,10 @@
+// @context: Date scroll picker — month/day/year scrolling selector
+// @purpose: Three-column scrollable date picker (Month, Day, Year) with snap-to-item behavior
+// @behavior: Each column scrolls independently; items snap to center via scroll padding; calls onDateChange with selected values
+// @behavior: Highlights the centered/selected item in each column; viewport height configurable
+// @performance: useMemo for day generation (accounts for selected month/year for correct day count)
+// @dependencies: react (useRef, useEffect, useState, useMemo)
+
 import React, { useRef, useEffect, useState, useMemo } from "react";
 
 interface DateScrollPickerProps {

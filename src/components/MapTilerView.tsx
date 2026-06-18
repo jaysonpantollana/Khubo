@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
-import { Home } from 'lucide-react';
 
 interface MapTilerViewProps {
   lat: number;
@@ -12,11 +11,12 @@ interface MapTilerViewProps {
 const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maptilersdk.Map | null>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
 
   useEffect(() => {
-    if (map.current) return; // stops map from initializing more than once
+    if (map.current) return;
 
     if (!apiKey) {
       console.warn('MapTiler API Key is missing. Please add VITE_MAPTILER_API_KEY to your secrets.');
@@ -32,7 +32,15 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
         zoom: 14,
         navigationControl: false,
         geolocateControl: false,
+        fadeDuration: 0,
+        transformRequest: (url: string) => {
+          if (url.includes('maptiler.com') || url.includes('maptiler')) {
+            return { url };
+          }
+        },
       });
+
+      map.current.on('load', () => setMapLoaded(true));
 
       // Intercept and resolve missing style images to suppress MapTiler road/space warnings in console
       map.current.on('styleimagemissing', (e: any) => {
@@ -153,6 +161,12 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
         </>
       )}
 
+      {!!apiKey && !mapLoaded && (
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
+          <div className="w-10 h-10 border-4 border-neutral-200 border-t-[#17294F] rounded-full animate-spin mb-3" />
+          <p className="text-xs text-neutral-500 font-medium">Loading map...</p>
+        </div>
+      )}
       <div ref={mapContainer} className="w-full h-full relative z-0" />
     </div>
   );

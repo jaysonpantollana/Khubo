@@ -38,6 +38,7 @@ export default function Maps() {
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
 
+  const [mapLoaded, setMapLoaded] = useState(false);
   const hasSelections = selectedLocation || selectedDateStr || selectedBudget;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -118,6 +119,11 @@ export default function Maps() {
     return dataListings.filter((l) => l.lat && l.lng); // Only show listings with coordinates
   }, [searchQuery, LISTINGS, filters]);
 
+  const selectedListingRef = useRef(selectedListing);
+  useEffect(() => {
+    selectedListingRef.current = selectedListing;
+  }, [selectedListing]);
+
   const updateMarkers = React.useCallback(() => {
     if (!map.current) return;
 
@@ -131,7 +137,7 @@ export default function Maps() {
       if (listing.lat && listing.lng) {
         const el = document.createElement("div");
         el.className = "custom-marker";
-        const isActive = selectedListing === listing.id;
+        const isActive = selectedListingRef.current === listing.id;
 
         el.innerHTML = `
           <div style="cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;">
@@ -189,7 +195,7 @@ export default function Maps() {
         markers.current[listing.id] = marker;
       }
     });
-  }, [filteredListings, selectedListing]);
+  }, [filteredListings]);
 
   const updateMarkersRef = useRef(updateMarkers);
   useEffect(() => {
@@ -205,10 +211,16 @@ export default function Maps() {
     map.current = new maptilersdk.Map({
       container: mapContainer.current!,
       style: maptilersdk.MapStyle.STREETS,
-      center: [124.2442, 8.2415], // Iligan City center
+      center: [124.2442, 8.2415],
       zoom: 13,
       navigationControl: false,
       geolocateControl: false,
+      fadeDuration: 0,
+      transformRequest: (url: string) => {
+        if (url.includes('maptiler.com') || url.includes('maptiler')) {
+          return { url };
+        }
+      },
     });
 
     // Intercept and resolve missing style images to suppress MapTiler road/space warnings in console
@@ -227,6 +239,7 @@ export default function Maps() {
 
     map.current.on("load", () => {
       updateMarkersRef.current();
+      setMapLoaded(true);
     });
   }, []);
 
@@ -242,6 +255,27 @@ export default function Maps() {
   useEffect(() => {
     updateMarkers();
   }, [updateMarkers]);
+
+  useEffect(() => {
+    if (!map.current || !mapLoaded) return;
+    Object.entries(markers.current).forEach(([id, marker]) => {
+      const el = marker.getElement();
+      const svg = el.querySelector('svg');
+      if (!svg) return;
+      const paths = svg.querySelectorAll<SVGPathElement>('path, circle');
+      const isActive = selectedListing === id;
+      const color = isActive ? '#000' : '#17294F';
+      paths.forEach((p) => {
+        if (p.getAttribute('fill') === '#000' || p.getAttribute('fill') === '#17294F') {
+          p.setAttribute('fill', color);
+        }
+      });
+      const label = el.querySelector<HTMLDivElement>('[style*="background"]');
+      if (label) {
+        label.style.background = color;
+      }
+    });
+  }, [selectedListing, mapLoaded]);
 
   const handleListingClick = (listing: Listing) => {
     setSelectedListing(listing.id);
@@ -657,6 +691,12 @@ export default function Maps() {
                   Get a free key
                 </a>
               </div>
+            </div>
+          )}
+          {!mapLoaded && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
+              <div className="w-12 h-12 border-4 border-neutral-200 border-t-[#17294F] rounded-full animate-spin mb-4" />
+              <p className="text-sm text-neutral-500 font-medium">Loading map...</p>
             </div>
           )}
           <div ref={mapContainer} className="w-full h-full" />

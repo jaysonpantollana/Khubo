@@ -152,9 +152,6 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
             </div>
           </div>
 
-          <div className="absolute inset-0 z-40 bg-white/20 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
-          </div>
-
           {/* Fallback Marker (Only visible when live map is not active) */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] pointer-events-none z-10 flex flex-col items-center">
             <div className="w-16 h-16 bg-[#2252D6]/10 rounded-full animate-ping absolute top-0" />

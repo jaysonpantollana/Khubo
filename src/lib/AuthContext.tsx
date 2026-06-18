@@ -25,8 +25,9 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSession] = useState<MockSession | null>(null);
-  const [user, setUser] = useState<MockUser | null>(null);
+  // Auto-sign-in a mock user on mount so pages like ManageListings don't redirect
+  const [session, setSession] = useState<MockSession | null>({ user: { email: 'demo@khubo.ph' } });
+  const [user, setUser] = useState<MockUser | null>({ email: 'demo@khubo.ph' });
   const [isLoading] = useState(false);
 
   const signOut = async () => {

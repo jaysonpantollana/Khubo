@@ -182,15 +182,15 @@ export default function Maps() {
 
     map.current = new maptilersdk.Map({
       container: mapContainer.current!,
-      style: maptilersdk.MapStyle.STREETS,
+      style: maptilersdk.MapStyle.DATAVIZ.LIGHT,
       center: [124.2442, 8.2415],
-      zoom: 13,
+      zoom: 12,
+      maxZoom: 18,
       navigationControl: false,
       geolocateControl: false,
       fadeDuration: 0,
     });
 
-    // Intercept and resolve missing style images to suppress MapTiler road/space warnings in console
     map.current.on("styleimagemissing", (e: { id?: string }) => {
       try {
         if (e && e.id && map.current) {
@@ -200,20 +200,21 @@ export default function Maps() {
           map.current.addImage(e.id, { width, height, data });
         }
       } catch {
-        // ignore any errors adding dummy fallback
+        // ignore
       }
     });
 
     map.current.on("load", () => {
       updateMarkersRef.current();
       setMapLoaded(true);
+      setStaticMapOpacity(0);
+      setTimeout(() => setStaticMapVisible(false), 350);
     });
 
-    // Scale all markers with zoom level
     map.current.on("zoom", () => {
       const zoom = map.current!.getZoom();
       Object.values(markerPins.current).forEach((pin) => {
-        const scale = Math.pow(1.25, zoom - 13);
+        const scale = Math.pow(1.25, zoom - 12);
         pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
       });
     });

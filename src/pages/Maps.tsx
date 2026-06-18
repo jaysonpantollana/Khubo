@@ -575,6 +575,7 @@ export default function Maps() {
                       listing={listing}
                       onClick={() => navigate(`/listing/${listing.id}`)}
                       compact={true}
+                      disableInitialAnimation
                     />
                   </div>
                 ))

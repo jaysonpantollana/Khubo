@@ -12,8 +12,9 @@ import { ListingCarousel } from "../components/ListingCarousel";
 import { useListings } from "../hooks/useListings";
 import { useListingsFilter } from "../hooks/useListingsFilter";
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { initMapPreload, isMapReady } from "../lib/mapPreloader";
 import {
   Search,
   MapPin,

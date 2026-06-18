@@ -1,6 +1,6 @@
 // @context: Map preloader singleton — initializes MapTiler map in background
-// @purpose: Pre-renders the interactive map on app mount so it's 100% ready when user navigates to /maps
-// @behavior: Creates a hidden off-screen container, initializes MapTiler map, stores instance
+// @purpose: Pre-renders the interactive map on Home mount so it's 100% ready when user navigates to /maps
+// @behavior: Home.tsx mounts a hidden off-screen container; initMapPreload() initializes MapTiler in it
 // @behavior: Maps.tsx consumes the preloaded map via takeMap() and re-parents the container
 // @dependencies: @maptiler/sdk
 
@@ -12,17 +12,17 @@ let mapReady = false;
 let mapLoading = false;
 let onLoadCallbacks: (() => void)[] = [];
 
-export function startMapPreload(apiKey: string) {
-  if (mapInstance || mapLoading || !apiKey) return;
+/**
+ * Initialize the map preloader with a container element provided by the host component.
+ * The container should be mounted in the DOM with real dimensions but positioned off-screen.
+ * Called by Home.tsx to start preloading the map as soon as the Home page renders.
+ */
+export function initMapPreload(container: HTMLDivElement, apiKey: string) {
+  if (mapInstance || mapLoading || !apiKey || !container) return;
   mapLoading = true;
 
   maptilersdk.config.apiKey = apiKey;
-
-  // Create hidden off-screen container
-  mapContainer = document.createElement("div");
-  mapContainer.style.cssText =
-    "position:fixed;left:-9999px;top:-9999px;width:1200px;height:800px;visibility:hidden;z-index:-1;";
-  document.body.appendChild(mapContainer);
+  mapContainer = container;
 
   mapInstance = new maptilersdk.Map({
     container: mapContainer,
@@ -71,7 +71,6 @@ export function takeMap(): {
 } | null {
   if (!mapContainer || !mapInstance) return null;
 
-  // Reset singleton so a new preload can start if needed
   const result = { container: mapContainer, map: mapInstance };
   mapContainer = null;
   mapInstance = null;
@@ -79,4 +78,16 @@ export function takeMap(): {
   mapLoading = false;
 
   return result;
+}
+
+/**
+ * Reset the preloader singleton so a new preload cycle can start.
+ * Called by Maps.tsx on unmount so Home.tsx can re-init on next visit.
+ */
+export function resetMapPreload() {
+  mapContainer = null;
+  mapInstance = null;
+  mapReady = false;
+  mapLoading = false;
+  onLoadCallbacks = [];
 }

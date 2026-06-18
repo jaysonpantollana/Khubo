@@ -558,7 +558,7 @@ export default function Maps() {
                 Array.from({ length: 6 }).map((_, i) => (
                   <div
                     key={`skeleton-map-${i}`}
-                    className="transition-all duration-300 rounded-xl"
+                    className="rounded-xl"
                   >
                     <ListingCardSkeleton compact={true} />
                   </div>

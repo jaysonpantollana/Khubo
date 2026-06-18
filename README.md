@@ -46,6 +46,7 @@ Built with React, TypeScript, and Tailwind CSS.
 - **Responsive Design** - Fully optimized for mobile, tablet, and desktop devices
 - **Smooth Animations** - Polished UI transitions using Motion library with accessibility-conscious reduced motion support
 - **Toast Notifications** - Real-time feedback for user actions
+- **Error Boundaries** - Graceful error handling with fallback UI components
 
 ---
 
@@ -55,8 +56,6 @@ Built with React, TypeScript, and Tailwind CSS.
 
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
 - npm or yarn
-- A [Gemini API key](https://ai.google.dev/) (for AI features)
-- A [Supabase](https://supabase.com/) project (for authentication and database)
 - A [MapTiler](https://www.maptiler.com/) API key (for maps functionality)
 
 ### Installation
@@ -79,9 +78,6 @@ Built with React, TypeScript, and Tailwind CSS.
    Create a `.env.local` file in the root directory with the following:
 
    ```env
-   GEMINI_API_KEY=your_gemini_api_key
-   VITE_SUPABASE_URL=your_supabase_url
-   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
    VITE_MAPTILER_API_KEY=your_maptiler_api_key
    ```
 
@@ -144,6 +140,7 @@ Built with React, TypeScript, and Tailwind CSS.
 - **Motion (Framer Motion)** - Production-ready animation library
 - **Lucide React** - Beautiful, consistent icon set
 - **clsx & tailwind-merge** - Conditional className utilities
+- **Recharts** - Composable charting library for analytics
 
 ### Backend & Services
 - **Supabase** - Backend-as-a-Service for authentication and database
@@ -156,29 +153,46 @@ Built with React, TypeScript, and Tailwind CSS.
 
 ```
 khubo/
-├── public/                    # Static assets
+├── public/                        # Static assets
 ├── src/
-│   ├── components/           # Reusable UI components
-│   │   ├── ui/              # Base UI components
-│   │   ├── errors/          # Error boundary components
-│   │   └── *.tsx            # Feature components
-│   ├── pages/               # Route-level components
-│   ├── hooks/               # Custom React hooks
-│   ├── lib/                 # Core libraries and contexts
-│   │   ├── api/             # API integration layer
-│   │   ├── AuthContext.tsx   # Authentication provider
-│   │   └── ThemeContext.tsx  # Theme provider
-│   ├── mocks/               # Mock data for development
-│   ├── data/                # Static data files
-│   ├── types.ts             # TypeScript type definitions
-│   ├── App.tsx              # Root component with routing
-│   └── main.tsx             # Application entry point
-├── index.html               # HTML template
-├── package.json             # Dependencies and scripts
-├── tsconfig.json            # TypeScript configuration
-├── vite.config.ts           # Vite configuration
-├── tailwind.config.js       # Tailwind CSS configuration
-└── eslint.config.js         # ESLint configuration
+│   ├── components/               # Reusable UI components
+│   │   ├── ui/                   # Base UI components (Modal, ErrorScreen)
+│   │   ├── errors/               # Error boundary components
+│   │   ├── example/              # Example components for reference
+│   │   └── *.tsx                 # Feature components (40+ files)
+│   ├── pages/                    # Route-level components (8 pages)
+│   ├── hooks/                    # Custom React hooks
+│   │   ├── useErrorHandler.ts    # Error handling hook
+│   │   ├── useListing.ts         # Single listing fetcher
+│   │   ├── useListings.ts        # Listings collection fetcher
+│   │   ├── useReducedMotion.ts   # Motion preference detector
+│   │   └── useSearchHistory.ts   # Search history manager
+│   ├── lib/                      # Core libraries and contexts
+│   │   ├── api/                  # API integration layer
+│   │   │   ├── auth.ts           # Authentication API
+│   │   │   ├── client.ts         # API client setup
+│   │   │   ├── listings.ts       # Listings API
+│   │   │   ├── messages.ts       # Messages API
+│   │   │   ├── roommates.ts      # Roommates API
+│   │   │   └── types.ts          # API type definitions
+│   │   ├── AuthContext.tsx        # Authentication provider
+│   │   ├── ThemeContext.tsx       # Theme provider
+│   │   ├── animations.ts         # Animation presets and variants
+│   │   └── utils.ts              # Utility functions
+│   ├── mocks/                    # Mock data for development
+│   │   ├── listings.ts           # Mock listing data
+│   │   ├── messages.ts           # Mock message data
+│   │   ├── roommates.ts          # Mock roommate data
+│   │   └── supabase.ts           # Mock Supabase client
+│   ├── types.ts                  # TypeScript type definitions
+│   ├── App.tsx                   # Root component with routing
+│   └── main.tsx                  # Application entry point
+├── index.html                    # HTML template
+├── package.json                  # Dependencies and scripts
+├── tsconfig.json                 # TypeScript configuration
+├── vite.config.ts                # Vite configuration
+├── tailwind.config.js            # Tailwind CSS configuration
+└── eslint.config.js              # ESLint configuration
 ```
 
 ---

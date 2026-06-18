@@ -23,10 +23,9 @@ const data = [
 interface AnalyticsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  listingTitle?: string;
 }
 
-export function AnalyticsModal({ isOpen, onClose, listingTitle }: AnalyticsModalProps) {
+export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
   const [timeframe, setTimeframe] = useState<'Daily' | 'Weekly' | 'Monthly'>('Weekly');
 
   return (

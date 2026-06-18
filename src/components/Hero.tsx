@@ -158,7 +158,10 @@ export default function Hero({
                     />
                     {searchQuery && (
                       <button
-                        onClick={() => setSearchQuery("")}
+                        onClick={() => {
+                          setSearchQuery("");
+                          setHideDropdown(true);
+                        }}
                         className="p-1 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
                         aria-label="Clear search"
                       >

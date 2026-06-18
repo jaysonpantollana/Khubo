@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
-import { Search, Globe, Menu, User, LogOut } from 'lucide-react';
+import { Search, Globe, Menu, User, LogOut, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../lib/AuthContext';
 import { AuthModal } from './AuthModal';
 import { CreateListingModal } from './CreateListingModal';
+import { useToast } from './ToastProvider';
 import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const { user, signOut } = useAuth();
+  const { showToast, openNotifications, notifications } = useToast();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -90,6 +92,18 @@ export default function Navbar() {
             >
               Khubo your home
             </div>
+            <button
+              onClick={openNotifications}
+              aria-label="Notifications"
+              className="hidden sm:flex relative p-3 hover:bg-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+            >
+              <Bell size={18} />
+              {notifications.length > 0 && (
+                <span className="absolute top-2 right-2 w-4 h-4 bg-red-500 text-white text-[9px] font-bold flex items-center justify-center rounded-full border border-white">
+                  {notifications.length > 9 ? '9+' : notifications.length}
+                </span>
+              )}
+            </button>
             <div
               role="button"
               tabIndex={0}
@@ -211,7 +225,7 @@ export default function Navbar() {
         isOpen={isCreateListingOpen}
         onClose={() => setIsCreateListingOpen(false)}
         onSuccess={() => {
-          alert('Listing created successfully!');
+          showToast('Listing created successfully!');
         }}
       />
     </header>

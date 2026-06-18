@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../lib/AuthContext';
+import { useToast } from '../components/ToastProvider';
 import { supabase } from '../mocks/supabase';
 import { EditListingModal } from '../components/EditListingModal';
 import { CreateListingModal } from '../components/CreateListingModal';
@@ -39,6 +40,7 @@ import { InquiriesModal } from '../components/InquiriesModal';
 export default function Profile() {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const { showToast } = useToast();
   const [isLandlord, setIsLandlord] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false);
@@ -51,8 +53,8 @@ export default function Profile() {
   
   const menuItems = [
     { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
-    { title: 'Account settings', icon: Settings, action: () => alert('Account settings clicked') },
-    { title: 'Help Center', icon: HelpCircle, action: () => alert('Help Center clicked') },
+    { title: 'Account settings', icon: Settings, action: () => showToast('Account settings clicked', 'info') },
+    { title: 'Help Center', icon: HelpCircle, action: () => showToast('Help Center clicked', 'info') },
   ];
   
   const [myListings, setMyListings] = useState<Listing[]>([]);
@@ -216,7 +218,7 @@ export default function Profile() {
         });
 
         if (error) {
-          alert('Login failed: ' + error.message);
+          showToast('Login failed: ' + error.message, 'error');
           setIsSigningUp(false);
           return;
         }
@@ -233,7 +235,7 @@ export default function Profile() {
             setIsLandlord(true);
             setShowSignupModal(false);
           } else {
-            alert('This account is not registered as a landlord.');
+            showToast('This account is not registered as a landlord.', 'error');
           }
         }
       } else {
@@ -243,7 +245,7 @@ export default function Profile() {
         });
 
         if (error) {
-          alert('Signup failed: ' + error.message);
+          showToast('Signup failed: ' + error.message, 'error');
           setIsSigningUp(false);
           return;
         }
@@ -262,7 +264,7 @@ export default function Profile() {
         }
       }
     } catch (e: unknown) {
-      alert(e instanceof Error ? e.message : 'An error occurred');
+      showToast(e instanceof Error ? e.message : 'An error occurred', 'error');
     }
 
     setIsSigningUp(false);

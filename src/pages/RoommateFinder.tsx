@@ -300,7 +300,10 @@ export default function RoommateFinder() {
                           />
                           {searchQuery && (
                             <button
-                              onClick={() => setSearchQuery("")}
+                              onClick={() => {
+                                setSearchQuery("");
+                                setHideStickyDropdown(true);
+                              }}
                               className="p-1 hover:bg-neutral-100 rounded-full transition-colors flex-shrink-0"
                               aria-label="Clear search"
                             >
@@ -838,7 +841,10 @@ export default function RoommateFinder() {
                 Try adjusting your filters to find more potential matches.
               </p>
               <button
-                onClick={() => setSelectedTag("ALL")}
+                onClick={() => {
+                  setSelectedTag("ALL");
+                  setSearchQuery("");
+                }}
                 className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800 transition"
               >
                 Clear all filters

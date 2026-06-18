@@ -295,7 +295,10 @@ export default function Home() {
                           />
                           {searchQuery && (
                             <button
-                              onClick={() => setSearchQuery("")}
+                              onClick={() => {
+                                setSearchQuery("");
+                                setHideStickyDropdown(true);
+                              }}
                               className="p-1 hover:bg-neutral-100 rounded-full transition-colors mr-2 flex-shrink-0"
                               aria-label="Clear search"
                             >
@@ -897,6 +900,9 @@ export default function Home() {
               onClick={() => {
                 setSelectedCategory("ALL");
                 setSearchQuery("");
+                setIsSearchActive(false);
+                setIsStickySearchActive(false);
+                setHideStickyDropdown(true);
               }}
               className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800 transition"
             >

@@ -1,3 +1,9 @@
+// @context: Unit tests for API client (apiRequest, apiGet, apiPost)
+// @purpose: Tests HTTP client behavior: successful response, error handling, Bearer auth header
+// @behavior: Mocks fetch with vi; tests data extraction, error extraction, and auth header injection
+// @performance: Fast — all tests use mocked fetch, no network calls
+// @dependencies: vitest, client.ts api functions
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { apiRequest, apiGet, apiPost } from './client';
 

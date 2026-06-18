@@ -1,3 +1,8 @@
+// @context: Logout confirmation modal — separated from Profile.tsx
+// @purpose: Confirms user wants to log out; calls onConfirm on confirmation, onClose on cancel
+// @behavior: Shows "Are you sure?" with Cancel and Logout buttons; backdrop click closes
+// @dependencies: motion
+
 import { motion } from 'motion/react';
 
 interface Props {

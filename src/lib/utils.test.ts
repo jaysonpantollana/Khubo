@@ -1,3 +1,10 @@
+// @context: Unit tests for utility functions (cn, delay)
+// @purpose: Tests class name merging (cn) and promise delay (delay)
+// @behavior: cn tests: basic merge, conditional classes, tailwind conflict resolution
+// @behavior: delay tests: resolves after specified ms
+// @performance: Fast — synchronous for cn, async with timeout for delay
+// @dependencies: vitest, cn, delay from utils.ts
+
 import { describe, it, expect } from 'vitest';
 import { cn, delay } from './utils';
 

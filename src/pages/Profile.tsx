@@ -167,7 +167,7 @@ export default function Profile() {
       setMyListings((data || []) as Listing[]);
     }
     setLoadingListings(false);
-  }, [user]);
+  }, [user, setLoadingListings, setMyListings]);
 
   useEffect(() => {
     if (user && isLandlord) {

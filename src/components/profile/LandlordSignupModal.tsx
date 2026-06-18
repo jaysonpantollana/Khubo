@@ -1,3 +1,12 @@
+// @context: Landlord signup/login modal — separated from Profile.tsx
+// @purpose: Email/password form for landlord registration or login; uses supabase mock auth
+// @behavior: Toggle between login and signup modes; validates email/password; shows toast on errors
+// @behavior: Calls supabase.auth.signInWithPassword (login) or supabase.auth.signUp (signup)
+// @behavior: Creates landlord_profiles record on successful signup
+// @side-effects: Calls supabase mock; shows toast messages
+// @dependencies: supabase mock, useToast, motion, lucide-react
+// @known-issues: Mock supabase may always succeed or always fail depending on stub implementation
+
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { X, Mail, Lock, Eye, EyeOff } from 'lucide-react';

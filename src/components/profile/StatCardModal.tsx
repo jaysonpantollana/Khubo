@@ -1,3 +1,9 @@
+// @context: Stat card detail modal — separated from Profile.tsx
+// @purpose: Generic overlay for stat card detail views (Saved, Reservation, Roommate, Invitation)
+// @behavior: Shows title and placeholder content; currently empty/detailed view placeholder
+// @dependencies: motion, lucide-react
+// @known-issues: Content is a placeholder — no real data shown yet
+
 import { motion } from 'motion/react';
 import { X, ArrowUpRight } from 'lucide-react';
 

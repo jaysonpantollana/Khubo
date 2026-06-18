@@ -1,3 +1,9 @@
+// @context: Edit profile modal — separated from Profile.tsx
+// @purpose: Form for editing profile name, school/details, location, bio, and online status
+// @behavior: Controlled component — all values and setters passed as props from parent (Profile.tsx)
+// @behavior: Fields: full name, school/age/gender, location, bio/quote, online toggle
+// @dependencies: motion, lucide-react
+
 import { motion } from 'motion/react';
 import { Edit2, GraduationCap, MapPin, X } from 'lucide-react';
 

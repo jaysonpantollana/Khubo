@@ -104,10 +104,6 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
 
   }, [lat, lng, title, apiKey, shouldLoadMap]);
 
-  const handleOpenGoogleMaps = () => {
-    window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
-  };
-
   const handleZoomIn = () => map.current?.zoomIn();
   const handleZoomOut = () => map.current?.zoomOut();
 

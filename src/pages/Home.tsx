@@ -82,6 +82,25 @@ export default function Home() {
   >(null);
   const stickyDropdownRef = useRef<HTMLDivElement>(null);
 
+  // --- Map preloader: mount hidden container & init MapTiler off-screen ---
+  const mapPreloadRef = useRef<HTMLDivElement>(null);
+  const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
+
+  const mapContainerCallback = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node && apiKey && !isMapReady()) {
+        initMapPreload(node, apiKey);
+      }
+    },
+    [apiKey],
+  );
+
+  useEffect(() => {
+    if (mapPreloadRef.current && apiKey && !isMapReady()) {
+      initMapPreload(mapPreloadRef.current, apiKey);
+    }
+  }, [apiKey]);
+
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (

@@ -33,7 +33,7 @@ function createChannelBuilder() {
   return ch;
 }
 
-function createChannel() {
+function _createChannel() {
   return {
     on: () => ({ on: () => ({ subscribe: () => {} }), subscribe: () => {} }),
     subscribe: () => {},

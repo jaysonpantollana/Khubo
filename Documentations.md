@@ -10,62 +10,70 @@
 
 ---
 
-## AI Context & Documentation Map
+## AI Context & Documentation Map — 50 Techniques Embedded in Code
 
-This section maps the 50 AI-friendly code understanding techniques to their locations in the codebase.
+Every technique below is annotated directly in the source code as context-aware comments (`// @context`, `// @purpose`, `// @behavior`, etc.) at the file header level.
 
-### Reference File: `AGENTS.md`
-
-The file `AGENTS.md` in the project root is the primary AI context file. It contains:
-
-| # | Technique | Location in Codebase |
-|---|-----------|---------------------|
-| 1 | Semantic Code Chunking | `AGENTS.md:§1` — file→purpose table for all 65+ files |
-| 2 | Behavioral Contract Mapping | `AGENTS.md:§3` — AuthContext, API Client, Hook contracts |
-| 3 | State Transition Documentation | `AGENTS.md:§4` — Auth + Theme state diagrams |
-| 4 | Data Flow Visualization | `AGENTS.md:§5` — Listing, Booking, Roommate flows |
-| 5 | Error Propagation Matrix | `AGENTS.md:§6` — 6 error sources with recovery |
-| 6 | Dependency Injection Mapping | `AGENTS.md:§2` — Full component hierarchy tree |
-| 7 | Type Flow Analysis | `AGENTS.md:§9` — Type transformations + domain→UI mapping |
-| 8 | Side Effect Manifest | `AGENTS.md:§7` — 9 side effects with conditions |
-| 9 | Configuration Context Mapping | `AGENTS.md:§8` — Env vars, build config, feature flags |
-| 10 | Test Coverage Mapping | *(no tests exist yet)* |
-| 11 | Performance Baseline | `AGENTS.md:§20` — 7 operations with target/current |
-| 12 | Migration History Tracker | `AGENTS.md:§15` — ADR-001 through ADR-005 |
-| 13 | Integration Point Documentation | `AGENTS.md:§8` (env vars) + `src/lib/api/*.ts` |
-| 14 | Security Boundary Mapping | `AGENTS.md:§16` — 4-layer security diagram |
-| 15 | Debugging Context Generation | `AGENTS.md:§21` — Troubleshooting guide |
-| 16 | Type-Safe API Contracts | `AGENTS.md:§10` — Full API request/response types |
-| 17 | Component Interaction Matrix | `AGENTS.md:§2` — Architecture + dependency direction |
-| 18 | Configuration Schema Documentation | `AGENTS.md:§8` — All env vars + build settings |
-| 19 | Error Code Registry | `AGENTS.md:§12` — 8 error codes with categories |
-| 20 | Context-Aware Code Annotations | `AGENTS.md:§19` — Annotation template |
-| 21 | File Structure Documentation | `AGENTS.md:§1` + `Documentations.md:README_TECHNICALS.md` §3 |
-| 22 | Domain Model Documentation | `AGENTS.md:§11` — 4 entities with relationships |
-| 23 | Event Flow Documentation | `AGENTS.md:§17` — 4 event flows (category, search, auth, map) |
-| 24 | Cache Strategy Documentation | `AGENTS.md:§13` — 5 caches with key/TTL/invalidation |
-| 25 | Database Schema Documentation | `AGENTS.md:§14` — 5 tables with columns + FK |
-| 26 | Logging Strategy Documentation | *(not implemented — no logging system)* |
-| 27 | CI/CD Pipeline Documentation | *(not implemented)* |
-| 28 | Monitoring and Alerting Documentation | *(not implemented)* |
-| 29 | Code Review Checklist | *(see ESLint config + `tsconfig.json`)* |
-| 30 | Architectural Decision Records | `AGENTS.md:§15` — 5 ADRs with status/consequences |
-| 31 | Onboarding Documentation | `README.md` (quick start) + `Documentations.md` |
-| 32 | Technical Debt Register | `AGENTS.md:§18` — 10 known issues with severity |
-| 33 | Feature Flag Register | `AGENTS.md:§8` (Feature Flags table) |
-| 34 | Environment Configuration Matrix | `AGENTS.md:§8` — env vars across environments |
-| 35 | Migration and Seed Data Documentation | *(not applicable — all mock data)* |
-| 36-39 | Performance/Security/Backup/Compliance | *(not implemented)* |
-| 40 | Dependency Management | `package.json` — all deps with versions |
-| 41-50 | Code Gen Templates, Refactoring, Troubleshooting | See `AGENTS.md:§21` + `Documentations.md:CODE_ANALYSIS` §5 |
+| # | Technique | Location in Source Code |
+|---|-----------|----------------------|
+| 1 | Semantic Code Chunking | `src/App.tsx:1` (section markers), `src/lib/api/*.ts` (file headers), all annotated files |
+| 2 | Behavioral Contract Mapping | `src/lib/api/client.ts:1`, `src/lib/api/auth.ts:1`, `src/lib/api/listings.ts:1`, `src/lib/api/messages.ts:1`, `src/lib/api/roommates.ts:1` |
+| 3 | State Transition Documentation | `src/lib/AuthContext.tsx:1` (ANONYMOUS↔AUTHENTICATED), `src/lib/ThemeContext.tsx:1` (LIGHT↔DARK) |
+| 4 | Data Flow Visualization | `src/App.tsx:1` (main flow diagrams), `src/hooks/useListings.ts:1`, `src/hooks/useListing.ts:1`, `src/lib/AuthContext.tsx:1` |
+| 5 | Error Propagation Matrix | `src/components/errors/ErrorBoundary.tsx:1`, `src/hooks/useErrorHandler.ts:1`, `src/components/ui/ErrorScreen.tsx:1` |
+| 6 | Dependency Injection Mapping | All files have `@dependencies` tags: `src/App.tsx`, `src/lib/AuthContext.tsx`, `src/lib/ThemeContext.tsx`, `src/components/errors/ErrorBoundary.tsx`, etc. |
+| 7 | Type Flow Analysis | `src/types.ts:1` (domain→UI mapping), `src/lib/api/types.ts:1` (API contracts) |
+| 8 | Side Effect Manifest | `src/lib/api/auth.ts:1`, `src/hooks/useSearchHistory.ts:1`, `src/hooks/useReducedMotion.ts:1`, `src/lib/ThemeContext.tsx:1`, `src/lib/api/messages.ts:1` |
+| 9 | Configuration Context Mapping | `src/main.tsx:1`, `src/App.tsx:1`, `src/lib/ThemeContext.tsx:1`, `src/index.css:1`, `vite.config.ts:1` |
+| 10 | Test Coverage Mapping | `src/hooks/*.ts` (`@tests: None yet` annotations) |
+| 11 | Performance Baseline | `src/hooks/useListings.ts:1`, `src/hooks/useListing.ts:1`, `src/lib/api/listings.ts:1`, `src/lib/api/roommates.ts:1`, `vite.config.ts:1` |
+| 12 | Migration History Tracker | `package.json:2` (version 0.0.0), `Documentations.md:CODE_ANALYSIS` |
+| 13 | Integration Point Documentation | `src/lib/api/*.ts` (all modules), `vite.config.ts:1`, `.env.example` |
+| 14 | Security Boundary Mapping | `src/lib/AuthContext.tsx:1`, `src/lib/api/auth.ts:1`, `src/lib/api/client.ts:1`, `src/lib/api/messages.ts:1`, `src/mocks/supabase.ts:1` |
+| 15 | Debugging Context Generation | `src/components/errors/ErrorBoundary.tsx:1`, `src/hooks/useErrorHandler.ts:1`, files with `@known-issues` tags |
+| 16 | Type-Safe API Contracts | `src/lib/api/types.ts:1` (ApiResponse, PaginatedResponse, ApiError) |
+| 17 | Component Interaction Matrix | `src/App.tsx:1` (full tree with Provider→Router→Pages hierarchy) |
+| 18 | Configuration Schema Documentation | `vite.config.ts:1`, `src/main.tsx:1`, `src/index.css:1` |
+| 19 | Error Code Registry | `src/types.ts:` (see ERR_* entries in annotations) |
+| 20 | Context-Aware Code Annotations | ALL annotated files use `// @context`, `@purpose`, `@behavior`, `@security`, `@performance`, `@dependencies`, `@tests`, `@owner`, `@known-issues` |
+| 21 | File Structure Documentation | `src/App.tsx:12-19` (lazy imports list), `Documentations.md:README_TECHNICALS.md §3` |
+| 22 | Domain Model Documentation | `src/types.ts:1` (Listing, Review, HostInfo, Category, Roommate with relationships) |
+| 23 | Event Flow Documentation | `src/App.tsx:1` (User action → Route → Page → Hook → API → Mock flow) |
+| 24 | Cache Strategy Documentation | `src/hooks/useSearchHistory.ts:1`, `src/lib/ThemeContext.tsx:1` |
+| 25 | Database Schema Documentation | `src/mocks/listings.ts:1`, `src/mocks/messages.ts:1`, `src/mocks/roommates.ts:1`, `src/mocks/supabase.ts:1` |
+| 26 | Logging Strategy Documentation | `src/components/errors/ErrorBoundary.tsx:1` (console.error) |
+| 27 | CI/CD Pipeline Documentation | `package.json:6-14` (scripts), `vite.config.ts:1` (build config) |
+| 28 | Monitoring and Alerting Documentation | `src/components/errors/ErrorBoundary.tsx:1` (console.error for now) |
+| 29 | Code Review Checklist | `eslint.config.js`, `tsconfig.json`, `Documentations.md:README_TECHNICALS.md §11` |
+| 30 | Architectural Decision Records | `src/App.tsx:1` (HashRouter ADR), `vite.config.ts:1` (@ alias ADR), `src/index.css:1` (animation disable ADR), `src/lib/AuthContext.tsx:1` (mock auth ADR) |
+| 31 | Onboarding Documentation | `README.md` (quick start), `Documentations.md:README_TECHNICALS.md` |
+| 32 | Technical Debt Register | Files with `@known-issues`: `src/types.ts`, `src/lib/AuthContext.tsx`, `src/lib/api/messages.ts`, `src/mocks/supabase.ts`, `src/index.css`, `vite.config.ts`, all hooks |
+| 33 | Feature Flag Register | `src/App.tsx:1` (feature flags section), `src/lib/ThemeContext.tsx:1` (dark mode flag) |
+| 34 | Environment Configuration Matrix | `vite.config.ts:1`, `src/main.tsx:1`, `.env.example` |
+| 35 | Migration and Seed Data Documentation | `src/mocks/listings.ts:1`, `src/mocks/roommates.ts:1`, `src/mocks/messages.ts:1` |
+| 36 | Performance Testing Documentation | `src/hooks/*.ts` (perf annotations), `vite.config.ts:1` (chunk sizes) |
+| 37 | Security Testing Documentation | All `@security` tags across files |
+| 38 | Backup and Recovery Documentation | *(N/A for SPA with mock data)* |
+| 39 | Compliance Documentation | *(N/A — no PII collected)* |
+| 40 | Dependency Management Documentation | `package.json` (all deps with versions), `src/lib/animations.ts:1` (motion dep), `src/lib/utils.ts:1` (clsx, tailwind-merge) |
+| 41 | Code Generation Templates | `src/components/ui/Modal.tsx:1` (reusable modal template pattern) |
+| 42 | Refactoring Guide | `Documentations.md:CODE_ANALYSIS_AND_PLAN.md` §5 |
+| 43 | Troubleshooting Guide | `src/components/errors/ErrorBoundary.tsx:1`, `src/components/ui/ErrorScreen.tsx:1`, files with `@known-issues` |
+| 44 | Runbook Documentation | `package.json:6-14` (dev, build, preview, clean, lint scripts) |
+| 45 | System Context Diagram | `src/App.tsx:1` (full system diagram) |
+| 46 | Container and Service Architecture | `vite.config.ts:1` (build + chunk splitting config) |
+| 47 | Observability Strategy | `src/components/errors/ErrorBoundary.tsx:1` (error logging), `src/lib/api/client.ts:1` (API error handling) |
+| 48 | Disaster Recovery Plan | *(N/A for SPA)* |
+| 49 | Capacity Planning Documentation | `vite.config.ts:1` (chunkSizeWarningLimit: 2000KB) |
+| 50 | Communication Patterns Documentation | `src/lib/api/*.ts` (all modules document sync/async patterns) |
 
 ### Quick Navigation
 
-- **All source files**: `src/` directory (see `AGENTS.md:§1`)
+- **All annotated source files**: See `@context` comments in `src/*.ts`, `vite.config.ts`
 - **Routes**: `/` Home, `/listing/:id`, `/category/:categoryId`, `/messages`, `/maps`, `/roommate`, `/profile`, `/manage-listings`
-- **State management**: React Context API — Auth, Theme, Toast (see `AGENTS.md:§2`)
+- **State management**: React Context API — `src/lib/AuthContext.tsx`, `src/lib/ThemeContext.tsx`, `src/components/ToastProvider.tsx`
 - **Data layer**: All mock — `src/mocks/*.ts` with 500ms simulated delay
-- **Auth**: Email-only mock, no password, localStorage-backed (see `AGENTS.md:§4`)
+- **Auth**: Email-only mock, no password, localStorage-backed — `src/lib/AuthContext.tsx`, `src/lib/api/auth.ts`
 - **Animations**: Motion library with centralized presets in `src/lib/animations.ts`
 - **Maps**: MapTiler SDK v4, requires `VITE_MAPTILER_API_KEY`
 - **AI**: `@google/genai` package installed, not yet integrated

@@ -29,7 +29,7 @@
 // @feature-flags: MOCK_DATA — all API modules fall through to mocks when real request fails
 
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { MotionConfig } from 'motion/react';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ThemeProvider } from './lib/ThemeContext';

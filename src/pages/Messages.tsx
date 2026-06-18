@@ -64,16 +64,14 @@ export default function Messages() {
     setConversations(prev => prev.map(c => c.id === conv.id ? { ...c, unread: 0 } : c));
   };
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>, type: 'image' | 'video' | 'file') => {
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>, _type: 'image' | 'video' | 'file') => {
     const files = e.target.files;
     if (!files) return;
 
     const newAttachments = Array.from(files).map(file => {
-      // Determine more specific type base on mime
-      let actualType = type;
-      if (file.type.startsWith('image/')) actualType = 'image';
-      else if (file.type.startsWith('video/')) actualType = 'video';
-      else actualType = 'file';
+      const actualType = file.type.startsWith('image/') ? 'image' as const
+        : file.type.startsWith('video/') ? 'video' as const
+        : 'file' as const;
 
       return {
         id: Date.now().toString() + Math.random().toString(36).substring(7),

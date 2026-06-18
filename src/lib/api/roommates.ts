@@ -1,3 +1,12 @@
+// @context: Roommate API
+// @purpose: getRoommates (with search/gender/university filters), getRoommate, createRoommateRequest
+// @behavior: All functions try real API first; fall back to mock with 300-500ms simulated delay
+// @behavior: Mock filtering is client-side on the ROOMMATES array from mocks/roommates.ts
+// @behavior: createRoommateRequest has no mock fallback (will return real API error)
+// @performance: 6 mock roommate entries; filtering is O(n) on small dataset
+// @side-effects: None
+// @dependencies: types.ts (Roommate), mocks/roommates.ts, client.ts
+
 import { Roommate } from '../../types';
 import { apiGet, apiPost } from './client';
 import { ROOMMATES as MOCK_ROOMMATES } from '../../mocks/roommates';

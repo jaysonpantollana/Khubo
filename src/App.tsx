@@ -1,3 +1,12 @@
+// @context: Root application layout
+// @purpose: Wraps all routes with providers (Theme → Auth → Toast → Motion → Router), lazy-loads pages
+// @purpose: Each page is code-split via React.lazy() with a spinner fallback
+// @security: AuthProvider gates protected functionality; there are no private routes (all routes render)
+// @performance: 8 lazy-loaded chunks + vendor chunk splitting (maptiler, recharts, lucide, motion)
+// @dependencies: ThemeContext, AuthContext, ToastProvider, react-router-dom HashRouter
+// @config: HashRouter used for static hosting compatibility (no server-side URL rewriting)
+// @tests: None yet
+
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy } from 'react';
 import { MotionConfig } from 'motion/react';
@@ -8,7 +17,7 @@ import { ToastProvider } from './components/ToastProvider';
 import ErrorBoundary from './components/errors/ErrorBoundary';
 import PageError from './components/ui/ErrorScreen';
 
-// Lazy loaded pages
+// --- Lazy loaded pages (code-split at build time) ---
 const Home = lazy(() => import('./pages/Home'));
 const ListingDetail = lazy(() => import('./pages/ListingDetail'));
 const CategoryListings = lazy(() => import('./pages/CategoryListings'));
@@ -18,7 +27,7 @@ const RoommateFinder = lazy(() => import('./pages/RoommateFinder'));
 const Profile = lazy(() => import('./pages/Profile'));
 const ManageListings = lazy(() => import('./pages/ManageListings'));
 
-// A simple loading fallback for Suspense
+// --- Suspense fallback while lazy chunks load ---
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-white">
     <div className="w-8 h-8 md:w-12 md:h-12 border-4 border-neutral-200 border-t-[#17294F] rounded-full animate-spin"></div>
@@ -26,6 +35,7 @@ const PageLoader = () => (
 );
 
 export default function App() {
+  // Provider hierarchy: outer providers don't depend on inner ones
   return (
     <ThemeProvider>
       <AuthProvider>

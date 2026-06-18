@@ -1,3 +1,17 @@
+// @context: Stubbed Supabase client
+// @purpose: Provides a fully stubbed Supabase client that returns empty/null data for all operations
+// @purpose: Prevents real database calls during development; all real backend calls disabled
+// @behavior: All auth methods resolve successfully with empty/null data
+// @behavior: All from(table) queries return empty arrays
+// @behavior: All storage operations resolve with empty data
+// @behavior: All channel/realtime methods return no-op unsubscribable channels
+// @performance: All operations resolve synchronously or via instant Promise
+// @security: No real credentials exposed; all operations safe no-ops
+// @dependencies: None - standalone mock
+// @known-issues: Entire file typed as 'any' in some consumers; no type safety guarantee against real SupabaseClient
+// @known-issues: createChannel() is defined but never exported/used (dead code)
+// @known-issues: Many callback params prefixed with underscore but still generate lint warnings (no-unused-vars)
+
 type MockResponseData = { data: unknown; error: null; count: null };
 
 function createFilterBuilder() {

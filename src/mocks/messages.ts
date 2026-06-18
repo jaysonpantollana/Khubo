@@ -1,3 +1,13 @@
+// @context: Mock messaging data
+// @purpose: 5 dummy conversations + 5 dummy messages for development
+// @schema: DUMMY_CONVERSATIONS: {id, name, avatar, lastMessage, time, unread, online}[]
+// @schema: DUMMY_MESSAGES: {id, text, sender, time}[]
+// @behavior: Used by Messages.tsx page and lib/api/messages.ts fallback
+// @known-issues: No conversation list is returned from getConversations() mock (returns empty array)
+// @known-issues: DUMMY_CONVERSATIONS does NOT match Conversation interface (different field names)
+// @side-effects: None
+// @dependencies: None
+
 export const DUMMY_CONVERSATIONS = [
   {
     id: '1',

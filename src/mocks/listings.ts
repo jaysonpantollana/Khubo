@@ -1,3 +1,16 @@
+// @context: Mock listing data
+// @purpose: 28 mock listings (k1-k28), 18 categories for development/testing
+// @schema: Each listing has: id, title, location, description, price, rating, image, gallery, category, date, amenities, lat/lng, reviews, host
+// @schema: k1-k5 have full reviews; k6-k28 have empty reviews (to test partial data states)
+// @schema: Coordinates are real Iligan City, Philippines locations
+// @behavior: Used as fallback by lib/api/listings.ts when real API is unavailable
+// @behavior: Categories are also consumed directly by Categories.tsx component
+// @performance: All data in-memory; no async loading
+// @security: No sensitive data; all images are public Unsplash/DiceBear URLs
+// @side-effects: None
+// @dependencies: types.ts (Listing, Category)
+// @owner: Core team
+
 import { Listing, Category } from '../types';
 
 export const CATEGORIES: Category[] = [

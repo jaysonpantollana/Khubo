@@ -1,3 +1,10 @@
+// @context: Reusable modal wrapper
+// @purpose: Standard modal backdrop + content with animation presets from lib/animations.ts
+// @purpose: Eliminates ~30 lines of duplicate code across 10+ modal components
+// @behavior: Shows/hides with AnimatePresence; backdrop click closes modal
+// @behavior: Props: isOpen, onClose, children, maxWidth (default max-w-lg), className
+// @performance: Returns null when not open (no DOM overhead)
+// @dependencies: motion (AnimatePresence), lib/animations.ts (modalBackdrop, modalContent)
 import { motion, AnimatePresence } from 'motion/react';
 import { modalBackdrop, modalContent } from '../../lib/animations';
 

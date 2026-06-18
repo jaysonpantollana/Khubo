@@ -1,3 +1,15 @@
+// @context: Global error boundary
+// @purpose: Class component that catches unhandled React errors and displays ErrorScreen fallback UI
+// @behavior: getDerivedStateFromError → sets hasError=true, error object
+// @behavior: componentDidCatch → logs to console (extensible for external error reporting)
+// @behavior: handleRetry → resets state to false, calls optional onReset prop
+// @behavior: handleGoHome → resets state + navigates to #/
+// @behavior: Supports custom fallback prop; defaults to <ErrorScreen> with retry + goHome
+// @performance: Only renders fallback when error state is active (no overhead during normal operation)
+// @side-effects: console.error in componentDidCatch; hash navigation in handleGoHome
+// @dependencies: ui/ErrorScreen.tsx
+// @owner: Core team
+
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import ErrorScreen from '../ui/ErrorScreen';
 
@@ -19,12 +31,10 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true, error };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log the error to an error reporting service here if needed
     console.error("Uncaught error:", error, errorInfo);
   }
 

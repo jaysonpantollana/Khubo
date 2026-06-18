@@ -1,3 +1,11 @@
+// @context: Error fallback UI
+// @purpose: Full-screen error display with retry/goBack/goHome actions; shown by ErrorBoundary
+// @behavior: Accepts error, title, message, onRetry, onGoBack, onGoHome
+// @behavior: In dev mode, shows error name, message, and stack trace (collapsible)
+// @behavior: Animated entrance via motion FadeUp+Scale
+// @performance: React.memo wraps to prevent re-renders from parent state changes
+// @dependencies: motion/react, lucide-react (AlertCircle, RefreshCw, ArrowLeft, Home)
+// @security: Error stack traces only shown in development (NODE_ENV check)
 import React from 'react';
 import { motion } from 'motion/react';
 import { AlertCircle, RefreshCw, ArrowLeft, Home } from 'lucide-react';

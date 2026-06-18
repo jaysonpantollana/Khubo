@@ -1,3 +1,11 @@
+// @context: Mock roommate data
+// @purpose: 6 mock roommate profiles (rm1-rm6) for development/testing
+// @schema: Each has: id, name, age, gender, university, location, bio, image (DiceBear avatar), tags, budgetRange, preferredPlace
+// @behavior: Used by RoommateFinder.tsx, RoommateCard, RoommateModal, and lib/api/roommates.ts fallback
+// @performance: All data in-memory; no async loading
+// @side-effects: None
+// @dependencies: types.ts (Roommate)
+
 import { Roommate } from '../types';
 
 export const ROOMMATES: Roommate[] = [

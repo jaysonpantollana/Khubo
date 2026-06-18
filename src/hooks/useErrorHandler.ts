@@ -1,22 +1,18 @@
+// @context: Error propagation to ErrorBoundary
+// @purpose: Catches async errors and re-throws them during render phase so ErrorBoundary catches them
+// @behavior: Usage: const handleError = useErrorHandler(); ... handleError(someError);
+// @behavior: Normalizes caught value to Error instance: Error stays as-is, string wraps, unknown → generic message
+// @behavior: Throws during render (not during event handler) → ErrorBoundary catches it
+// @performance: State setter triggers re-render; throw during render is intentional
+// @side-effects: Sets error state causing re-render with throw
+// @dependencies: ErrorBoundary (components/errors/ErrorBoundary.tsx)
+// @known-issues: Once thrown, the ErrorBoundary resets state on retry; this hook's error state persists across retry
 import { useState, useCallback } from 'react';
 
-/**
- * Hook to handle asynchronous errors and surface them to the nearest ErrorBoundary.
- * 
- * Usage:
- * const handleError = useErrorHandler();
- * 
- * try {
- *   await someAsyncAction();
- * } catch (error) {
- *   handleError(error);
- * }
- */
 export function useErrorHandler() {
   const [error, setError] = useState<Error | null>(null);
 
   if (error) {
-    // Throwing during render phase gets caught by the ErrorBoundary
     throw error;
   }
 

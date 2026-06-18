@@ -1,13 +1,16 @@
+// @context: Search history cache
+// @purpose: Persists 5 most recent unique search queries to localStorage under 'home_search_history' key
+// @behavior: addSearch(query): prepends query, removes duplicates, caps at 5, writes to localStorage
+// @behavior: removeSearch(query): filters out the query, writes to localStorage
+// @behavior: Initializes from localStorage on mount
+// @performance: O(n) for add/remove on small array (max 5)
+// @side-effects: Writes to localStorage on every addSearch/removeSearch call
+// @dependencies: None
+// @config: localStorage key: 'home_search_history', max entries: 5
 import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'home_search_history';
 
-/**
- * Custom hook to manage search history locally.
- * Preserves the 5 most recent unique search queries using localStorage.
- * 
- * @returns {{ history: string[], addSearch: (query: string) => void, removeSearch: (query: string) => void }}
- */
 export const useSearchHistory = () => {
   const [history, setHistory] = useState<string[]>([]);
 

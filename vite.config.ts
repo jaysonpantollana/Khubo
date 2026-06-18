@@ -1,3 +1,14 @@
+// @context: Vite build configuration
+// @purpose: Build tool config for React 19 + TypeScript + Tailwind CSS v4
+// @config: @ alias → project root (NOT src/ — potential mismatch with tsconfig @/* → src/*)
+// @config: Dev server on port 3000, host 0.0.0.0, HMR toggle via DISABLE_HMR env var
+// @config: Manual chunk splitting: maptiler, recharts/d3, lucide, motion, vendor (everything else)
+// @config: chunkSizeWarningLimit: 2000KB
+// @security: VITE_* env vars exposed client-side; DISABLE_HMR controls file watching
+// @dependencies: @vitejs/plugin-react, @tailwindcss/vite
+// @known-issues: @ alias points to project root (.) but tsconfig maps @/* → ./src/* — potential import mismatch
+// @owner: Core team
+
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -37,8 +48,6 @@ export default defineConfig(({mode}) => {
       }
     },
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };

@@ -4,8 +4,71 @@
 
 ## Contents
 
-1. [README_TECHNICALS.md — Technical Documentation](#readme_technicals-md--technical-documentation)
-2. [CODE_ANALYSIS_AND_PLAN.md — Codebase Analysis & Implementation Plan](#code_analysis_and_plan-md--codebase-analysis--implementation-plan)
+1. [AI Context & Documentation Map](#ai-context--documentation-map)
+2. [README_TECHNICALS.md — Technical Documentation](#readme_technicals-md--technical-documentation)
+3. [CODE_ANALYSIS_AND_PLAN.md — Codebase Analysis & Implementation Plan](#code_analysis_and_plan-md--codebase-analysis--implementation-plan)
+
+---
+
+## AI Context & Documentation Map
+
+This section maps the 50 AI-friendly code understanding techniques to their locations in the codebase.
+
+### Reference File: `AGENTS.md`
+
+The file `AGENTS.md` in the project root is the primary AI context file. It contains:
+
+| # | Technique | Location in Codebase |
+|---|-----------|---------------------|
+| 1 | Semantic Code Chunking | `AGENTS.md:§1` — file→purpose table for all 65+ files |
+| 2 | Behavioral Contract Mapping | `AGENTS.md:§3` — AuthContext, API Client, Hook contracts |
+| 3 | State Transition Documentation | `AGENTS.md:§4` — Auth + Theme state diagrams |
+| 4 | Data Flow Visualization | `AGENTS.md:§5` — Listing, Booking, Roommate flows |
+| 5 | Error Propagation Matrix | `AGENTS.md:§6` — 6 error sources with recovery |
+| 6 | Dependency Injection Mapping | `AGENTS.md:§2` — Full component hierarchy tree |
+| 7 | Type Flow Analysis | `AGENTS.md:§9` — Type transformations + domain→UI mapping |
+| 8 | Side Effect Manifest | `AGENTS.md:§7` — 9 side effects with conditions |
+| 9 | Configuration Context Mapping | `AGENTS.md:§8` — Env vars, build config, feature flags |
+| 10 | Test Coverage Mapping | *(no tests exist yet)* |
+| 11 | Performance Baseline | `AGENTS.md:§20` — 7 operations with target/current |
+| 12 | Migration History Tracker | `AGENTS.md:§15` — ADR-001 through ADR-005 |
+| 13 | Integration Point Documentation | `AGENTS.md:§8` (env vars) + `src/lib/api/*.ts` |
+| 14 | Security Boundary Mapping | `AGENTS.md:§16` — 4-layer security diagram |
+| 15 | Debugging Context Generation | `AGENTS.md:§21` — Troubleshooting guide |
+| 16 | Type-Safe API Contracts | `AGENTS.md:§10` — Full API request/response types |
+| 17 | Component Interaction Matrix | `AGENTS.md:§2` — Architecture + dependency direction |
+| 18 | Configuration Schema Documentation | `AGENTS.md:§8` — All env vars + build settings |
+| 19 | Error Code Registry | `AGENTS.md:§12` — 8 error codes with categories |
+| 20 | Context-Aware Code Annotations | `AGENTS.md:§19` — Annotation template |
+| 21 | File Structure Documentation | `AGENTS.md:§1` + `Documentations.md:README_TECHNICALS.md` §3 |
+| 22 | Domain Model Documentation | `AGENTS.md:§11` — 4 entities with relationships |
+| 23 | Event Flow Documentation | `AGENTS.md:§17` — 4 event flows (category, search, auth, map) |
+| 24 | Cache Strategy Documentation | `AGENTS.md:§13` — 5 caches with key/TTL/invalidation |
+| 25 | Database Schema Documentation | `AGENTS.md:§14` — 5 tables with columns + FK |
+| 26 | Logging Strategy Documentation | *(not implemented — no logging system)* |
+| 27 | CI/CD Pipeline Documentation | *(not implemented)* |
+| 28 | Monitoring and Alerting Documentation | *(not implemented)* |
+| 29 | Code Review Checklist | *(see ESLint config + `tsconfig.json`)* |
+| 30 | Architectural Decision Records | `AGENTS.md:§15` — 5 ADRs with status/consequences |
+| 31 | Onboarding Documentation | `README.md` (quick start) + `Documentations.md` |
+| 32 | Technical Debt Register | `AGENTS.md:§18` — 10 known issues with severity |
+| 33 | Feature Flag Register | `AGENTS.md:§8` (Feature Flags table) |
+| 34 | Environment Configuration Matrix | `AGENTS.md:§8` — env vars across environments |
+| 35 | Migration and Seed Data Documentation | *(not applicable — all mock data)* |
+| 36-39 | Performance/Security/Backup/Compliance | *(not implemented)* |
+| 40 | Dependency Management | `package.json` — all deps with versions |
+| 41-50 | Code Gen Templates, Refactoring, Troubleshooting | See `AGENTS.md:§21` + `Documentations.md:CODE_ANALYSIS` §5 |
+
+### Quick Navigation
+
+- **All source files**: `src/` directory (see `AGENTS.md:§1`)
+- **Routes**: `/` Home, `/listing/:id`, `/category/:categoryId`, `/messages`, `/maps`, `/roommate`, `/profile`, `/manage-listings`
+- **State management**: React Context API — Auth, Theme, Toast (see `AGENTS.md:§2`)
+- **Data layer**: All mock — `src/mocks/*.ts` with 500ms simulated delay
+- **Auth**: Email-only mock, no password, localStorage-backed (see `AGENTS.md:§4`)
+- **Animations**: Motion library with centralized presets in `src/lib/animations.ts`
+- **Maps**: MapTiler SDK v4, requires `VITE_MAPTILER_API_KEY`
+- **AI**: `@google/genai` package installed, not yet integrated
 
 ---
 

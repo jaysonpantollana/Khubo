@@ -1,8 +1,18 @@
+// @context: Listing CRUD API
+// @purpose: getListings, getListing, createListing, updateListing, deleteListing with mock fallback
+// @behavior: All functions try real API first; fall back to mock data with simulated delay on error
+// @behavior: getListings filters by category, search, minPrice, maxPrice on mock data
+// @behavior: createListing/updateListing/deleteListing only modify in-memory mock data (no persistence)
+// @behavior: Returns {data: T | null, error: string | null} consistent with ApiResponse pattern
+// @performance: Mock simulates 300-500ms delay; real API depends on network
+// @side-effects: None (mock operations are read-only on original data)
+// @known-issues: Mock updates are not persisted between re-renders (original MOCK_LISTINGS unchanged)
+// @dependencies: types.ts (Listing), mocks/listings.ts
+
 import { Listing } from '../../types';
 import { apiGet, apiPost, apiPut, apiDelete } from './client';
 import { PaginatedResponse, PaginationParams } from './types';
 
-// Mock fallback when backend is unavailable
 import { LISTINGS as MOCK_LISTINGS } from '../../mocks/listings';
 
 function delay(ms: number) {

@@ -1,3 +1,13 @@
+// @context: Toast notification system
+// @purpose: Context provider for temporary toast messages + persistent notification history
+// @behavior: showToast(message, type) → creates toast (auto-dismiss 3s) + adds to notification history
+// @behavior: Toasts rendered via portal to document.body, top-right corner
+// @behavior: Notifications accessible via NotificationDialog modal (open via openNotifications())
+// @behavior: clearNotifications() empties the notification list
+// @performance: useCallback wrappers prevent unnecessary re-renders of consumers
+// @side-effects: setTimeout for auto-dismiss; createPortal for DOM rendering
+// @dependencies: Toast.tsx, NotificationDialog.tsx, motion (AnimatePresence)
+
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { Toast, ToastType } from './Toast';
 import { NotificationDialog } from './NotificationDialog';

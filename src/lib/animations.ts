@@ -1,3 +1,12 @@
+// @context: Centralized Motion animation presets
+// @purpose: Shared transition and variant objects for all Motion components
+// @purpose: Includes reduced-motion variants for accessibility (useReducedMotion hook or MotionConfig)
+// @purpose: Shared modalBackdrop/modalContent/dropdownReveal to eliminate duplication across 10+ modal components
+// @behavior: Use spread: <motion.div {...modalBackdrop} /> or <motion.div {...FADE_UP}>
+// @performance: All objects are constants - no runtime allocation
+// @dependencies: motion/react
+// @owner: Core team
+
 export const EASE_OUT = [0.23, 1, 0.32, 1];
 
 export const TRANSITIONS = {

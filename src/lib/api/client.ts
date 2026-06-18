@@ -1,3 +1,15 @@
+// @context: Generic HTTP API client
+// @purpose: Provides typed GET/POST/PUT/DELETE wrappers around fetch() with Bearer auth
+// @purpose: All API modules (auth, listings, messages, roommates) delegate to this client
+// @behavior: Returns ApiResponse<T> with either data or error string; never throws
+// @behavior: On HTTP error, attempts to parse JSON body for error message; falls back to status text
+// @behavior: On network error, returns generic message
+// @security: Auth token read from sessionStorage('auth_token'); no CSRF protection
+// @performance: No caching, no retry logic, no timeout
+// @dependencies: types.ts (ApiResponse, ApiError)
+// @config: BASE_URL from VITE_API_URL env var, defaults to '/api'
+// @known-issues: No request timeout, no retry on failure, no cancellation support
+
 import { ApiResponse, ApiError } from './types';
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api';

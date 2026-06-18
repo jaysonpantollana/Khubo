@@ -21,9 +21,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { DateScrollPicker } from "../components/DateScrollPicker";
 import SearchDropdown from "../components/SearchDropdown";
 import Filters, { FilterState } from "../components/Filters";
-
 export default function Maps() {
   const { listings: LISTINGS, loading } = useListings();
+  const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [selectedListing, setSelectedListing] = useState<string | null>(null);
@@ -198,9 +198,9 @@ export default function Maps() {
 
   useEffect(() => {
     if (map.current) return;
+    if (!apiKey) return;
 
-    const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
-    maptilersdk.config.apiKey = apiKey || "";
+    maptilersdk.config.apiKey = apiKey;
 
     map.current = new maptilersdk.Map({
       container: mapContainer.current!,
@@ -630,6 +630,35 @@ export default function Maps() {
 
         {/* Right Map */}
         <div className="flex-1 h-full relative">
+          {!apiKey && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
+              <div
+                className="absolute inset-0 opacity-20 grayscale-[0.5]"
+                style={{
+                  backgroundImage: 'url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=2000")',
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+              <div className="relative z-20 flex flex-col items-center gap-4 px-6 text-center">
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
+                  <MapPin size={32} className="text-amber-600" />
+                </div>
+                <h3 className="text-lg font-bold text-neutral-800">Map unavailable</h3>
+                <p className="text-sm text-neutral-500 max-w-xs">
+                  Add your MapTiler API key to <code className="bg-neutral-200 px-1.5 py-0.5 rounded text-xs font-mono">.env</code> to enable the live map.
+                </p>
+                <a
+                  href="https://cloud.maptiler.com/account/keys/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 px-5 py-2.5 bg-[#17294F] text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-[#2252D6] transition-all"
+                >
+                  Get a free key
+                </a>
+              </div>
+            </div>
+          )}
           <div ref={mapContainer} className="w-full h-full" />
 
           <div className="hidden md:flex absolute bottom-10 right-10 flex-col gap-2 z-10">

@@ -82,7 +82,7 @@ export default function RoommateFinder() {
       setLoading(false);
     }, 600);
     return () => clearTimeout(timer);
-  }, [selectedTag, searchQuery]);
+  }, []);
 
   React.useEffect(() => {
     if (isStickySearchActive) {

@@ -568,7 +568,7 @@ export default function Maps() {
                   <div
                     key={listing.id}
                     id={`listing-${listing.id}`}
-                    className={`transition-all duration-300 rounded-xl cursor-pointer ${selectedListing === listing.id ? "ring-2 ring-[#17294F] ring-offset-2" : ""}`}
+                    className={`rounded-xl cursor-pointer ${selectedListing === listing.id ? "ring-2 ring-[#17294F] ring-offset-2" : ""}`}
                     onClick={() => handleListingClick(listing)}
                   >
                     <ListingCard

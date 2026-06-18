@@ -624,19 +624,6 @@ export default function Maps() {
               </div>
             </div>
           )}
-          {apiKey && staticMapVisible && (
-            <div
-              className="absolute inset-0 z-20 pointer-events-none"
-              style={{ opacity: staticMapOpacity, transition: "opacity 0.3s ease-out" }}
-            >
-              <img
-                src={staticMapUrl}
-                alt="Map preview"
-                className="w-full h-full object-cover"
-                draggable={false}
-              />
-            </div>
-          )}
           <div ref={mapContainer} className="w-full h-full" />
 
           <div className="hidden md:flex absolute bottom-10 right-10 flex-col gap-2 z-10">

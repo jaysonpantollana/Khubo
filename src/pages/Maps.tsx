@@ -180,45 +180,49 @@ export default function Maps() {
         preloaded.container.style.cssText =
           "position:static;visibility:visible;width:100%;height:100%;";
         map.current = preloaded.map;
+        sdkRef.current = preloaded.map;
         map.current.resize();
         updateMarkersRef.current();
       }
       return;
     }
 
-    // Fallback: create a new map if no preload available
-    maptilersdk.config.apiKey = apiKey;
+    // Fallback: dynamically import SDK and create a new map
+    import("@maptiler/sdk").then((maptilersdk) => {
+      sdkRef.current = maptilersdk;
+      maptilersdk.config.apiKey = apiKey;
 
-    map.current = new maptilersdk.Map({
-      container: mapContainer.current!,
-      style: maptilersdk.MapStyle.STREETS,
-      center: [124.2442, 8.2415],
-      zoom: 13,
-      navigationControl: false,
-      geolocateControl: false,
-      fadeDuration: 0,
-    });
+      map.current = new maptilersdk.Map({
+        container: mapContainer.current!,
+        style: maptilersdk.MapStyle.STREETS,
+        center: [124.2442, 8.2415],
+        zoom: 13,
+        navigationControl: false,
+        geolocateControl: false,
+        fadeDuration: 0,
+      });
 
-    map.current.on("styleimagemissing", (e: { id?: string }) => {
-      try {
-        if (e && e.id && map.current) {
-          const data = new Uint8Array([0, 0, 0, 0]);
-          map.current.addImage(e.id, { width: 1, height: 1, data });
+      map.current.on("styleimagemissing", (e: { id?: string }) => {
+        try {
+          if (e && e.id && map.current) {
+            const data = new Uint8Array([0, 0, 0, 0]);
+            map.current.addImage(e.id, { width: 1, height: 1, data });
+          }
+        } catch {
+          // ignore
         }
-      } catch {
-        // ignore
-      }
-    });
+      });
 
-    map.current.on("load", () => {
-      updateMarkersRef.current();
-    });
+      map.current.on("load", () => {
+        updateMarkersRef.current();
+      });
 
-    map.current.on("zoom", () => {
-      const zoom = map.current!.getZoom();
-      Object.values(markerPins.current).forEach((pin) => {
-        const scale = Math.pow(1.25, zoom - 13);
-        pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
+      map.current.on("zoom", () => {
+        const zoom = map.current!.getZoom();
+        Object.values(markerPins.current).forEach((pin) => {
+          const scale = Math.pow(1.25, zoom - 13);
+          pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
+        });
       });
     });
   }, [apiKey]);

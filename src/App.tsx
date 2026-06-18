@@ -37,6 +37,7 @@ import { AuthProvider } from './lib/AuthContext';
 import { ToastProvider } from './components/ToastProvider';
 import ErrorBoundary from './components/errors/ErrorBoundary';
 import PageError from './components/ui/ErrorScreen';
+import { startMapPreload } from './lib/mapPreloader';
 
 // --- Lazy loaded pages (code-split at build time) ---
 const Home = lazy(() => import('./pages/Home'));

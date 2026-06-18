@@ -56,28 +56,40 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
         }
       });
 
-      // Create a custom element for the house marker
+      // Create a custom DOM element for the Google Maps-style red pin
       const el = document.createElement('div');
-      el.className = 'house-marker';
+      el.className = 'custom-marker';
       el.innerHTML = `
-        <div style="filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25)); width: 56px; height: 64px; display: flex; align-items: center; justify-content: center;">
-          <svg width="52" height="60" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Outer Glow/Border -->
-            <path d="M22 1C10.4 1 1 10.4 1 22C1 34.5 22 51 22 51C22 51 43 34.5 43 22C43 10.4 33.6 1 22 1Z" fill="white" fill-opacity="0.2"/>
-            <path d="M22 2C11 2 2 11 2 22C2 34 22 50 22 50C22 50 42 34 42 22C42 11 33 2 22 2Z" fill="white" stroke="white" stroke-width="2"/>
-            <!-- Main Navy Background -->
-            <path d="M22 3C11.5 3 3 11.5 3 22C3 33.5 22 49 22 49C22 49 41 33.5 41 22C41 11.5 32.5 3 22 3Z" fill="#17294F"/>
-            <!-- Center White Circle -->
-            <circle cx="22" cy="22" r="13" fill="white"/>
-            <!-- House Icon -->
-            <path d="M22 14L15 19.5V28.5H19.5V23.5H24.5V28.5H29V19.5L22 14Z" fill="#17294F"/>
+        <div class="marker-pin" style="
+          transition: transform 0.15s ease-out;
+          transform-origin: center bottom;
+          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        ">
+          <svg width="26" height="34" viewBox="0 0 26 34" fill="none">
+            <path d="M13 0C5.8 0 0 5.8 0 13c0 2.5 1 4.8 2.6 6.5L13 34l10.4-14.5C24 17.8 25 15.5 25 13 25 5.8 20.2 0 13 0z" fill="#EA4335"/>
+            <circle cx="13" cy="11.5" r="4.25" fill="#fff"/>
           </svg>
         </div>
       `;
 
-      new maptilersdk.Marker({ element: el })
+      const marker = new maptilersdk.Marker({ element: el, anchor: 'bottom' })
         .setLngLat([lng, lat])
         .addTo(map.current);
+
+      // Scale marker with zoom level
+      const markerInner = el.querySelector('.marker-pin') as HTMLElement;
+      const updateMarkerScale = () => {
+        if (!map.current) return;
+        const zoom = map.current.getZoom();
+        const scale = Math.pow(1.25, zoom - 14);
+        markerInner.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
+      };
+      map.current.on('zoom', updateMarkerScale);
+      map.current.on('load', updateMarkerScale);
+      updateMarkerScale();
     } catch (error) {
       console.error('Error initializing MapTiler map:', error);
     }
@@ -149,12 +161,9 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] pointer-events-none z-10 flex flex-col items-center">
             <div className="w-16 h-16 bg-[#2252D6]/10 rounded-full animate-ping absolute top-0" />
             <div className="relative z-20">
-              <svg width="52" height="60" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg" className="filter drop-shadow-xl">
-                <path d="M22 1C10.4 1 1 10.4 1 22C1 34.5 22 51 22 51C22 51 43 34.5 43 22C43 10.4 33.6 1 22 1Z" fill="white" fill-opacity="0.2"/>
-                <path d="M22 2C11 2 2 11 2 22C2 34 22 50 22 50C22 50 42 34 42 22C42 11 33 2 22 2Z" fill="white" stroke="white" stroke-width="2"/>
-                <path d="M22 3C11.5 3 3 11.5 3 22C3 33.5 22 49 22 49C22 49 41 33.5 41 22C41 11.5 32.5 3 22 3Z" fill="#17294F"/>
-                <circle cx="22" cy="22" r="13" fill="white"/>
-                <path d="M22 14L15 19.5V28.5H19.5V23.5H24.5V28.5H29V19.5L22 14Z" fill="#17294F"/>
+              <svg width="26" height="34" viewBox="0 0 26 34" fill="none" className="filter drop-shadow-xl">
+                <path d="M13 0C5.8 0 0 5.8 0 13c0 2.5 1 4.8 2.6 6.5L13 34l10.4-14.5C24 17.8 25 15.5 25 13 25 5.8 20.2 0 13 0z" fill="#EA4335"/>
+                <circle cx="13" cy="11.5" r="4.25" fill="#fff"/>
               </svg>
             </div>
           </div>

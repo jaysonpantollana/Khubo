@@ -45,6 +45,7 @@ export default function Maps() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maptilersdk.Map | null>(null);
   const markers = useRef<{ [key: string]: maptilersdk.Marker }>({});
+  const markerPins = useRef<{ [key: string]: HTMLElement }>({});
   const [filters, setFilters] = useState<FilterState>({
     minPrice: 0,
     maxPrice: 50000,
@@ -132,48 +133,29 @@ export default function Maps() {
       marker.remove(),
     );
     markers.current = {};
+    markerPins.current = {};
 
     filteredListings.forEach((listing) => {
       if (listing.lat && listing.lng) {
         const el = document.createElement("div");
         el.className = "custom-marker";
-        const isActive = selectedListingRef.current === listing.id;
 
         el.innerHTML = `
-          <div style="cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;">
-            <div style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
-              <svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Outer Glow/Border -->
-                <path d="M22 1C10.4 1 1 10.4 1 22C1 34.5 22 51 22 51C22 51 43 34.5 43 22C43 10.4 33.6 1 22 1Z" fill="white" fill-opacity="0.2"/>
-                <path d="M22 2C11 2 2 11 2 22C2 34 22 50 22 50C22 50 42 34 42 22C42 11 33 2 22 2Z" fill="white" stroke="white" stroke-width="2"/>
-                <!-- Main Navy Background -->
-                <path d="M22 3C11.5 3 3 11.5 3 22C3 33.5 22 49 22 49C22 49 41 33.5 41 22C41 11.5 32.5 3 22 3Z" fill="${isActive ? "#000" : "#17294F"}"/>
-                <!-- Center White Circle -->
-                <circle cx="22" cy="22" r="13" fill="white"/>
-                <!-- House Icon -->
-                <path d="M22 14L15 19.5V28.5H19.5V23.5H24.5V28.5H29V19.5L22 14Z" fill="${isActive ? "#000" : "#17294F"}"/>
-              </svg>
-            </div>
-            <div style="
-              background: ${isActive ? "#000" : "#17294F"};
-              color: white;
-              padding: 4px 10px;
-              border-radius: 12px;
-              font-family: inherit;
-              font-weight: 400;
-              font-size: 11px;
-              box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-              white-space: nowrap;
-              border: 1.5px solid white;
-            ">
-              ₱${(listing.price / 1000).toFixed(1)}k
-            </div>
+          <div class="marker-pin" style="cursor: pointer; transition: transform 0.15s ease-out; transform-origin: center bottom; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); display: flex; align-items: center; justify-content: center;">
+            <svg width="26" height="34" viewBox="0 0 26 34" fill="none">
+              <path d="M13 0C5.8 0 0 5.8 0 13c0 2.5 1 4.8 2.6 6.5L13 34l10.4-14.5C24 17.8 25 15.5 25 13 25 5.8 20.2 0 13 0z" fill="#EA4335"/>
+              <circle cx="13" cy="11.5" r="4.25" fill="#fff"/>
+            </svg>
           </div>
         `;
 
-        const marker = new maptilersdk.Marker({ element: el })
+        const marker = new maptilersdk.Marker({ element: el, anchor: 'bottom' })
           .setLngLat([listing.lng, listing.lat])
           .addTo(map.current!);
+
+        // Store pin element for zoom-based scaling
+        const pinEl = el.querySelector('.marker-pin') as HTMLElement;
+        if (pinEl) markerPins.current[listing.id] = pinEl;
 
         el.addEventListener("click", () => {
           setSelectedListing(listing.id);
@@ -194,6 +176,13 @@ export default function Maps() {
 
         markers.current[listing.id] = marker;
       }
+    });
+
+    // Apply initial zoom scale to new markers
+    const zoom = map.current.getZoom();
+    Object.values(markerPins.current).forEach((pin) => {
+      const scale = Math.pow(1.25, zoom - 13);
+      pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
     });
   }, [filteredListings]);
 
@@ -241,6 +230,15 @@ export default function Maps() {
       updateMarkersRef.current();
       setMapLoaded(true);
     });
+
+    // Scale all markers with zoom level
+    map.current.on("zoom", () => {
+      const zoom = map.current!.getZoom();
+      Object.values(markerPins.current).forEach((pin) => {
+        const scale = Math.pow(1.25, zoom - 13);
+        pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -256,26 +254,7 @@ export default function Maps() {
     updateMarkers();
   }, [updateMarkers]);
 
-  useEffect(() => {
-    if (!map.current || !mapLoaded) return;
-    Object.entries(markers.current).forEach(([id, marker]) => {
-      const el = marker.getElement();
-      const svg = el.querySelector('svg');
-      if (!svg) return;
-      const paths = svg.querySelectorAll<SVGPathElement>('path, circle');
-      const isActive = selectedListing === id;
-      const color = isActive ? '#000' : '#17294F';
-      paths.forEach((p) => {
-        if (p.getAttribute('fill') === '#000' || p.getAttribute('fill') === '#17294F') {
-          p.setAttribute('fill', color);
-        }
-      });
-      const label = el.querySelector<HTMLDivElement>('[style*="background"]');
-      if (label) {
-        label.style.background = color;
-      }
-    });
-  }, [selectedListing, mapLoaded]);
+
 
   const handleListingClick = (listing: Listing) => {
     setSelectedListing(listing.id);

@@ -10,6 +10,10 @@ import { Listing } from '../types';
 export default function ManageListings() {
   const { user, isLoading: authLoading } = useAuth();
   const [listings, setListings] = useState<Listing[]>([]);
+
+  useEffect(() => {
+    document.title = "Manage Listings | Khubo";
+  }, []);
   const [loading, setLoading] = useState(true);
   const [editingListing, setEditingListing] = useState<Listing | null>(null);
   const navigate = useNavigate();

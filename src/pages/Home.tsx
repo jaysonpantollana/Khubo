@@ -58,6 +58,10 @@ export default function Home() {
     string | null
   >(null);
 
+  React.useEffect(() => {
+    document.title = "Home | Khubo";
+  }, []);
+
   const stickyHasSelections =
     selectedStickyLocation || selectedStickyDateStr || selectedStickyBudget;
 

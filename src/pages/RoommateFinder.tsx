@@ -44,6 +44,10 @@ export default function RoommateFinder() {
   const [selectedRoommate, setSelectedRoommate] = useState<Roommate | null>(
     null,
   );
+
+  React.useEffect(() => {
+    document.title = "Roommate | Khubo";
+  }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [showSearch, setShowSearch] = useState(false);

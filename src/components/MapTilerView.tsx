@@ -1,21 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
+import { MapPin } from 'lucide-react';
 
 interface MapTilerViewProps {
   lat: number;
   lng: number;
   title: string;
+  loadImmediately?: boolean;
 }
 
-const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
+const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmediately = false }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maptilersdk.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [shouldLoadMap, setShouldLoadMap] = useState(loadImmediately);
 
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
 
   useEffect(() => {
+    if (!shouldLoadMap) return;
     if (map.current) return;
 
     if (!apiKey) {
@@ -94,7 +98,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
       console.error('Error initializing MapTiler map:', error);
     }
 
-  }, [lat, lng, title, apiKey]);
+  }, [lat, lng, title, apiKey, shouldLoadMap]);
 
   const handleOpenGoogleMaps = () => {
     window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
@@ -104,7 +108,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
   const handleZoomOut = () => map.current?.zoomOut();
 
   return (
-    <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-md border border-neutral-200 bg-neutral-50">
+    <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-md border border-neutral-200 bg-neutral-50 flex items-center justify-center">
       {/* Custom Map Controls - Bottom Right Container style */}
       <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2">
         {/* Zoom Stack */}
@@ -123,9 +127,9 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
           </button>
         </div>
       </div>
-      {!apiKey && (
+      {(!apiKey || !shouldLoadMap) && (
         <>
-          {/* Fallback Map Background (Visible if live map fails to load or no key) */}
+          {/* Fallback Map Background (Visible if live map fails to load or no key or not loaded yet) */}
           <div 
             className="absolute inset-0 z-0 opacity-40 grayscale-[0.5]"
             style={{ 
@@ -141,9 +145,23 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
               <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
               <div className="flex flex-col">
                 <span className="text-[9px] font-black text-[#17294F] uppercase tracking-widest leading-none mb-0.5">Preview Mode</span>
-                <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-wider leading-none">Add API Key for live maps</span>
+                <span className="text-[8px] font-bold text-neutral-400 uppercase tracking-wider leading-none">
+                  {!apiKey ? 'Add API Key for live maps' : 'Map loading paused'}
+                </span>
               </div>
             </div>
+          </div>
+
+          <div className="absolute inset-0 z-40 bg-white/20 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
+            {!shouldLoadMap && apiKey && (
+               <button 
+                 onClick={(e) => { e.stopPropagation(); setShouldLoadMap(true); }}
+                 className="pointer-events-auto py-3 px-6 bg-[#17294F] text-white text-sm font-bold rounded-xl hover:bg-[#2252D6] transition-all shadow-xl active:scale-95 flex items-center gap-2"
+               >
+                 <MapPin className="w-5 h-5 text-white" />
+                 Load Interactive Map
+               </button>
+            )}
           </div>
 
           {/* Bottom Action Button */}
@@ -170,8 +188,8 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title }) => {
         </>
       )}
 
-      {!!apiKey && !mapLoaded && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
+      {!!apiKey && shouldLoadMap && !mapLoaded && (
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50 backdrop-blur-md">
           <span className="loader" />
         </div>
       )}

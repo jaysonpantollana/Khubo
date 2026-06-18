@@ -45,6 +45,9 @@ export default function Profile() {
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
 
+  useEffect(() => {
+    document.title = "Profile | Khubo";
+  }, []);
   
   const [hasLandlordAccount, setHasLandlordAccount] = useState(false);
   

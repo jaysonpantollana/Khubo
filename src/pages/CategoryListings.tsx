@@ -4,12 +4,16 @@ import ListingCard from '../components/ListingCard';
 import ListingCardSkeleton from '../components/ListingCardSkeleton';
 import Footer from '../components/Footer';
 import { ArrowLeft } from 'lucide-react';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 
 export default function CategoryListings() {
   const { categoryId } = useParams<{ categoryId: string }>();
   const navigate = useNavigate();
   const { listings: LISTINGS, loading } = useListings();
+
+  useEffect(() => {
+    document.title = `${categoryId ? categoryId.charAt(0).toUpperCase() + categoryId.slice(1).replace('-', ' ') : 'Category'} | Khubo`;
+  }, [categoryId]);
 
   const filteredListings = useMemo(() => {
     if (!categoryId || !LISTINGS) return [];

@@ -142,6 +142,12 @@ export default function ListingDetail() {
   const { listing, loading } = useListing(id);
   const { showToast } = useToast();
 
+  useEffect(() => {
+    if (listing) {
+      document.title = `${listing.title} | Khubo`;
+    }
+  }, [listing]);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -856,6 +862,7 @@ export default function ListingDetail() {
                   lat={8.2280} 
                   lng={124.2452} 
                   title={listing.title} 
+                  loadImmediately={true}
                 />
               </div>
 

@@ -39,6 +39,12 @@ export default function Maps() {
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [shouldLoadMap, setShouldLoadMap] = useState(false);
+
+  useEffect(() => {
+    document.title = "Maps | Khubo";
+  }, []);
+
   const hasSelections = selectedLocation || selectedDateStr || selectedBudget;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -192,6 +198,7 @@ export default function Maps() {
   }, [updateMarkers]);
 
   useEffect(() => {
+    if (!shouldLoadMap) return;
     if (map.current) return;
     if (!apiKey) return;
 
@@ -239,7 +246,7 @@ export default function Maps() {
         pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
       });
     });
-  }, []);
+  }, [shouldLoadMap, apiKey]);
 
   useEffect(() => {
     // If map exists, we need to tell it to resize when sidebar collapses/expands
@@ -643,7 +650,7 @@ export default function Maps() {
 
         {/* Right Map */}
         <div className="flex-1 h-full relative">
-          {!apiKey && (
+          {(!apiKey || !shouldLoadMap) && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
               <div
                 className="absolute inset-0 opacity-20 grayscale-[0.5]"
@@ -654,26 +661,38 @@ export default function Maps() {
                 }}
               />
               <div className="relative z-20 flex flex-col items-center gap-4 px-6 text-center">
-                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
-                  <MapPin size={32} className="text-amber-600" />
-                </div>
-                <h3 className="text-lg font-bold text-neutral-800">Map unavailable</h3>
-                <p className="text-sm text-neutral-500 max-w-xs">
-                  Add your MapTiler API key to <code className="bg-neutral-200 px-1.5 py-0.5 rounded text-xs font-mono">.env</code> to enable the live map.
-                </p>
-                <a
-                  href="https://cloud.maptiler.com/account/keys/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 px-5 py-2.5 bg-[#17294F] text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-[#2252D6] transition-all"
-                >
-                  Get a free key
-                </a>
+                {!apiKey ? (
+                  <>
+                    <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
+                      <MapPin size={32} className="text-amber-600" />
+                    </div>
+                    <h3 className="text-lg font-bold text-neutral-800">Map unavailable</h3>
+                    <p className="text-sm text-neutral-500 max-w-xs">
+                      Add your MapTiler API key to <code className="bg-neutral-200 px-1.5 py-0.5 rounded text-xs font-mono">.env</code> to enable the live map.
+                    </p>
+                    <a
+                      href="https://cloud.maptiler.com/account/keys/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 px-5 py-2.5 bg-[#17294F] text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-[#2252D6] transition-all"
+                    >
+                      Get a free key
+                    </a>
+                  </>
+                ) : (
+                  <button 
+                    onClick={() => setShouldLoadMap(true)}
+                    className="py-3 px-6 bg-[#17294F] text-white text-sm font-bold rounded-xl hover:bg-[#2252D6] transition-all shadow-xl active:scale-95 flex items-center gap-2"
+                  >
+                    <MapPin className="w-5 h-5 text-white" />
+                    Load Interactive Map
+                  </button>
+                )}
               </div>
             </div>
           )}
-          {!mapLoaded && (
-            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
+          {!!apiKey && shouldLoadMap && !mapLoaded && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50 backdrop-blur-md">
               <span className="loader" />
             </div>
           )}

@@ -28,6 +28,10 @@ export type Attachment = {
 export default function Messages() {
   const [conversations, setConversations] = useState(DUMMY_CONVERSATIONS);
   const [selectedConversation, setSelectedConversation] = useState<typeof DUMMY_CONVERSATIONS[0] | null>(null);
+
+  useEffect(() => {
+    document.title = "Messages | Khubo";
+  }, []);
   const [messageInput, setMessageInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>(DUMMY_MESSAGES as ChatMessage[]);
   const [isDarkMode, setIsDarkMode] = useState(false);

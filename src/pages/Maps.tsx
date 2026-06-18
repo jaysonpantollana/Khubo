@@ -196,8 +196,6 @@ export default function Maps() {
 
     map.current.on("load", () => {
       updateMarkersRef.current();
-      setStaticMapOpacity(0);
-      setTimeout(() => setStaticMapVisible(false), 350);
     });
 
     map.current.on("zoom", () => {

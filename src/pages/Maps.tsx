@@ -49,7 +49,7 @@ export default function Maps() {
   const staticMapContainerRef = useRef<HTMLDivElement>(null);
 
   const staticMapUrl = apiKey
-    ? `https://api.maptiler.com/maps/streets-v4/static/124.2442,8.2415,12/1200x800.png?key=${apiKey}`
+    ? `https://api.maptiler.com/maps/dataviz-v4/static/124.2442,8.2415,12/1200x800.png?key=${apiKey}`
     : "";
 
   useEffect(() => {

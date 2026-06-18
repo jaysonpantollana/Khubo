@@ -236,6 +236,13 @@ export default function Maps() {
     updateMarkers();
   }, [updateMarkers]);
 
+  // Reset preloader on unmount so Home.tsx can re-init on next visit
+  useEffect(() => {
+    return () => {
+      resetMapPreload();
+    };
+  }, []);
+
 
 
   const handleListingClick = (listing: Listing) => {

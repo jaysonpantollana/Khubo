@@ -44,7 +44,6 @@ export default function Maps() {
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
 
-  const [mapLoaded, setMapLoaded] = useState(false);
   const [staticMapVisible, setStaticMapVisible] = useState(true);
   const [staticMapOpacity, setStaticMapOpacity] = useState(1);
   const staticMapContainerRef = useRef<HTMLDivElement>(null);

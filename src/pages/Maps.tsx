@@ -175,10 +175,9 @@ export default function Maps() {
 
     map.current = new maptilersdk.Map({
       container: mapContainer.current!,
-      style: maptilersdk.MapStyle.DATAVIZ.LIGHT,
+      style: maptilersdk.MapStyle.STREETS,
       center: [124.2442, 8.2415],
-      zoom: 12,
-      maxZoom: 18,
+      zoom: 13,
       navigationControl: false,
       geolocateControl: false,
       fadeDuration: 0,
@@ -199,14 +198,13 @@ export default function Maps() {
 
     map.current.on("load", () => {
       updateMarkersRef.current();
-      setStaticMapOpacity(0);
-      setTimeout(() => setStaticMapVisible(false), 350);
+      setMapLoaded(true);
     });
 
     map.current.on("zoom", () => {
       const zoom = map.current!.getZoom();
       Object.values(markerPins.current).forEach((pin) => {
-        const scale = Math.pow(1.25, zoom - 12);
+        const scale = Math.pow(1.25, zoom - 13);
         pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
       });
     });

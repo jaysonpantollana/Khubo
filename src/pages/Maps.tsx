@@ -45,6 +45,13 @@ export default function Maps() {
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [staticMapVisible, setStaticMapVisible] = useState(true);
+  const [staticMapOpacity, setStaticMapOpacity] = useState(1);
+  const staticMapContainerRef = useRef<HTMLDivElement>(null);
+
+  const staticMapUrl = apiKey
+    ? `https://api.maptiler.com/maps/streets-v4/static/124.2442,8.2415,12/1200x800.png?key=${apiKey}`
+    : "";
 
   useEffect(() => {
     document.title = "Maps | Khubo";

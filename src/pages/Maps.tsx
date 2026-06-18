@@ -680,12 +680,13 @@ export default function Maps() {
                 }}
               >
                 <div
-                  className={`w-full [@media(max-height:600px)_and_(orientation:landscape)]:max-w-[340px] transition-all duration-300 rounded-[1.5rem] bg-white shadow-2xl ${selectedListing === listing.id ? "ring-2 ring-[#17294F] scale-[1.02]" : "scale-100"}`}
+                  className={`w-full [@media(max-height:600px)_and_(orientation:landscape)]:max-w-[340px] rounded-[1.5rem] bg-white shadow-2xl ${selectedListing === listing.id ? "ring-2 ring-[#17294F] scale-[1.02]" : "scale-100"}`}
                 >
                   <ListingCard
                     listing={listing}
                     onClick={() => navigate(`/listing/${listing.id}`)}
                     compact={true}
+                    disableInitialAnimation
                   />
                 </div>
               </div>

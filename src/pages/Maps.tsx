@@ -695,8 +695,7 @@ export default function Maps() {
           )}
           {!mapLoaded && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
-              <div className="w-12 h-12 border-4 border-neutral-200 border-t-[#17294F] rounded-full animate-spin mb-4" />
-              <p className="text-sm text-neutral-500 font-medium">Loading map...</p>
+              <span className="loader" />
             </div>
           )}
           <div ref={mapContainer} className="w-full h-full" />

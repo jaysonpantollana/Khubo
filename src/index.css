@@ -47,3 +47,28 @@
     scrollbar-width: none;
   }
 }
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #17294f;
+  box-shadow: 32px 0 #17294f, -32px 0 #17294f;
+  position: relative;
+  animation: flash 0.5s ease-out infinite alternate !important;
+}
+
+@keyframes flash {
+  0% {
+    background-color: #17294f33;
+    box-shadow: 32px 0 #17294f33, -32px 0 #17294f;
+  }
+  50% {
+    background-color: #17294f;
+    box-shadow: 32px 0 #17294f33, -32px 0 #17294f33;
+  }
+  100% {
+    background-color: #17294f33;
+    box-shadow: 32px 0 #17294f, -32px 0 #17294f33;
+  }
+}

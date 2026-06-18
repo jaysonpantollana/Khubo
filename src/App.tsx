@@ -63,6 +63,17 @@ const PageLoader = () => (
   </div>
 );
 
+function SkipLink() {
+  return (
+    <a
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-white focus:text-[#17294F] focus:rounded-full focus:shadow-lg focus:font-bold"
+    >
+      Skip to main content
+    </a>
+  );
+}
+
 export default function App() {
   return (
     <ThemeProvider>
@@ -70,19 +81,22 @@ export default function App() {
         <ToastProvider>
           <MotionConfig reducedMotion="user">
             <Router>
+              <SkipLink />
               <ScrollToTop />
               <ErrorBoundary fallback={<PageError />}>
                 <Suspense fallback={<PageLoader />}>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/listing/:id" element={<ListingDetail />} />
-                    <Route path="/category/:categoryId" element={<CategoryListings />} />
-                    <Route path="/maps" element={<Maps />} />
-                    <Route path="/messages" element={<Messages />} />
-                    <Route path="/roommate" element={<RoommateFinder />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/manage-listings" element={<ManageListings />} />
-                  </Routes>
+                  <div id="main-content">
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/listing/:id" element={<ListingDetail />} />
+                      <Route path="/category/:categoryId" element={<CategoryListings />} />
+                      <Route path="/maps" element={<Maps />} />
+                      <Route path="/messages" element={<Messages />} />
+                      <Route path="/roommate" element={<RoommateFinder />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/manage-listings" element={<ManageListings />} />
+                    </Routes>
+                  </div>
                 </Suspense>
               </ErrorBoundary>
             </Router>

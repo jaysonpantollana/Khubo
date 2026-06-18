@@ -153,26 +153,6 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
           </div>
 
           <div className="absolute inset-0 z-40 bg-white/20 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
-            {!shouldLoadMap && apiKey && (
-               <button 
-                 onClick={(e) => { e.stopPropagation(); setShouldLoadMap(true); }}
-                 className="pointer-events-auto py-3 px-6 bg-[#17294F] text-white text-sm font-bold rounded-xl hover:bg-[#2252D6] transition-all shadow-xl active:scale-95 flex items-center gap-2"
-               >
-                 <MapPin className="w-5 h-5 text-white" />
-                 Load Interactive Map
-               </button>
-            )}
-          </div>
-
-          {/* Bottom Action Button */}
-          <div className="absolute bottom-6 left-6 z-50">
-            <button 
-              onClick={handleOpenGoogleMaps}
-              className="py-3 px-5 bg-[#17294F] text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-[#2252D6] transition-all shadow-xl active:scale-95 flex items-center gap-2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-              Open in Google Maps
-            </button>
           </div>
 
           {/* Fallback Marker (Only visible when live map is not active) */}

@@ -27,6 +27,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { DateScrollPicker } from "../components/DateScrollPicker";
 import SearchDropdown from "../components/SearchDropdown";
 import { FilterState } from "../components/Filters";
+import { takeMap } from "../lib/mapPreloader";
 export default function Maps() {
   const { listings: LISTINGS, loading } = useListings();
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";

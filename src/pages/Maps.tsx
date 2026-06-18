@@ -58,12 +58,12 @@ export default function Maps() {
   const map = useRef<maptilersdk.Map | null>(null);
   const markers = useRef<{ [key: string]: maptilersdk.Marker }>({});
   const markerPins = useRef<{ [key: string]: HTMLElement }>({});
-  const [filters, setFilters] = useState<FilterState>({
+  const filters: FilterState = {
     minPrice: 0,
     maxPrice: 50000,
     sortBy: "relevance",
     minRating: 0,
-  });
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

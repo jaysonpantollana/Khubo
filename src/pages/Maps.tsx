@@ -635,9 +635,17 @@ export default function Maps() {
               </div>
             </div>
           )}
-          {apiKey && !mapLoaded && (
-            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50 backdrop-blur-md">
-              <span className="loader" />
+          {apiKey && staticMapVisible && (
+            <div
+              className="absolute inset-0 z-20 pointer-events-none"
+              style={{ opacity: staticMapOpacity, transition: "opacity 0.3s ease-out" }}
+            >
+              <img
+                src={staticMapUrl}
+                alt="Map preview"
+                className="w-full h-full object-cover"
+                draggable={false}
+              />
             </div>
           )}
           <div ref={mapContainer} className="w-full h-full" />

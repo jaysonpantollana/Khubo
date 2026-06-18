@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "Accommodation & roommate finder platform (Iligan City). React 19 + TypeScript 5.8 + Vite 6.2. Migration history: v0.0.0 = initial scaffold from AI Studio (Staybnb rename). Dependencies: react (UI), react-router-dom (routing), @maptiler/sdk (maps), @google/genai (AI), lucide-react (icons), motion (animations), recharts (charts), date-fns (dates), clsx+tailwind-merge (styling). DevDeps: vite, tailwindcss, typescript, eslint, prettier, autoprefixer.",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
@@ -28,6 +29,9 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.14",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.14.0",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
@@ -36,10 +40,12 @@
     "eslint": "^9.39.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "jsdom": "^29.1.1",
     "prettier": "^3.8.3",
     "tailwindcss": "^4.1.14",
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.60.1",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
+    "vitest": "^4.1.9"
   }
 }

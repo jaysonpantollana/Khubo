@@ -11,6 +11,7 @@
 // @side-effects: Writes 'khubo_mock_users' to localStorage, writes 'auth_token' to sessionStorage
 
 import { apiPost, apiGet } from './client';
+import { delay } from '../utils';
 export interface AuthUser {
   id: string;
   email: string;
@@ -118,6 +119,4 @@ export async function getSession() {
   return { data, error };
 }
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+

@@ -12,12 +12,9 @@
 import { Listing } from '../../types';
 import { apiGet, apiPost, apiPut, apiDelete } from './client';
 import { PaginatedResponse, PaginationParams } from './types';
+import { delay } from '../utils';
 
 import { LISTINGS as MOCK_LISTINGS } from '../../mocks/listings';
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 export async function getListings(params?: PaginationParams & {
   category?: string;

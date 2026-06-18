@@ -10,6 +10,7 @@
 
 import { apiGet, apiPost } from './client';
 import { DUMMY_MESSAGES as MOCK_MESSAGES } from '../../mocks/messages';
+import { delay } from '../utils';
 
 export interface Message {
   id: string;
@@ -27,10 +28,6 @@ export interface Conversation {
   lastMessage: string;
   lastTimestamp: string;
   unreadCount: number;
-}
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export async function getConversations() {

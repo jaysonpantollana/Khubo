@@ -6,8 +6,9 @@ import BottomNav from "../components/BottomNav";
 import Filters, { FilterState } from "../components/Filters";
 import Footer from "../components/Footer";
 import { useListings } from "../hooks/useListings";
+import { useListingsFilter } from "../hooks/useListingsFilter";
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
@@ -156,58 +157,12 @@ export default function Home() {
     }
   }, [displaySearch]);
 
-  const filteredListings = useMemo(() => {
-    if (!LISTINGS) return [];
-    let result = [...LISTINGS];
-
-    // Filter by Category
-    if (selectedCategory !== "ALL") {
-      result = result.filter(
-        (listing) => listing.category === selectedCategory,
-      );
-    }
-
-    // Filter by Price
-    result = result.filter(
-      (listing) =>
-        listing.price >= filters.minPrice && listing.price <= filters.maxPrice,
-    );
-
-    // Filter by Rating
-    result = result.filter((listing) => listing.rating >= filters.minRating);
-
-    // Filter by Search Query (keywords or numbers)
-    if (searchQuery.trim() !== "") {
-      const query = searchQuery.toLowerCase().trim();
-      result = result.filter((listing) => {
-        return (
-          listing.title.toLowerCase().includes(query) ||
-          listing.description.toLowerCase().includes(query) ||
-          listing.location.toLowerCase().includes(query) ||
-          listing.category.toLowerCase().includes(query) ||
-          listing.price.toString().includes(query)
-        );
-      });
-    }
-
-    // Sort
-    switch (filters.sortBy) {
-      case "price-low":
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case "price-high":
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case "rating":
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      default:
-        // Relevance - keep original order
-        break;
-    }
-
-    return result;
-  }, [selectedCategory, filters, searchQuery, LISTINGS]);
+  const filteredListings = useListingsFilter(
+    LISTINGS,
+    filters,
+    searchQuery,
+    selectedCategory,
+  );
 
   const handleListingClick = (id: string) => {
     navigate(`/listing/${id}`);

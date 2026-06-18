@@ -1,5 +1,6 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useListings } from "../hooks/useListings";
+import { useListingsFilter } from "../hooks/useListingsFilter";
 import ListingCard from "../components/ListingCard";
 import ListingCardSkeleton from "../components/ListingCardSkeleton";
 import {
@@ -88,43 +89,8 @@ export default function Maps() {
     setIsSearchActive(false);
   };
 
-  const filteredListings = useMemo(() => {
-    let dataListings = LISTINGS || [];
-
-    // Apply search query
-    if (searchQuery) {
-      dataListings = dataListings.filter(
-        (listing) =>
-          listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          listing.location.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-    }
-
-    // Apply filter state
-    dataListings = dataListings.filter((listing) => {
-      if (listing.price < filters.minPrice) return false;
-      if (listing.price > filters.maxPrice) return false;
-      if (listing.rating < filters.minRating) return false;
-      return true;
-    });
-
-    // Apply sorting
-    dataListings = [...dataListings].sort((a, b) => {
-      switch (filters.sortBy) {
-        case "price-low":
-          return a.price - b.price;
-        case "price-high":
-          return b.price - a.price;
-        case "rating":
-          return b.rating - a.rating;
-        case "relevance":
-        default:
-          return 0; // Or standard order
-      }
-    });
-
-    return dataListings.filter((l) => l.lat && l.lng); // Only show listings with coordinates
-  }, [searchQuery, LISTINGS, filters]);
+  const filteredRaw = useListingsFilter(LISTINGS, filters, searchQuery);
+  const filteredListings = filteredRaw.filter((l) => l.lat && l.lng);
 
   const selectedListingRef = useRef(selectedListing);
   useEffect(() => {

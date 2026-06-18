@@ -10,10 +10,7 @@
 import { Roommate } from '../../types';
 import { apiGet, apiPost } from './client';
 import { ROOMMATES as MOCK_ROOMMATES } from '../../mocks/roommates';
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { delay } from '../utils';
 
 export async function getRoommates(params?: {
   search?: string;

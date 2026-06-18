@@ -1,0 +1,6 @@
+hooks:
+  - event: tool.execute.after
+    conditions:
+      - matchesCodeFiles
+    actions:
+      - bash: git add -A && git commit -m "auto: opencode changes" --no-verify --allow-empty

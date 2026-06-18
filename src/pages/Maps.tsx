@@ -613,7 +613,7 @@ export default function Maps() {
 
         {/* Right Map */}
         <div className="flex-1 h-full relative">
-          {(!apiKey || !shouldLoadMap) && (
+          {!apiKey && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50">
               <div
                 className="absolute inset-0 opacity-20 grayscale-[0.5]"

@@ -203,7 +203,6 @@ export default function Maps() {
 
     map.current.on("load", () => {
       updateMarkersRef.current();
-      setMapLoaded(true);
       setStaticMapOpacity(0);
       setTimeout(() => setStaticMapVisible(false), 350);
     });

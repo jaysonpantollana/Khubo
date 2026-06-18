@@ -170,6 +170,23 @@ export default function Maps() {
     if (map.current) return;
     if (!apiKey) return;
 
+    // Try to take the pre-initialized map from the preloader
+    const preloaded = takeMap();
+    if (preloaded) {
+      // Re-parent the preloaded container into our layout
+      const container = mapContainer.current;
+      if (container) {
+        container.appendChild(preloaded.container);
+        preloaded.container.style.cssText =
+          "position:static;visibility:visible;width:100%;height:100%;";
+        map.current = preloaded.map;
+        map.current.resize();
+        updateMarkersRef.current();
+      }
+      return;
+    }
+
+    // Fallback: create a new map if no preload available
     maptilersdk.config.apiKey = apiKey;
 
     map.current = new maptilersdk.Map({
@@ -185,10 +202,8 @@ export default function Maps() {
     map.current.on("styleimagemissing", (e: { id?: string }) => {
       try {
         if (e && e.id && map.current) {
-          const width = 1;
-          const height = 1;
           const data = new Uint8Array([0, 0, 0, 0]);
-          map.current.addImage(e.id, { width, height, data });
+          map.current.addImage(e.id, { width: 1, height: 1, data });
         }
       } catch {
         // ignore

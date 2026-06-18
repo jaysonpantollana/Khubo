@@ -1,3 +1,10 @@
+// @context: Chat message bubble — individual message in chat
+// @purpose: Renders a single chat message with text, attachments (image/video/file), and sender differentiation
+// @behavior: Shows avatar for "them" messages; attachments rendered with previews (images, videos with play icon, file cards)
+// @behavior: "me" messages styled with blue background on right; "them" with gray on left; delivery status on last "me" message
+// @dependencies: lucide-react, motion (AnimatePresence used in parent)
+// @code-template: Pattern for chat message UI with attachment support
+
 import { Play, FileIcon } from 'lucide-react';
 
 export interface Attachment {

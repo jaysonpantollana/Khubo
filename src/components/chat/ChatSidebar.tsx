@@ -1,3 +1,10 @@
+// @context: Chat sidebar — conversation list panel
+// @purpose: Displays list of conversations with avatar, name, last message, unread count, online status
+// @behavior: Filter buttons (All/Landlord/Friends/Admin); search input; dark/light mode toggle
+// @behavior: Click conversation → calls onSelect with conversation data; highlights selected conversation
+// @dependencies: lucide-react, BottomNav
+// @known-issues: Conversation type defined locally (duplicates DUMMY_CONVERSATIONS shape)
+
 import { ArrowLeft, Search, Moon, Sun } from 'lucide-react';
 import BottomNav from '../BottomNav';
 

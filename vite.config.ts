@@ -18,6 +18,7 @@
 // @adr: ADR-005 — Vite @ alias → project root: intentional but mismatches tsconfig @/* → src/*
 // @known-issues: @ alias points to project root (.) but tsconfig maps @/* → ./src/* — potential import mismatch
 
+/// <reference types="vitest" />
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -27,6 +28,11 @@ export default defineConfig(({mode}) => {
   loadEnv(mode, '.', '');
   return {
     plugins: [react(), tailwindcss()],
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: ['./src/test/setup.ts'],
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

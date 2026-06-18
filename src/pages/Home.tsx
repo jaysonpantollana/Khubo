@@ -1,18 +1,15 @@
 import Hero from "../components/Hero";
 import Categories from "../components/Categories";
-import ListingCard from "../components/ListingCard";
-import ListingCardSkeleton from "../components/ListingCardSkeleton";
 import BottomNav from "../components/BottomNav";
 import Filters, { FilterState } from "../components/Filters";
 import Footer from "../components/Footer";
+import { ListingCarousel } from "../components/ListingCarousel";
 import { useListings } from "../hooks/useListings";
 import { useListingsFilter } from "../hooks/useListingsFilter";
 import { motion, AnimatePresence } from "motion/react";
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  ChevronLeft,
-  ChevronRight,
   Search,
   MapPin,
   Calendar as CalendarIcon,
@@ -29,16 +26,6 @@ const POPULAR_LOCATIONS = ["Iligan City"];
 
 const CAROUSEL_ITEM_CLASS =
   "w-[calc((100%-12px)/2)] flex-none min-w-[calc((100%-12px)/2)] sm:w-[calc((100%-12px)/2)] sm:min-w-[calc((100%-12px)/2)] md:portrait:min-w-[calc((100%-24px)/3)] md:portrait:w-[calc((100%-24px)/3)] md:landscape:min-w-[calc((100%-48px)/5)] md:landscape:w-[calc((100%-48px)/5)] lg:min-w-[calc((100%-48px)/5)] lg:w-[calc((100%-48px)/5)] xl:min-w-[calc((100%-48px)/5)] xl:w-[calc((100%-48px)/5)] snap-start";
-
-const ListingCarouselSkeleton = ({ prefix }: { prefix: string }) => (
-  <>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <div key={`skeleton-${prefix}-${i}`} className={CAROUSEL_ITEM_CLASS}>
-        <ListingCardSkeleton />
-      </div>
-    ))}
-  </>
-);
 
 export default function Home() {
   const { listings: LISTINGS, loading: listingsLoading } = useListings();
@@ -77,9 +64,6 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const observerRef = useRef<HTMLDivElement>(null);
   const searchObserverRef = useRef<HTMLDivElement>(null);
-  const recommendedRef = useRef<HTMLDivElement>(null);
-  const topListingsRef = useRef<HTMLDivElement>(null);
-  const msuIitRef = useRef<HTMLDivElement>(null);
   const [filters, setFilters] = useState<FilterState>({
     minPrice: 0,
     maxPrice: 50000,
@@ -166,19 +150,6 @@ export default function Home() {
 
   const handleListingClick = (id: string) => {
     navigate(`/listing/${id}`);
-  };
-
-  const scroll = (
-    ref: React.RefObject<HTMLDivElement | null>,
-    direction: "left" | "right",
-  ) => {
-    if (ref.current) {
-      const scrollAmount = ref.current.clientWidth * 0.8;
-      ref.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
   };
 
   return (
@@ -668,176 +639,46 @@ export default function Home() {
 
       <main className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 pt-10">
         <div className="flex flex-col gap-16">
-          {(listingsLoading || filteredListings.length > 0) && (
-            <div className="flex flex-col gap-5 md:gap-6">
-              <div className="flex items-center justify-between">
-                <div
-                  className="flex items-center gap-2 group cursor-pointer min-w-0"
-                  onClick={() => navigate("/category/recommended")}
-                >
-                  <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
-                    Recommended
-                  </h2>
-                  <div className="flex items-center gap-1 px-3 py-1 bg-[#17294F] text-white rounded-full ml-1 sm:ml-2 flex-shrink-0">
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                      See more
-                    </span>
-                  </div>
-                </div>
-
-                <div className="hidden md:flex items-center gap-3">
-                  <button
-                    onClick={() => scroll(recommendedRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
-                    aria-label="Previous Recommended"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={() => scroll(recommendedRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
-                    aria-label="Next Recommended"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-              </div>
-
-              <div
-                ref={recommendedRef}
-                className="flex gap-3 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
-                style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
-              >
-                {listingsLoading ? (
-                  <ListingCarouselSkeleton prefix="rec" />
-                ) : (
-                  filteredListings.slice(0, 21).map((listing) => (
-                    <div key={listing.id} className={CAROUSEL_ITEM_CLASS}>
-                      <ListingCard
-                        listing={listing}
-                        onClick={() => handleListingClick(listing.id)}
-                        disableInitialAnimation={true}
-                      />
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
-
-          {(listingsLoading || filteredListings.length > 0) && (
-            <div className="flex flex-col gap-5 md:gap-6">
-              <div className="flex items-center justify-between">
-                <div
-                  className="flex items-center gap-2 group cursor-pointer min-w-0"
-                  onClick={() => navigate("/category/top-listing")}
-                >
-                  <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
-                    Top Listing
-                  </h2>
-                  <div className="flex items-center gap-1 px-3 py-1 bg-[#17294F] text-white rounded-full ml-1 sm:ml-2 flex-shrink-0">
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                      See more
-                    </span>
-                  </div>
-                </div>
-
-                <div className="hidden md:flex items-center gap-3">
-                  <button
-                    onClick={() => scroll(topListingsRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
-                    aria-label="Previous Top Listings"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={() => scroll(topListingsRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
-                    aria-label="Next Top Listings"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-              </div>
-
-              <div
-                ref={topListingsRef}
-                className="flex gap-3 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
-                style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
-              >
-                {listingsLoading ? (
-                  <ListingCarouselSkeleton prefix="top" />
-                ) : (
-                  filteredListings.slice(7, 28).map((listing) => (
-                    <div key={listing.id} className={CAROUSEL_ITEM_CLASS}>
-                      <ListingCard
-                        listing={listing}
-                        onClick={() => handleListingClick(listing.id)}
-                        disableInitialAnimation={true}
-                      />
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
-
-          {(listingsLoading || filteredListings.length > 0) && (
-            <div className="flex flex-col gap-5 md:gap-6">
-              <div className="flex items-center justify-between">
-                <div
-                  className="flex items-center gap-2 group cursor-pointer min-w-0"
-                  onClick={() => navigate("/category/near-msu-iit")}
-                >
-                  <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
-                    Near MSU-IIT
-                  </h2>
-                  <div className="flex items-center gap-1 px-3 py-1 bg-[#17294F] text-white rounded-full ml-1 sm:ml-2 flex-shrink-0">
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                      See more
-                    </span>
-                  </div>
-                </div>
-
-                <div className="hidden md:flex items-center gap-3">
-                  <button
-                    onClick={() => scroll(msuIitRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
-                    aria-label="Previous MSU-IIT Listings"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={() => scroll(msuIitRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
-                    aria-label="Next MSU-IIT Listings"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-              </div>
-
-              <div
-                ref={msuIitRef}
-                className="flex gap-3 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
-                style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
-              >
-                {listingsLoading ? (
-                  <ListingCarouselSkeleton prefix="msu" />
-                ) : (
-                  filteredListings.slice(14, 35).map((listing) => (
-                    <div key={listing.id} className={CAROUSEL_ITEM_CLASS}>
-                      <ListingCard
-                        listing={listing}
-                        onClick={() => handleListingClick(listing.id)}
-                        disableInitialAnimation={true}
-                      />
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
+          {listingsLoading || filteredListings.length > 0 ? (
+            <>
+              <ListingCarousel
+                title="Recommended"
+                categoryPath="/category/recommended"
+                listings={filteredListings}
+                loading={listingsLoading}
+                sliceStart={0}
+                sliceEnd={21}
+                skeletonPrefix="rec"
+                carouselItemClass={CAROUSEL_ITEM_CLASS}
+                onListingClick={handleListingClick}
+                onNavigateCategory={navigate}
+              />
+              <ListingCarousel
+                title="Top Listing"
+                categoryPath="/category/top-listing"
+                listings={filteredListings}
+                loading={listingsLoading}
+                sliceStart={7}
+                sliceEnd={28}
+                skeletonPrefix="top"
+                carouselItemClass={CAROUSEL_ITEM_CLASS}
+                onListingClick={handleListingClick}
+                onNavigateCategory={navigate}
+              />
+              <ListingCarousel
+                title="Near MSU-IIT"
+                categoryPath="/category/near-msu-iit"
+                listings={filteredListings}
+                loading={listingsLoading}
+                sliceStart={14}
+                sliceEnd={35}
+                skeletonPrefix="msu"
+                carouselItemClass={CAROUSEL_ITEM_CLASS}
+                onListingClick={handleListingClick}
+                onNavigateCategory={navigate}
+              />
+            </>
+          ) : null}
         </div>
 
         {!listingsLoading && filteredListings.length === 0 && (

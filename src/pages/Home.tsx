@@ -7,7 +7,7 @@ import Filters, { FilterState } from "../components/Filters";
 import Footer from "../components/Footer";
 import { useListings } from "../hooks/useListings";
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useMemo, useRef, useDeferredValue } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ChevronLeft,
@@ -44,7 +44,6 @@ export default function Home() {
   const { history, addSearch, removeSearch } = useSearchHistory();
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
-  const deferredSearchQuery = useDeferredValue(searchQuery);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isStickySearchActive, setIsStickySearchActive] = useState(false);
   const [hideStickyDropdown, setHideStickyDropdown] = useState(false);
@@ -174,8 +173,8 @@ export default function Home() {
     result = result.filter((listing) => listing.rating >= filters.minRating);
 
     // Filter by Search Query (keywords or numbers)
-    if (deferredSearchQuery.trim() !== "") {
-      const query = deferredSearchQuery.toLowerCase().trim();
+    if (searchQuery.trim() !== "") {
+      const query = searchQuery.toLowerCase().trim();
       result = result.filter((listing) => {
         return (
           listing.title.toLowerCase().includes(query) ||
@@ -204,7 +203,7 @@ export default function Home() {
     }
 
     return result;
-  }, [selectedCategory, filters, deferredSearchQuery, LISTINGS]);
+  }, [selectedCategory, filters, searchQuery, LISTINGS]);
 
   const handleListingClick = (id: string) => {
     navigate(`/listing/${id}`);

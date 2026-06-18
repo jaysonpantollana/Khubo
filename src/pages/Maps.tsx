@@ -44,13 +44,7 @@ export default function Maps() {
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
 
-  const [staticMapVisible, setStaticMapVisible] = useState(true);
-  const [staticMapOpacity, setStaticMapOpacity] = useState(1);
-  const staticMapContainerRef = useRef<HTMLDivElement>(null);
-
-  const staticMapUrl = apiKey
-    ? `https://api.maptiler.com/maps/dataviz-v4/static/124.2442,8.2415,12/1200x800.png?key=${apiKey}`
-    : "";
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     document.title = "Maps | Khubo";

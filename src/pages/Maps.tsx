@@ -215,7 +215,7 @@ export default function Maps() {
         pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
       });
     });
-  }, [shouldLoadMap, apiKey]);
+  }, [apiKey]);
 
   useEffect(() => {
     // If map exists, we need to tell it to resize when sidebar collapses/expands

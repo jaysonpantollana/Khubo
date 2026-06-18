@@ -5,8 +5,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import {
-  Search, MoreHorizontal, Phone, Video, ArrowLeft, Send, Image as ImageIcon,
-  Smile, Moon, Sun, Camera, FileText, ChevronRight, X, Play, File as FileIcon,
+  MoreHorizontal, Phone, Video, ArrowLeft, Send, Image as ImageIcon,
+  Smile, Camera, FileText, ChevronRight, X, Play, File as FileIcon,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';

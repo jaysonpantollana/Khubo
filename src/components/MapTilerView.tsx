@@ -10,7 +10,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
-import { MapPin } from 'lucide-react';
+
 
 interface MapTilerViewProps {
   lat: number;

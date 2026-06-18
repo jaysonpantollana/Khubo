@@ -14,8 +14,6 @@ interface ReviewBreakdownProps {
 }
 
 const ReviewBreakdown: React.FC<ReviewBreakdownProps> = ({ 
-  rating, 
-  totalReviews,
   breakdown 
 }) => {
   const categories = [

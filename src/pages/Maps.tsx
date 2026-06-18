@@ -220,7 +220,7 @@ export default function Maps() {
     });
 
     // Intercept and resolve missing style images to suppress MapTiler road/space warnings in console
-    map.current.on("styleimagemissing", (e: any) => {
+    map.current.on("styleimagemissing", (e: { id?: string }) => {
       try {
         if (e && e.id && map.current) {
           const width = 1;

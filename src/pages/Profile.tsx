@@ -49,8 +49,6 @@ export default function Profile() {
     document.title = "Profile | Khubo";
   }, []);
   
-  const [hasLandlordAccount, setHasLandlordAccount] = useState(false);
-  
   const menuItems = [
     { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
     { title: 'Account settings', icon: Settings, action: () => showToast('Account settings clicked', 'info') },
@@ -133,7 +131,7 @@ export default function Profile() {
       .maybeSingle();
       
     if (!error && data) {
-      setHasLandlordAccount(true);
+      // landlord profile exists
     }
   }, [user]);
 

@@ -9,7 +9,6 @@ import {
   X,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useNavigate } from "react-router-dom";
 import { DateScrollPicker } from "./DateScrollPicker";
 import SearchDropdown from "./SearchDropdown";
 import { AnnouncementsOverlay } from "./AnnouncementsOverlay";
@@ -19,7 +18,6 @@ interface HeroProps {
   setSearchQuery?: (query: string) => void;
   isSearchActive?: boolean;
   setIsSearchActive?: (active: boolean) => void;
-  onOpenMobileSearch?: () => void;
   suppressDropdown?: boolean;
 }
 
@@ -28,10 +26,8 @@ export default function Hero({
   setSearchQuery = () => {},
   isSearchActive = false,
   setIsSearchActive = () => {},
-  onOpenMobileSearch = () => {},
   suppressDropdown = false,
 }: HeroProps) {
-  const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<
     "location" | "dates" | "budget" | "general" | null
   >(null);
@@ -501,21 +497,4 @@ export default function Hero({
   );
 }
 
-const Sparkles = ({ size }: { size: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-    <path d="M5 3v4" />
-    <path d="M3 5h4" />
-    <path d="M21 17v4" />
-    <path d="M19 19h4" />
-  </svg>
-);
+

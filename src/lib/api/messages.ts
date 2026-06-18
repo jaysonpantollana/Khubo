@@ -46,7 +46,7 @@ export async function getMessages(conversationId: string) {
   const { data, error } = await apiGet<Message[]>(`/messages/${conversationId}`);
   if (error) {
     await delay(300);
-    const messages = MOCK_MESSAGES as any || [];
+    const messages = (MOCK_MESSAGES || []) as Message[];
     return { data: messages, error: null };
   }
   return { data: data || [], error };

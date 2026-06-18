@@ -11,8 +11,6 @@
 // @side-effects: Writes 'khubo_mock_users' to localStorage, writes 'auth_token' to sessionStorage
 
 import { apiPost, apiGet } from './client';
-import { ApiResponse } from './types';
-
 export interface AuthUser {
   id: string;
   email: string;

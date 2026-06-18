@@ -47,7 +47,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
       map.current.on('load', () => setMapLoaded(true));
 
       // Intercept and resolve missing style images to suppress MapTiler road/space warnings in console
-      map.current.on('styleimagemissing', (e: any) => {
+      map.current.on('styleimagemissing', (e: { id?: string }) => {
         try {
           if (e && e.id && map.current) {
             const width = 1;
@@ -55,7 +55,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
             const data = new Uint8Array([0, 0, 0, 0]);
             map.current.addImage(e.id, { width, height, data });
           }
-        } catch (err) {
+        } catch {
           // ignore any errors adding dummy fallback
         }
       });
@@ -79,7 +79,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
         </div>
       `;
 
-      const marker = new maptilersdk.Marker({ element: el, anchor: 'bottom' })
+      new maptilersdk.Marker({ element: el, anchor: 'bottom' })
         .setLngLat([lng, lat])
         .addTo(map.current);
 

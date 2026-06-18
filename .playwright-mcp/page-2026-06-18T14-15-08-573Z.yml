@@ -1,0 +1,6 @@
+- generic [ref=e2]:
+  - link "Skip to main content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e1786]:
+    - heading "Listing not found" [level=1] [ref=e1787]
+    - button "Go back home" [ref=e1788]

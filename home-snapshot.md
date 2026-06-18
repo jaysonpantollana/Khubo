@@ -1,0 +1,1388 @@
+- generic [ref=e2]:
+  - link "Skip to main content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e7]:
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - button "Home" [ref=e13]:
+          - img "Khubo Logo" [ref=e14]
+        - button "Announcements" [ref=e15]:
+          - img [ref=e16]
+      - generic [ref=e19]:
+        - heading "WELCOME TO KHUBO" [level=1] [ref=e20]:
+          - generic [ref=e21]: WELCOME TO
+          - generic [ref=e22]: KHUBO
+        - generic [ref=e24]:
+          - 'button "Location: Location" [ref=e26] [cursor=pointer]':
+            - generic [ref=e27]:
+              - img [ref=e28]
+              - generic [ref=e31]: Location
+            - img [ref=e32]
+          - button "Add dates" [ref=e36] [cursor=pointer]:
+            - generic [ref=e37]:
+              - img [ref=e38]
+              - generic [ref=e40]: Dates
+            - img [ref=e42]
+          - button "Add budget" [ref=e46] [cursor=pointer]:
+            - generic [ref=e47]:
+              - img [ref=e48]
+              - generic [ref=e51]: Budget
+            - img [ref=e52]
+          - button "Search" [ref=e54] [cursor=pointer]:
+            - img [ref=e55]
+    - generic [ref=e60]:
+      - generic [ref=e62]:
+        - 'button "Location: Location" [ref=e64] [cursor=pointer]':
+          - generic [ref=e65]:
+            - img [ref=e66]
+            - generic [ref=e69]: Location
+          - img [ref=e70]
+        - button "Add dates" [ref=e74] [cursor=pointer]:
+          - generic [ref=e75]:
+            - img [ref=e76]
+            - generic [ref=e78]: Dates
+          - img [ref=e80]
+        - button "Add budget" [ref=e84] [cursor=pointer]:
+          - generic [ref=e85]:
+            - img [ref=e86]
+            - generic [ref=e89]: Budget
+          - img [ref=e90]
+        - button "Search" [ref=e92] [cursor=pointer]:
+          - img [ref=e93]
+      - button "Filters" [ref=e98]:
+        - img [ref=e99]
+    - main [ref=e100]:
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - generic [ref=e104] [cursor=pointer]:
+              - heading "Recommended" [level=2] [ref=e105]
+              - generic [ref=e107]: See more
+            - generic [ref=e108]:
+              - button "Previous Recommended" [ref=e109]:
+                - img [ref=e110]
+              - button "Next Recommended" [ref=e112]:
+                - img [ref=e113]
+          - generic [ref=e115]:
+            - button "View details for Yhuzuong’s Dormitory at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e117] [cursor=pointer]:
+              - generic [ref=e118]:
+                - generic [ref=e119]:
+                  - img "Yhuzuong’s Dormitory" [ref=e120]
+                  - generic [ref=e121]: 6 available
+                - generic [ref=e122]:
+                  - heading "Yhuzuong’s Dormitory" [level=3] [ref=e123]
+                  - generic [ref=e124]:
+                    - generic [ref=e125]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e126]:
+                      - img [ref=e127]
+                      - generic [ref=e130]: Verified
+                  - generic [ref=e131]:
+                    - generic [ref=e132]:
+                      - generic [ref=e133]: P5000
+                      - generic [ref=e134]: /month
+                    - generic [ref=e135]:
+                      - img [ref=e136]
+                      - generic [ref=e138]: "5.00"
+                  - generic [ref=e140]:
+                    - generic [ref=e141]: Free Wifi
+                    - generic [ref=e142]: Electricity
+            - button "View details for Kayla’s Residences & Dormitory at Iligan City, Lanao del norte 9200. Price P6000 per month. Rating 5.00 stars." [ref=e144] [cursor=pointer]:
+              - generic [ref=e145]:
+                - generic [ref=e146]:
+                  - img "Kayla’s Residences & Dormitory" [ref=e147]
+                  - generic [ref=e148]: 6 available
+                - generic [ref=e149]:
+                  - heading "Kayla’s Residences & Dormitory" [level=3] [ref=e150]
+                  - generic [ref=e151]:
+                    - generic [ref=e152]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e153]:
+                      - img [ref=e154]
+                      - generic [ref=e157]: Verified
+                  - generic [ref=e158]:
+                    - generic [ref=e159]:
+                      - generic [ref=e160]: P6000
+                      - generic [ref=e161]: /month
+                    - generic [ref=e162]:
+                      - img [ref=e163]
+                      - generic [ref=e165]: "5.00"
+                  - generic [ref=e167]:
+                    - generic [ref=e168]: Free Wifi
+                    - generic [ref=e169]: CCTV
+            - button "View details for Nathan’s Female Boarders at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e171] [cursor=pointer]:
+              - generic [ref=e172]:
+                - generic [ref=e173]:
+                  - img "Nathan’s Female Boarders" [ref=e174]
+                  - generic [ref=e175]: 3 available
+                - generic [ref=e176]:
+                  - heading "Nathan’s Female Boarders" [level=3] [ref=e177]
+                  - generic [ref=e178]:
+                    - generic [ref=e179]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e180]:
+                      - img [ref=e181]
+                      - generic [ref=e184]: Verified
+                  - generic [ref=e185]:
+                    - generic [ref=e186]:
+                      - generic [ref=e187]: P5000
+                      - generic [ref=e188]: /month
+                    - generic [ref=e189]:
+                      - img [ref=e190]
+                      - generic [ref=e192]: "5.00"
+                  - generic [ref=e194]:
+                    - generic [ref=e195]: Free Wifi
+                    - generic [ref=e196]: Water
+            - button "View details for Blue Horizon Boarding House at Iligan City, Lanao del norte 9200. Price P4500 per month. Rating 5.00 stars." [ref=e198] [cursor=pointer]:
+              - generic [ref=e199]:
+                - generic [ref=e200]:
+                  - img "Blue Horizon Boarding House" [ref=e201]
+                  - generic [ref=e202]: 4 available
+                - generic [ref=e203]:
+                  - heading "Blue Horizon Boarding House" [level=3] [ref=e204]
+                  - generic [ref=e205]:
+                    - generic [ref=e206]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e207]:
+                      - img [ref=e208]
+                      - generic [ref=e211]: Verified
+                  - generic [ref=e212]:
+                    - generic [ref=e213]:
+                      - generic [ref=e214]: P4500
+                      - generic [ref=e215]: /month
+                    - generic [ref=e216]:
+                      - img [ref=e217]
+                      - generic [ref=e219]: "5.00"
+                  - generic [ref=e221]:
+                    - generic [ref=e222]: Free Wifi
+                    - generic [ref=e223]: Drinking Water
+            - button "View details for Executive Solo Suite at Iligan City, Lanao del norte 9200. Price P8500 per month. Rating 5.00 stars." [ref=e225] [cursor=pointer]:
+              - generic [ref=e226]:
+                - generic [ref=e227]:
+                  - img "Executive Solo Suite" [ref=e228]
+                  - generic [ref=e229]: 2 available
+                - generic [ref=e230]:
+                  - heading "Executive Solo Suite" [level=3] [ref=e231]
+                  - generic [ref=e232]:
+                    - generic [ref=e233]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e234]:
+                      - img [ref=e235]
+                      - generic [ref=e238]: Verified
+                  - generic [ref=e239]:
+                    - generic [ref=e240]:
+                      - generic [ref=e241]: P8500
+                      - generic [ref=e242]: /month
+                    - generic [ref=e243]:
+                      - img [ref=e244]
+                      - generic [ref=e246]: "5.00"
+                  - generic [ref=e248]:
+                    - generic [ref=e249]: Aircon
+                    - generic [ref=e250]: Free Wifi
+            - button "View details for IIT Student Hub at Trece, Iligan City 9200. Price P3500 per month. Rating 4.50 stars." [ref=e252] [cursor=pointer]:
+              - generic [ref=e253]:
+                - generic [ref=e254]:
+                  - img "IIT Student Hub" [ref=e255]
+                  - generic [ref=e256]: 10 available
+                - generic [ref=e257]:
+                  - heading "IIT Student Hub" [level=3] [ref=e258]
+                  - generic [ref=e259]:
+                    - generic [ref=e260]: Trece, Iligan City 9200
+                    - generic [ref=e261]:
+                      - img [ref=e262]
+                      - generic [ref=e265]: Verified
+                  - generic [ref=e266]:
+                    - generic [ref=e267]:
+                      - generic [ref=e268]: P3500
+                      - generic [ref=e269]: /month
+                    - generic [ref=e270]:
+                      - img [ref=e271]
+                      - generic [ref=e273]: "4.50"
+                  - generic [ref=e275]:
+                    - generic [ref=e276]: Free Wifi
+                    - generic [ref=e277]: Study Area
+            - button "View details for Luxe Female Residence at Tibanga, Iligan City 9200. Price P7500 per month. Rating 4.90 stars." [ref=e279] [cursor=pointer]:
+              - generic [ref=e280]:
+                - generic [ref=e281]:
+                  - img "Luxe Female Residence" [ref=e282]
+                  - generic [ref=e283]: 5 available
+                - generic [ref=e284]:
+                  - heading "Luxe Female Residence" [level=3] [ref=e285]
+                  - generic [ref=e286]:
+                    - generic [ref=e287]: Tibanga, Iligan City 9200
+                    - generic [ref=e288]:
+                      - img [ref=e289]
+                      - generic [ref=e292]: Verified
+                  - generic [ref=e293]:
+                    - generic [ref=e294]:
+                      - generic [ref=e295]: P7500
+                      - generic [ref=e296]: /month
+                    - generic [ref=e297]:
+                      - img [ref=e298]
+                      - generic [ref=e300]: "4.90"
+                  - generic [ref=e302]:
+                    - generic [ref=e303]: Free Wifi
+                    - generic [ref=e304]: Elevator
+            - button "View details for Brotherhood Shared Room at San Miguel, Iligan City 9200. Price P2500 per month. Rating 4.20 stars." [ref=e306] [cursor=pointer]:
+              - generic [ref=e307]:
+                - generic [ref=e308]:
+                  - img "Brotherhood Shared Room" [ref=e309]
+                  - generic [ref=e310]: 8 available
+                - generic [ref=e311]:
+                  - heading "Brotherhood Shared Room" [level=3] [ref=e312]
+                  - generic [ref=e313]:
+                    - generic [ref=e314]: San Miguel, Iligan City 9200
+                    - generic [ref=e315]:
+                      - img [ref=e316]
+                      - generic [ref=e319]: Verified
+                  - generic [ref=e320]:
+                    - generic [ref=e321]:
+                      - generic [ref=e322]: P2500
+                      - generic [ref=e323]: /month
+                    - generic [ref=e324]:
+                      - img [ref=e325]
+                      - generic [ref=e327]: "4.20"
+                  - generic [ref=e329]:
+                    - generic [ref=e330]: Electricity
+                    - generic [ref=e331]: Kitchen Access
+            - button "View details for Corner Solo Room at Pala-o, Iligan City 9200. Price P5500 per month. Rating 4.70 stars." [ref=e333] [cursor=pointer]:
+              - generic [ref=e334]:
+                - generic [ref=e335]:
+                  - img "Corner Solo Room" [ref=e336]
+                  - generic [ref=e337]: 1 available
+                - generic [ref=e338]:
+                  - heading "Corner Solo Room" [level=3] [ref=e339]
+                  - generic [ref=e340]:
+                    - generic [ref=e341]: Pala-o, Iligan City 9200
+                    - generic [ref=e342]:
+                      - img [ref=e343]
+                      - generic [ref=e346]: Verified
+                  - generic [ref=e347]:
+                    - generic [ref=e348]:
+                      - generic [ref=e349]: P5500
+                      - generic [ref=e350]: /month
+                    - generic [ref=e351]:
+                      - img [ref=e352]
+                      - generic [ref=e354]: "4.70"
+                  - generic [ref=e356]:
+                    - generic [ref=e357]: Free Wifi
+                    - generic [ref=e358]: Water
+            - button "View details for Affordable Bed Spacer at Ubaldo Laya, Iligan City 9200. Price P1500 per month. Rating 4.00 stars." [ref=e360] [cursor=pointer]:
+              - generic [ref=e361]:
+                - generic [ref=e362]:
+                  - img "Affordable Bed Spacer" [ref=e363]
+                  - generic [ref=e364]: 12 available
+                - generic [ref=e365]:
+                  - heading "Affordable Bed Spacer" [level=3] [ref=e366]
+                  - generic [ref=e367]:
+                    - generic [ref=e368]: Ubaldo Laya, Iligan City 9200
+                    - generic [ref=e369]:
+                      - img [ref=e370]
+                      - generic [ref=e373]: Verified
+                  - generic [ref=e374]:
+                    - generic [ref=e375]:
+                      - generic [ref=e376]: P1500
+                      - generic [ref=e377]: /month
+                    - generic [ref=e378]:
+                      - img [ref=e379]
+                      - generic [ref=e381]: "4.00"
+                  - generic [ref=e384]: Water
+            - button "View details for Kings Solo Pad at Mahayahay, Iligan City 9200. Price P6000 per month. Rating 4.80 stars." [ref=e386] [cursor=pointer]:
+              - generic [ref=e387]:
+                - generic [ref=e388]:
+                  - img "Kings Solo Pad" [ref=e389]
+                  - generic [ref=e390]: 4 available
+                - generic [ref=e391]:
+                  - heading "Kings Solo Pad" [level=3] [ref=e392]
+                  - generic [ref=e393]:
+                    - generic [ref=e394]: Mahayahay, Iligan City 9200
+                    - generic [ref=e395]:
+                      - img [ref=e396]
+                      - generic [ref=e399]: Verified
+                  - generic [ref=e400]:
+                    - generic [ref=e401]:
+                      - generic [ref=e402]: P6000
+                      - generic [ref=e403]: /month
+                    - generic [ref=e404]:
+                      - img [ref=e405]
+                      - generic [ref=e407]: "4.80"
+                  - generic [ref=e409]:
+                    - generic [ref=e410]: Free Wifi
+                    - generic [ref=e411]: Aircon
+            - button "View details for Garden View Boarding at Buru-un, Iligan City 9200. Price P4000 per month. Rating 4.60 stars." [ref=e413] [cursor=pointer]:
+              - generic [ref=e414]:
+                - generic [ref=e415]:
+                  - img "Garden View Boarding" [ref=e416]
+                  - generic [ref=e417]: 2 available
+                - generic [ref=e418]:
+                  - heading "Garden View Boarding" [level=3] [ref=e419]
+                  - generic [ref=e420]:
+                    - generic [ref=e421]: Buru-un, Iligan City 9200
+                    - generic [ref=e422]:
+                      - img [ref=e423]
+                      - generic [ref=e426]: Verified
+                  - generic [ref=e427]:
+                    - generic [ref=e428]:
+                      - generic [ref=e429]: P4000
+                      - generic [ref=e430]: /month
+                    - generic [ref=e431]:
+                      - img [ref=e432]
+                      - generic [ref=e434]: "4.60"
+                  - generic [ref=e436]:
+                    - generic [ref=e437]: Garden
+                    - generic [ref=e438]: Free Wifi
+            - button "View details for MSU-IIT Elite Shared at Trece, Iligan City 9200. Price P4500 per month. Rating 4.90 stars." [ref=e440] [cursor=pointer]:
+              - generic [ref=e441]:
+                - generic [ref=e442]:
+                  - img "MSU-IIT Elite Shared" [ref=e443]
+                  - generic [ref=e444]: 4 available
+                - generic [ref=e445]:
+                  - heading "MSU-IIT Elite Shared" [level=3] [ref=e446]
+                  - generic [ref=e447]:
+                    - generic [ref=e448]: Trece, Iligan City 9200
+                    - generic [ref=e449]:
+                      - img [ref=e450]
+                      - generic [ref=e453]: Verified
+                  - generic [ref=e454]:
+                    - generic [ref=e455]:
+                      - generic [ref=e456]: P4500
+                      - generic [ref=e457]: /month
+                    - generic [ref=e458]:
+                      - img [ref=e459]
+                      - generic [ref=e461]: "4.90"
+                  - generic [ref=e463]:
+                    - generic [ref=e464]: Free Wifi
+                    - generic [ref=e465]: AC
+            - button "View details for Downtown Solo Room at Poblacion, Iligan City 9200. Price P7000 per month. Rating 4.50 stars." [ref=e467] [cursor=pointer]:
+              - generic [ref=e468]:
+                - generic [ref=e469]:
+                  - img "Downtown Solo Room" [ref=e470]
+                  - generic [ref=e471]: 3 available
+                - generic [ref=e472]:
+                  - heading "Downtown Solo Room" [level=3] [ref=e473]
+                  - generic [ref=e474]:
+                    - generic [ref=e475]: Poblacion, Iligan City 9200
+                    - generic [ref=e476]:
+                      - img [ref=e477]
+                      - generic [ref=e480]: Verified
+                  - generic [ref=e481]:
+                    - generic [ref=e482]:
+                      - generic [ref=e483]: P7000
+                      - generic [ref=e484]: /month
+                    - generic [ref=e485]:
+                      - img [ref=e486]
+                      - generic [ref=e488]: "4.50"
+                  - generic [ref=e490]:
+                    - generic [ref=e491]: Security
+                    - generic [ref=e492]: Free Wifi
+            - button "View details for Yhuzuong’s Dormitory (B) at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e494] [cursor=pointer]:
+              - generic [ref=e495]:
+                - generic [ref=e496]:
+                  - img "Yhuzuong’s Dormitory (B)" [ref=e497]
+                  - generic [ref=e498]: 6 available
+                - generic [ref=e499]:
+                  - heading "Yhuzuong’s Dormitory (B)" [level=3] [ref=e500]
+                  - generic [ref=e501]:
+                    - generic [ref=e502]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e503]:
+                      - img [ref=e504]
+                      - generic [ref=e507]: Verified
+                  - generic [ref=e508]:
+                    - generic [ref=e509]:
+                      - generic [ref=e510]: P5000
+                      - generic [ref=e511]: /month
+                    - generic [ref=e512]:
+                      - img [ref=e513]
+                      - generic [ref=e515]: "5.00"
+                  - generic [ref=e517]:
+                    - generic [ref=e518]: Free Wifi
+                    - generic [ref=e519]: Electricity
+            - button "View details for Kayla’s Residences & Dormitory (B) at Iligan City, Lanao del norte 9200. Price P6000 per month. Rating 5.00 stars." [ref=e521] [cursor=pointer]:
+              - generic [ref=e522]:
+                - generic [ref=e523]:
+                  - img "Kayla’s Residences & Dormitory (B)" [ref=e524]
+                  - generic [ref=e525]: 6 available
+                - generic [ref=e526]:
+                  - heading "Kayla’s Residences & Dormitory (B)" [level=3] [ref=e527]
+                  - generic [ref=e528]:
+                    - generic [ref=e529]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e530]:
+                      - img [ref=e531]
+                      - generic [ref=e534]: Verified
+                  - generic [ref=e535]:
+                    - generic [ref=e536]:
+                      - generic [ref=e537]: P6000
+                      - generic [ref=e538]: /month
+                    - generic [ref=e539]:
+                      - img [ref=e540]
+                      - generic [ref=e542]: "5.00"
+                  - generic [ref=e544]:
+                    - generic [ref=e545]: Free Wifi
+                    - generic [ref=e546]: CCTV
+            - button "View details for Nathan’s Female Boarders (B) at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e548] [cursor=pointer]:
+              - generic [ref=e549]:
+                - generic [ref=e550]:
+                  - img "Nathan’s Female Boarders (B)" [ref=e551]
+                  - generic [ref=e552]: 3 available
+                - generic [ref=e553]:
+                  - heading "Nathan’s Female Boarders (B)" [level=3] [ref=e554]
+                  - generic [ref=e555]:
+                    - generic [ref=e556]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e557]:
+                      - img [ref=e558]
+                      - generic [ref=e561]: Verified
+                  - generic [ref=e562]:
+                    - generic [ref=e563]:
+                      - generic [ref=e564]: P5000
+                      - generic [ref=e565]: /month
+                    - generic [ref=e566]:
+                      - img [ref=e567]
+                      - generic [ref=e569]: "5.00"
+                  - generic [ref=e571]:
+                    - generic [ref=e572]: Free Wifi
+                    - generic [ref=e573]: Water
+            - button "View details for Blue Horizon Boarding House (B) at Iligan City, Lanao del norte 9200. Price P4500 per month. Rating 4.80 stars." [ref=e575] [cursor=pointer]:
+              - generic [ref=e576]:
+                - generic [ref=e577]:
+                  - img "Blue Horizon Boarding House (B)" [ref=e578]
+                  - generic [ref=e579]: 4 available
+                - generic [ref=e580]:
+                  - heading "Blue Horizon Boarding House (B)" [level=3] [ref=e581]
+                  - generic [ref=e582]:
+                    - generic [ref=e583]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e584]:
+                      - img [ref=e585]
+                      - generic [ref=e588]: Verified
+                  - generic [ref=e589]:
+                    - generic [ref=e590]:
+                      - generic [ref=e591]: P4500
+                      - generic [ref=e592]: /month
+                    - generic [ref=e593]:
+                      - img [ref=e594]
+                      - generic [ref=e596]: "4.80"
+                  - generic [ref=e598]:
+                    - generic [ref=e599]: Free Wifi
+                    - generic [ref=e600]: Drinking Water
+            - button "View details for Executive Solo Suite (B) at Iligan City, Lanao del norte 9200. Price P8500 per month. Rating 4.90 stars." [ref=e602] [cursor=pointer]:
+              - generic [ref=e603]:
+                - generic [ref=e604]:
+                  - img "Executive Solo Suite (B)" [ref=e605]
+                  - generic [ref=e606]: 2 available
+                - generic [ref=e607]:
+                  - heading "Executive Solo Suite (B)" [level=3] [ref=e608]
+                  - generic [ref=e609]:
+                    - generic [ref=e610]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e611]:
+                      - img [ref=e612]
+                      - generic [ref=e615]: Verified
+                  - generic [ref=e616]:
+                    - generic [ref=e617]:
+                      - generic [ref=e618]: P8500
+                      - generic [ref=e619]: /month
+                    - generic [ref=e620]:
+                      - img [ref=e621]
+                      - generic [ref=e623]: "4.90"
+                  - generic [ref=e625]:
+                    - generic [ref=e626]: Aircon
+                    - generic [ref=e627]: Free Wifi
+            - button "View details for IIT Student Hub (B) at Trece, Iligan City 9200. Price P3500 per month. Rating 4.50 stars." [ref=e629] [cursor=pointer]:
+              - generic [ref=e630]:
+                - generic [ref=e631]:
+                  - img "IIT Student Hub (B)" [ref=e632]
+                  - generic [ref=e633]: 10 available
+                - generic [ref=e634]:
+                  - heading "IIT Student Hub (B)" [level=3] [ref=e635]
+                  - generic [ref=e636]:
+                    - generic [ref=e637]: Trece, Iligan City 9200
+                    - generic [ref=e638]:
+                      - img [ref=e639]
+                      - generic [ref=e642]: Verified
+                  - generic [ref=e643]:
+                    - generic [ref=e644]:
+                      - generic [ref=e645]: P3500
+                      - generic [ref=e646]: /month
+                    - generic [ref=e647]:
+                      - img [ref=e648]
+                      - generic [ref=e650]: "4.50"
+                  - generic [ref=e652]:
+                    - generic [ref=e653]: Free Wifi
+                    - generic [ref=e654]: Study Area
+            - button "View details for Luxe Female Residence (B) at Tibanga, Iligan City 9200. Price P7500 per month. Rating 4.90 stars." [ref=e656] [cursor=pointer]:
+              - generic [ref=e657]:
+                - generic [ref=e658]:
+                  - img "Luxe Female Residence (B)" [ref=e659]
+                  - generic [ref=e660]: 5 available
+                - generic [ref=e661]:
+                  - heading "Luxe Female Residence (B)" [level=3] [ref=e662]
+                  - generic [ref=e663]:
+                    - generic [ref=e664]: Tibanga, Iligan City 9200
+                    - generic [ref=e665]:
+                      - img [ref=e666]
+                      - generic [ref=e669]: Verified
+                  - generic [ref=e670]:
+                    - generic [ref=e671]:
+                      - generic [ref=e672]: P7500
+                      - generic [ref=e673]: /month
+                    - generic [ref=e674]:
+                      - img [ref=e675]
+                      - generic [ref=e677]: "4.90"
+                  - generic [ref=e679]:
+                    - generic [ref=e680]: Free Wifi
+                    - generic [ref=e681]: Elevator
+        - generic [ref=e682]:
+          - generic [ref=e683]:
+            - generic [ref=e684] [cursor=pointer]:
+              - heading "Top Listing" [level=2] [ref=e685]
+              - generic [ref=e687]: See more
+            - generic [ref=e688]:
+              - button "Previous Top Listing" [ref=e689]:
+                - img [ref=e690]
+              - button "Next Top Listing" [ref=e692]:
+                - img [ref=e693]
+          - generic [ref=e695]:
+            - button "View details for Brotherhood Shared Room at San Miguel, Iligan City 9200. Price P2500 per month. Rating 4.20 stars." [ref=e697] [cursor=pointer]:
+              - generic [ref=e698]:
+                - generic [ref=e699]:
+                  - img "Brotherhood Shared Room" [ref=e700]
+                  - generic [ref=e701]: 8 available
+                - generic [ref=e702]:
+                  - heading "Brotherhood Shared Room" [level=3] [ref=e703]
+                  - generic [ref=e704]:
+                    - generic [ref=e705]: San Miguel, Iligan City 9200
+                    - generic [ref=e706]:
+                      - img [ref=e707]
+                      - generic [ref=e710]: Verified
+                  - generic [ref=e711]:
+                    - generic [ref=e712]:
+                      - generic [ref=e713]: P2500
+                      - generic [ref=e714]: /month
+                    - generic [ref=e715]:
+                      - img [ref=e716]
+                      - generic [ref=e718]: "4.20"
+                  - generic [ref=e720]:
+                    - generic [ref=e721]: Electricity
+                    - generic [ref=e722]: Kitchen Access
+            - button "View details for Corner Solo Room at Pala-o, Iligan City 9200. Price P5500 per month. Rating 4.70 stars." [ref=e724] [cursor=pointer]:
+              - generic [ref=e725]:
+                - generic [ref=e726]:
+                  - img "Corner Solo Room" [ref=e727]
+                  - generic [ref=e728]: 1 available
+                - generic [ref=e729]:
+                  - heading "Corner Solo Room" [level=3] [ref=e730]
+                  - generic [ref=e731]:
+                    - generic [ref=e732]: Pala-o, Iligan City 9200
+                    - generic [ref=e733]:
+                      - img [ref=e734]
+                      - generic [ref=e737]: Verified
+                  - generic [ref=e738]:
+                    - generic [ref=e739]:
+                      - generic [ref=e740]: P5500
+                      - generic [ref=e741]: /month
+                    - generic [ref=e742]:
+                      - img [ref=e743]
+                      - generic [ref=e745]: "4.70"
+                  - generic [ref=e747]:
+                    - generic [ref=e748]: Free Wifi
+                    - generic [ref=e749]: Water
+            - button "View details for Affordable Bed Spacer at Ubaldo Laya, Iligan City 9200. Price P1500 per month. Rating 4.00 stars." [ref=e751] [cursor=pointer]:
+              - generic [ref=e752]:
+                - generic [ref=e753]:
+                  - img "Affordable Bed Spacer" [ref=e754]
+                  - generic [ref=e755]: 12 available
+                - generic [ref=e756]:
+                  - heading "Affordable Bed Spacer" [level=3] [ref=e757]
+                  - generic [ref=e758]:
+                    - generic [ref=e759]: Ubaldo Laya, Iligan City 9200
+                    - generic [ref=e760]:
+                      - img [ref=e761]
+                      - generic [ref=e764]: Verified
+                  - generic [ref=e765]:
+                    - generic [ref=e766]:
+                      - generic [ref=e767]: P1500
+                      - generic [ref=e768]: /month
+                    - generic [ref=e769]:
+                      - img [ref=e770]
+                      - generic [ref=e772]: "4.00"
+                  - generic [ref=e775]: Water
+            - button "View details for Kings Solo Pad at Mahayahay, Iligan City 9200. Price P6000 per month. Rating 4.80 stars." [ref=e777] [cursor=pointer]:
+              - generic [ref=e778]:
+                - generic [ref=e779]:
+                  - img "Kings Solo Pad" [ref=e780]
+                  - generic [ref=e781]: 4 available
+                - generic [ref=e782]:
+                  - heading "Kings Solo Pad" [level=3] [ref=e783]
+                  - generic [ref=e784]:
+                    - generic [ref=e785]: Mahayahay, Iligan City 9200
+                    - generic [ref=e786]:
+                      - img [ref=e787]
+                      - generic [ref=e790]: Verified
+                  - generic [ref=e791]:
+                    - generic [ref=e792]:
+                      - generic [ref=e793]: P6000
+                      - generic [ref=e794]: /month
+                    - generic [ref=e795]:
+                      - img [ref=e796]
+                      - generic [ref=e798]: "4.80"
+                  - generic [ref=e800]:
+                    - generic [ref=e801]: Free Wifi
+                    - generic [ref=e802]: Aircon
+            - button "View details for Garden View Boarding at Buru-un, Iligan City 9200. Price P4000 per month. Rating 4.60 stars." [ref=e804] [cursor=pointer]:
+              - generic [ref=e805]:
+                - generic [ref=e806]:
+                  - img "Garden View Boarding" [ref=e807]
+                  - generic [ref=e808]: 2 available
+                - generic [ref=e809]:
+                  - heading "Garden View Boarding" [level=3] [ref=e810]
+                  - generic [ref=e811]:
+                    - generic [ref=e812]: Buru-un, Iligan City 9200
+                    - generic [ref=e813]:
+                      - img [ref=e814]
+                      - generic [ref=e817]: Verified
+                  - generic [ref=e818]:
+                    - generic [ref=e819]:
+                      - generic [ref=e820]: P4000
+                      - generic [ref=e821]: /month
+                    - generic [ref=e822]:
+                      - img [ref=e823]
+                      - generic [ref=e825]: "4.60"
+                  - generic [ref=e827]:
+                    - generic [ref=e828]: Garden
+                    - generic [ref=e829]: Free Wifi
+            - button "View details for MSU-IIT Elite Shared at Trece, Iligan City 9200. Price P4500 per month. Rating 4.90 stars." [ref=e831] [cursor=pointer]:
+              - generic [ref=e832]:
+                - generic [ref=e833]:
+                  - img "MSU-IIT Elite Shared" [ref=e834]
+                  - generic [ref=e835]: 4 available
+                - generic [ref=e836]:
+                  - heading "MSU-IIT Elite Shared" [level=3] [ref=e837]
+                  - generic [ref=e838]:
+                    - generic [ref=e839]: Trece, Iligan City 9200
+                    - generic [ref=e840]:
+                      - img [ref=e841]
+                      - generic [ref=e844]: Verified
+                  - generic [ref=e845]:
+                    - generic [ref=e846]:
+                      - generic [ref=e847]: P4500
+                      - generic [ref=e848]: /month
+                    - generic [ref=e849]:
+                      - img [ref=e850]
+                      - generic [ref=e852]: "4.90"
+                  - generic [ref=e854]:
+                    - generic [ref=e855]: Free Wifi
+                    - generic [ref=e856]: AC
+            - button "View details for Downtown Solo Room at Poblacion, Iligan City 9200. Price P7000 per month. Rating 4.50 stars." [ref=e858] [cursor=pointer]:
+              - generic [ref=e859]:
+                - generic [ref=e860]:
+                  - img "Downtown Solo Room" [ref=e861]
+                  - generic [ref=e862]: 3 available
+                - generic [ref=e863]:
+                  - heading "Downtown Solo Room" [level=3] [ref=e864]
+                  - generic [ref=e865]:
+                    - generic [ref=e866]: Poblacion, Iligan City 9200
+                    - generic [ref=e867]:
+                      - img [ref=e868]
+                      - generic [ref=e871]: Verified
+                  - generic [ref=e872]:
+                    - generic [ref=e873]:
+                      - generic [ref=e874]: P7000
+                      - generic [ref=e875]: /month
+                    - generic [ref=e876]:
+                      - img [ref=e877]
+                      - generic [ref=e879]: "4.50"
+                  - generic [ref=e881]:
+                    - generic [ref=e882]: Security
+                    - generic [ref=e883]: Free Wifi
+            - button "View details for Yhuzuong’s Dormitory (B) at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e885] [cursor=pointer]:
+              - generic [ref=e886]:
+                - generic [ref=e887]:
+                  - img "Yhuzuong’s Dormitory (B)" [ref=e888]
+                  - generic [ref=e889]: 6 available
+                - generic [ref=e890]:
+                  - heading "Yhuzuong’s Dormitory (B)" [level=3] [ref=e891]
+                  - generic [ref=e892]:
+                    - generic [ref=e893]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e894]:
+                      - img [ref=e895]
+                      - generic [ref=e898]: Verified
+                  - generic [ref=e899]:
+                    - generic [ref=e900]:
+                      - generic [ref=e901]: P5000
+                      - generic [ref=e902]: /month
+                    - generic [ref=e903]:
+                      - img [ref=e904]
+                      - generic [ref=e906]: "5.00"
+                  - generic [ref=e908]:
+                    - generic [ref=e909]: Free Wifi
+                    - generic [ref=e910]: Electricity
+            - button "View details for Kayla’s Residences & Dormitory (B) at Iligan City, Lanao del norte 9200. Price P6000 per month. Rating 5.00 stars." [ref=e912] [cursor=pointer]:
+              - generic [ref=e913]:
+                - generic [ref=e914]:
+                  - img "Kayla’s Residences & Dormitory (B)" [ref=e915]
+                  - generic [ref=e916]: 6 available
+                - generic [ref=e917]:
+                  - heading "Kayla’s Residences & Dormitory (B)" [level=3] [ref=e918]
+                  - generic [ref=e919]:
+                    - generic [ref=e920]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e921]:
+                      - img [ref=e922]
+                      - generic [ref=e925]: Verified
+                  - generic [ref=e926]:
+                    - generic [ref=e927]:
+                      - generic [ref=e928]: P6000
+                      - generic [ref=e929]: /month
+                    - generic [ref=e930]:
+                      - img [ref=e931]
+                      - generic [ref=e933]: "5.00"
+                  - generic [ref=e935]:
+                    - generic [ref=e936]: Free Wifi
+                    - generic [ref=e937]: CCTV
+            - button "View details for Nathan’s Female Boarders (B) at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e939] [cursor=pointer]:
+              - generic [ref=e940]:
+                - generic [ref=e941]:
+                  - img "Nathan’s Female Boarders (B)" [ref=e942]
+                  - generic [ref=e943]: 3 available
+                - generic [ref=e944]:
+                  - heading "Nathan’s Female Boarders (B)" [level=3] [ref=e945]
+                  - generic [ref=e946]:
+                    - generic [ref=e947]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e948]:
+                      - img [ref=e949]
+                      - generic [ref=e952]: Verified
+                  - generic [ref=e953]:
+                    - generic [ref=e954]:
+                      - generic [ref=e955]: P5000
+                      - generic [ref=e956]: /month
+                    - generic [ref=e957]:
+                      - img [ref=e958]
+                      - generic [ref=e960]: "5.00"
+                  - generic [ref=e962]:
+                    - generic [ref=e963]: Free Wifi
+                    - generic [ref=e964]: Water
+            - button "View details for Blue Horizon Boarding House (B) at Iligan City, Lanao del norte 9200. Price P4500 per month. Rating 4.80 stars." [ref=e966] [cursor=pointer]:
+              - generic [ref=e967]:
+                - generic [ref=e968]:
+                  - img "Blue Horizon Boarding House (B)" [ref=e969]
+                  - generic [ref=e970]: 4 available
+                - generic [ref=e971]:
+                  - heading "Blue Horizon Boarding House (B)" [level=3] [ref=e972]
+                  - generic [ref=e973]:
+                    - generic [ref=e974]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e975]:
+                      - img [ref=e976]
+                      - generic [ref=e979]: Verified
+                  - generic [ref=e980]:
+                    - generic [ref=e981]:
+                      - generic [ref=e982]: P4500
+                      - generic [ref=e983]: /month
+                    - generic [ref=e984]:
+                      - img [ref=e985]
+                      - generic [ref=e987]: "4.80"
+                  - generic [ref=e989]:
+                    - generic [ref=e990]: Free Wifi
+                    - generic [ref=e991]: Drinking Water
+            - button "View details for Executive Solo Suite (B) at Iligan City, Lanao del norte 9200. Price P8500 per month. Rating 4.90 stars." [ref=e993] [cursor=pointer]:
+              - generic [ref=e994]:
+                - generic [ref=e995]:
+                  - img "Executive Solo Suite (B)" [ref=e996]
+                  - generic [ref=e997]: 2 available
+                - generic [ref=e998]:
+                  - heading "Executive Solo Suite (B)" [level=3] [ref=e999]
+                  - generic [ref=e1000]:
+                    - generic [ref=e1001]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e1002]:
+                      - img [ref=e1003]
+                      - generic [ref=e1006]: Verified
+                  - generic [ref=e1007]:
+                    - generic [ref=e1008]:
+                      - generic [ref=e1009]: P8500
+                      - generic [ref=e1010]: /month
+                    - generic [ref=e1011]:
+                      - img [ref=e1012]
+                      - generic [ref=e1014]: "4.90"
+                  - generic [ref=e1016]:
+                    - generic [ref=e1017]: Aircon
+                    - generic [ref=e1018]: Free Wifi
+            - button "View details for IIT Student Hub (B) at Trece, Iligan City 9200. Price P3500 per month. Rating 4.50 stars." [ref=e1020] [cursor=pointer]:
+              - generic [ref=e1021]:
+                - generic [ref=e1022]:
+                  - img "IIT Student Hub (B)" [ref=e1023]
+                  - generic [ref=e1024]: 10 available
+                - generic [ref=e1025]:
+                  - heading "IIT Student Hub (B)" [level=3] [ref=e1026]
+                  - generic [ref=e1027]:
+                    - generic [ref=e1028]: Trece, Iligan City 9200
+                    - generic [ref=e1029]:
+                      - img [ref=e1030]
+                      - generic [ref=e1033]: Verified
+                  - generic [ref=e1034]:
+                    - generic [ref=e1035]:
+                      - generic [ref=e1036]: P3500
+                      - generic [ref=e1037]: /month
+                    - generic [ref=e1038]:
+                      - img [ref=e1039]
+                      - generic [ref=e1041]: "4.50"
+                  - generic [ref=e1043]:
+                    - generic [ref=e1044]: Free Wifi
+                    - generic [ref=e1045]: Study Area
+            - button "View details for Luxe Female Residence (B) at Tibanga, Iligan City 9200. Price P7500 per month. Rating 4.90 stars." [ref=e1047] [cursor=pointer]:
+              - generic [ref=e1048]:
+                - generic [ref=e1049]:
+                  - img "Luxe Female Residence (B)" [ref=e1050]
+                  - generic [ref=e1051]: 5 available
+                - generic [ref=e1052]:
+                  - heading "Luxe Female Residence (B)" [level=3] [ref=e1053]
+                  - generic [ref=e1054]:
+                    - generic [ref=e1055]: Tibanga, Iligan City 9200
+                    - generic [ref=e1056]:
+                      - img [ref=e1057]
+                      - generic [ref=e1060]: Verified
+                  - generic [ref=e1061]:
+                    - generic [ref=e1062]:
+                      - generic [ref=e1063]: P7500
+                      - generic [ref=e1064]: /month
+                    - generic [ref=e1065]:
+                      - img [ref=e1066]
+                      - generic [ref=e1068]: "4.90"
+                  - generic [ref=e1070]:
+                    - generic [ref=e1071]: Free Wifi
+                    - generic [ref=e1072]: Elevator
+            - button "View details for Brotherhood Shared Room (B) at San Miguel, Iligan City 9200. Price P2500 per month. Rating 4.20 stars." [ref=e1074] [cursor=pointer]:
+              - generic [ref=e1075]:
+                - generic [ref=e1076]:
+                  - img "Brotherhood Shared Room (B)" [ref=e1077]
+                  - generic [ref=e1078]: 8 available
+                - generic [ref=e1079]:
+                  - heading "Brotherhood Shared Room (B)" [level=3] [ref=e1080]
+                  - generic [ref=e1081]:
+                    - generic [ref=e1082]: San Miguel, Iligan City 9200
+                    - generic [ref=e1083]:
+                      - img [ref=e1084]
+                      - generic [ref=e1087]: Verified
+                  - generic [ref=e1088]:
+                    - generic [ref=e1089]:
+                      - generic [ref=e1090]: P2500
+                      - generic [ref=e1091]: /month
+                    - generic [ref=e1092]:
+                      - img [ref=e1093]
+                      - generic [ref=e1095]: "4.20"
+                  - generic [ref=e1097]:
+                    - generic [ref=e1098]: Electricity
+                    - generic [ref=e1099]: Kitchen Access
+            - button "View details for Corner Solo Room (B) at Pala-o, Iligan City 9200. Price P5500 per month. Rating 4.70 stars." [ref=e1101] [cursor=pointer]:
+              - generic [ref=e1102]:
+                - generic [ref=e1103]:
+                  - img "Corner Solo Room (B)" [ref=e1104]
+                  - generic [ref=e1105]: 1 available
+                - generic [ref=e1106]:
+                  - heading "Corner Solo Room (B)" [level=3] [ref=e1107]
+                  - generic [ref=e1108]:
+                    - generic [ref=e1109]: Pala-o, Iligan City 9200
+                    - generic [ref=e1110]:
+                      - img [ref=e1111]
+                      - generic [ref=e1114]: Verified
+                  - generic [ref=e1115]:
+                    - generic [ref=e1116]:
+                      - generic [ref=e1117]: P5500
+                      - generic [ref=e1118]: /month
+                    - generic [ref=e1119]:
+                      - img [ref=e1120]
+                      - generic [ref=e1122]: "4.70"
+                  - generic [ref=e1124]:
+                    - generic [ref=e1125]: Free Wifi
+                    - generic [ref=e1126]: Water
+            - button "View details for Affordable Bed Spacer (B) at Ubaldo Laya, Iligan City 9200. Price P1500 per month. Rating 4.00 stars." [ref=e1128] [cursor=pointer]:
+              - generic [ref=e1129]:
+                - generic [ref=e1130]:
+                  - img "Affordable Bed Spacer (B)" [ref=e1131]
+                  - generic [ref=e1132]: 12 available
+                - generic [ref=e1133]:
+                  - heading "Affordable Bed Spacer (B)" [level=3] [ref=e1134]
+                  - generic [ref=e1135]:
+                    - generic [ref=e1136]: Ubaldo Laya, Iligan City 9200
+                    - generic [ref=e1137]:
+                      - img [ref=e1138]
+                      - generic [ref=e1141]: Verified
+                  - generic [ref=e1142]:
+                    - generic [ref=e1143]:
+                      - generic [ref=e1144]: P1500
+                      - generic [ref=e1145]: /month
+                    - generic [ref=e1146]:
+                      - img [ref=e1147]
+                      - generic [ref=e1149]: "4.00"
+                  - generic [ref=e1152]: Water
+            - button "View details for Kings Solo Pad (B) at Mahayahay, Iligan City 9200. Price P6000 per month. Rating 4.80 stars." [ref=e1154] [cursor=pointer]:
+              - generic [ref=e1155]:
+                - generic [ref=e1156]:
+                  - img "Kings Solo Pad (B)" [ref=e1157]
+                  - generic [ref=e1158]: 4 available
+                - generic [ref=e1159]:
+                  - heading "Kings Solo Pad (B)" [level=3] [ref=e1160]
+                  - generic [ref=e1161]:
+                    - generic [ref=e1162]: Mahayahay, Iligan City 9200
+                    - generic [ref=e1163]:
+                      - img [ref=e1164]
+                      - generic [ref=e1167]: Verified
+                  - generic [ref=e1168]:
+                    - generic [ref=e1169]:
+                      - generic [ref=e1170]: P6000
+                      - generic [ref=e1171]: /month
+                    - generic [ref=e1172]:
+                      - img [ref=e1173]
+                      - generic [ref=e1175]: "4.80"
+                  - generic [ref=e1177]:
+                    - generic [ref=e1178]: Free Wifi
+                    - generic [ref=e1179]: Aircon
+            - button "View details for Garden View Boarding (B) at Buru-un, Iligan City 9200. Price P4000 per month. Rating 4.60 stars." [ref=e1181] [cursor=pointer]:
+              - generic [ref=e1182]:
+                - generic [ref=e1183]:
+                  - img "Garden View Boarding (B)" [ref=e1184]
+                  - generic [ref=e1185]: 2 available
+                - generic [ref=e1186]:
+                  - heading "Garden View Boarding (B)" [level=3] [ref=e1187]
+                  - generic [ref=e1188]:
+                    - generic [ref=e1189]: Buru-un, Iligan City 9200
+                    - generic [ref=e1190]:
+                      - img [ref=e1191]
+                      - generic [ref=e1194]: Verified
+                  - generic [ref=e1195]:
+                    - generic [ref=e1196]:
+                      - generic [ref=e1197]: P4000
+                      - generic [ref=e1198]: /month
+                    - generic [ref=e1199]:
+                      - img [ref=e1200]
+                      - generic [ref=e1202]: "4.60"
+                  - generic [ref=e1204]:
+                    - generic [ref=e1205]: Garden
+                    - generic [ref=e1206]: Free Wifi
+            - button "View details for MSU-IIT Elite Shared (B) at Trece, Iligan City 9200. Price P4500 per month. Rating 4.90 stars." [ref=e1208] [cursor=pointer]:
+              - generic [ref=e1209]:
+                - generic [ref=e1210]:
+                  - img "MSU-IIT Elite Shared (B)" [ref=e1211]
+                  - generic [ref=e1212]: 4 available
+                - generic [ref=e1213]:
+                  - heading "MSU-IIT Elite Shared (B)" [level=3] [ref=e1214]
+                  - generic [ref=e1215]:
+                    - generic [ref=e1216]: Trece, Iligan City 9200
+                    - generic [ref=e1217]:
+                      - img [ref=e1218]
+                      - generic [ref=e1221]: Verified
+                  - generic [ref=e1222]:
+                    - generic [ref=e1223]:
+                      - generic [ref=e1224]: P4500
+                      - generic [ref=e1225]: /month
+                    - generic [ref=e1226]:
+                      - img [ref=e1227]
+                      - generic [ref=e1229]: "4.90"
+                  - generic [ref=e1231]:
+                    - generic [ref=e1232]: Free Wifi
+                    - generic [ref=e1233]: AC
+            - button "View details for Downtown Solo Room (B) at Poblacion, Iligan City 9200. Price P7000 per month. Rating 4.50 stars." [ref=e1235] [cursor=pointer]:
+              - generic [ref=e1236]:
+                - generic [ref=e1237]:
+                  - img "Downtown Solo Room (B)" [ref=e1238]
+                  - generic [ref=e1239]: 3 available
+                - generic [ref=e1240]:
+                  - heading "Downtown Solo Room (B)" [level=3] [ref=e1241]
+                  - generic [ref=e1242]:
+                    - generic [ref=e1243]: Poblacion, Iligan City 9200
+                    - generic [ref=e1244]:
+                      - img [ref=e1245]
+                      - generic [ref=e1248]: Verified
+                  - generic [ref=e1249]:
+                    - generic [ref=e1250]:
+                      - generic [ref=e1251]: P7000
+                      - generic [ref=e1252]: /month
+                    - generic [ref=e1253]:
+                      - img [ref=e1254]
+                      - generic [ref=e1256]: "4.50"
+                  - generic [ref=e1258]:
+                    - generic [ref=e1259]: Security
+                    - generic [ref=e1260]: Free Wifi
+        - generic [ref=e1261]:
+          - generic [ref=e1262]:
+            - generic [ref=e1263] [cursor=pointer]:
+              - heading "Near MSU-IIT" [level=2] [ref=e1264]
+              - generic [ref=e1266]: See more
+            - generic [ref=e1267]:
+              - button "Previous Near MSU-IIT" [ref=e1268]:
+                - img [ref=e1269]
+              - button "Next Near MSU-IIT" [ref=e1271]:
+                - img [ref=e1272]
+          - generic [ref=e1274]:
+            - button "View details for Yhuzuong’s Dormitory (B) at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e1276] [cursor=pointer]:
+              - generic [ref=e1277]:
+                - generic [ref=e1278]:
+                  - img "Yhuzuong’s Dormitory (B)" [ref=e1279]
+                  - generic [ref=e1280]: 6 available
+                - generic [ref=e1281]:
+                  - heading "Yhuzuong’s Dormitory (B)" [level=3] [ref=e1282]
+                  - generic [ref=e1283]:
+                    - generic [ref=e1284]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e1285]:
+                      - img [ref=e1286]
+                      - generic [ref=e1289]: Verified
+                  - generic [ref=e1290]:
+                    - generic [ref=e1291]:
+                      - generic [ref=e1292]: P5000
+                      - generic [ref=e1293]: /month
+                    - generic [ref=e1294]:
+                      - img [ref=e1295]
+                      - generic [ref=e1297]: "5.00"
+                  - generic [ref=e1299]:
+                    - generic [ref=e1300]: Free Wifi
+                    - generic [ref=e1301]: Electricity
+            - button "View details for Kayla’s Residences & Dormitory (B) at Iligan City, Lanao del norte 9200. Price P6000 per month. Rating 5.00 stars." [ref=e1303] [cursor=pointer]:
+              - generic [ref=e1304]:
+                - generic [ref=e1305]:
+                  - img "Kayla’s Residences & Dormitory (B)" [ref=e1306]
+                  - generic [ref=e1307]: 6 available
+                - generic [ref=e1308]:
+                  - heading "Kayla’s Residences & Dormitory (B)" [level=3] [ref=e1309]
+                  - generic [ref=e1310]:
+                    - generic [ref=e1311]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e1312]:
+                      - img [ref=e1313]
+                      - generic [ref=e1316]: Verified
+                  - generic [ref=e1317]:
+                    - generic [ref=e1318]:
+                      - generic [ref=e1319]: P6000
+                      - generic [ref=e1320]: /month
+                    - generic [ref=e1321]:
+                      - img [ref=e1322]
+                      - generic [ref=e1324]: "5.00"
+                  - generic [ref=e1326]:
+                    - generic [ref=e1327]: Free Wifi
+                    - generic [ref=e1328]: CCTV
+            - button "View details for Nathan’s Female Boarders (B) at Iligan City, Lanao del norte 9200. Price P5000 per month. Rating 5.00 stars." [ref=e1330] [cursor=pointer]:
+              - generic [ref=e1331]:
+                - generic [ref=e1332]:
+                  - img "Nathan’s Female Boarders (B)" [ref=e1333]
+                  - generic [ref=e1334]: 3 available
+                - generic [ref=e1335]:
+                  - heading "Nathan’s Female Boarders (B)" [level=3] [ref=e1336]
+                  - generic [ref=e1337]:
+                    - generic [ref=e1338]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e1339]:
+                      - img [ref=e1340]
+                      - generic [ref=e1343]: Verified
+                  - generic [ref=e1344]:
+                    - generic [ref=e1345]:
+                      - generic [ref=e1346]: P5000
+                      - generic [ref=e1347]: /month
+                    - generic [ref=e1348]:
+                      - img [ref=e1349]
+                      - generic [ref=e1351]: "5.00"
+                  - generic [ref=e1353]:
+                    - generic [ref=e1354]: Free Wifi
+                    - generic [ref=e1355]: Water
+            - button "View details for Blue Horizon Boarding House (B) at Iligan City, Lanao del norte 9200. Price P4500 per month. Rating 4.80 stars." [ref=e1357] [cursor=pointer]:
+              - generic [ref=e1358]:
+                - generic [ref=e1359]:
+                  - img "Blue Horizon Boarding House (B)" [ref=e1360]
+                  - generic [ref=e1361]: 4 available
+                - generic [ref=e1362]:
+                  - heading "Blue Horizon Boarding House (B)" [level=3] [ref=e1363]
+                  - generic [ref=e1364]:
+                    - generic [ref=e1365]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e1366]:
+                      - img [ref=e1367]
+                      - generic [ref=e1370]: Verified
+                  - generic [ref=e1371]:
+                    - generic [ref=e1372]:
+                      - generic [ref=e1373]: P4500
+                      - generic [ref=e1374]: /month
+                    - generic [ref=e1375]:
+                      - img [ref=e1376]
+                      - generic [ref=e1378]: "4.80"
+                  - generic [ref=e1380]:
+                    - generic [ref=e1381]: Free Wifi
+                    - generic [ref=e1382]: Drinking Water
+            - button "View details for Executive Solo Suite (B) at Iligan City, Lanao del norte 9200. Price P8500 per month. Rating 4.90 stars." [ref=e1384] [cursor=pointer]:
+              - generic [ref=e1385]:
+                - generic [ref=e1386]:
+                  - img "Executive Solo Suite (B)" [ref=e1387]
+                  - generic [ref=e1388]: 2 available
+                - generic [ref=e1389]:
+                  - heading "Executive Solo Suite (B)" [level=3] [ref=e1390]
+                  - generic [ref=e1391]:
+                    - generic [ref=e1392]: Iligan City, Lanao del norte 9200
+                    - generic [ref=e1393]:
+                      - img [ref=e1394]
+                      - generic [ref=e1397]: Verified
+                  - generic [ref=e1398]:
+                    - generic [ref=e1399]:
+                      - generic [ref=e1400]: P8500
+                      - generic [ref=e1401]: /month
+                    - generic [ref=e1402]:
+                      - img [ref=e1403]
+                      - generic [ref=e1405]: "4.90"
+                  - generic [ref=e1407]:
+                    - generic [ref=e1408]: Aircon
+                    - generic [ref=e1409]: Free Wifi
+            - button "View details for IIT Student Hub (B) at Trece, Iligan City 9200. Price P3500 per month. Rating 4.50 stars." [ref=e1411] [cursor=pointer]:
+              - generic [ref=e1412]:
+                - generic [ref=e1413]:
+                  - img "IIT Student Hub (B)" [ref=e1414]
+                  - generic [ref=e1415]: 10 available
+                - generic [ref=e1416]:
+                  - heading "IIT Student Hub (B)" [level=3] [ref=e1417]
+                  - generic [ref=e1418]:
+                    - generic [ref=e1419]: Trece, Iligan City 9200
+                    - generic [ref=e1420]:
+                      - img [ref=e1421]
+                      - generic [ref=e1424]: Verified
+                  - generic [ref=e1425]:
+                    - generic [ref=e1426]:
+                      - generic [ref=e1427]: P3500
+                      - generic [ref=e1428]: /month
+                    - generic [ref=e1429]:
+                      - img [ref=e1430]
+                      - generic [ref=e1432]: "4.50"
+                  - generic [ref=e1434]:
+                    - generic [ref=e1435]: Free Wifi
+                    - generic [ref=e1436]: Study Area
+            - button "View details for Luxe Female Residence (B) at Tibanga, Iligan City 9200. Price P7500 per month. Rating 4.90 stars." [ref=e1438] [cursor=pointer]:
+              - generic [ref=e1439]:
+                - generic [ref=e1440]:
+                  - img "Luxe Female Residence (B)" [ref=e1441]
+                  - generic [ref=e1442]: 5 available
+                - generic [ref=e1443]:
+                  - heading "Luxe Female Residence (B)" [level=3] [ref=e1444]
+                  - generic [ref=e1445]:
+                    - generic [ref=e1446]: Tibanga, Iligan City 9200
+                    - generic [ref=e1447]:
+                      - img [ref=e1448]
+                      - generic [ref=e1451]: Verified
+                  - generic [ref=e1452]:
+                    - generic [ref=e1453]:
+                      - generic [ref=e1454]: P7500
+                      - generic [ref=e1455]: /month
+                    - generic [ref=e1456]:
+                      - img [ref=e1457]
+                      - generic [ref=e1459]: "4.90"
+                  - generic [ref=e1461]:
+                    - generic [ref=e1462]: Free Wifi
+                    - generic [ref=e1463]: Elevator
+            - button "View details for Brotherhood Shared Room (B) at San Miguel, Iligan City 9200. Price P2500 per month. Rating 4.20 stars." [ref=e1465] [cursor=pointer]:
+              - generic [ref=e1466]:
+                - generic [ref=e1467]:
+                  - img "Brotherhood Shared Room (B)" [ref=e1468]
+                  - generic [ref=e1469]: 8 available
+                - generic [ref=e1470]:
+                  - heading "Brotherhood Shared Room (B)" [level=3] [ref=e1471]
+                  - generic [ref=e1472]:
+                    - generic [ref=e1473]: San Miguel, Iligan City 9200
+                    - generic [ref=e1474]:
+                      - img [ref=e1475]
+                      - generic [ref=e1478]: Verified
+                  - generic [ref=e1479]:
+                    - generic [ref=e1480]:
+                      - generic [ref=e1481]: P2500
+                      - generic [ref=e1482]: /month
+                    - generic [ref=e1483]:
+                      - img [ref=e1484]
+                      - generic [ref=e1486]: "4.20"
+                  - generic [ref=e1488]:
+                    - generic [ref=e1489]: Electricity
+                    - generic [ref=e1490]: Kitchen Access
+            - button "View details for Corner Solo Room (B) at Pala-o, Iligan City 9200. Price P5500 per month. Rating 4.70 stars." [ref=e1492] [cursor=pointer]:
+              - generic [ref=e1493]:
+                - generic [ref=e1494]:
+                  - img "Corner Solo Room (B)" [ref=e1495]
+                  - generic [ref=e1496]: 1 available
+                - generic [ref=e1497]:
+                  - heading "Corner Solo Room (B)" [level=3] [ref=e1498]
+                  - generic [ref=e1499]:
+                    - generic [ref=e1500]: Pala-o, Iligan City 9200
+                    - generic [ref=e1501]:
+                      - img [ref=e1502]
+                      - generic [ref=e1505]: Verified
+                  - generic [ref=e1506]:
+                    - generic [ref=e1507]:
+                      - generic [ref=e1508]: P5500
+                      - generic [ref=e1509]: /month
+                    - generic [ref=e1510]:
+                      - img [ref=e1511]
+                      - generic [ref=e1513]: "4.70"
+                  - generic [ref=e1515]:
+                    - generic [ref=e1516]: Free Wifi
+                    - generic [ref=e1517]: Water
+            - button "View details for Affordable Bed Spacer (B) at Ubaldo Laya, Iligan City 9200. Price P1500 per month. Rating 4.00 stars." [ref=e1519] [cursor=pointer]:
+              - generic [ref=e1520]:
+                - generic [ref=e1521]:
+                  - img "Affordable Bed Spacer (B)" [ref=e1522]
+                  - generic [ref=e1523]: 12 available
+                - generic [ref=e1524]:
+                  - heading "Affordable Bed Spacer (B)" [level=3] [ref=e1525]
+                  - generic [ref=e1526]:
+                    - generic [ref=e1527]: Ubaldo Laya, Iligan City 9200
+                    - generic [ref=e1528]:
+                      - img [ref=e1529]
+                      - generic [ref=e1532]: Verified
+                  - generic [ref=e1533]:
+                    - generic [ref=e1534]:
+                      - generic [ref=e1535]: P1500
+                      - generic [ref=e1536]: /month
+                    - generic [ref=e1537]:
+                      - img [ref=e1538]
+                      - generic [ref=e1540]: "4.00"
+                  - generic [ref=e1543]: Water
+            - button "View details for Kings Solo Pad (B) at Mahayahay, Iligan City 9200. Price P6000 per month. Rating 4.80 stars." [ref=e1545] [cursor=pointer]:
+              - generic [ref=e1546]:
+                - generic [ref=e1547]:
+                  - img "Kings Solo Pad (B)" [ref=e1548]
+                  - generic [ref=e1549]: 4 available
+                - generic [ref=e1550]:
+                  - heading "Kings Solo Pad (B)" [level=3] [ref=e1551]
+                  - generic [ref=e1552]:
+                    - generic [ref=e1553]: Mahayahay, Iligan City 9200
+                    - generic [ref=e1554]:
+                      - img [ref=e1555]
+                      - generic [ref=e1558]: Verified
+                  - generic [ref=e1559]:
+                    - generic [ref=e1560]:
+                      - generic [ref=e1561]: P6000
+                      - generic [ref=e1562]: /month
+                    - generic [ref=e1563]:
+                      - img [ref=e1564]
+                      - generic [ref=e1566]: "4.80"
+                  - generic [ref=e1568]:
+                    - generic [ref=e1569]: Free Wifi
+                    - generic [ref=e1570]: Aircon
+            - button "View details for Garden View Boarding (B) at Buru-un, Iligan City 9200. Price P4000 per month. Rating 4.60 stars." [ref=e1572] [cursor=pointer]:
+              - generic [ref=e1573]:
+                - generic [ref=e1574]:
+                  - img "Garden View Boarding (B)" [ref=e1575]
+                  - generic [ref=e1576]: 2 available
+                - generic [ref=e1577]:
+                  - heading "Garden View Boarding (B)" [level=3] [ref=e1578]
+                  - generic [ref=e1579]:
+                    - generic [ref=e1580]: Buru-un, Iligan City 9200
+                    - generic [ref=e1581]:
+                      - img [ref=e1582]
+                      - generic [ref=e1585]: Verified
+                  - generic [ref=e1586]:
+                    - generic [ref=e1587]:
+                      - generic [ref=e1588]: P4000
+                      - generic [ref=e1589]: /month
+                    - generic [ref=e1590]:
+                      - img [ref=e1591]
+                      - generic [ref=e1593]: "4.60"
+                  - generic [ref=e1595]:
+                    - generic [ref=e1596]: Garden
+                    - generic [ref=e1597]: Free Wifi
+            - button "View details for MSU-IIT Elite Shared (B) at Trece, Iligan City 9200. Price P4500 per month. Rating 4.90 stars." [ref=e1599] [cursor=pointer]:
+              - generic [ref=e1600]:
+                - generic [ref=e1601]:
+                  - img "MSU-IIT Elite Shared (B)" [ref=e1602]
+                  - generic [ref=e1603]: 4 available
+                - generic [ref=e1604]:
+                  - heading "MSU-IIT Elite Shared (B)" [level=3] [ref=e1605]
+                  - generic [ref=e1606]:
+                    - generic [ref=e1607]: Trece, Iligan City 9200
+                    - generic [ref=e1608]:
+                      - img [ref=e1609]
+                      - generic [ref=e1612]: Verified
+                  - generic [ref=e1613]:
+                    - generic [ref=e1614]:
+                      - generic [ref=e1615]: P4500
+                      - generic [ref=e1616]: /month
+                    - generic [ref=e1617]:
+                      - img [ref=e1618]
+                      - generic [ref=e1620]: "4.90"
+                  - generic [ref=e1622]:
+                    - generic [ref=e1623]: Free Wifi
+                    - generic [ref=e1624]: AC
+            - button "View details for Downtown Solo Room (B) at Poblacion, Iligan City 9200. Price P7000 per month. Rating 4.50 stars." [ref=e1626] [cursor=pointer]:
+              - generic [ref=e1627]:
+                - generic [ref=e1628]:
+                  - img "Downtown Solo Room (B)" [ref=e1629]
+                  - generic [ref=e1630]: 3 available
+                - generic [ref=e1631]:
+                  - heading "Downtown Solo Room (B)" [level=3] [ref=e1632]
+                  - generic [ref=e1633]:
+                    - generic [ref=e1634]: Poblacion, Iligan City 9200
+                    - generic [ref=e1635]:
+                      - img [ref=e1636]
+                      - generic [ref=e1639]: Verified
+                  - generic [ref=e1640]:
+                    - generic [ref=e1641]:
+                      - generic [ref=e1642]: P7000
+                      - generic [ref=e1643]: /month
+                    - generic [ref=e1644]:
+                      - img [ref=e1645]
+                      - generic [ref=e1647]: "4.50"
+                  - generic [ref=e1649]:
+                    - generic [ref=e1650]: Security
+                    - generic [ref=e1651]: Free Wifi
+    - contentinfo [ref=e1652]:
+      - generic [ref=e1653]:
+        - generic [ref=e1654]:
+          - heading "Keep up to date with our quarterly newsletter, \"You've got mail.\"" [level=3] [ref=e1655]
+          - generic [ref=e1656]:
+            - textbox "Enter Your Email" [ref=e1657]
+            - button "Subscribe" [ref=e1658]:
+              - generic [ref=e1659]: Subscribe
+              - img [ref=e1660]
+        - generic [ref=e1662]:
+          - generic [ref=e1663]:
+            - button "Solutions" [ref=e1664]:
+              - heading "Solutions" [level=4] [ref=e1665]
+            - generic [ref=e1666]:
+              - link "Transactional Emails" [ref=e1667] [cursor=pointer]:
+                - /url: "#"
+              - link "Marketing Emails" [ref=e1668] [cursor=pointer]:
+                - /url: "#"
+              - link "Email Automation" [ref=e1669] [cursor=pointer]:
+                - /url: "#"
+              - link "Email Builder" [ref=e1670] [cursor=pointer]:
+                - /url: "#"
+              - link "SMTP" [ref=e1671] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e1672]:
+            - button "Docs" [ref=e1673]:
+              - heading "Docs" [level=4] [ref=e1674]
+            - generic [ref=e1675]:
+              - link "Getting Started" [ref=e1676] [cursor=pointer]:
+                - /url: "#"
+              - link "API Reference" [ref=e1677] [cursor=pointer]:
+                - /url: "#"
+              - link "Guides" [ref=e1678] [cursor=pointer]:
+                - /url: "#"
+              - link "Transactional Emails" [ref=e1679] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e1680]:
+            - button "Resources" [ref=e1681]:
+              - heading "Resources" [level=4] [ref=e1682]
+            - generic [ref=e1683]:
+              - link "FAQ" [ref=e1684] [cursor=pointer]:
+                - /url: "#"
+              - link "Blog" [ref=e1685] [cursor=pointer]:
+                - /url: "#"
+              - link "Glossary" [ref=e1686] [cursor=pointer]:
+                - /url: "#"
+              - link "Changelog" [ref=e1687] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=e1688]:
+            - button "Legal" [ref=e1689]:
+              - heading "Legal" [level=4] [ref=e1690]
+            - generic [ref=e1691]:
+              - link "Fair Use" [ref=e1692] [cursor=pointer]:
+                - /url: "#"
+              - link "Terms & Conditions" [ref=e1693] [cursor=pointer]:
+                - /url: "#"
+              - link "Subprocessors" [ref=e1694] [cursor=pointer]:
+                - /url: "#"
+              - link "Privacy Policy" [ref=e1695] [cursor=pointer]:
+                - /url: "#"
+    - navigation [ref=e1696]:
+      - button "Home" [ref=e1697]:
+        - img [ref=e1699]
+        - generic [ref=e1702]: Home
+      - button "Messages" [ref=e1703]:
+        - img [ref=e1705]
+        - generic [ref=e1707]: Messages
+      - button "Roommate" [ref=e1708]:
+        - img [ref=e1710]
+        - generic [ref=e1715]: Roommate
+      - button "Maps" [ref=e1716]:
+        - img [ref=e1718]
+        - generic [ref=e1720]: Maps
+      - button "Profile" [ref=e1721]:
+        - img [ref=e1723]
+        - generic [ref=e1726]: Profile

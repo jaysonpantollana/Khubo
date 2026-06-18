@@ -46,11 +46,6 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
         navigationControl: false,
         geolocateControl: false,
         fadeDuration: 0,
-        transformRequest: (url: string) => {
-          if (url.includes('maptiler.com') || url.includes('maptiler')) {
-            return { url };
-          }
-        },
       });
 
       map.current.on('load', () => setMapLoaded(true));

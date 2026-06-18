@@ -168,7 +168,6 @@ export default function Maps() {
   }, [updateMarkers]);
 
   useEffect(() => {
-    if (!shouldLoadMap) return;
     if (map.current) return;
     if (!apiKey) return;
 

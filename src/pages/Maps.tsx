@@ -540,13 +540,7 @@ export default function Maps() {
           </div>
         </div>
 
-        <div className="hidden sm:flex flex-1 justify-end min-w-0 pl-2">
-          <Filters
-            currentFilters={filters}
-            onFilterChange={setFilters}
-            hideIndicator={true}
-          />
-        </div>
+
       </div>
 
       <div className="flex flex-1 overflow-hidden relative">

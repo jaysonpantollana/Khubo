@@ -45,7 +45,6 @@ export default function Maps() {
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [shouldLoadMap, setShouldLoadMap] = useState(false);
 
   useEffect(() => {
     document.title = "Maps | Khubo";

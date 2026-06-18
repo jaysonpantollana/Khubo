@@ -67,13 +67,6 @@ function SkipLink() {
 }
 
 export default function App() {
-  useEffect(() => {
-    const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
-    if (apiKey) {
-      startMapPreload(apiKey);
-    }
-  }, []);
-
   return (
     <ThemeProvider>
       <AuthProvider>

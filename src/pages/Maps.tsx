@@ -164,7 +164,7 @@ export default function Maps() {
     // Apply initial zoom scale to new markers
     const zoom = map.current.getZoom();
     Object.values(markerPins.current).forEach((pin) => {
-      const scale = Math.pow(1.25, zoom - 13);
+      const scale = Math.pow(1.25, zoom - 12);
       pin.style.transform = `scale(${Math.min(Math.max(scale, 0.3), 3)})`;
     });
   }, [filteredListings]);

@@ -233,7 +233,6 @@ export default function Home() {
         setSearchQuery={setSearchQuery}
         isSearchActive={isSearchActive}
         setIsSearchActive={setIsSearchActive}
-        onOpenMobileSearch={() => setIsSearchActive(true)}
         suppressDropdown={displaySearch}
       />
 

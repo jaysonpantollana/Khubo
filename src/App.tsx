@@ -1,11 +1,40 @@
-// @context: Root application layout
-// @purpose: Wraps all routes with providers (Theme → Auth → Toast → Motion → Router), lazy-loads pages
-// @purpose: Each page is code-split via React.lazy() with a spinner fallback
-// @security: AuthProvider gates protected functionality; there are no private routes (all routes render)
-// @performance: 8 lazy-loaded chunks + vendor chunk splitting (maptiler, recharts, lucide, motion)
-// @dependencies: ThemeContext, AuthContext, ToastProvider, react-router-dom HashRouter
-// @config: HashRouter used for static hosting compatibility (no server-side URL rewriting)
-// @tests: None yet
+// @context: Root application layout — provider hierarchy, routing, lazy loading, code splitting
+// @purpose: Assembles the entire app from providers → router → error boundary → lazy pages
+// @purpose: Every page is code-split; 8 chunks total (1 per page) + vendor chunks
+// @security: AuthProvider provides useAuth() context; NO routes are actually protected (all render)
+// @security: No CSRF, no CSP headers configured at this layer
+// @performance: 8 lazy chunks via React.lazy + Suspense; spinner fallback shown while chunk loads
+// @performance: Bundle split: maptiler (~500KB), recharts+d3, lucide, motion, vendor (everything else)
+// @dependencies: ThemeContext → AuthContext → ToastProvider → MotionConfig → HashRouter → pages
+// @owner: Core team
+// @tests: None yet — no integration tests for routing behavior
+// @config: HashRouter selected for static hosting compat (ADR-001)
+// @config: Feature flags: dark mode (ThemeContext), mock auth (AuthContext), mock data (API fallback)
+//
+// @adr: ADR-001 — HashRouter over BrowserRouter: chosen for static hosting without server URL rewriting
+// @adr: ADR-003 — Context API over Redux: only 3 global concerns, no complex state interactions
+// @adr: ADR-005 — Vite @ alias → project root: intentional but mismatches tsconfig @/* → src/*
+// @adr: ADR-002 — Mock-first data: all API calls fall through to mocks; no real backend needed
+//
+// @dataflow: User Action → Route Match → Lazy Load Page → Hook Fetch → API Layer → Mock Data → Render
+// @dataflow: Listing Search: Home.tsx → useListings({search, category}) → getListings() → MOCK_LISTINGS.filter() → ListingCard[]
+// @dataflow: Auth Flow: AuthModal → AuthContext.signIn(email) → {user, session} → Conditional UI render
+// @dataflow: Roommate Search: RoommateFinder → client-side filter → RoommateCard[]
+// @dataflow: Map View: Maps.tsx → MapTilerView with markers from mock listing coordinates
+// @dataflow: Booking: ListingCard → ListingModal → DateScrollPicker → Toast notification (no real booking)
+//
+// @events: Route change → ScrollToTop effect fires → window.scrollTo(0,0)
+// @events: Theme toggle → ThemeContext → setTheme → classList.toggle('dark') on <html>
+// @events: Auth signIn → AuthContext → setUser/setSession → all useAuth() consumers re-render
+// @events: Toast → ToastProvider.showToast → createPortal → 3s auto-dismiss → AnimatePresence exit
+// @events: Error → Component throw → ErrorBoundary.getDerivedStateFromError → ErrorScreen render
+//
+// @monitoring: All uncaught errors logged via ErrorBoundary.componentDidCatch → console.error
+// @monitoring: No structured logging, no metrics, no APM integration
+// @logging: No logging strategy defined; errors only surface via console.error and ErrorScreen UI
+// @feature-flags: DARK_MODE — toggled via ThemeContext; no backend gating
+// @feature-flags: MOCK_AUTH — always on; AuthContext never hits real Supabase
+// @feature-flags: MOCK_DATA — all API modules fall through to mocks when real request fails
 
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy } from 'react';
@@ -35,7 +64,6 @@ const PageLoader = () => (
 );
 
 export default function App() {
-  // Provider hierarchy: outer providers don't depend on inner ones
   return (
     <ThemeProvider>
       <AuthProvider>

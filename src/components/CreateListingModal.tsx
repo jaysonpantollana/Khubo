@@ -77,7 +77,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
         const filePath = `${user.id}/${fileName}`;
 
-        const { error: uploadError, data } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from('listing-images')
           .upload(filePath, file);
 

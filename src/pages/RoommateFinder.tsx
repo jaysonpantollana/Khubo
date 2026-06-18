@@ -13,12 +13,10 @@ import {
   ChevronRight,
   ChevronDown,
   MapPin,
-  Calendar as CalendarIcon,
   Wallet,
   X,
   UserPlus,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import RoommateModal from "../components/RoommateModal";
 import { Roommate } from "../types";
 import RoommateSearchDropdown from "../components/RoommateSearchDropdown";
@@ -112,8 +110,6 @@ export default function RoommateFinder() {
   const searchObserverRef = useRef<HTMLDivElement>(null);
   const recommendedRef = useRef<HTMLDivElement>(null);
   const nearMsuIitRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-
   const [filters, setFilters] = useState<FilterState>({
     minPrice: 0,
     maxPrice: 50000,
@@ -182,12 +178,6 @@ export default function RoommateFinder() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const toggleStickyDropdown = (dropdown: "location" | "budget") => {
-    setActiveStickyDropdown(
-      activeStickyDropdown === dropdown ? null : dropdown,
-    );
-  };
 
   const filteredRoommates = useMemo(() => {
     let result = [...roommates];

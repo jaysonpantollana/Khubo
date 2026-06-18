@@ -1,3 +1,8 @@
+// @context: Category listings page — filtered listing grid
+// @purpose: Displays listings filtered by category (recommended, top-listing, near-msu-iit, or exact match)
+// @behavior: useMemo filters by categoryId param; loading skeleton while data loads; empty state fallback
+// @dependencies: useListings, ListingCard, ListingCardSkeleton, Footer, react-router-dom
+
 import { useParams, useNavigate } from 'react-router-dom';
 import { useListings } from '../hooks/useListings';
 import ListingCard from '../components/ListingCard';

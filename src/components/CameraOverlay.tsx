@@ -1,3 +1,8 @@
+// @context: Camera overlay — device camera capture for photo upload
+// @purpose: Full-screen camera view with capture, retake, and send actions; falls back to file input
+// @behavior: Uses getUserMedia for live preview; captures to canvas; supports front/rear camera toggle
+// @dependencies: react (useState, useRef, useEffect), motion, lucide-react
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, RefreshCw, Send } from 'lucide-react';

@@ -1,3 +1,8 @@
+// @context: Class-based error boundary — catches render errors
+// @purpose: Wraps app tree; catches uncaught errors and displays ErrorScreen with retry/go-home options
+// @behavior: getDerivedStateFromError sets error state; componentDidCatch logs to console; optional fallback prop
+// @dependencies: ErrorScreen, React (Component, ErrorInfo, ReactNode)
+
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import ErrorScreen from '../ui/ErrorScreen';
 

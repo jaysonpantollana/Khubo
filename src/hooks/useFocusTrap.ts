@@ -1,3 +1,8 @@
+// @context: Focus trap hook — keyboard navigation confinement within modals
+// @purpose: Keeps Tab/Shift+Tab cycling inside a container; restores focus on unmount
+// @behavior: Wraps first/last focusable elements; locks body overflow; returns a ref to attach to container
+// @dependencies: react (useEffect, useRef)
+
 import { useEffect, useRef } from 'react';
 
 const FOCUSABLE_SELECTOR =

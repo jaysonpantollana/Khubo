@@ -1,3 +1,8 @@
+// @context: Bottom navigation bar — fixed mobile navigation
+// @purpose: Five-tab bottom nav (Home, Messages, Roommate, Maps, Profile) with active state and badge indicator
+// @behavior: Fetches unread message count from supabase mock; listens to real-time changes; shows badge on Messages tab
+// @dependencies: react-router-dom, motion, lucide-react, useAuth, supabase mock
+
 import { useEffect, useState } from 'react';
 import { Home, MessageSquare, Users, Map, User } from 'lucide-react';
 import { motion } from 'motion/react';

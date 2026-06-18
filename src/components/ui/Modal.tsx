@@ -1,8 +1,8 @@
-//   <Modal isOpen={isOpen} onClose={handleClose} maxWidth="max-w-md">
-//     <div className="p-6">{content}</div>
-//   </Modal>
-// @dependencies: motion (AnimatePresence), lib/animations.ts (modalBackdrop, modalContent)
-// @owner: Core team
+// @context: Generic modal wrapper — animated overlay dialog
+// @purpose: Reusable modal with backdrop, animated entrance, focus trap, and configurable width
+// @behavior: Uses AnimatePresence for mount/unmount animation; focus trap on open; backdrop click to close
+// @dependencies: motion, useFocusTrap, lib/animations (modalBackdrop, modalContent)
+
 import { motion, AnimatePresence } from 'motion/react';
 import { modalBackdrop, modalContent } from '../../lib/animations';
 import { useFocusTrap } from '../../hooks/useFocusTrap';

@@ -1,3 +1,8 @@
+// @context: Listing detail page — full property view with booking
+// @purpose: Displays gallery, details, amenities, reviews, host profile, map, and booking modal
+// @behavior: useListing fetches by ID; gallery grid with photo overlay; booking modal for date selection; inline calendar
+// @dependencies: useListing, useToast, ListingModal, PhotoCarouselOverlay, MapTilerView, ReviewBreakdown, HostProfile, lucide-react, motion
+
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
 import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2 } from 'lucide-react';

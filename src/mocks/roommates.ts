@@ -1,3 +1,8 @@
+// @context: Mock roommate data — 10 seed roommate profiles
+// @purpose: Provides ROOMMATES array for roommate finder development/testing
+// @behavior: Profiles include name, age, gender, university, location, bio, tags, and budget range
+// @dependencies: Roommate type from types.ts
+
 import { Roommate } from '../types';
 
 export const ROOMMATES: Roommate[] = [

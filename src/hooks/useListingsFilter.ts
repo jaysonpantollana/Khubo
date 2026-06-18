@@ -1,3 +1,8 @@
+// @context: Listing filtering hook — client-side filter and sort
+// @purpose: useMemo-based filter pipeline: category → price range → min rating → search query → sort
+// @behavior: Returns filtered/sorted copy of listings array (never mutates original)
+// @dependencies: Listing type, react (useMemo)
+
 import { useMemo } from 'react';
 import { Listing } from '../types';
 

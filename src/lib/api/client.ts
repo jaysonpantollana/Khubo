@@ -1,3 +1,8 @@
+// @context: HTTP API client — fetch wrapper with retry, timeout, and auth headers
+// @purpose: Provides apiRequest (generic), apiGet, apiPost, apiPut, apiDelete helpers
+// @behavior: Retries on 429/5xx up to MAX_RETRIES; combines abort signals; injects Bearer token from sessionStorage
+// @dependencies: ApiResponse, ApiError (types)
+
 import { ApiResponse, ApiError } from './types';
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api';

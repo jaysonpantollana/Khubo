@@ -1,3 +1,8 @@
+// @context: Error screen UI — full-page error display
+// @purpose: Displays error title, message, dev-only stack trace, and action buttons (Retry, Go Back, Home)
+// @behavior: React.memo wrapped; shows error stack only in development mode; action buttons visible per props
+// @dependencies: motion, lucide-react
+
 import React from 'react';
 import { motion } from 'motion/react';
 import { AlertCircle, RefreshCw, ArrowLeft, Home } from 'lucide-react';

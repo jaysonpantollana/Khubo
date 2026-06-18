@@ -1,3 +1,8 @@
+// @context: Announcements overlay — app news and updates
+// @purpose: Modal overlay displaying MOCK_ANNOUNCEMENTS with title, message, date, and "New" badge
+// @behavior: Animated entrance/exit via AnimatePresence; backdrop click to close
+// @dependencies: motion, lucide-react
+
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Megaphone } from 'lucide-react';

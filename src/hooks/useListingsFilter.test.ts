@@ -1,3 +1,8 @@
+// @context: Unit tests for useListingsFilter hook
+// @purpose: Tests filtering by category, price range, search query, and sorting by price/rating
+// @behavior: Uses renderHook with mock listings; verifies filter/sort output counts and ordering
+// @dependencies: vitest, @testing-library/react, useListingsFilter, Listing type
+
 import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useListingsFilter } from './useListingsFilter';

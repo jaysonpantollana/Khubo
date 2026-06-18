@@ -1,3 +1,8 @@
+// @context: Main landing page — search, categories, listing carousels
+// @purpose: Displays Hero search bar, Categories filter, sticky search header, and filtered listing carousels
+// @behavior: Scroll-driven sticky header with location/date/budget search dropdowns; IntersectionObserver triggers sticky states
+// @dependencies: Hero, Categories, Filters, ListingCarousel, useListings, useListingsFilter, BottomNav, Footer, DateScrollPicker, SearchDropdown, useSearchHistory
+
 import Hero from "../components/Hero";
 import Categories from "../components/Categories";
 import BottomNav from "../components/BottomNav";

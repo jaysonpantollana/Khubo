@@ -1,3 +1,8 @@
+// @context: Motion animation constants and variants
+// @purpose: Exports reusable transition configs, variants (FADE_IN, FADE_UP, SCALE_IN), and modal/dropdown presets
+// @behavior: Includes REDUCED_* variants for accessibility (prefers-reduced-motion)
+// @dependencies: None (pure constants)
+
 export const EASE_OUT = [0.23, 1, 0.32, 1];
 
 export const TRANSITIONS = {

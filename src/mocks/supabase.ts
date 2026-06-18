@@ -1,3 +1,8 @@
+// @context: Mock Supabase client — stub for all Supabase operations
+// @purpose: Provides a fully-typed stub supabase client returning empty/default responses
+// @behavior: Every method returns a chainable builder that resolves to { data: [], error: null, count: null }
+// @dependencies: None (pure mock)
+
 type MockResponseData = { data: unknown; error: null; count: null };
 
 function createFilterBuilder() {

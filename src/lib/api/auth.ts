@@ -1,3 +1,8 @@
+// @context: Auth API functions — sign in, sign up, sign out, get session
+// @purpose: Provides mock authentication with localStorage-backed users and SHA-256 hashed passwords
+// @behavior: Falls back to mock if API call fails; stores user credentials in localStorage
+// @dependencies: apiPost, apiGet (client), delay (utils)
+
 import { apiPost, apiGet } from './client';
 import { delay } from '../utils';
 export interface AuthUser {

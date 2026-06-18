@@ -1,3 +1,7 @@
+// @context: Shared TypeScript type definitions
+// @purpose: Defines Listing, Category, Review, Roommate, and HostProfile interfaces used across the app
+// @behavior: Pure type exports — no runtime code; includes amenity label/icon mapping
+// @dependencies: None
 //
 // @typeflow: UI (string input) → Validation (none) → Hook params → API layer → Mock data → Component state → Render
 // @typeflow: SearchDropdown string → useSearchHistory.storeSearch() → localStorage (JSON.stringify)

@@ -1,3 +1,8 @@
+// @context: Roommate finder page — browse and filter roommate profiles
+// @purpose: Full-page roommate discovery with hero search, filter panel, card grid, and detail modal
+// @behavior: useMemo filters ROOMMATES by category, gender, budget, and search query; RoommateModal for detail view
+// @dependencies: RoommateHero, RoommateCard, RoommateCardSkeleton, RoommateModal, Filters, BottomNav, Footer, ROOMMATES mock, motion
+
 import React, { useState, useMemo, useRef } from "react";
 import RoommateHero from "../components/RoommateHero";
 import RoommateCard from "../components/RoommateCard";

@@ -1,3 +1,8 @@
+// @context: Toast notification context — global toast management
+// @purpose: Provides showToast, notification list, and clear functionality app-wide via React context
+// @behavior: Toast auto-dismiss after 3s; notifications persist until cleared; portal-based rendering
+// @dependencies: Toast, NotificationDialog, createPortal, AnimatePresence
+
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { Toast, ToastType } from './Toast';
 import { NotificationDialog } from './NotificationDialog';

@@ -1,3 +1,8 @@
+// @context: Theme context — dark/light mode provider
+// @purpose: Provides theme and toggleTheme; toggles 'dark' class on document.documentElement
+// @behavior: Adds/removes 'dark' class via useEffect; no localStorage persistence (defaults to light)
+// @dependencies: React (createContext, useContext, useEffect, useState)
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';

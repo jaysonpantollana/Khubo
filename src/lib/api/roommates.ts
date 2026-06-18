@@ -1,3 +1,8 @@
+// @context: Roommates API — roommate listing and request operations
+// @purpose: getRoommates, getRoommate, createRoommateRequest with mock fallback
+// @behavior: Filters mock data by search, gender, university on API failure; simulated delay
+// @dependencies: Roommate type, apiGet, apiPost (client), MOCK_ROOMMATES
+
 import { Roommate } from '../../types';
 import { apiGet, apiPost } from './client';
 import { ROOMMATES as MOCK_ROOMMATES } from '../../mocks/roommates';

@@ -1,3 +1,8 @@
+// @context: Mock listing data — 28 seed listings for Iligan City
+// @purpose: Provides LISTINGS and CATEGORIES arrays for development/testing without a backend
+// @behavior: Contains 28 listings across 18 categories; k1-k5 have full reviews, k6-k28 have empty reviews
+// @dependencies: Listing, Category types from types.ts
+
 import { Listing, Category } from '../types';
 
 export const CATEGORIES: Category[] = [

@@ -1,3 +1,8 @@
+// @context: Maps page — map-based listing discovery
+// @purpose: Sidebar listing panel + MapTiler map view with interactive filtering and card selection
+// @behavior: Left panel shows filterable listing cards; map shows markers for visible listings; card hover syncs with map
+// @dependencies: useListings, useListingsFilter, ListingCard, MapTilerView, Filters, BottomNav, Footer, lucide-react
+
 import React, { useState, useRef, useEffect } from "react";
 import { useListings } from "../hooks/useListings";
 import { useListingsFilter } from "../hooks/useListingsFilter";

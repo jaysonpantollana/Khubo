@@ -1,3 +1,8 @@
+// @context: Authentication context — mock auth state provider
+// @purpose: Provides session, user, signIn, signOut, and isLoading via React context
+// @behavior: signIn sets mock user from email; signOut clears state; no real API call
+// @dependencies: React (createContext, useContext, useState)
+
 import React, { createContext, useContext, useState } from 'react';
 
 export interface MockUser {

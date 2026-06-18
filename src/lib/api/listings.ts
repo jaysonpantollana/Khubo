@@ -1,3 +1,8 @@
+// @context: Listings API — CRUD operations for property listings
+// @purpose: getListings, getListing, createListing, updateListing, deleteListing with mock fallback
+// @behavior: Attempts real API first; falls back to mock data with simulated delay on failure
+// @dependencies: Listing type, apiGet/Put/Post/Delete (client), MOCK_LISTINGS
+
 import { Listing } from '../../types';
 import { apiGet, apiPost, apiPut, apiDelete } from './client';
 import { PaginatedResponse, PaginationParams } from './types';

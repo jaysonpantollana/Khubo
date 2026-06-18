@@ -1,3 +1,8 @@
+// @context: Mock message data — 5 conversations and 5 dummy messages
+// @purpose: Provides DUMMY_CONVERSATIONS and DUMMY_MESSAGES for chat UI development
+// @behavior: Conversations have avatar, name, last message, timestamp, unread count; messages have sender and time
+// @dependencies: None (pure data)
+
 export const DUMMY_CONVERSATIONS = [
   {
     id: '1',

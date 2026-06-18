@@ -1,3 +1,8 @@
+// @context: Search history hook — localStorage-backed recent searches
+// @purpose: Manages a list of recent search queries (max 5) persisted in localStorage
+// @behavior: addSearch prepends deduplicated entry; removeSearch filters it out; max 5 items
+// @dependencies: react (useState, useEffect), localStorage
+
 import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'home_search_history';

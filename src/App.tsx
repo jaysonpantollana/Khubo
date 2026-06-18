@@ -1,3 +1,7 @@
+// @context: App root — routing and global layout
+// @purpose: HashRouter with lazy-loaded routes for all pages; wraps app in providers (Auth, Theme, Toast, ErrorBoundary)
+// @behavior: Route definitions for /, /category/:categoryId, /listing/:id, /messages, /maps, /profile, /manage-listings, /roommate
+// @dependencies: react-router-dom, AuthProvider, ThemeProvider, ToastProvider, ErrorBoundary, ScrollToTop
 //
 // @adr: ADR-001 — HashRouter over BrowserRouter: chosen for static hosting without server URL rewriting
 // @adr: ADR-003 — Context API over Redux: only 3 global concerns, no complex state interactions

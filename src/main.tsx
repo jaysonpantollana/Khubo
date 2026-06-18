@@ -1,3 +1,8 @@
+// @context: Application entry point — React DOM mount
+// @purpose: Renders App inside StrictMode and ErrorBoundary; session run ID tracking for development
+// @behavior: Creates root with createRoot; wraps in ErrorBoundary for global error catching
+// @dependencies: App, ErrorBoundary, index.css
+
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';

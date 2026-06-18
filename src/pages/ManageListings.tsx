@@ -1,3 +1,8 @@
+// @context: Manage listings page — landlord's property dashboard
+// @purpose: Shows user's listings with stats (rating, inquiries, tenants, revenue) and edit action
+// @behavior: Filters mock listings by current user; opens EditListingModal for editing; tab/page navigation
+// @dependencies: Navbar, Footer, useAuth, EditListingModal, Listing type, react-router-dom
+
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';

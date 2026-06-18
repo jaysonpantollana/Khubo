@@ -1,3 +1,8 @@
+// @context: Authentication modal — login/signup with email and password
+// @purpose: Modal for sign in and sign up flows; supports toggle between login/register; calls AuthContext.signIn
+// @behavior: Mock auth with setTimeout delay; shows loading/error states; password visibility toggle
+// @dependencies: useAuth (AuthContext), motion, lucide-react, createPortal
+
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';

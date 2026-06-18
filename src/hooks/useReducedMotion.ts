@@ -1,3 +1,8 @@
+// @context: Reduced motion hook — accessibility for animations
+// @purpose: Detects prefers-reduced-motion OS setting via matchMedia; returns boolean
+// @behavior: Initializes from matchMedia; listens to change events for live updates
+// @dependencies: react (useState, useEffect)
+
 import { useState, useEffect } from 'react';
 
 export function useReducedMotion() {

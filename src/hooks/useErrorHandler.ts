@@ -1,3 +1,8 @@
+// @context: Error handler hook — throws caught errors as render exceptions
+// @purpose: Returns a handleError callback that stores the error in state and re-throws it during render
+// @behavior: Sets error in useState; re-throws synchronously on next render to be caught by ErrorBoundary
+// @dependencies: react (useState, useCallback)
+
 import { useState, useCallback } from 'react';
 
 export function useErrorHandler() {

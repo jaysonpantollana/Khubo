@@ -1,3 +1,8 @@
+// @context: Messages API — conversation and message operations
+// @purpose: getConversations, getMessages, sendMessage with mock fallback data
+// @behavior: Attempts API first; falls back to DUMMY_MESSAGES mock with delay on failure
+// @dependencies: apiGet, apiPost (client), MOCK_MESSAGES
+
 import { apiGet, apiPost } from './client';
 import { DUMMY_MESSAGES as MOCK_MESSAGES } from '../../mocks/messages';
 import { delay } from '../utils';

@@ -52,9 +52,10 @@ export default function Maps() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<maptilersdk.Map | null>(null);
-  const markers = useRef<{ [key: string]: maptilersdk.Marker }>({});
+  const map = useRef<any>(null);
+  const markers = useRef<{ [key: string]: any }>({});
   const markerPins = useRef<{ [key: string]: HTMLElement }>({});
+  const sdkRef = useRef<any>(null);
   const filters: FilterState = {
     minPrice: 0,
     maxPrice: 50000,

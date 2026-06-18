@@ -181,11 +181,6 @@ export default function Maps() {
       navigationControl: false,
       geolocateControl: false,
       fadeDuration: 0,
-      transformRequest: (url: string) => {
-        if (url.includes('maptiler.com') || url.includes('maptiler')) {
-          return { url };
-        }
-      },
     });
 
     // Intercept and resolve missing style images to suppress MapTiler road/space warnings in console

@@ -67,6 +67,15 @@ function SkipLink() {
 }
 
 export default function App() {
+  useEffect(() => {
+    const preloadMaps = () => import('./pages/Maps');
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(preloadMaps);
+    } else {
+      setTimeout(preloadMaps, 2000);
+    }
+  }, []);
+
   return (
     <ThemeProvider>
       <AuthProvider>

@@ -5,7 +5,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
 import { Listing } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
@@ -216,7 +215,7 @@ export default function Profile() {
           <button
             aria-label="Announcements"
             onClick={() => setIsAnnouncementsOpen(true)}
-            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full pointer-events-auto cursor-pointer"
+            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full pointer-events-auto cursor-pointer"
           >
             <Megaphone className="w-5 h-5 md:w-8 md:h-8" />
           </button>
@@ -324,11 +323,8 @@ export default function Profile() {
         {/* Stat Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 drop-shadow-sm">
           {statCards.map((stat, i) => (
-            <motion.div
+            <div
               key={stat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
               onClick={() => handleStatClick(stat.title)}
               className="bg-white rounded-[1.5rem] p-5 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col relative group cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300"
             >
@@ -340,7 +336,7 @@ export default function Profile() {
                 <span className="text-3xl md:text-[40px] font-bold text-[#17294F] leading-none">{stat.count}</span>
                 <span className="text-sm md:text-base text-neutral-500 font-medium">{stat.sub}</span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
@@ -544,13 +540,11 @@ export default function Profile() {
                 </span>
               </div>
               <div className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${isLandlord ? 'bg-[#2252D6]' : 'bg-neutral-300'}`}>
-                <motion.div
+                <div
                   className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm flex items-center justify-center"
-                  animate={{ x: isLandlord ? 24 : 0 }}
-                  transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
                 >
                   {isLandlord && <Check className="w-3 h-3 text-[#2252D6]" strokeWidth={3} />}
-                </motion.div>
+                </div>
               </div>
             </div>
 

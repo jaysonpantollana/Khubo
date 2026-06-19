@@ -54,6 +54,7 @@ export default function Filters({ onFilterChange, currentFilters, hideIndicator 
       </button>
 
       {typeof document !== 'undefined' && createPortal(
+        <>
           {isOpen && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
               <div
@@ -166,7 +167,8 @@ export default function Filters({ onFilterChange, currentFilters, hideIndicator 
                 </div>
               </div>
             </div>
-          )},
+          )}
+        </>,
         document.body
       )}
     </div>

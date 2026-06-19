@@ -20,25 +20,18 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
   if (!roommate) return null;
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <>
           {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             onClick={onClose}
             className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] cursor-pointer"
           />
 
           {/* Modal Container */}
           <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-[101] p-4 sm:p-6 md:p-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              transition={{ type: "tween", ease: "easeOut", duration: 0.3 }}
+            <div
               className="bg-[#F9F9F9] w-full max-w-lg md:max-w-3xl pointer-events-auto rounded-[40px] overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.2)] flex flex-col md:flex-row max-h-[90vh] relative"
             >
               {/* Close Button - Desktop */}
@@ -159,10 +152,10 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
 
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </>
       )}
-    </AnimatePresence>
+    </>
   );
 }

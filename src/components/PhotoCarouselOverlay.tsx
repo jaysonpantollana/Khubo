@@ -56,11 +56,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
   if (!isOpen) return null;
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+      <div
         className="fixed inset-0 z-[200] bg-black/0 backdrop-blur-sm flex flex-col"
       >
         {/* Header */}
@@ -105,13 +101,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
 
           {/* Image Container */}
           <div className="flex-1 flex items-center justify-center p-5">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+              <div
                 className="shadow-2xl rounded-[2.5rem] overflow-hidden"
               >
                 <img
@@ -120,8 +110,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
                   className="max-w-[90vw] max-h-[75vh] w-auto h-auto object-contain pointer-events-none select-none"
                   referrerPolicy="no-referrer"
                 />
-              </motion.div>
-            </AnimatePresence>
+              </div>
           </div>
         </div>
 
@@ -141,7 +130,6 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
               ))}
            </div>
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
   );
 };

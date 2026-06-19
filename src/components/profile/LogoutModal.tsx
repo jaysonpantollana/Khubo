@@ -16,17 +16,11 @@ export default function LogoutModal({ isOpen, onClose, onConfirm }: Props) {
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+      <div
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+      <div
         className="relative w-full max-w-[400px] bg-white p-6 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl z-10 flex flex-col"
       >
         <h2 className="text-xl md:text-2xl font-bold text-neutral-900 mb-2">Are you absolutely sure?</h2>
@@ -47,7 +41,7 @@ export default function LogoutModal({ isOpen, onClose, onConfirm }: Props) {
             Continue
           </button>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -6,7 +6,6 @@
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
 import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -118,8 +117,7 @@ const Calendar = ({
               )}
             >
               {isSelected && (
-                <motion.div 
-                   layoutId="calendar-selection"
+                <div 
                    className="absolute inset-0 bg-[#17294F] rounded-full z-0" 
                 />
               )}
@@ -196,8 +194,7 @@ export default function ListingDetail() {
     'https://images.unsplash.com/photo-1555819485-99aaa4aee26b?auto=format&fit=crop&q=80&w=800',
     'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800',
     'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&q=80&w=800',
-    'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800',
-    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800'
+    'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800'
   ];
 
   const actualImages = listing.gallery?.length > 0 ? listing.gallery : [listing.image];
@@ -706,8 +703,7 @@ export default function ListingDetail() {
                   </div>
                   
                   {startDate ? (
-                    <motion.div 
-                      layoutId="selected-date-card"
+                    <div
                       onClick={() => setIsModalOpen(true)}
                       className="bg-white rounded-[1.5rem] p-5 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100 cursor-pointer hover:border-[#17294F]/20 transition-all hover:bg-neutral-50/50 flex items-center gap-4 group"
                     >
@@ -719,7 +715,7 @@ export default function ListingDetail() {
                         <span className="text-base font-black text-[#17294F]">{format(startDate, 'EEEE')}</span>
                         <span className="text-xs font-bold text-neutral-400">{format(startDate, 'yyyy')}</span>
                       </div>
-                    </motion.div>
+                    </div>
                   ) : (
                     <div 
                       onClick={() => setIsModalOpen(true)}
@@ -837,55 +833,47 @@ export default function ListingDetail() {
       <Footer />
 
       {/* Full-screen Map Modal */}
-      <AnimatePresence>
-        {isMapModalOpen && (
-          <div className="fixed inset-0 z-[500] flex items-center justify-center p-0 md:p-10">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMapModalOpen(false)}
-              className="absolute inset-0 bg-black/90 backdrop-blur-xl"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 40 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 40 }}
-              className="relative w-full h-full md:max-w-6xl md:max-h-[85vh] bg-white md:rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col"
-            >
-              <div className="absolute top-6 left-6 z-[600]">
-                <button 
-                  onClick={() => setIsMapModalOpen(false)}
-                  className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg pointer-events-auto active:scale-90 transition-transform"
-                >
-                  <ArrowLeft size={24} className="text-neutral-900" />
-                </button>
-              </div>
+      {isMapModalOpen && (
+        <div className="fixed inset-0 z-[500] flex items-center justify-center p-0 md:p-10">
+          <div
+            onClick={() => setIsMapModalOpen(false)}
+            className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+          />
+          <div
+            className="relative w-full h-full md:max-w-6xl md:max-h-[85vh] bg-white md:rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col"
+          >
+            <div className="absolute top-6 left-6 z-[600]">
+              <button 
+                onClick={() => setIsMapModalOpen(false)}
+                className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg pointer-events-auto active:scale-90 transition-transform"
+              >
+                <ArrowLeft size={24} className="text-neutral-900" />
+              </button>
+            </div>
 
-              <div className="flex-1 w-full h-full">
-                <MapTilerView 
-                  lat={8.2280} 
-                  lng={124.2452} 
-                  title={listing.title} 
-                  loadImmediately={true}
-                />
-              </div>
+            <div className="flex-1 w-full h-full">
+              <MapTilerView 
+                lat={8.2280} 
+                lng={124.2452} 
+                title={listing.title} 
+                loadImmediately={true}
+              />
+            </div>
 
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[600] w-full px-6 flex justify-center">
-                <div className="bg-neutral-900/60 backdrop-blur-xl rounded-2xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 w-fit flex items-center gap-3.5 transition-all hover:scale-105 active:scale-95 cursor-default">
-                  <div className="w-8 h-8 bg-[#2252D6] rounded-xl flex items-center justify-center shadow-lg shrink-0">
-                    <Navigation size={16} className="text-white fill-white/20" />
-                  </div>
-                  <div className="flex flex-col pr-2">
-                    <h4 className="text-xs font-black text-white leading-tight">Pala-o, Iligan City</h4>
-                    <p className="text-[8px] font-bold text-white/30 mt-0.5 uppercase tracking-wider">8.2280° N, 124.2452° E</p>
-                  </div>
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[600] w-full px-6 flex justify-center">
+              <div className="bg-neutral-900/60 backdrop-blur-xl rounded-2xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 w-fit flex items-center gap-3.5 hover:scale-105 active:scale-95 cursor-default">
+                <div className="w-8 h-8 bg-[#2252D6] rounded-xl flex items-center justify-center shadow-lg shrink-0">
+                  <Navigation size={16} className="text-white fill-white/20" />
+                </div>
+                <div className="flex flex-col pr-2">
+                  <h4 className="text-xs font-black text-white leading-tight">Pala-o, Iligan City</h4>
+                  <p className="text-[8px] font-bold text-white/30 mt-0.5 uppercase tracking-wider">8.2280° N, 124.2452° E</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
       <PhotoCarouselOverlay 
         isOpen={isPhotoGalleryOpen}

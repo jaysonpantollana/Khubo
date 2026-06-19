@@ -17,17 +17,11 @@ export default function StatCardModal({ title, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+      <div
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+      <div
         className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
       >
         <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
@@ -49,7 +43,7 @@ export default function StatCardModal({ title, onClose }: Props) {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

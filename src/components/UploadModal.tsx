@@ -75,20 +75,14 @@ export function UploadModal({
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <React.Fragment>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             onClick={handleClose}
             className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
           />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          <div
             className={`fixed left-1/2 top-1/2 z-50 w-[90%] max-w-[500px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl shadow-2xl ${
               isDarkMode ? 'bg-[#1E1F20] text-white border border-[#3A3B3C]' : 'bg-white text-neutral-900 border border-neutral-200'
             }`}
@@ -208,9 +202,9 @@ export function UploadModal({
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
         </React.Fragment>
       )}
-    </AnimatePresence>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 // @context: Listing card skeleton — loading placeholder
 // @purpose: Animated pulse skeleton matching ListingCard layout; supports compact variant
-// @behavior: Shows gray placeholder shapes with CSS animate-pulse; compact mode for map sidebar
-// @performance: Zero JS animation — pure CSS animate-pulse
+// @behavior: Shows gray placeholder shapes with CSS ; compact mode for map sidebar
+// @performance: Zero JS animation — pure CSS 
 // @dependencies: None (pure divs)
 
 import React from 'react';
@@ -14,7 +14,7 @@ interface ListingCardSkeletonProps {
 export default function ListingCardSkeleton({ compact }: ListingCardSkeletonProps) {
   if (compact) {
     return (
-      <div className="col-span-1 bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 flex flex-row gap-3 h-[96px] sm:h-[104px] animate-pulse">
+      <div className="col-span-1 bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 flex flex-row gap-3 h-[96px] sm:h-[104px] ">
         <div className="aspect-[4/3] h-full relative rounded-lg bg-neutral-200 flex-shrink-0"></div>
         <div className="flex-1 py-0.5 flex flex-col justify-between">
           <div>
@@ -31,7 +31,7 @@ export default function ListingCardSkeleton({ compact }: ListingCardSkeletonProp
   }
 
   return (
-    <div className="col-span-1 bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent group animate-pulse">
+    <div className="col-span-1 bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent group ">
       <div className="flex flex-col gap-2.5 sm:gap-3 w-full">
         <div className="aspect-[4/3] relative rounded-xl bg-neutral-200"></div>
         <div className="px-1.5 sm:px-1 flex flex-col gap-1">

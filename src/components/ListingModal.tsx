@@ -154,20 +154,13 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   };
 
   return (
-    <AnimatePresence>
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <motion.div
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           exit={{ opacity: 0 }}
+        <div
            onClick={onClose}
            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         />
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        <div
           className="relative bg-white w-full max-w-[400px] md:max-w-[540px] rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden p-6 md:p-12"
         >
           <div className="flex items-center justify-between mb-6 md:mb-10">
@@ -233,8 +226,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
               Confirm Move-in
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
   );
 };

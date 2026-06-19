@@ -1,6 +1,6 @@
 // @context: Listing detail page skeleton — full-page loading placeholder
 // @purpose: Matches ListingDetail layout: header, gallery grid, info columns, booking sidebar
-// @behavior: Uses CSS animate-pulse; mirrors the full responsive layout of ListingDetail
+// @behavior: Uses CSS ; mirrors the full responsive layout of ListingDetail
 // @performance: Pure CSS — no JS animation overhead
 // @dependencies: None
 
@@ -8,7 +8,7 @@ import React from 'react';
 
 export default function ListingDetailSkeleton() {
   return (
-    <div className="min-h-screen bg-neutral-50 md:bg-white pb-32 animate-pulse">
+    <div className="min-h-screen bg-neutral-50 md:bg-white pb-32 ">
        {/* Desktop Header Skeleton */}
        <div className="hidden md:block sticky top-0 z-50 bg-white/80 border-b border-gray-100">
         <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 h-16 flex items-center justify-between">

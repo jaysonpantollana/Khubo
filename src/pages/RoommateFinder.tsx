@@ -11,7 +11,6 @@ import BottomNav from "../components/BottomNav";
 import Filters, { FilterState } from "../components/Filters";
 import Footer from "../components/Footer";
 import { ROOMMATES } from "../mocks/roommates";
-import { motion, AnimatePresence } from "motion/react";
 import {
   Search,
   ChevronLeft,
@@ -262,383 +261,325 @@ export default function RoommateFinder() {
       {/* Sticky Header with Categories & Search */}
       <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm transition-all duration-300">
         <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-[70px]">
-          <AnimatePresence mode="wait">
-            {displaySearch ? (
-              <motion.div
-                key="search"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center justify-between w-full py-3 px-2 sm:px-0"
+          {displaySearch ? (
+            <div className="flex items-center justify-between w-full py-3 px-2 sm:px-0">
+              <div className="hidden md:block flex-1 min-w-0"></div>
+              <div
+                className="flex justify-center flex-[3] lg:flex-none min-w-0 w-full px-2 sm:px-0"
+                ref={stickyDropdownRef}
               >
-                <div className="hidden md:block flex-1 min-w-0"></div>
-                <div
-                  className="flex justify-center flex-[3] lg:flex-none min-w-0 w-full px-2 sm:px-0"
-                  ref={stickyDropdownRef}
-                >
-                  <div className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 rounded-full flex items-center text-neutral-800 shadow-lg w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] relative transition-all duration-300 pointer-events-auto cursor-default">
-                    {isStickySearchActive ? (
-                      <>
-                        <div className="flex-1 flex items-center pl-4 md:pl-5 pr-0 py-0 w-full">
-                          <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => {
-                              setSearchQuery(e.target.value);
-                              setHideStickyDropdown(false);
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                setHideStickyDropdown(true);
-                              }
-                            }}
-                            placeholder="Search rooms, location..."
-                            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
-                            autoFocus
-                          />
-                          {searchQuery && (
-                            <button
-                              onClick={() => {
-                                setSearchQuery("");
-                                setHideStickyDropdown(true);
-                              }}
-                              className="p-1 hover:bg-neutral-100 rounded-full transition-colors flex-shrink-0"
-                              aria-label="Clear search"
-                            >
-                              <X className="w-3.5 h-3.5 text-neutral-500" />
-                            </button>
-                          )}
-                          <button
-                            onClick={() => {
-                              setIsStickySearchActive(false);
-                            }}
-                            className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] flex-shrink-0 flex items-center justify-center cursor-pointer"
-                          >
-                            <Search
-                              size={16}
-                              className="text-white group-hover:stroke-[3px] transition-all"
-                            />
-                          </button>
-                        </div>
-                        {!hideStickyDropdown && (
-                          <RoommateSearchDropdown
-                            searchQuery={searchQuery}
-                            setSearchQuery={(val) => {
-                              setSearchQuery(val);
+                <div className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 rounded-full flex items-center text-neutral-800 shadow-lg w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] relative transition-all duration-300 pointer-events-auto cursor-default">
+                  {isStickySearchActive ? (
+                    <>
+                      <div className="flex-1 flex items-center pl-4 md:pl-5 pr-0 py-0 w-full">
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setHideStickyDropdown(false);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
                               setHideStickyDropdown(true);
-                            }}
-                            onClose={() => {
-                              setHideStickyDropdown(true);
-                              setIsStickySearchActive(false);
-                            }}
-                            onSelectRoommate={(roommate) =>
-                              openProfile(roommate)
-                            }
-                          />
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {/* Sticky Location Section */}
-                        <div className="flex-1 min-w-0">
-                          <div
-                            role="button"
-                            tabIndex={0}
-                            aria-label="Location: Location"
-                            onClick={() => {
-                              setActiveStickyDropdown(
-                                activeStickyDropdown === "location"
-                                  ? null
-                                  : "location",
-                              );
-                            }}
-                            onKeyDown={(e) =>
-                              (e.key === "Enter" || e.key === " ") &&
-                              (e.preventDefault(),
-                              setActiveStickyDropdown(
-                                activeStickyDropdown === "location"
-                                  ? null
-                                  : "location",
-                              ))
-                            }
-                            className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
-                              activeStickyDropdown === "location"
-                                ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                                : "hover:bg-neutral-50 rounded-full"
-                            }`}
-                          >
-                            <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                              <MapPin className="text-[#2252D6] flex-shrink-0 w-4 h-4 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                              <span
-                                className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
-                              >
-                                Location
-                              </span>
-                            </div>
-                            <ChevronDown
-                              className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "location" ? "rotate-180" : ""}`}
-                            />
-                          </div>
-
-                          <AnimatePresence>
-                            {activeStickyDropdown === "location" && (
-                              <motion.div
-                                initial={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                animate={{
-                                  opacity: 1,
-                                  clipPath: "inset(0% 0% 0% 0%)",
-                                }}
-                                exit={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                transition={{
-                                  type: "tween",
-                                  ease: "easeOut",
-                                  duration: 0.2,
-                                }}
-                                className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-50 text-left"
-                              >
-                                <div className="space-y-3">
-                                  <div>
-                                    <div
-                                      className="flex items-center px-3 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        (
-                                          e.currentTarget.querySelector(
-                                            "input",
-                                          ) as HTMLInputElement
-                                        )?.focus();
-                                      }}
-                                    >
-                                      <Search className="w-3.5 h-3.5 text-neutral-400 mr-2 flex-shrink-0" />
-                                      <input
-                                        type="text"
-                                        placeholder="Search location..."
-                                        value={searchQuery}
-                                        onChange={(e) =>
-                                          setSearchQuery(e.target.value)
-                                        }
-                                        className="w-full bg-transparent border-none outline-none text-xs font-semibold text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                                      />
-                                    </div>
-                                    <div className="space-y-1">
-                                      {["MSU-IIT", "Pala-o", "Tibanga"].map(
-                                        (loc) => (
-                                          <button
-                                            key={loc}
-                                            onClick={() => {
-                                              setSearchQuery(loc);
-                                              setActiveStickyDropdown(null);
-                                            }}
-                                            className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 transition-colors group"
-                                          >
-                                            <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all">
-                                              <MapPin size={12} />
-                                            </div>
-                                            <span className="font-medium text-neutral-800 text-xs">
-                                              {loc}
-                                            </span>
-                                          </button>
-                                        ),
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-
-                        <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
-
-                        {/* Sticky Budget Section */}
-                        <div className="flex-1 min-w-0">
-                          <div
-                            role="button"
-                            tabIndex={0}
-                            aria-label="Add budget"
-                            onClick={() => {
-                              setActiveStickyDropdown(
-                                activeStickyDropdown === "budget"
-                                  ? null
-                                  : "budget",
-                              );
-                            }}
-                            onKeyDown={(e) =>
-                              (e.key === "Enter" || e.key === " ") &&
-                              (e.preventDefault(),
-                              setActiveStickyDropdown(
-                                activeStickyDropdown === "budget"
-                                  ? null
-                                  : "budget",
-                              ))
-                            }
-                            className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
-                              activeStickyDropdown === "budget"
-                                ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                                : "hover:bg-neutral-50 rounded-full"
-                            }`}
-                          >
-                            <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                              <Wallet className="text-[#2252D6] flex-shrink-0 w-4 h-4 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                              <span
-                                className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
-                              >
-                                Budget
-                              </span>
-                            </div>
-                            <ChevronDown
-                              className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "budget" ? "rotate-180" : ""}`}
-                            />
-                          </div>
-
-                          <AnimatePresence>
-                            {activeStickyDropdown === "budget" && (
-                              <motion.div
-                                initial={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                animate={{
-                                  opacity: 1,
-                                  clipPath: "inset(0% 0% 0% 0%)",
-                                }}
-                                exit={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                transition={{
-                                  type: "tween",
-                                  ease: "easeOut",
-                                  duration: 0.2,
-                                }}
-                                className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left"
-                              >
-                                <div className="space-y-2">
-                                  <div className="grid grid-cols-1 gap-1">
-                                    {[
-                                      { label: "₱1k - ₱3k", val: "1500" },
-                                      { label: "₱3k - ₱5k", val: "4000" },
-                                      { label: "₱5k+", val: "6000" },
-                                    ].map((range) => (
-                                      <button
-                                        key={range.label}
-                                        onClick={() => {
-                                          setSearchQuery(range.val);
-                                          setActiveStickyDropdown(null);
-                                        }}
-                                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
-                                      >
-                                        <span className="font-medium text-neutral-900 text-xs">
-                                          {range.label}
-                                        </span>
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-
-                        {/* Search Button */}
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (activeStickyDropdown) {
-                              setActiveStickyDropdown(null);
-                            }
-                            if (
-                              searchQuery.trim().length > 0 &&
-                              !isStickySearchActive
-                            ) {
-                              const searchAnchor = document.getElementById(
-                                "roommate-results-anchor",
-                              );
-                              if (searchAnchor) {
-                                searchAnchor.scrollIntoView({
-                                  behavior: "smooth",
-                                });
-                              }
-                            } else if (!isStickySearchActive) {
-                              setSearchQuery("");
-                              setIsStickySearchActive(true);
-                              setActiveStickyDropdown(null);
-                            } else {
-                              const searchAnchor = document.getElementById(
-                                "roommate-results-anchor",
-                              );
-                              if (searchAnchor) {
-                                searchAnchor.scrollIntoView({
-                                  behavior: "smooth",
-                                });
-                              }
                             }
                           }}
-                          aria-label="Search"
-                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                          placeholder="Search rooms, location..."
+                          className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
+                          autoFocus
+                        />
+                        {searchQuery && (
+                          <button
+                            onClick={() => {
+                              setSearchQuery("");
+                              setHideStickyDropdown(true);
+                            }}
+                            className="p-1 hover:bg-neutral-100 rounded-full transition-colors flex-shrink-0"
+                            aria-label="Clear search"
+                          >
+                            <X className="w-3.5 h-3.5 text-neutral-500" />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => {
+                            setIsStickySearchActive(false);
+                          }}
+                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] flex-shrink-0 flex items-center justify-center cursor-pointer"
                         >
                           <Search
                             size={16}
                             className="text-white group-hover:stroke-[3px] transition-all"
                           />
                         </button>
-                      </>
-                    )}
-                  </div>
+                      </div>
+                      {!hideStickyDropdown && (
+                        <RoommateSearchDropdown
+                          searchQuery={searchQuery}
+                          setSearchQuery={(val) => {
+                            setSearchQuery(val);
+                            setHideStickyDropdown(true);
+                          }}
+                          onClose={() => {
+                            setHideStickyDropdown(true);
+                            setIsStickySearchActive(false);
+                          }}
+                          onSelectRoommate={(roommate) =>
+                            openProfile(roommate)
+                          }
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {/* Sticky Location Section */}
+                      <div className="flex-1 min-w-0">
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          aria-label="Location: Location"
+                          onClick={() => {
+                            setActiveStickyDropdown(
+                              activeStickyDropdown === "location"
+                                ? null
+                                : "location",
+                            );
+                          }}
+                          onKeyDown={(e) =>
+                            (e.key === "Enter" || e.key === " ") &&
+                            (e.preventDefault(),
+                            setActiveStickyDropdown(
+                              activeStickyDropdown === "location"
+                                ? null
+                                : "location",
+                            ))
+                          }
+                          className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
+                            activeStickyDropdown === "location"
+                              ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
+                              : "hover:bg-neutral-50 rounded-full"
+                          }`}
+                        >
+                          <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
+                            <MapPin className="text-[#2252D6] flex-shrink-0 w-4 h-4 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                            <span
+                              className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
+                            >
+                              Location
+                            </span>
+                          </div>
+                          <ChevronDown
+                            className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "location" ? "rotate-180" : ""}`}
+                          />
+                        </div>
+
+                        {activeStickyDropdown === "location" && (
+                          <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-50 text-left">
+                            <div className="space-y-3">
+                              <div>
+                                <div
+                                  className="flex items-center px-3 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    (
+                                      e.currentTarget.querySelector(
+                                        "input",
+                                      ) as HTMLInputElement
+                                    )?.focus();
+                                  }}
+                                >
+                                  <Search className="w-3.5 h-3.5 text-neutral-400 mr-2 flex-shrink-0" />
+                                  <input
+                                    type="text"
+                                    placeholder="Search location..."
+                                    value={searchQuery}
+                                    onChange={(e) =>
+                                      setSearchQuery(e.target.value)
+                                    }
+                                    className="w-full bg-transparent border-none outline-none text-xs font-semibold text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  {["MSU-IIT", "Pala-o", "Tibanga"].map(
+                                    (loc) => (
+                                      <button
+                                        key={loc}
+                                        onClick={() => {
+                                          setSearchQuery(loc);
+                                          setActiveStickyDropdown(null);
+                                        }}
+                                        className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 transition-colors group"
+                                      >
+                                        <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all">
+                                          <MapPin size={12} />
+                                        </div>
+                                        <span className="font-medium text-neutral-800 text-xs">
+                                          {loc}
+                                        </span>
+                                      </button>
+                                    ),
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
+
+                      {/* Sticky Budget Section */}
+                      <div className="flex-1 min-w-0">
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          aria-label="Add budget"
+                          onClick={() => {
+                            setActiveStickyDropdown(
+                              activeStickyDropdown === "budget"
+                                ? null
+                                : "budget",
+                            );
+                          }}
+                          onKeyDown={(e) =>
+                            (e.key === "Enter" || e.key === " ") &&
+                            (e.preventDefault(),
+                            setActiveStickyDropdown(
+                              activeStickyDropdown === "budget"
+                                ? null
+                                : "budget",
+                            ))
+                          }
+                          className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
+                            activeStickyDropdown === "budget"
+                              ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
+                              : "hover:bg-neutral-50 rounded-full"
+                          }`}
+                        >
+                          <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
+                            <Wallet className="text-[#2252D6] flex-shrink-0 w-4 h-4 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                            <span
+                              className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
+                            >
+                              Budget
+                            </span>
+                          </div>
+                          <ChevronDown
+                            className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "budget" ? "rotate-180" : ""}`}
+                          />
+                        </div>
+
+                        {activeStickyDropdown === "budget" && (
+                          <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left">
+                            <div className="space-y-2">
+                              <div className="grid grid-cols-1 gap-1">
+                                {[
+                                  { label: "₱1k - ₱3k", val: "1500" },
+                                  { label: "₱3k - ₱5k", val: "4000" },
+                                  { label: "₱5k+", val: "6000" },
+                                ].map((range) => (
+                                  <button
+                                    key={range.label}
+                                    onClick={() => {
+                                      setSearchQuery(range.val);
+                                      setActiveStickyDropdown(null);
+                                    }}
+                                    className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                                  >
+                                    <span className="font-medium text-neutral-900 text-xs">
+                                      {range.label}
+                                    </span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Search Button */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (activeStickyDropdown) {
+                            setActiveStickyDropdown(null);
+                          }
+                          if (
+                            searchQuery.trim().length > 0 &&
+                            !isStickySearchActive
+                          ) {
+                            const searchAnchor = document.getElementById(
+                              "roommate-results-anchor",
+                            );
+                            if (searchAnchor) {
+                              searchAnchor.scrollIntoView({
+                                behavior: "smooth",
+                              });
+                            }
+                          } else if (!isStickySearchActive) {
+                            setSearchQuery("");
+                            setIsStickySearchActive(true);
+                            setActiveStickyDropdown(null);
+                          } else {
+                            const searchAnchor = document.getElementById(
+                              "roommate-results-anchor",
+                            );
+                            if (searchAnchor) {
+                              searchAnchor.scrollIntoView({
+                                behavior: "smooth",
+                              });
+                            }
+                          }
+                        }}
+                        aria-label="Search"
+                        className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                      >
+                        <Search
+                          size={16}
+                          className="text-white group-hover:stroke-[3px] transition-all"
+                        />
+                      </button>
+                    </>
+                  )}
                 </div>
-                <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
-                  <Filters
-                    currentFilters={filters}
-                    onFilterChange={setFilters}
-                  />
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="categories"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center justify-between w-full px-4 md:px-0"
-              >
-                <div className="flex-1 flex flex-row items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full touch-pan-x">
-                  {TAGS.map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={() => setSelectedTag(tag)}
-                      className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 active:scale-95 cursor-pointer ${
-                        selectedTag === tag
-                          ? "bg-neutral-900 text-white border-neutral-900 shadow-sm"
-                          : "bg-white text-neutral-700 border-neutral-200 hover:border-neutral-800 hover:text-neutral-900"
-                      }`}
-                    >
-                      {tag.toUpperCase()}
-                    </button>
-                  ))}
-                  {/* End Spacer to guarantee the rightmost items can be scrolled into view without clipping */}
-                  <div
-                    className="w-4 md:w-12 h-1 flex-shrink-0"
-                    aria-hidden="true"
-                  />
-                </div>
-                <div className="pl-4">
-                  <Filters
-                    currentFilters={filters}
-                    onFilterChange={setFilters}
-                  />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+              <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
+                <Filters
+                  currentFilters={filters}
+                  onFilterChange={setFilters}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between w-full px-4 md:px-0">
+              <div className="flex-1 flex flex-row items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full touch-pan-x">
+                {TAGS.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => setSelectedTag(tag)}
+                    className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 active:scale-95 cursor-pointer ${
+                      selectedTag === tag
+                        ? "bg-neutral-900 text-white border-neutral-900 shadow-sm"
+                        : "bg-white text-neutral-700 border-neutral-200 hover:border-neutral-800 hover:text-neutral-900"
+                    }`}
+                  >
+                    {tag.toUpperCase()}
+                  </button>
+                ))}
+                {/* End Spacer to guarantee the rightmost items can be scrolled into view without clipping */}
+                <div
+                  className="w-4 md:w-12 h-1 flex-shrink-0"
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="pl-4">
+                <Filters
+                  currentFilters={filters}
+                  onFilterChange={setFilters}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -735,28 +676,26 @@ export default function RoommateFinder() {
                 className="flex gap-4 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
                 style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
               >
-                <AnimatePresence mode="popLayout">
-                  {loading
-                    ? Array.from({ length: 4 }).map((_, i) => (
-                        <div
-                          key={`skeleton-rec-${i}`}
-                          className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
-                        >
-                          <RoommateCardSkeleton />
-                        </div>
-                      ))
-                    : filteredRoommates.slice(0, 10).map((roommate) => (
-                        <div
-                          key={roommate.id}
-                          className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
-                        >
-                          <RoommateCard
-                            roommate={roommate}
-                            onProfileClick={openProfile}
-                          />
-                        </div>
-                      ))}
-                </AnimatePresence>
+                {loading
+                  ? Array.from({ length: 4 }).map((_, i) => (
+                      <div
+                        key={`skeleton-rec-${i}`}
+                        className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
+                      >
+                        <RoommateCardSkeleton />
+                      </div>
+                    ))
+                  : filteredRoommates.slice(0, 10).map((roommate) => (
+                      <div
+                        key={roommate.id}
+                        className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
+                      >
+                        <RoommateCard
+                          roommate={roommate}
+                          onProfileClick={openProfile}
+                        />
+                      </div>
+                    ))}
               </div>
             </div>
           )}
@@ -797,33 +736,31 @@ export default function RoommateFinder() {
                 className="flex gap-4 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
                 style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
               >
-                <AnimatePresence mode="popLayout">
-                  {loading
-                    ? Array.from({ length: 4 }).map((_, i) => (
+                {loading
+                  ? Array.from({ length: 4 }).map((_, i) => (
+                      <div
+                        key={`skeleton-msu-${i}`}
+                        className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
+                      >
+                        <RoommateCardSkeleton />
+                      </div>
+                    ))
+                  : filteredRoommates
+                      .slice()
+                      .reverse()
+                      .slice(0, 10)
+                      .map((roommate) => (
                         <div
-                          key={`skeleton-msu-${i}`}
+                          key={roommate.id}
                           className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
                         >
-                          <RoommateCardSkeleton />
+                          <RoommateCard
+                            roommate={roommate}
+                            onProfileClick={openProfile}
+                            actionLabel="Accept as Roommate"
+                          />
                         </div>
-                      ))
-                    : filteredRoommates
-                        .slice()
-                        .reverse()
-                        .slice(0, 10)
-                        .map((roommate) => (
-                          <div
-                            key={roommate.id}
-                            className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
-                          >
-                            <RoommateCard
-                              roommate={roommate}
-                              onProfileClick={openProfile}
-                              actionLabel="Accept as Roommate"
-                            />
-                          </div>
-                        ))}
-                </AnimatePresence>
+                      ))}
               </div>
             </div>
           )}

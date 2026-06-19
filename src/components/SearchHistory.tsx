@@ -23,13 +23,9 @@ export const SearchHistory: React.FC<SearchHistoryProps> = ({ history, onSelect,
         <History size={14} /> Recent Searches
       </h3>
       <div className="flex flex-wrap gap-2">
-        <AnimatePresence>
           {history.map((query) => (
-            <motion.button
+            <button
               key={query}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
               onClick={() => onSelect(query)}
               className="flex items-center gap-1.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 px-3 py-1.5 rounded-full text-xs font-medium text-neutral-800 dark:text-neutral-200 transition-colors"
             >
@@ -43,9 +39,8 @@ export const SearchHistory: React.FC<SearchHistoryProps> = ({ history, onSelect,
               >
                 <X size={12} />
               </span>
-            </motion.button>
+            </button>
           ))}
-        </AnimatePresence>
       </div>
     </div>
   );

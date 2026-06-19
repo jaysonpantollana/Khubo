@@ -67,9 +67,7 @@ export default function Navbar() {
           </div>
 
           {/* Search Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div
             role="button"
             tabIndex={0}
             aria-label="Open search menu"
@@ -86,7 +84,7 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* User Menu */}
           <div className="flex flex-row items-center gap-3 relative" ref={menuRef}>
@@ -135,13 +133,8 @@ export default function Navbar() {
             </div>
 
             {/* Dropdown Menu */}
-            <AnimatePresence>
-              {isMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                  animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                  exit={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                  transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+                {isMenuOpen && (
+                <div
                   className="absolute right-0 top-[60px] w-64 bg-white rounded-xl shadow-[0_2px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] py-2 z-50 overflow-hidden"
                 >
                   {user ? (
@@ -217,9 +210,8 @@ export default function Navbar() {
                       </button>
                     </>
                   )}
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
           </div>
         </div>
       </div>

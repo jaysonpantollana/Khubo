@@ -105,9 +105,7 @@ export default function RoommateHero({
 
         {/* Center Content */}
         <div className="flex flex-col items-center justify-center text-center h-full pt-8 md:pt-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div 
             className="flex items-baseline gap-3 md:gap-4"
           >
             <h1 className="font-noto-serif italic text-white text-xl sm:text-2xl md:text-[35px] tracking-tight leading-tight">
@@ -116,12 +114,9 @@ export default function RoommateHero({
             <p className="text-white/70 font-roboto font-bold text-[10px] md:text-base tracking-[0.3em] uppercase">
               by <span className="text-white">KHUBO</span>
             </p>
-          </motion.div>
+          </div>
 
-           <motion.div 
-             initial={{ opacity: 0, scale: 0.9 }}
-             animate={{ opacity: 1, scale: 1 }}
-             transition={{ delay: 0.4 }}
+           <div 
              className="mt-5 md:mt-12 bg-white/10 backdrop-blur-md border border-white/20 p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] dropdown-container relative z-40 pointer-events-auto cursor-default"
           >
             {isSearchActive ? (
@@ -205,13 +200,8 @@ export default function RoommateHero({
                     <ChevronDown className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'location' ? 'rotate-180 text-neutral-900' : ''}`} />
                   </div>
 
-                  <AnimatePresence>
                     {activeDropdown === 'location' && (
-                      <motion.div
-                        initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                        exit={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+                      <div
                         className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-50 text-left"
                       >
                         <div className="space-y-4">
@@ -240,9 +230,8 @@ export default function RoommateHero({
                             </div>
                           </div>
                         </div>
-                      </motion.div>
+                      </div>
                     )}
-                  </AnimatePresence>
                 </div>
 
                 <div className="w-[1px] h-5 md:h-8 bg-white/20" />
@@ -269,13 +258,8 @@ export default function RoommateHero({
                     <ChevronDown className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'budget' ? 'rotate-180 text-neutral-900' : ''}`} />
                   </div>
 
-                  <AnimatePresence>
                     {activeDropdown === 'budget' && (
-                      <motion.div
-                        initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                        exit={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                        transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+                      <div
                         className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-50 text-left"
                       >
                         <div className="space-y-3">
@@ -295,9 +279,8 @@ export default function RoommateHero({
                             ))}
                           </div>
                         </div>
-                      </motion.div>
+                      </div>
                     )}
-                  </AnimatePresence>
                 </div>
 
                  <button 
@@ -328,7 +311,7 @@ export default function RoommateHero({
                 </button>
               </>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />

@@ -76,17 +76,11 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+      <div
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+      <div
         className="relative w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl z-10"
       >
         <button
@@ -165,7 +159,7 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
             </button>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

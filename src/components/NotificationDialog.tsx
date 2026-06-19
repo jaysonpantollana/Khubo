@@ -40,20 +40,14 @@ const labelMap: Record<ToastType, string> = {
 
 export function NotificationDialog({ isOpen, onClose, notifications, onClear }: NotificationDialogProps) {
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <div className="fixed inset-0 z-[1000] flex items-start justify-center pt-16 sm:pt-24 px-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             onClick={onClose}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+          <div
             className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl z-10 flex flex-col max-h-[70vh]"
           >
             <div className="flex items-center justify-between p-5 border-b border-neutral-100 shrink-0">
@@ -119,10 +113,10 @@ export function NotificationDialog({ isOpen, onClose, notifications, onClear }: 
                 </button>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       )}
-    </AnimatePresence>
+    </>
   );
 }
 

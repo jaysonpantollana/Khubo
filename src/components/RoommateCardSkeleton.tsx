@@ -1,6 +1,6 @@
 // @context: Roommate card skeleton — loading placeholder
 // @purpose: Animated pulse skeleton matching RoommateCard layout
-// @behavior: Gray placeholder shapes with CSS animate-pulse for avatar, name, details, tags, button
+// @behavior: Gray placeholder shapes with CSS  for avatar, name, details, tags, button
 // @performance: Pure CSS animation — zero JS overhead
 // @dependencies: None
 
@@ -8,7 +8,7 @@ import React from 'react';
 
 export default function RoommateCardSkeleton() {
   return (
-    <div className="bg-white rounded-2xl p-6 md:p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col h-full animate-pulse text-left">
+    <div className="bg-white rounded-2xl p-6 md:p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col h-full  text-left">
       {/* Header with Avatar and Basic Info */}
       <div className="flex flex-row items-start gap-4 mb-5">
         <div className="w-16 h-16 rounded-full bg-neutral-200 flex-shrink-0 border-4 border-[#F0F2F5]"></div>

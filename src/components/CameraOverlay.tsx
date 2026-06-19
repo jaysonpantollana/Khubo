@@ -123,6 +123,7 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
   };
 
   return (
+    <>
       {isOpen && (
         <div
           className="fixed inset-0 z-[100] bg-black text-white flex flex-col"
@@ -211,5 +212,6 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
           </div>
         </div>
       )}
+    </>
   );
 }

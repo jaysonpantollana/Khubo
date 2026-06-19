@@ -1,4 +1,4 @@
-// @context: ESLint configuration — code quality + code review automation
+ // @context: ESLint configuration — code quality + code review automation
 // @purpose: Enforces coding standards, catches unused vars, strict any usage, and hook dependency completeness
 // @purpose: Serves as automated code review checklist — these rules are enforced in CI
 // @purpose: Review checklist (cross-reference with automated rules):

@@ -5,12 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - VITE_MAPTILER_API_KEY=${VITE_MAPTILER_API_KEY:-}
     container_name: khubo
     restart: unless-stopped
     ports:
       - "8080:80"
-    environment:
-      - VITE_MAPTILER_API_KEY=${VITE_MAPTILER_API_KEY:-}
     env_file:
       - .env
     healthcheck:

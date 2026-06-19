@@ -48,10 +48,37 @@ const RoommateFinder = lazy(() => import('./pages/RoommateFinder'));
 const Profile = lazy(() => import('./pages/Profile'));
 const ManageListings = lazy(() => import('./pages/ManageListings'));
 
-// --- Suspense fallback while lazy chunks load ---
+// --- Suspense fallback — skeleton loads immediately, no spinner flash ---
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-white">
-    <div className="w-8 h-8 md:w-12 md:h-12 border-4 border-neutral-200 border-t-[#17294F] rounded-full animate-spin"></div>
+  <div className="min-h-screen bg-white animate-pulse">
+    {/* Navbar skeleton */}
+    <div className="h-16 bg-neutral-100 border-b border-neutral-200 flex items-center px-4 md:px-8 gap-4">
+      <div className="w-8 h-8 bg-neutral-200 rounded-full" />
+      <div className="h-4 w-32 bg-neutral-200 rounded" />
+      <div className="hidden md:flex ml-auto gap-6">
+        <div className="h-4 w-16 bg-neutral-200 rounded" />
+        <div className="h-4 w-20 bg-neutral-200 rounded" />
+        <div className="h-4 w-14 bg-neutral-200 rounded" />
+      </div>
+    </div>
+    {/* Hero skeleton */}
+    <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-16 space-y-6">
+      <div className="h-8 w-72 bg-neutral-200 rounded" />
+      <div className="h-4 w-96 bg-neutral-200 rounded" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="rounded-xl overflow-hidden bg-neutral-100">
+            <div className="aspect-[4/3] bg-neutral-200" />
+            <div className="p-4 space-y-3">
+              <div className="h-4 w-3/4 bg-neutral-200 rounded" />
+              <div className="h-3 w-1/2 bg-neutral-200 rounded" />
+              <div className="h-3 w-2/3 bg-neutral-200 rounded" />
+              <div className="h-5 w-1/3 bg-neutral-200 rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 );
 

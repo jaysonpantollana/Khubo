@@ -38,11 +38,6 @@ class ErrorBoundary extends Component<Props, State> {
     }
   };
 
-  private handleGoHome = () => {
-    this.setState({ hasError: false, error: null });
-    window.location.hash = '#/';
-  };
-
   public render() {
     if (this.state.hasError) {
       if (this.props.fallback) {
@@ -52,7 +47,6 @@ class ErrorBoundary extends Component<Props, State> {
         <ErrorScreen 
           error={this.state.error || undefined} 
           onRetry={this.handleRetry}
-          onGoHome={this.handleGoHome}
         />
       );
     }

@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { AlertCircle, RefreshCw, ArrowLeft, Home } from 'lucide-react';
+import { AlertCircle, RefreshCw, ArrowLeft } from 'lucide-react';
 
 interface ErrorScreenProps {
   error?: Error;
@@ -13,7 +13,6 @@ interface ErrorScreenProps {
   message?: string;
   onRetry?: () => void;
   onGoBack?: () => void;
-  onGoHome?: () => void;
 }
 
 const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({ 
@@ -21,8 +20,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
   title = "Something went wrong", 
   message = "An unexpected error occurred. Please try again or return to the home page.", 
   onRetry, 
-  onGoBack, 
-  onGoHome 
+  onGoBack 
 }) => {
   const isDev = process.env.NODE_ENV === 'development';
 
@@ -80,15 +78,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
             </button>
           )}
 
-          {(!onRetry && !onGoBack) || onGoHome ? (
-             <button 
-             onClick={onGoHome || (() => window.location.hash = '#/')}
-             className="flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-100 dark:bg-slate-700 hover:bg-neutral-200 dark:hover:bg-slate-600 text-neutral-800 dark:text-white rounded-full font-medium transition-colors w-full sm:w-auto"
-           >
-             <Home className="w-4 h-4" />
-             <span>Home</span>
-           </button>
-          ) : null}
+
         </div>
       </motion.div>
     </div>

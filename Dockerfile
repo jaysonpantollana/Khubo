@@ -1,5 +1,6 @@
 # ---- Build Stage ----
 FROM node:20-alpine AS builder
+ARG VITE_MAPTILER_API_KEY
 WORKDIR /app
 
 COPY package.json package-lock.json ./

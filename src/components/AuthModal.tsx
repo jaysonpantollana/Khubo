@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 
 import { X, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
-import { OnboardingModal } from './OnboardingModal';
+import { OnboardingFlow } from './OnboardingFlow';
 import { useToast } from './ToastProvider';
 
 export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: boolean; onClose: () => void, onLogin?: () => void, onSignUp?: () => void }) {
@@ -150,7 +150,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
 
   if (showOnboarding) {
     return (
-      <OnboardingModal
+      <OnboardingFlow
         isOpen={true}
         onClose={() => { setShowOnboarding(false); onClose(); }}
         onComplete={() => {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { OnboardingModal } from './OnboardingModal';
 import { OccupationStep } from './OccupationStep';
+import { RoommatePreferences } from './RoommatePreferences';
 import { VerificationStep } from './VerificationStep';
 
 interface OnboardingFlowProps {
@@ -99,33 +100,27 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       );
     case 2:
       return (
-        <FullPageOverlay>
-          <OccupationStep
-            onBack={() => setStep(1)}
-            onContinue={() => setStep(3)}
-          />
-        </FullPageOverlay>
+        <OccupationStep
+          onBack={() => setStep(1)}
+          onClose={onClose}
+          onContinue={() => setStep(3)}
+        />
       );
     case 3:
       return (
-        <FullPageOverlay>
-          <PlaceholderStep
-            step={3}
-            title="Roommate Preferences"
-            subtitle="Tell us what you're looking for"
-            onBack={() => setStep(2)}
-            onContinue={() => setStep(4)}
-          />
-        </FullPageOverlay>
+        <RoommatePreferences
+          onBack={() => setStep(2)}
+          onClose={onClose}
+          onContinue={() => setStep(4)}
+        />
       );
     case 4:
       return (
-        <FullPageOverlay>
-          <VerificationStep
-            onBack={() => setStep(3)}
-            onContinue={() => setStep(5)}
-          />
-        </FullPageOverlay>
+        <VerificationStep
+          onBack={() => setStep(3)}
+          onClose={onClose}
+          onContinue={() => setStep(5)}
+        />
       );
     case 5:
       return (

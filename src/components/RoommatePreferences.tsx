@@ -1,43 +1,42 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, GraduationCap, Briefcase, Clock } from 'lucide-react';
+import { X, Moon, DollarSign, Users, Sparkles } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-interface OccupationOption {
-  id: string;
-  icon: typeof GraduationCap;
-  title: string;
-  subtext: string;
-}
-
-const occupations: OccupationOption[] = [
+const preferences = [
   {
-    id: 'student',
-    icon: GraduationCap,
-    title: 'Student',
-    subtext: 'Currently enrolled in school or university',
+    id: 'quiet',
+    icon: Moon,
+    title: 'Quiet & Focused',
+    subtext: 'Prefer a calm environment for studying or working',
   },
   {
-    id: 'professional',
-    icon: Briefcase,
-    title: 'Professional',
-    subtext: 'Full-time or part-time employee',
+    id: 'social',
+    icon: Users,
+    title: 'Social & Friendly',
+    subtext: 'Enjoy hanging out and building connections',
   },
   {
-    id: 'working-student',
-    icon: Clock,
-    title: 'Working Student',
-    subtext: 'Balancing work and studies',
+    id: 'budget',
+    icon: DollarSign,
+    title: 'Budget-Conscious',
+    subtext: 'Looking for affordable and practical living',
+  },
+  {
+    id: 'balanced',
+    icon: Sparkles,
+    title: 'Balanced',
+    subtext: 'Somewhere between social and quiet',
   },
 ];
 
-interface OccupationStepProps {
+interface RoommatePreferencesProps {
   onBack?: () => void;
   onClose?: () => void;
-  onContinue?: (occupation: string) => void;
+  onContinue?: (preference: string) => void;
 }
 
-export function OccupationStep({ onBack, onClose, onContinue }: OccupationStepProps) {
+export function RoommatePreferences({ onBack, onClose, onContinue }: RoommatePreferencesProps) {
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
@@ -61,7 +60,7 @@ export function OccupationStep({ onBack, onClose, onContinue }: OccupationStepPr
                 key={s}
                 className={cn(
                   'h-1.5 rounded-full flex-1 transition-all duration-500',
-                  s <= 2 ? 'bg-[#2252D6]' : 'bg-neutral-200'
+                  s <= 3 ? 'bg-[#2252D6]' : 'bg-neutral-200'
                 )}
               />
             ))}
@@ -71,30 +70,30 @@ export function OccupationStep({ onBack, onClose, onContinue }: OccupationStepPr
         <div className="px-8 pt-5 pb-6 overflow-y-auto">
           <div className="mb-6">
             <p className="text-xs font-bold text-[#2252D6] tracking-[0.15em] uppercase mb-1">
-              Step 2 of 5: Occupation
+              Step 3 of 5: Roommate Preferences
             </p>
-            <h2 className="text-2xl font-bold text-[#17294F]">Occupation</h2>
+            <h2 className="text-2xl font-bold text-[#17294F]">Roommate Preferences</h2>
             <p className="text-sm text-neutral-500 font-medium mt-1">
-              What do you do?
+              Tell us what you're looking for
             </p>
           </div>
 
           <p className="text-xs text-neutral-400 leading-relaxed mb-6">
-            This helps landlords and roommates understand your schedule and lifestyle.
+            This helps us match you with compatible roommates and properties.
           </p>
 
           <div className="space-y-3">
-            {occupations.map((occ, i) => {
-              const isSelected = selected === occ.id;
-              const Icon = occ.icon;
+            {preferences.map((pref, i) => {
+              const isSelected = selected === pref.id;
+              const Icon = pref.icon;
               return (
                 <motion.button
-                  key={occ.id}
+                  key={pref.id}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 * i, duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
                   type="button"
-                  onClick={() => setSelected(occ.id)}
+                  onClick={() => setSelected(pref.id)}
                   className={cn(
                     'w-full flex items-center gap-4 p-4 rounded-xl border transition-all duration-200 cursor-pointer text-left',
                     isSelected
@@ -124,9 +123,9 @@ export function OccupationStep({ onBack, onClose, onContinue }: OccupationStepPr
                         isSelected ? 'text-[#17294F]' : 'text-neutral-800'
                       )}
                     >
-                      {occ.title}
+                      {pref.title}
                     </p>
-                    <p className="text-xs text-neutral-400 mt-0.5">{occ.subtext}</p>
+                    <p className="text-xs text-neutral-400 mt-0.5">{pref.subtext}</p>
                   </div>
 
                   <div
@@ -162,7 +161,7 @@ export function OccupationStep({ onBack, onClose, onContinue }: OccupationStepPr
             Back
           </button>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-neutral-400 font-medium">2 of 5</span>
+            <span className="text-xs text-neutral-400 font-medium">3 of 5</span>
             <button
               type="button"
               onClick={() => selected && onContinue?.(selected)}

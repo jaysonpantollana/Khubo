@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { X } from 'lucide-react';
 import { OnboardingModal } from './OnboardingModal';
 import { OccupationStep } from './OccupationStep';
-import { RoommatePreferences } from './RoommatePreferences';
 import { VerificationStep } from './VerificationStep';
+import { ReviewProfile } from './ReviewProfile';
 
 interface OnboardingFlowProps {
   isOpen: boolean;
@@ -11,45 +11,55 @@ interface OnboardingFlowProps {
   onComplete: () => void;
 }
 
-function PlaceholderStep({
-  step,
-  title,
-  subtitle,
-  onBack,
-  onContinue,
-}: {
-  step: number;
-  title: string;
-  subtitle: string;
-  onBack?: () => void;
-  onContinue?: () => void;
-}) {
+function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; onClose?: () => void; onComplete?: () => void }) {
   return (
-    <div className="min-h-screen bg-[#F0F4F8] flex items-center justify-center p-4 sm:p-6">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-        className="w-full max-w-lg"
-      >
-        <div className="mb-1">
-          <span className="text-xs font-bold text-[#2252D6]/60 tracking-[0.15em] uppercase">
-            Step {step} of 5
-          </span>
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+      <div onClick={onClose} className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-5 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
+        >
+          <X size={20} className="text-neutral-500" />
+        </button>
+
+        <div className="px-8 pt-8 pb-0 pr-16">
+          <div className="flex items-center gap-1.5 mb-1">
+            {[1, 2, 3, 4, 5].map((s) => (
+              <div
+                key={s}
+                className={`h-1.5 rounded-full flex-1 transition-all duration-500 ${
+                  s <= 5 ? 'bg-[#2252D6]' : 'bg-neutral-200'
+                }`}
+              />
+            ))}
+          </div>
         </div>
-        <h1 className="text-2xl font-bold text-[#17294F] mt-1">{title}</h1>
-        <p className="text-sm text-neutral-500 font-medium mt-1">{subtitle}</p>
-        <div className="flex items-center gap-1.5 mt-6 mb-6">
-          {[1, 2, 3, 4, 5].map((s) => (
-            <div
-              key={s}
-              className={`h-1.5 rounded-full flex-1 transition-all duration-500 ${
-                s <= step ? 'bg-[#2252D6]' : 'bg-neutral-200'
-              }`}
-            />
-          ))}
+
+        <div className="px-8 pt-5 pb-6 overflow-y-auto text-center">
+          <div className="mb-6">
+            <p className="text-xs font-bold text-[#2252D6] tracking-[0.15em] uppercase mb-1">
+              STEP 5 OF 5: Almost Done
+            </p>
+            <h2 className="text-2xl font-bold text-[#17294F]">Almost Done!</h2>
+            <p className="text-sm text-neutral-500 font-medium mt-1">
+              You're all set.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="w-20 h-20 rounded-full bg-[#2252D6]/10 flex items-center justify-center mb-4">
+              <svg className="w-10 h-10 text-[#2252D6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p className="text-sm text-neutral-500 font-medium max-w-md">
+              Your profile is set up! Click finish to start exploring properties and finding your perfect roommate.
+            </p>
+          </div>
         </div>
-        <div className="flex items-center justify-between mt-8">
+
+        <div className="flex items-center justify-between px-8 py-5 border-t border-neutral-100 bg-neutral-50/50">
           <button
             type="button"
             onClick={onBack}
@@ -57,23 +67,18 @@ function PlaceholderStep({
           >
             Back
           </button>
-          <button
-            type="button"
-            onClick={onContinue}
-            className="px-8 py-2.5 bg-[#2252D6] hover:bg-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
-          >
-            Continue
-          </button>
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-neutral-400 font-medium">5 of 5</span>
+            <button
+              type="button"
+              onClick={onComplete}
+              className="px-8 py-2.5 bg-[#2252D6] hover:bg-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
+            >
+              Finish
+            </button>
+          </div>
         </div>
-      </motion.div>
-    </div>
-  );
-}
-
-function FullPageOverlay({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="fixed inset-0 z-[1000] overflow-y-auto">
-      {children}
+      </div>
     </div>
   );
 }
@@ -108,7 +113,7 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       );
     case 3:
       return (
-        <RoommatePreferences
+        <VerificationStep
           onBack={() => setStep(2)}
           onClose={onClose}
           onContinue={() => setStep(4)}
@@ -116,7 +121,7 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       );
     case 4:
       return (
-        <VerificationStep
+        <ReviewProfile
           onBack={() => setStep(3)}
           onClose={onClose}
           onContinue={() => setStep(5)}
@@ -124,15 +129,11 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       );
     case 5:
       return (
-        <FullPageOverlay>
-          <PlaceholderStep
-            step={5}
-            title="Almost Done!"
-            subtitle="Review your information"
-            onBack={() => setStep(4)}
-            onContinue={handleFlowComplete}
-          />
-        </FullPageOverlay>
+        <AlmostDoneStep
+          onBack={() => setStep(4)}
+          onClose={onClose}
+          onComplete={handleFlowComplete}
+        />
       );
     default:
       return null;

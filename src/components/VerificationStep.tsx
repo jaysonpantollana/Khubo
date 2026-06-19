@@ -61,7 +61,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                 key={s}
                 className={cn(
                   'h-1.5 rounded-full flex-1 transition-all duration-500',
-                  s <= 4 ? 'bg-[#2252D6]' : 'bg-neutral-200'
+                  s <= 3 ? 'bg-[#2252D6]' : 'bg-neutral-200'
                 )}
               />
             ))}
@@ -71,7 +71,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
         <div className="px-8 pt-5 pb-6 overflow-y-auto">
           <div className="mb-6">
             <p className="text-xs font-bold text-[#2252D6] tracking-[0.15em] uppercase mb-1">
-              STEP 4 OF 5: Verification
+              STEP 3 OF 5: Verification
             </p>
             <h2 className="text-2xl font-bold text-[#17294F]">Verification</h2>
             <p className="text-sm text-neutral-500 font-medium mt-1">
@@ -219,7 +219,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
             Back
           </button>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-neutral-400 font-medium">4 of 5</span>
+            <span className="text-xs text-neutral-400 font-medium">3 of 5</span>
             <button
               type="button"
               onClick={() => isReady && onContinue?.(selected)}

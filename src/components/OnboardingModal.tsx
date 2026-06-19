@@ -96,7 +96,7 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
         <div className="px-8 pt-5 pb-6 overflow-y-auto">
           <div className="mb-6">
             <p className="text-xs font-bold text-[#2252D6] tracking-[0.15em] uppercase mb-1">
-              Step {step} of 5: Your Identity
+              STEP {step} OF 5: Your Identity
             </p>
             <h2 className="text-2xl font-bold text-[#17294F]">Your Identity</h2>
             <p className="text-sm text-neutral-500 font-medium mt-1">

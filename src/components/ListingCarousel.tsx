@@ -103,7 +103,6 @@ export function ListingCarousel({
               <ListingCard
                 listing={listing}
                 onClick={() => onListingClick(listing.id)}
-                disableInitialAnimation={true}
               />
             </div>
           ))

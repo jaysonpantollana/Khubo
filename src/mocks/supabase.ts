@@ -60,8 +60,8 @@ export const supabase: MockSupabaseClient = {
     getSession: () => Promise.resolve({ data: { session: null } }),
     onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
     signOut: () => Promise.resolve(),
-    signInWithPassword: () => Promise.resolve({ data: {}, error: null }),
-    signUp: () => Promise.resolve({ data: {}, error: null }),
+    signInWithPassword: () => Promise.resolve({ data: { user: { id: crypto.randomUUID() } }, error: null }),
+    signUp: () => Promise.resolve({ data: { user: { id: crypto.randomUUID() } }, error: null }),
   },
   from: () => ({
     select: (_columns?: string, _options?: { count?: string; head?: boolean }) => createFilterBuilder(),

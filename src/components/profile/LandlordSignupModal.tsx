@@ -107,7 +107,7 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
                   <Mail size={18} />
                 </div>
                 <input
-                  type="email"
+                  type="text"
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -125,7 +125,6 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  minLength={6}
                   className="w-full pl-10 pr-12 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium"
                 />
                 <button

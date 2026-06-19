@@ -9,7 +9,7 @@ import { createPortal } from 'react-dom';
 import { X, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 
-export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClose: () => void, onLogin?: () => void }) {
+export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: boolean; onClose: () => void, onLogin?: () => void, onSignUp?: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +28,14 @@ export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClo
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    if (!isLogin) {
+      // Bypass inputs for demo — open onboarding
+      if (onSignUp) onSignUp();
+      onClose();
+      return;
+    }
+
     setIsLoading(true);
 
     // Mock authentication
@@ -74,8 +82,8 @@ export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClo
                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
                      <Mail size={18} />
                    </div>
-                   <input 
-                     type="email" 
+                    <input 
+                      type="text" 
                      placeholder="Email" 
                      value={email}
                      onChange={(e) => setEmail(e.target.value)}
@@ -87,13 +95,12 @@ export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClo
                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
                      <Lock size={18} />
                    </div>
-                   <input 
-                     type={showPassword ? "text" : "password"} 
-                     placeholder="Password"
-                     value={password}
-                     onChange={(e) => setPassword(e.target.value)}
-                     required
-                     minLength={6}
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                      className="w-full pl-10 pr-12 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium"
                    />
                    <button 

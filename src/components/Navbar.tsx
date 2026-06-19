@@ -10,6 +10,7 @@ import { Search, Globe, Menu, User, LogOut, Bell } from 'lucide-react';
 
 import { useAuth } from '../lib/AuthContext';
 import { AuthModal } from './AuthModal';
+import { OnboardingModal } from './OnboardingModal';
 import { CreateListingModal } from './CreateListingModal';
 import { useToast } from './ToastProvider';
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ export default function Navbar() {
   const { user, signOut } = useAuth();
   const { showToast, openNotifications, notifications } = useToast();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -219,6 +221,14 @@ export default function Navbar() {
       <AuthModal 
         isOpen={isAuthModalOpen} 
         onClose={() => setIsAuthModalOpen(false)} 
+        onSignUp={() => setIsOnboardingOpen(true)}
+      />
+      <OnboardingModal 
+        isOpen={isOnboardingOpen}
+        onClose={() => setIsOnboardingOpen(false)}
+        onComplete={() => {
+          showToast('Welcome to Khubo! Your profile has been created.');
+        }}
       />
       <CreateListingModal 
         isOpen={isCreateListingOpen}

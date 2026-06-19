@@ -113,7 +113,7 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       );
     case 3:
       return (
-        <VerificationStep
+        <ReviewProfile
           onBack={() => setStep(2)}
           onClose={onClose}
           onContinue={() => setStep(4)}
@@ -121,7 +121,7 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       );
     case 4:
       return (
-        <ReviewProfile
+        <VerificationStep
           onBack={() => setStep(3)}
           onClose={onClose}
           onContinue={() => setStep(5)}

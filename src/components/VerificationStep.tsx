@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, AlertCircle, Upload, Trash2, Image as ImageIcon } from 'lucide-react';
+import { X, AlertCircle, CloudUpload, CheckCircle, FileText, Trash2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const idTypes = [
@@ -20,22 +20,42 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
   const [selected, setSelected] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    if (f) {
-      setFile(f);
+  const handleFile = (f: File) => {
+    setFile(f);
+    if (f.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (ev) => setPreview(ev.target?.result as string);
       reader.readAsDataURL(f);
+    } else {
+      setPreview(null);
     }
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) handleFile(f);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const f = e.dataTransfer.files?.[0];
+    if (f) handleFile(f);
   };
 
   const handleRemoveFile = () => {
     setFile(null);
     setPreview(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
   const isReady = selected && file;
@@ -61,7 +81,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                 key={s}
                 className={cn(
                   'h-1.5 rounded-full flex-1 transition-all duration-500',
-                  s <= 3 ? 'bg-[#2252D6]' : 'bg-neutral-200'
+                  s <= 4 ? 'bg-[#2252D6]' : 'bg-neutral-200'
                 )}
               />
             ))}
@@ -71,7 +91,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
         <div className="px-8 pt-5 pb-6 overflow-y-auto">
           <div className="mb-6">
             <p className="text-xs font-bold text-[#2252D6] tracking-[0.15em] uppercase mb-1">
-              STEP 3 OF 5: Verification
+              STEP 4 OF 5: Verification
             </p>
             <h2 className="text-2xl font-bold text-[#17294F]">Verification</h2>
             <p className="text-sm text-neutral-500 font-medium mt-1">
@@ -96,7 +116,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
             SELECT ID TYPE
           </p>
 
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-2 gap-3">
             {idTypes.map((type, i) => {
               const isSelected = selected === type;
               return (
@@ -108,22 +128,23 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                   type="button"
                   onClick={() => { setSelected(type); if (type !== selected) { setFile(null); setPreview(null); } }}
                   className={cn(
-                    'w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center',
+                    'w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center relative',
                     isSelected
-                      ? 'border-[#2252D6]/60 bg-[#2252D6]/5'
-                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
+                      ? 'border-[#2252D6] bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
+                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-sm'
                   )}
                 >
-                  <AnimatePresence>
-                    {isSelected && (
-                      <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0, opacity: 0 }}
-                        className="w-2 h-2 bg-[#2252D6] rounded-full mx-auto mb-1.5"
-                      />
-                    )}
-                  </AnimatePresence>
+                  {isSelected && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute top-2 right-2"
+                    >
+                      <div className="w-5 h-5 bg-[#2252D6] rounded-full flex items-center justify-center">
+                        <CheckCircle size={12} className="text-white" fill="white" />
+                      </div>
+                    </motion.div>
+                  )}
                   <span
                     className={cn(
                       'text-sm font-bold transition-colors duration-200',
@@ -139,13 +160,13 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
 
           {selected && (
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-              className="mb-6"
+              initial={{ opacity: 0, y: 8, height: 0 }}
+              animate={{ opacity: 1, y: 0, height: 'auto' }}
+              transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+              className="mt-5 mb-6 overflow-hidden"
             >
               <p className="text-xs font-bold text-neutral-400 tracking-[0.15em] uppercase mb-3">
-                UPLOAD YOUR {selected.toUpperCase().replace(/\s*\(.*?\)\s*/g, ' ').trim()}
+                UPLOAD YOUR {selected.toUpperCase()}
               </p>
 
               <input
@@ -157,55 +178,85 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
               />
 
               {!file ? (
-                <button
-                  type="button"
+                <div
+                  onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
+                  onDragLeave={() => setIsDragOver(false)}
+                  onDrop={handleDrop}
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full border-2 border-dashed border-neutral-300 hover:border-[#2252D6]/50 rounded-2xl p-8 transition-all duration-200 cursor-pointer group"
+                  className={cn(
+                    'w-full border-2 border-dashed rounded-2xl p-8 transition-all duration-200 cursor-pointer group',
+                    isDragOver
+                      ? 'border-[#2252D6] bg-[#2252D6]/5'
+                      : 'border-neutral-300 hover:border-[#2252D6]/50 hover:bg-neutral-50/50'
+                  )}
                 >
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-12 h-12 rounded-full bg-neutral-100 group-hover:bg-[#2252D6]/10 flex items-center justify-center transition-colors duration-200">
-                      <Upload size={22} className="text-neutral-400 group-hover:text-[#2252D6] transition-colors duration-200" />
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#2252D6]/10 to-[#2252D6]/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                      <CloudUpload size={26} className="text-[#2252D6]" />
                     </div>
-                    <p className="text-sm font-bold text-neutral-600 group-hover:text-[#2252D6] transition-colors duration-200">
-                      Click to upload
-                    </p>
-                    <p className="text-xs text-neutral-400">
-                      Upload a clear photo or scan of your ID (JPG, PNG, or PDF)
-                    </p>
-                  </div>
-                </button>
-              ) : (
-                <div className="border border-neutral-200 rounded-2xl overflow-hidden">
-                  <div className="relative bg-neutral-50 flex items-center justify-center p-4 max-h-48 overflow-hidden">
-                    {preview && (
-                      <img
-                        src={preview}
-                        alt="ID preview"
-                        className="max-h-40 object-contain rounded-lg"
-                      />
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between px-4 py-3 border-t border-neutral-100 bg-white">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <ImageIcon size={16} className="text-neutral-400 flex-shrink-0" />
-                      <span className="text-sm font-medium text-neutral-700 truncate">
-                        {file.name}
-                      </span>
+                    <div className="text-center">
+                      <p className="text-sm font-bold text-neutral-700 group-hover:text-[#2252D6] transition-colors duration-200">
+                        <span className="text-[#2252D6]">Click to upload</span> or drag and drop
+                      </p>
+                      <p className="text-xs text-neutral-400 mt-1">
+                        SVG, PNG, JPG, GIF or PDF (max. 50MB)
+                      </p>
                     </div>
                     <button
                       type="button"
-                      onClick={handleRemoveFile}
-                      className="p-1.5 hover:bg-red-50 rounded-full transition-colors cursor-pointer"
+                      onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+                      className="px-5 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-bold rounded-full transition-colors cursor-pointer"
                     >
-                      <Trash2 size={16} className="text-red-400 hover:text-red-500 transition-colors" />
+                      Browse Files
                     </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="border border-neutral-200 rounded-2xl overflow-hidden">
+                  <div className="relative bg-neutral-50 flex items-center justify-center p-4 max-h-44 overflow-hidden">
+                    {preview ? (
+                      <img
+                        src={preview}
+                        alt="ID preview"
+                        className="max-h-36 object-contain rounded-lg"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 py-4">
+                        <FileText size={36} className="text-neutral-300" />
+                        <p className="text-xs text-neutral-400 font-medium">PDF preview not available</p>
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={handleRemoveFile}
+                      className="absolute top-2 right-2 p-1.5 bg-white/90 hover:bg-red-50 rounded-full shadow-sm border border-neutral-200 transition-colors cursor-pointer"
+                    >
+                      <Trash2 size={14} className="text-red-400 hover:text-red-500" />
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-3 border-t border-neutral-100 bg-white">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center flex-shrink-0">
+                        <FileText size={16} className="text-[#2252D6]" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-neutral-800 truncate max-w-[200px]">
+                          {file.name}
+                        </p>
+                        <p className="text-[11px] text-neutral-400">{formatFileSize(file.size)}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle size={14} className="text-green-500" />
+                      <span className="text-[11px] font-medium text-green-600">Uploaded</span>
+                    </div>
                   </div>
                 </div>
               )}
             </motion.div>
           )}
 
-          <p className="text-xs text-neutral-400 text-center mt-6">
+          <p className="text-xs text-neutral-400 text-center mt-2">
             You can also skip this step and verify later from your Profile settings.
           </p>
         </div>
@@ -219,7 +270,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
             Back
           </button>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-neutral-400 font-medium">3 of 5</span>
+            <span className="text-xs text-neutral-400 font-medium">4 of 5</span>
             <button
               type="button"
               onClick={() => isReady && onContinue?.(selected)}

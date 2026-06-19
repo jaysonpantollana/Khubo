@@ -35,57 +35,6 @@ const BARANGAYS_ILIGAN: Record<string, string[]> = {
   ]
 };
 
-const MAP_STYLE = {
-  container: {
-    position: 'relative' as const,
-    width: '100%',
-    height: '220px',
-    borderRadius: '16px',
-    overflow: 'hidden',
-    background: 'linear-gradient(135deg, #e8f0fe 0%, #d4e4fc 50%, #c7daf8 100%)',
-    border: '1.5px solid #e2e8f0',
-  },
-  grid: {
-    position: 'absolute' as const,
-    inset: 0,
-    backgroundImage: `
-      linear-gradient(rgba(34, 82, 214, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(34, 82, 214, 0.06) 1px, transparent 1px)
-    `,
-    backgroundSize: '40px 40px',
-  },
-  road: (top: string, left: string, width: string, angle: string) => ({
-    position: 'absolute' as const,
-    top,
-    left,
-    width,
-    height: '3px',
-    background: 'rgba(255,255,255,0.7)',
-    transform: `rotate(${angle})`,
-    borderRadius: '2px',
-    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-  }),
-  building: (top: string, left: string, size: string, opacity: number) => ({
-    position: 'absolute' as const,
-    top,
-    left,
-    width: size,
-    height: size,
-    background: 'rgba(255,255,255,0.6)',
-    borderRadius: '3px',
-    opacity,
-  }),
-  park: (top: string, left: string) => ({
-    position: 'absolute' as const,
-    top,
-    left,
-    width: '48px',
-    height: '32px',
-    background: 'rgba(76, 175, 80, 0.2)',
-    borderRadius: '8px',
-  }),
-};
-
 export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModalProps) {
   const [step] = useState(1);
   const [username, setUsername] = useState('');
@@ -98,10 +47,7 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [showBarangayDropdown, setShowBarangayDropdown] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
-  const [isDraggingPin, setIsDraggingPin] = useState(false);
-  const [pinPosition, setPinPosition] = useState({ x: 50, y: 50 });
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -111,24 +57,6 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
       reader.readAsDataURL(file);
     }
   };
-
-  const handlePinMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsDraggingPin(true);
-  };
-
-  const handleMapMouseMove = (e: React.MouseEvent) => {
-    if (!isDraggingPin || !mapRef.current) return;
-    const rect = mapRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setPinPosition({
-      x: Math.max(5, Math.min(95, x)),
-      y: Math.max(5, Math.min(95, y)),
-    });
-  };
-
-  const handleMapMouseUp = () => setIsDraggingPin(false);
 
   const handleContinue = () => {
     onComplete();
@@ -144,8 +72,6 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
       />
       <div
         className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]"
-        onMouseUp={handleMapMouseUp}
-        onMouseLeave={handleMapMouseUp}
       >
         <button
           onClick={onClose}
@@ -396,61 +322,6 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
               </div>
             </div>
 
-            <div
-              ref={mapRef}
-              style={MAP_STYLE.container}
-              onMouseMove={handleMapMouseMove}
-              className="select-none"
-            >
-              <div style={MAP_STYLE.grid} />
-              <div style={MAP_STYLE.road('30%', '0%', '60%', '0deg')} />
-              <div style={MAP_STYLE.road('55%', '20%', '70%', '-15deg')} />
-              <div style={MAP_STYLE.road('75%', '10%', '55%', '8deg')} />
-              <div style={MAP_STYLE.road('15%', '50%', '3px', '90deg')} />
-              <div style={MAP_STYLE.road('40%', '65%', '3px', '90deg')} />
-              <div style={MAP_STYLE.road('65%', '35%', '3px', '80deg')} />
-              <div style={MAP_STYLE.building('12%', '15%', '20px', 0.5)} />
-              <div style={MAP_STYLE.building('35%', '8%', '28px', 0.4)} />
-              <div style={MAP_STYLE.building('60%', '18%', '22px', 0.45)} />
-              <div style={MAP_STYLE.building('20%', '78%', '18px', 0.5)} />
-              <div style={MAP_STYLE.building('50%', '72%', '30px', 0.35)} />
-              <div style={MAP_STYLE.building('70%', '60%', '24px', 0.4)} />
-              <div style={MAP_STYLE.building('10%', '55%', '16px', 0.45)} />
-              <div style={MAP_STYLE.building('80%', '80%', '20px', 0.5)} />
-              <div style={MAP_STYLE.building('45%', '45%', '15px', 0.6)} />
-              <div style={MAP_STYLE.park('68%', '78%')} />
-
-              <div
-                className="absolute cursor-grab active:cursor-grabbing transition-transform hover:scale-110"
-                style={{
-                  left: `${pinPosition.x}%`,
-                  top: `${pinPosition.y}%`,
-                  transform: 'translate(-50%, -100%)',
-                  zIndex: 10,
-                }}
-                onMouseDown={handlePinMouseDown}
-              >
-                <svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 22 14 22s14-11.5 14-22C28 6.268 21.732 0 14 0z" fill="#2252D6" />
-                  <path d="M14 4C9.582 4 6 7.582 6 12c0 7 8 14 8 14s8-7 8-14c0-4.418-3.582-8-8-8z" fill="white" />
-                  <circle cx="14" cy="12" r="3" fill="#2252D6" />
-                </svg>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-2">
-              <p className="text-xs text-neutral-400 font-medium flex items-center gap-1.5">
-                <MapPin size={12} className="text-[#2252D6]" />
-                Drag the pin to precisely mark your location
-              </p>
-              <button
-                type="button"
-                onClick={() => setPinPosition({ x: 50, y: 50 })}
-                className="text-xs font-bold text-[#2252D6] hover:underline"
-              >
-                Reset
-              </button>
-            </div>
           </div>
         </div>
 

@@ -170,13 +170,6 @@ export default function ListingDetail() {
     window.scrollTo(0, 0);
   }, [id]);
 
-  useEffect(() => {
-    if (!loading && listing && !isAuthenticated) {
-      const timer = setTimeout(() => setIsAuthModalOpen(true), 600);
-      return () => clearTimeout(timer);
-    }
-  }, [loading, listing, isAuthenticated]);
-
   if (loading) {
     return <ListingDetailSkeleton />;
   }

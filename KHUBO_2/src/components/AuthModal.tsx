@@ -35,8 +35,9 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
     if (!isLogin) {
       // Bypass inputs for demo — open onboarding via parent's OnboardingFlow
       signIn(email);
-      if (onSignUp) onSignUp();
       onClose();
+      // Small delay ensures AuthModal fully unmounts before onboarding mounts
+      setTimeout(() => onSignUp?.(), 150);
       return;
     }
 

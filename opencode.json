@@ -18,3 +18,8 @@
     }
   }
 }
+"permission": {
+  "external_directory": {
+    "~/.config/jayson-chrome/**": "allow"
+  }
+}

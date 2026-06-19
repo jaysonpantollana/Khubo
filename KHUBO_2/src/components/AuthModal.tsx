@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom';
 import { X, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { useToast } from './ToastProvider';
 
 export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: boolean; onClose: () => void, onLogin?: () => void, onSignUp?: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,6 +19,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { signIn } = useAuth();
+  const { showToast } = useToast();
   const [mounted, setMounted] = useState(false);
 
   useBodyScrollLock(isOpen);
@@ -47,6 +49,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
     setTimeout(() => {
       setIsLoading(false);
       signIn(email);
+      showToast('Welcome to Khubo!');
       if (onLogin) onLogin();
       onClose();
     }, 1000);
@@ -124,7 +127,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
                  disabled={isLoading}
                  className="w-full bg-[#2252D6] text-white py-3 rounded-xl font-bold text-sm tracking-wide mt-2 hover:bg-[#1a41aa] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                >
-                 {isLoading ? 'Processing...' : (isLogin ? 'Sign in to dashboard' : 'Create account')}
+                 {isLoading ? 'Processing...' : (isLogin ? 'Log in' : 'Create account')}
                </button>
             </form>
           </div>

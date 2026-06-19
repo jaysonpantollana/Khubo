@@ -154,14 +154,14 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
           <X size={20} className="text-neutral-500" />
         </button>
 
-        <div className="px-8 pt-8 pb-0">
+        <div className="px-8 pt-8 pb-0 pr-16">
           <div className="flex items-center gap-1.5 mb-1">
             {[1, 2, 3, 4, 5].map((s) => (
               <div
                 key={s}
-                className={`h-1.5 rounded-full transition-all duration-500 ${
+                className={`h-1.5 rounded-full flex-1 transition-all duration-500 ${
                   s <= step ? 'bg-[#2252D6]' : 'bg-neutral-200'
-                } ${s === step ? 'flex-1' : 'w-6'}`}
+                }`}
               />
             ))}
           </div>

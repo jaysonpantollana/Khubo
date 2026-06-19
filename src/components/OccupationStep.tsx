@@ -49,7 +49,7 @@ export function OccupationStep({ onBack, onContinue }: OccupationStepProps) {
       >
         <div className="mb-1">
           <span className="text-xs font-bold text-[#2252D6]/60 tracking-[0.15em] uppercase">
-            Step 2 of 5
+            STEP 2 OF 5
           </span>
         </div>
 
@@ -87,10 +87,10 @@ export function OccupationStep({ onBack, onContinue }: OccupationStepProps) {
                 type="button"
                 onClick={() => setSelected(occ.id)}
                 className={cn(
-                  'w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-left',
+                  'w-full flex items-center gap-4 p-4 rounded-xl border transition-all duration-200 cursor-pointer text-left',
                   isSelected
-                    ? 'border-[#2252D6]/60 bg-[#2252D6]/5'
-                    : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
+                    ? 'border-[#2252D6]/60 bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
+                    : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-sm'
                 )}
               >
                 <div

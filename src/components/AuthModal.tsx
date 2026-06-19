@@ -49,6 +49,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
       signIn(email);
       if (onLogin) onLogin();
       onClose();
+      showToast('Hey there! Thanks for choosing Khubo!');
     }, 1000);
   };
 
@@ -124,7 +125,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
                  disabled={isLoading}
                  className="w-full bg-[#2252D6] text-white py-3 rounded-xl font-bold text-sm tracking-wide mt-2 hover:bg-[#1a41aa] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                >
-                 {isLoading ? 'Processing...' : (isLogin ? 'Sign in to dashboard' : 'Create account')}
+                  {isLoading ? 'Processing...' : (isLogin ? 'Login' : 'Create account')}
                </button>
             </form>
           </div>

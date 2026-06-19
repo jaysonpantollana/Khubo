@@ -48,6 +48,7 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
           if (existing) {
             onSuccess();
             onClose();
+            showToast('Hey there! Thanks for choosing Khubo!');
           } else {
             showToast('This account is not registered as a landlord.', 'error');
           }
@@ -142,7 +143,7 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
               disabled={isSigningUp}
               className="w-full bg-[#2252D6] text-white py-3 rounded-xl font-bold text-sm tracking-wide mt-2 hover:bg-[#1a41aa] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
             >
-              {isSigningUp ? 'Processing...' : isLandlordLogin ? 'Sign in to dashboard' : 'Create account'}
+              {isSigningUp ? 'Processing...' : isLandlordLogin ? 'Login' : 'Create account'}
             </button>
           </form>
         </div>

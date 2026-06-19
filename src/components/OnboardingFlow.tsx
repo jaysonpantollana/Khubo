@@ -5,11 +5,37 @@ import { OccupationStep } from './OccupationStep';
 import { VerificationStep } from './VerificationStep';
 import { ReviewProfile } from './ReviewProfile';
 
+export interface OnboardingData {
+  username: string;
+  email: string;
+  phone: string;
+  bio: string;
+  city: string;
+  barangay: string;
+  streetAddress: string;
+  gender: string;
+  profilePhoto: string | null;
+  occupation: string | null;
+}
+
 interface OnboardingFlowProps {
   isOpen: boolean;
   onClose: () => void;
   onComplete: () => void;
 }
+
+const defaultData: OnboardingData = {
+  username: '',
+  email: '',
+  phone: '',
+  bio: '',
+  city: '',
+  barangay: '',
+  streetAddress: '',
+  gender: '',
+  profilePhoto: null,
+  occupation: null,
+};
 
 function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; onClose?: () => void; onComplete?: () => void }) {
   return (
@@ -39,22 +65,24 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
         <div className="px-8 pt-5 pb-6 overflow-y-auto text-center">
           <div className="mb-6">
             <p className="text-xs font-bold text-[#2252D6] tracking-[0.15em] uppercase mb-1">
-              STEP 5 OF 5: Almost Done
+              STEP 5 OF 5: You're All Set
             </p>
-            <h2 className="text-2xl font-bold text-[#17294F]">Almost Done!</h2>
+            <h2 className="text-2xl font-bold text-[#17294F]">Thank You!</h2>
             <p className="text-sm text-neutral-500 font-medium mt-1">
-              You're all set.
+              You're now part of the Khubo community.
             </p>
           </div>
 
-          <div className="flex flex-col items-center justify-center py-12">
-            <div className="w-20 h-20 rounded-full bg-[#2252D6]/10 flex items-center justify-center mb-4">
-              <svg className="w-10 h-10 text-[#2252D6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="flex flex-col items-center justify-center py-10">
+            <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mb-4">
+              <svg className="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <p className="text-sm text-neutral-500 font-medium max-w-md">
-              Your profile is set up! Click finish to start exploring properties and finding your perfect roommate.
+            <p className="text-base font-bold text-[#17294F] mb-2">Welcome to Khubo!</p>
+            <p className="text-sm text-neutral-500 font-medium max-w-md leading-relaxed">
+              Thank you for choosing Khubo and for taking the time to complete your profile.
+              We're excited to have you on board! Start exploring properties and find your perfect roommate today.
             </p>
           </div>
         </div>
@@ -85,11 +113,17 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
 
 export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowProps) {
   const [step, setStep] = useState(1);
+  const [data, setData] = useState<OnboardingData>(defaultData);
+
+  const updateData = (partial: Partial<OnboardingData>) => {
+    setData(prev => ({ ...prev, ...partial }));
+  };
 
   const handleFlowComplete = () => {
     onComplete();
     onClose();
     setStep(1);
+    setData(defaultData);
   };
 
   if (!isOpen) return null;
@@ -99,21 +133,23 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       return (
         <OnboardingModal
           isOpen={true}
+          data={data}
           onClose={onClose}
-          onComplete={() => setStep(2)}
+          onComplete={(d) => { updateData(d); setStep(2); }}
         />
       );
     case 2:
       return (
         <OccupationStep
+          data={data}
           onBack={() => setStep(1)}
           onClose={onClose}
-          onContinue={() => setStep(3)}
+          onContinue={(occ) => { updateData({ occupation: occ }); setStep(3); }}
         />
       );
     case 3:
       return (
-        <ReviewProfile
+        <VerificationStep
           onBack={() => setStep(2)}
           onClose={onClose}
           onContinue={() => setStep(4)}
@@ -121,10 +157,12 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
       );
     case 4:
       return (
-        <VerificationStep
+        <ReviewProfile
+          data={data}
           onBack={() => setStep(3)}
           onClose={onClose}
           onContinue={() => setStep(5)}
+          onEditStep={(s) => setStep(s)}
         />
       );
     case 5:

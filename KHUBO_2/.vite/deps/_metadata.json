@@ -2,51 +2,78 @@
   "hash": "51207687",
   "configHash": "056996e5",
   "lockfileHash": "1c6cb6c9",
-  "browserHash": "df02ba98",
+  "browserHash": "efaf2489",
   "optimized": {
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "085919cf",
+      "fileHash": "3bd53086",
       "needsInterop": true
     },
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "49ad8731",
+      "fileHash": "9db13c31",
       "needsInterop": true
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "c86afc14",
+      "fileHash": "be550d5c",
       "needsInterop": true
     },
     "react-router-dom": {
       "src": "../../node_modules/react-router-dom/dist/index.mjs",
       "file": "react-router-dom.js",
-      "fileHash": "ef39a972",
+      "fileHash": "663a60a8",
       "needsInterop": false
     },
     "react-dom": {
       "src": "../../node_modules/react-dom/index.js",
       "file": "react-dom.js",
-      "fileHash": "6d9d9d57",
+      "fileHash": "e5317902",
       "needsInterop": true
     },
     "lucide-react": {
       "src": "../../node_modules/lucide-react/dist/esm/lucide-react.js",
       "file": "lucide-react.js",
-      "fileHash": "b0b156ac",
+      "fileHash": "2c62de12",
+      "needsInterop": false
+    },
+    "date-fns": {
+      "src": "../../node_modules/date-fns/index.js",
+      "file": "date-fns.js",
+      "fileHash": "1b33fdc5",
+      "needsInterop": false
+    },
+    "clsx": {
+      "src": "../../node_modules/clsx/dist/clsx.mjs",
+      "file": "clsx.js",
+      "fileHash": "4a35a5b4",
+      "needsInterop": false
+    },
+    "tailwind-merge": {
+      "src": "../../node_modules/tailwind-merge/dist/bundle-mjs.mjs",
+      "file": "tailwind-merge.js",
+      "fileHash": "11a05fb2",
+      "needsInterop": false
+    },
+    "@maptiler/sdk": {
+      "src": "../../node_modules/@maptiler/sdk/dist/maptiler-sdk.mjs",
+      "file": "@maptiler_sdk.js",
+      "fileHash": "692dcfb8",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-RZ3SKY36": {
-      "file": "chunk-RZ3SKY36.js"
+    "chunk-PJTGFUNU": {
+      "file": "chunk-PJTGFUNU.js"
     },
-    "chunk-YKWEX2AC": {
-      "file": "chunk-YKWEX2AC.js"
+    "chunk-ELDS2TUQ": {
+      "file": "chunk-ELDS2TUQ.js"
+    },
+    "chunk-WOOG5QLI": {
+      "file": "chunk-WOOG5QLI.js"
     }
   }
 }

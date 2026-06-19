@@ -10,7 +10,7 @@ import { Search, Globe, Menu, User, LogOut, Bell } from 'lucide-react';
 
 import { useAuth } from '../lib/AuthContext';
 import { AuthModal } from './AuthModal';
-import { OnboardingModal } from './OnboardingModal';
+import { OnboardingFlow } from './OnboardingFlow';
 import { CreateListingModal } from './CreateListingModal';
 import { useToast } from './ToastProvider';
 import { Link } from 'react-router-dom';
@@ -223,7 +223,7 @@ export default function Navbar() {
         onClose={() => setIsAuthModalOpen(false)} 
         onSignUp={() => setIsOnboardingOpen(true)}
       />
-      <OnboardingModal 
+      <OnboardingFlow
         isOpen={isOnboardingOpen}
         onClose={() => setIsOnboardingOpen(false)}
         onComplete={() => {

@@ -8,6 +8,8 @@ import { createPortal } from 'react-dom';
 
 import { X, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
+import { OnboardingModal } from './OnboardingModal';
+import { useToast } from './ToastProvider';
 
 export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: boolean; onClose: () => void, onLogin?: () => void, onSignUp?: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -17,7 +19,9 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { signIn } = useAuth();
+  const { showToast } = useToast();
   const [mounted, setMounted] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -31,8 +35,9 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
 
     if (!isLogin) {
       // Bypass inputs for demo — open onboarding
+      signIn(email);
       if (onSignUp) onSignUp();
-      onClose();
+      setShowOnboarding(true);
       return;
     }
 
@@ -141,6 +146,20 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
         </div>
       </div>
   );
+
+  if (showOnboarding) {
+    return (
+      <OnboardingModal
+        isOpen={true}
+        onClose={() => { setShowOnboarding(false); onClose(); }}
+        onComplete={() => {
+          showToast('Welcome to Khubo! Your profile has been created.');
+          setShowOnboarding(false);
+          onClose();
+        }}
+      />
+    );
+  }
 
   return mounted && typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
 }

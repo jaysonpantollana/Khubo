@@ -132,7 +132,6 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
 
   const handleContinue = () => {
     onComplete();
-    onClose();
   };
 
   if (!isOpen) return null;

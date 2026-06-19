@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Camera, MapPin, ChevronDown, User, Mail, Phone, BookOpen, GraduationCap, Briefcase, Clock, AlertCircle } from 'lucide-react';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { cn } from '../lib/utils';
 
 interface OnboardingModalProps {
   isOpen: boolean;
@@ -65,6 +67,7 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [showBarangayDropdown, setShowBarangayDropdown] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [occupation, setOccupation] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -198,26 +201,70 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
             <p className="text-xs text-neutral-400 leading-relaxed mb-6">
               This helps landlords and roommates understand your schedule and lifestyle.
             </p>
-            {occupations.map((occ) => {
+            {occupations.map((occ, i) => {
+              const isSelected = occupation === occ.id;
               const Icon = occ.icon;
               return (
-                <button
+                <motion.button
                   key={occ.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 * i, duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
                   type="button"
-                  className="w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-left"
-                  style={{
-                    borderColor: occ.id === username ? '#2252D6' : undefined,
-                    backgroundColor: occ.id === username ? 'rgba(34,82,214,0.05)' : undefined,
-                  }}
+                  onClick={() => setOccupation(occ.id)}
+                  className={cn(
+                    'w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer text-left group',
+                    isSelected
+                      ? 'border-[#2252D6]/60 bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
+                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-sm'
+                  )}
                 >
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: occ.id === username ? 'rgba(34,82,214,0.1)' : '#f5f5f5' }}>
-                    <Icon size={22} style={{ color: occ.id === username ? '#2252D6' : '#737373' }} />
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-200',
+                      isSelected ? 'bg-[#2252D6]/10' : 'bg-neutral-100'
+                    )}
+                  >
+                    <Icon
+                      size={22}
+                      className={cn(
+                        'transition-colors duration-200',
+                        isSelected ? 'text-[#2252D6]' : 'text-neutral-500'
+                      )}
+                    />
                   </div>
+
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-neutral-800">{occ.title}</p>
+                    <p
+                      className={cn(
+                        'text-sm font-bold transition-colors duration-200',
+                        isSelected ? 'text-[#17294F]' : 'text-neutral-800'
+                      )}
+                    >
+                      {occ.title}
+                    </p>
                     <p className="text-xs text-neutral-400 mt-0.5">{occ.subtext}</p>
                   </div>
-                </button>
+
+                  <div
+                    className={cn(
+                      'w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all duration-200',
+                      isSelected ? 'border-[#2252D6]' : 'border-neutral-300'
+                    )}
+                  >
+                    <AnimatePresence>
+                      {isSelected && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{ scale: 0 }}
+                          transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                          className="w-2.5 h-2.5 rounded-full bg-[#2252D6]"
+                        />
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </motion.button>
               );
             })}
           </div>
@@ -347,6 +394,7 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
             <span className="text-xs text-neutral-400 font-medium">{step} of 5</span>
             <button
               type="button"
+              disabled={step === 2 && !occupation}
               onClick={() => {
                 if (step < 5) {
                   setStep(step + 1);
@@ -355,7 +403,12 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
                   onClose();
                 }
               }}
-              className="px-8 py-2.5 bg-[#2252D6] hover:bg-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
+              className={cn(
+                'px-8 py-2.5 font-bold rounded-full transition text-sm shadow-md cursor-pointer',
+                step === 2 && !occupation
+                  ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed shadow-none'
+                  : 'bg-[#2252D6] hover:bg-[#1a41aa] text-white shadow-[#2252D6]/20'
+              )}
             >
               {step < 5 ? 'Continue' : 'Finish'}
             </button>

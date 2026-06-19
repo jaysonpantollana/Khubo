@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GraduationCap, Briefcase, Clock } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { EASE_OUT } from '../lib/animations';
 
 interface OccupationOption {
   id: string;
@@ -44,12 +45,12 @@ export function OccupationStep({ onBack, onContinue }: OccupationStepProps) {
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+        transition={{ duration: 0.4, ease: EASE_OUT }}
         className="w-full max-w-lg"
       >
         <div className="mb-1">
           <span className="text-xs font-bold text-[#2252D6]/60 tracking-[0.15em] uppercase">
-            Step 2 of 5
+            Step 2 of 5: Occupation
           </span>
         </div>
 
@@ -83,14 +84,14 @@ export function OccupationStep({ onBack, onContinue }: OccupationStepProps) {
                 key={occ.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 * i, duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+                transition={{ delay: 0.08 * i, duration: 0.35, ease: EASE_OUT }}
                 type="button"
                 onClick={() => setSelected(occ.id)}
                 className={cn(
-                  'w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-left',
+                  'w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer text-left',
                   isSelected
-                    ? 'border-[#2252D6]/60 bg-[#2252D6]/5'
-                    : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
+                    ? 'border-[#2252D6]/60 bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
+                    : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-sm'
                 )}
               >
                 <div
@@ -132,7 +133,7 @@ export function OccupationStep({ onBack, onContinue }: OccupationStepProps) {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
-                        transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 0.2, ease: EASE_OUT }}
                         className="w-2.5 h-2.5 rounded-full bg-[#2252D6]"
                       />
                     )}

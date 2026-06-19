@@ -166,7 +166,10 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
 
       {!!apiKey && shouldLoadMap && !mapLoaded && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-50 backdrop-blur-md">
-          <span className="loader" />
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-10 h-10 border-4 border-neutral-200 border-t-[#17294F] rounded-full animate-spin" />
+            <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest animate-pulse">Loading map...</span>
+          </div>
         </div>
       )}
       <div ref={mapContainer} className="w-full h-full relative z-0" />

@@ -3,8 +3,6 @@
 // @behavior: Uses AnimatePresence for mount/unmount animation; focus trap on open; backdrop click to close
 // @dependencies: motion, useFocusTrap, lib/animations (modalBackdrop, modalContent)
 
-import { motion, AnimatePresence } from 'motion/react';
-import { modalBackdrop, modalContent } from '../../lib/animations';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 interface ModalProps {
@@ -21,28 +19,23 @@ export function Modal({ isOpen, onClose, children, maxWidth = 'max-w-lg', classN
   if (!isOpen) return null;
 
   return (
-    <AnimatePresence>
+    <div
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Modal dialog"
+    >
       <div
-        className="fixed inset-0 z-[1000] flex items-center justify-center p-4"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Modal dialog"
+        onClick={onClose}
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+      />
+      <div
+        ref={focusTrapRef}
+        onClick={(e) => e.stopPropagation()}
+        className={`relative w-full ${maxWidth} bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 ${className}`}
       >
-        <motion.div
-          {...modalBackdrop}
-          onClick={onClose}
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        />
-        <motion.div
-          ref={focusTrapRef}
-          {...modalContent}
-          transition={{ type: 'spring', duration: 0.5, bounce: 0 }}
-          onClick={(e) => e.stopPropagation()}
-          className={`relative w-full ${maxWidth} bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 ${className}`}
-        >
-          {children}
-        </motion.div>
+        {children}
       </div>
-    </AnimatePresence>
+    </div>
   );
 }

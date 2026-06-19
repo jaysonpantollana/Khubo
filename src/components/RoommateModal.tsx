@@ -6,7 +6,7 @@
 // @known-issues: Social media buttons have no href or onClick; send message is a placeholder
 
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X, MapPin, GraduationCap, Wallet, Heart, MessageSquare, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles } from 'lucide-react';
 import { Roommate } from '../types';
 

@@ -8,7 +8,7 @@
 // @known-issues: Mock supabase may always succeed or always fail depending on stub implementation
 
 import { useState } from 'react';
-import { motion } from 'motion/react';
+
 import { X, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { supabase } from '../../mocks/supabase';
 import { useToast } from '../ToastProvider';

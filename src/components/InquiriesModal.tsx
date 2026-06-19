@@ -6,7 +6,7 @@
 // @known-issues: All data is static mock; reply button has no actual action
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

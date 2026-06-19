@@ -16,7 +16,7 @@ import {
   Wallet,
   X,
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+
 import { DateScrollPicker } from "./DateScrollPicker";
 import SearchDropdown from "./SearchDropdown";
 import { AnnouncementsOverlay } from "./AnnouncementsOverlay";
@@ -118,9 +118,7 @@ export default function Hero({
 
         {/* Center Content - Perfectly symmetrical */}
         <div className="flex flex-col items-center justify-center text-center h-full pt-8 md:pt-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          <h1
             className="flex flex-row items-center justify-center gap-x-4 md:gap-x-6 text-white px-4"
           >
             <span className="font-noto-serif italic text-xl sm:text-2xl md:text-[35px] tracking-[0.2em] md:tracking-[0.3em] opacity-80 whitespace-nowrap">
@@ -129,16 +127,13 @@ export default function Hero({
             <span className="font-roboto font-bold text-2xl sm:text-3xl md:text-[35px] tracking-[0.1em]">
               KHUBO
             </span>
-          </motion.h1>
+          </h1>
 
           <div
-            className="relative mt-5 md:mt-12 w-full flex justify-center animate-fade-in"
+            className="relative mt-5 md:mt-12 w-full flex justify-center"
             ref={dropdownRef}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
+            <div
               className="bg-white/10 backdrop-blur-md border border-white/20 p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default"
             >
               {isSearchActive ? (
@@ -237,26 +232,8 @@ export default function Hero({
                       />
                     </div>
 
-                    <AnimatePresence>
                       {activeDropdown === "location" && (
-                        <motion.div
-                          initial={{
-                            opacity: 0,
-                            clipPath: "inset(0% 0% 100% 0%)",
-                          }}
-                          animate={{
-                            opacity: 1,
-                            clipPath: "inset(0% 0% 0% 0%)",
-                          }}
-                          exit={{
-                            opacity: 0,
-                            clipPath: "inset(0% 0% 100% 0%)",
-                          }}
-                          transition={{
-                            type: "tween",
-                            ease: "easeOut",
-                            duration: 0.2,
-                          }}
+                        <div
                           className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-50 text-left"
                         >
                           <div className="space-y-3 md:space-y-4">
@@ -303,9 +280,8 @@ export default function Hero({
                               </div>
                             </div>
                           </div>
-                        </motion.div>
+                        </div>
                       )}
-                    </AnimatePresence>
                   </div>
 
                   <div className="w-[1px] h-5 md:h-8 bg-white/20" />
@@ -342,26 +318,8 @@ export default function Hero({
                       </div>
                     </div>
 
-                    <AnimatePresence>
                       {activeDropdown === "dates" && (
-                        <motion.div
-                          initial={{
-                            opacity: 0,
-                            clipPath: "inset(0% 0% 100% 0%)",
-                          }}
-                          animate={{
-                            opacity: 1,
-                            clipPath: "inset(0% 0% 0% 0%)",
-                          }}
-                          exit={{
-                            opacity: 0,
-                            clipPath: "inset(0% 0% 100% 0%)",
-                          }}
-                          transition={{
-                            type: "tween",
-                            ease: "easeOut",
-                            duration: 0.2,
-                          }}
+                        <div
                           className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 overflow-hidden z-50 text-left"
                         >
                           <DateScrollPicker
@@ -370,9 +328,8 @@ export default function Hero({
                               setSelectedDateStr(`${m} ${d}, ${y}`)
                             }
                           />
-                        </motion.div>
+                        </div>
                       )}
-                    </AnimatePresence>
                   </div>
 
                   <div className="w-[1px] h-5 md:h-8 bg-white/20" />
@@ -407,26 +364,8 @@ export default function Hero({
                       />
                     </div>
 
-                    <AnimatePresence>
                       {activeDropdown === "budget" && (
-                        <motion.div
-                          initial={{
-                            opacity: 0,
-                            clipPath: "inset(0% 0% 100% 0%)",
-                          }}
-                          animate={{
-                            opacity: 1,
-                            clipPath: "inset(0% 0% 0% 0%)",
-                          }}
-                          exit={{
-                            opacity: 0,
-                            clipPath: "inset(0% 0% 100% 0%)",
-                          }}
-                          transition={{
-                            type: "tween",
-                            ease: "easeOut",
-                            duration: 0.2,
-                          }}
+                        <div
                           className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-50 text-left"
                         >
                           <div className="space-y-2 md:space-y-3">
@@ -451,9 +390,8 @@ export default function Hero({
                               ))}
                             </div>
                           </div>
-                        </motion.div>
+                        </div>
                       )}
-                    </AnimatePresence>
                   </div>
 
                   <button
@@ -493,7 +431,7 @@ export default function Hero({
                   </button>
                 </>
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

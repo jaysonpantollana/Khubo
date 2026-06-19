@@ -6,7 +6,6 @@
 // @code-template: Pattern for type-specific UI config maps (icon, bg, textColor per type)
 
 import React from 'react';
-import { motion } from 'motion/react';
 import { CheckCircle, Info, AlertTriangle, XCircle, X } from 'lucide-react';
 
 export type ToastType = 'success' | 'info' | 'error' | 'warning';
@@ -27,10 +26,7 @@ const config: Record<ToastType, { icon: typeof CheckCircle; bg: string; iconColo
 export const Toast = ({ message, type, onClose }: ToastProps) => {
   const { icon: Icon, bg, iconColor, textColor } = config[type];
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+    <div
       className={`flex items-center gap-3 p-4 rounded-xl shadow-lg border ${bg} ${textColor}`}
     >
       <Icon size={20} className={iconColor} />
@@ -38,6 +34,6 @@ export const Toast = ({ message, type, onClose }: ToastProps) => {
       <button onClick={onClose} className="p-1 hover:bg-neutral-100 rounded-full ml-auto">
         <X size={16} />
       </button>
-    </motion.div>
+    </div>
   );
 };

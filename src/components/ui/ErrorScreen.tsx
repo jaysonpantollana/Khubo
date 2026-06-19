@@ -4,7 +4,6 @@
 // @dependencies: motion, lucide-react
 
 import React from 'react';
-import { motion } from 'motion/react';
 import { AlertCircle, RefreshCw, ArrowLeft } from 'lucide-react';
 
 interface ErrorScreenProps {
@@ -26,10 +25,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-slate-900 flex items-center justify-center p-4">
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95, y: 10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ type: "tween", ease: "easeOut", duration: 0.3 }}
+      <div 
         className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl w-full max-w-md p-6 sm:p-8 flex flex-col items-center text-center border border-neutral-100 dark:border-slate-700"
       >
         <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-6">
@@ -80,7 +76,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
 
 
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 });

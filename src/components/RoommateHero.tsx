@@ -7,7 +7,7 @@
 // @known-issues: window.innerWidth check on render (not reactive without resize listener)
 
 import { Search, MapPin, Megaphone, ChevronDown, Wallet, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import RoommateSearchDropdown from './RoommateSearchDropdown';

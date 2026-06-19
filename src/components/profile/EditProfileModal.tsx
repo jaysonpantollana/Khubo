@@ -4,7 +4,7 @@
 // @behavior: Fields: full name, school/age/gender, location, bio/quote, online toggle
 // @dependencies: motion, lucide-react
 
-import { motion } from 'motion/react';
+
 import { Edit2, GraduationCap, MapPin, X } from 'lucide-react';
 
 interface Props {

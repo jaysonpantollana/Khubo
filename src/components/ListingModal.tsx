@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { 
   format, 
   getMonth,

@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { SlidersHorizontal, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { cn } from '../lib/utils';
 
 interface FiltersProps {
@@ -54,24 +54,13 @@ export default function Filters({ onFilterChange, currentFilters, hideIndicator 
       </button>
 
       {typeof document !== 'undefined' && createPortal(
-        <AnimatePresence>
           {isOpen && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-              <motion.div
-                key="backdrop"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
+              <div
                 className="absolute inset-0 bg-black/40 backdrop-blur-sm"
                 onClick={() => setIsOpen(false)}
               />
-              <motion.div
-                key="modal"
-                initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+              <div
                 className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl z-10 overflow-hidden flex flex-col max-h-[90vh]"
               >
                 <div className="flex items-center justify-between p-6 border-b border-neutral-100">
@@ -175,10 +164,9 @@ export default function Filters({ onFilterChange, currentFilters, hideIndicator 
                     Show Results
                   </button>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          )}
-        </AnimatePresence>,
+          )},
         document.body
       )}
     </div>

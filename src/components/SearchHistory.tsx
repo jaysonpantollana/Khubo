@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { History, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+
 
 interface SearchHistoryProps {
   history: string[];

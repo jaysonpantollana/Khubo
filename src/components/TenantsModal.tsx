@@ -6,7 +6,7 @@
 // @known-issues: All tenant data is static mock; no edit/action functionality
 
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X } from 'lucide-react';
 
 interface TenantsModalProps {

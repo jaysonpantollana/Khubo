@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 
@@ -40,19 +40,12 @@ export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClo
   };
 
   const modalContent = (
-    <AnimatePresence>
       <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-        <motion.div
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           exit={{ opacity: 0 }}
+        <div
            onClick={onClose}
            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         />
-        <motion.div
-           initial={{ opacity: 0, scale: 0.95, y: 20 }}
-           animate={{ opacity: 1, scale: 1, y: 0 }}
-           exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        <div
            className="relative w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl z-10"
         >
           <button 
@@ -138,9 +131,8 @@ export function AuthModal({ isOpen, onClose, onLogin }: { isOpen: boolean; onClo
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
   );
 
   return mounted && typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;

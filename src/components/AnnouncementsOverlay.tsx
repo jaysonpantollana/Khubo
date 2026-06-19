@@ -4,7 +4,7 @@
 // @dependencies: motion, lucide-react
 
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X, Megaphone } from 'lucide-react';
 
 interface AnnouncementsOverlayProps {
@@ -31,22 +31,13 @@ const MOCK_ANNOUNCEMENTS = [
 
 export function AnnouncementsOverlay({ isOpen, onClose }: AnnouncementsOverlayProps) {
   return (
-    <AnimatePresence>
-      {isOpen && (
+    {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+          <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={onClose}
           />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+          <div
             className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl z-10 overflow-hidden flex flex-col max-h-[90vh]"
           >
             <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
@@ -72,9 +63,8 @@ export function AnnouncementsOverlay({ isOpen, onClose }: AnnouncementsOverlayPr
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
-    </AnimatePresence>
   );
 }

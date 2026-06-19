@@ -7,7 +7,7 @@
 // @known-issues: Mock supabase insert returns success without actual persistence
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X, Upload, XCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
@@ -139,20 +139,13 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
   };
 
   return (
-    <AnimatePresence>
       <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <div 
           onClick={onClose}
           className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         />
         
-        <motion.div 
-          initial={{ opacity: 0, y: 100, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 100, scale: 0.95 }}
+        <div 
           className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100">
@@ -308,7 +301,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 size={20} className="animate-spin" />
+                  <Loader2 size={20} />
                   Creating...
                 </>
               ) : (
@@ -316,8 +309,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
               )}
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
   );
 }

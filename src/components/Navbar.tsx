@@ -7,7 +7,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Search, Globe, Menu, User, LogOut, Bell } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { useAuth } from '../lib/AuthContext';
 import { AuthModal } from './AuthModal';
 import { CreateListingModal } from './CreateListingModal';

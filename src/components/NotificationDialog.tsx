@@ -5,7 +5,7 @@
 // @dependencies: Toast type definitions, motion, lucide-react
 // @known-issues: IconMap uses Record<ToastType, ...> but assumes all types exist (they do)
 
-import { motion, AnimatePresence } from 'motion/react';
+
 import { Bell, X, CheckCircle, Info, AlertTriangle, XCircle, Clock } from 'lucide-react';
 import { ToastType } from './Toast';
 import type { NotificationItem } from './ToastProvider';

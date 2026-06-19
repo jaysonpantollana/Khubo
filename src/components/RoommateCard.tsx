@@ -7,7 +7,6 @@
 import React from 'react';
 import { MapPin, GraduationCap } from 'lucide-react';
 import { Roommate } from '../types';
-import { motion } from 'motion/react';
 
 interface RoommateCardProps {
   roommate: Roommate;
@@ -17,10 +16,9 @@ interface RoommateCardProps {
 
 export default function RoommateCard({ roommate, onProfileClick, actionLabel = "Apply as Roommate" }: RoommateCardProps) {
   return (
-    <motion.div 
-      whileHover={{ y: -5 }}
+    <div 
       onClick={() => onProfileClick(roommate)}
-      className="bg-white rounded-2xl p-6 md:p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col h-full transition-all duration-300 cursor-pointer"
+      className="bg-white rounded-2xl p-6 md:p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col h-full cursor-pointer"
     >
       {/* Header with Avatar and Basic Info */}
       <div className="flex flex-row items-start text-left gap-4 mb-5">
@@ -62,7 +60,7 @@ export default function RoommateCard({ roommate, onProfileClick, actionLabel = "
         {roommate.tags.map((tag, idx) => (
           <span 
             key={idx} 
-            className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white text-black rounded-full text-[11px] sm:text-[13px] font-bold border border-black tracking-tight hover:bg-neutral-50 transition-colors cursor-default whitespace-nowrap"
+            className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white text-black rounded-full text-[11px] sm:text-[13px] font-bold border border-black tracking-tight cursor-default whitespace-nowrap"
           >
             {tag}
           </span>
@@ -79,9 +77,9 @@ export default function RoommateCard({ roommate, onProfileClick, actionLabel = "
       </div>
 
       {/* Action Button */}
-      <button className="w-full py-3.5 bg-[#17294F] text-white rounded-2xl font-black text-xs uppercase tracking-[0.1em] transition-all hover:bg-[#1e325c] active:scale-95 shadow-md">
+      <button className="w-full py-3.5 bg-[#17294F] text-white rounded-2xl font-black text-xs uppercase tracking-[0.1em] transition-all shadow-md">
         {actionLabel}
       </button>
-    </motion.div>
+    </div>
   );
 }

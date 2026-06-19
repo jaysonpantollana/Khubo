@@ -7,7 +7,6 @@ import { createContext, useContext, useState, useCallback, ReactNode } from 'rea
 import { Toast, ToastType } from './Toast';
 import { NotificationDialog } from './NotificationDialog';
 import { createPortal } from 'react-dom';
-import { AnimatePresence } from 'motion/react';
 
 export interface NotificationItem {
   id: number;
@@ -48,11 +47,9 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
       {children}
       {createPortal(
         <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2">
-          <AnimatePresence>
             {toasts.map((toast) => (
               <Toast key={toast.id} message={toast.message} type={toast.type} onClose={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))} />
             ))}
-          </AnimatePresence>
         </div>,
         document.body
       )}

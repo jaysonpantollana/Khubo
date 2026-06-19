@@ -4,7 +4,7 @@
 // @dependencies: react (useState, useRef, useEffect), motion, lucide-react
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X, RefreshCw, Send } from 'lucide-react';
 
 interface CameraOverlayProps {
@@ -123,13 +123,8 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
   };
 
   return (
-    <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+        <div
           className="fixed inset-0 z-[100] bg-black text-white flex flex-col"
         >
           {/* Header */}
@@ -214,8 +209,7 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
                </div>
             ) : null}
           </div>
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>
   );
 }

@@ -4,7 +4,7 @@
 // @dependencies: motion, lucide-react
 // @known-issues: Content is a placeholder — no real data shown yet
 
-import { motion } from 'motion/react';
+
 import { X, ArrowUpRight } from 'lucide-react';
 
 interface Props {

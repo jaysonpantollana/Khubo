@@ -11,7 +11,6 @@ import Footer from "../components/Footer";
 import { ListingCarousel } from "../components/ListingCarousel";
 import { useListings } from "../hooks/useListings";
 import { useListingsFilter } from "../hooks/useListingsFilter";
-import { motion, AnimatePresence } from "motion/react";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { initMapPreload, isMapReady } from "../lib/mapPreloader";
@@ -206,454 +205,375 @@ export default function Home() {
         className="w-full h-[1px] invisible pointer-events-none"
       />
 
-      <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm transition-all duration-300">
+      <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm">
         <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-[70px]">
-          <AnimatePresence mode="wait">
-            {displaySearch ? (
-              <motion.div
-                key="search"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center justify-between w-full py-3 px-2 sm:px-0"
+          {displaySearch ? (
+            <div className="flex items-center justify-between w-full py-3 px-2 sm:px-0">
+              <div className="hidden md:block flex-1 min-w-0"></div>
+              <div
+                className="flex justify-center flex-[3] lg:flex-none min-w-0 w-full px-2 sm:px-0"
+                ref={stickyDropdownRef}
               >
-                <div className="hidden md:block flex-1 min-w-0"></div>
                 <div
-                  className="flex justify-center flex-[3] lg:flex-none min-w-0 w-full px-2 sm:px-0"
-                  ref={stickyDropdownRef}
+                  id="2nd-search-bar"
+                  className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] relative z-40 rounded-full pointer-events-auto cursor-default"
                 >
-                  <div
-                    id="2nd-search-bar"
-                    className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] relative z-40 rounded-full transition-all duration-300 pointer-events-auto cursor-default"
-                  >
-                    {isStickySearchActive ? (
-                      <>
-                        <div className="flex-1 flex items-center pl-4 md:pl-5 pr-0 py-0 w-full">
-                          <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => {
-                              setSearchQuery(e.target.value);
-                              setHideStickyDropdown(false);
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                setHideStickyDropdown(true);
-                              }
-                            }}
-                            placeholder="Search rooms, location..."
-                            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
-                            autoFocus
-                          />
-                          {searchQuery && (
-                            <button
-                              onClick={() => {
-                                setSearchQuery("");
-                                setHideStickyDropdown(true);
-                              }}
-                              className="p-1 hover:bg-neutral-100 rounded-full transition-colors mr-2 flex-shrink-0"
-                              aria-label="Clear search"
-                            >
-                              <X className="w-3.5 h-3.5 text-neutral-500" />
-                            </button>
-                          )}
-                          <button
-                            onClick={() => {
-                              addSearch(searchQuery);
-                              setIsStickySearchActive(false);
-                            }}
-                            className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
-                            aria-label="Search"
-                          >
-                            <Search
-                              size={16}
-                              className="text-white group-hover:stroke-[3px] transition-all"
-                            />
-                          </button>
-                        </div>
-                        {!hideStickyDropdown && (
-                          <SearchDropdown
-                            searchQuery={searchQuery}
-                            setSearchQuery={(val) => {
-                              setSearchQuery(val);
+                  {isStickySearchActive ? (
+                    <>
+                      <div className="flex-1 flex items-center pl-4 md:pl-5 pr-0 py-0 w-full">
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setHideStickyDropdown(false);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
                               setHideStickyDropdown(true);
-                            }}
-                            onClose={() => {
-                              setHideStickyDropdown(true);
-                              setIsStickySearchActive(false);
-                            }}
-                            onSelectListing={(id) => handleListingClick(id)}
-                          />
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {/* Sticky Location Section */}
-                        <div className="flex-[1.2] min-w-0">
-                          <div
-                            role="button"
-                            tabIndex={0}
-                            aria-label="Location: Location"
-                            onClick={() => {
-                              setStickyActiveDropdown(
-                                stickyActiveDropdown === "location"
-                                  ? null
-                                  : "location",
-                              );
-                            }}
-                            onKeyDown={(e) =>
-                              (e.key === "Enter" || e.key === " ") &&
-                              (e.preventDefault(),
-                              setStickyActiveDropdown(
-                                stickyActiveDropdown === "location"
-                                  ? null
-                                  : "location",
-                              ))
-                            }
-                            className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer group select-none focus-visible:outline-none ${
-                              stickyActiveDropdown === "location"
-                                ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                                : "hover:bg-neutral-50 rounded-full"
-                            }`}
-                          >
-                            <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                              <MapPin className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                              <span
-                                className={`text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
-                              >
-                                {selectedStickyLocation
-                                  ? selectedStickyLocation
-                                  : "Location"}
-                              </span>
-                            </div>
-                            <ChevronDown
-                              className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "location" ? "rotate-180" : ""}`}
-                            />
-                          </div>
-
-                          <AnimatePresence>
-                            {stickyActiveDropdown === "location" && (
-                              <motion.div
-                                initial={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                animate={{
-                                  opacity: 1,
-                                  clipPath: "inset(0% 0% 0% 0%)",
-                                }}
-                                exit={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                transition={{
-                                  type: "tween",
-                                  ease: "easeOut",
-                                  duration: 0.2,
-                                }}
-                                className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-50 text-left cursor-default"
-                              >
-                                <div className="space-y-3">
-                                  <div>
-                                    <div
-                                      className="flex items-center px-2.5 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        (
-                                          e.currentTarget.querySelector(
-                                            "input",
-                                          ) as HTMLInputElement
-                                        )?.focus();
-                                      }}
-                                    >
-                                      <Search className="w-3.5 h-3.5 text-neutral-400 mr-1.5 flex-shrink-0" />
-                                      <input
-                                        type="text"
-                                        placeholder="Search..."
-                                        value={searchQuery}
-                                        onChange={(e) =>
-                                          setSearchQuery(e.target.value)
-                                        }
-                                        className="w-full bg-transparent border-none outline-none text-xs font-semibold text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                                      />
-                                    </div>
-                                    <div className="space-y-1">
-                                      {POPULAR_LOCATIONS.map((loc) => (
-                                        <button
-                                          key={loc}
-                                          onClick={() => {
-                                            setSelectedStickyLocation(loc);
-                                            setStickyActiveDropdown(null);
-                                          }}
-                                          className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 transition-colors group"
-                                        >
-                                          <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all flex-shrink-0">
-                                            <MapPin size={12} />
-                                          </div>
-                                          <span className="font-medium text-neutral-800 text-xs whitespace-nowrap">
-                                            {loc}
-                                          </span>
-                                        </button>
-                                      ))}
-                                    </div>
-                                  </div>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-
-                        <div className="w-[1px] h-3 sm:h-4 bg-white/20 flex-shrink-0 self-center" />
-
-                        {/* Sticky Dates Section */}
-                        <div className="flex-1 min-w-0">
-                          <div
-                            role="button"
-                            tabIndex={0}
-                            aria-label="Add dates"
-                            onClick={() => {
-                              setStickyActiveDropdown(
-                                stickyActiveDropdown === "dates"
-                                  ? null
-                                  : "dates",
-                              );
-                            }}
-                            onKeyDown={(e) =>
-                              (e.key === "Enter" || e.key === " ") &&
-                              (e.preventDefault(),
-                              setStickyActiveDropdown(
-                                stickyActiveDropdown === "dates"
-                                  ? null
-                                  : "dates",
-                              ))
-                            }
-                            className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-4 py-2 md:py-2 transition-all cursor-pointer group select-none focus-visible:outline-none ${
-                              stickyActiveDropdown === "dates"
-                                ? "bg-neutral-100 rounded-full text-black relative z-[60] shadow-sm"
-                                : "hover:bg-neutral-50 rounded-full"
-                            }`}
-                          >
-                            <div className="flex items-center gap-1 md:gap-3 min-w-0">
-                              <CalendarIcon
-                                className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]"
-                                strokeWidth={2}
-                              />
-                              <span
-                                className={`text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
-                              >
-                                {selectedStickyDateStr
-                                  ? selectedStickyDateStr
-                                  : "Dates"}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-1 md:gap-2">
-                              <ChevronDown
-                                className={`flex-shrink-0 opacity-50 text-neutral-500 transition-all w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "dates" ? "rotate-180 opacity-50" : "group-hover:opacity-100"}`}
-                              />
-                            </div>
-                          </div>
-
-                          <AnimatePresence>
-                            {stickyActiveDropdown === "dates" && (
-                              <motion.div
-                                initial={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                animate={{
-                                  opacity: 1,
-                                  clipPath: "inset(0% 0% 0% 0%)",
-                                }}
-                                exit={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                transition={{
-                                  type: "tween",
-                                  ease: "easeOut",
-                                  duration: 0.2,
-                                }}
-                                className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 overflow-hidden z-50 text-left"
-                              >
-                                <DateScrollPicker
-                                  viewportHeight={132}
-                                  onDateChange={(m, d, y) => {
-                                    setSelectedStickyDateStr(`${m} ${d}, ${y}`);
-                                  }}
-                                />
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-
-                        <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
-
-                        {/* Sticky Budget Section */}
-                        <div className="flex-1 min-w-0">
-                          <div
-                            role="button"
-                            tabIndex={0}
-                            aria-label="Add budget"
-                            onClick={() => {
-                              setStickyActiveDropdown(
-                                stickyActiveDropdown === "budget"
-                                  ? null
-                                  : "budget",
-                              );
-                            }}
-                            onKeyDown={(e) =>
-                              (e.key === "Enter" || e.key === " ") &&
-                              (e.preventDefault(),
-                              setStickyActiveDropdown(
-                                stickyActiveDropdown === "budget"
-                                  ? null
-                                  : "budget",
-                              ))
-                            }
-                            className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer group select-none focus-visible:outline-none ${
-                              stickyActiveDropdown === "budget"
-                                ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                                : "hover:bg-neutral-50 rounded-full"
-                            }`}
-                          >
-                            <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                              <Wallet className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                              <span
-                                className={`text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
-                              >
-                                {selectedStickyBudget
-                                  ? selectedStickyBudget
-                                  : "Budget"}
-                              </span>
-                            </div>
-                            <ChevronDown
-                              className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "budget" ? "rotate-180" : ""}`}
-                            />
-                          </div>
-
-                          <AnimatePresence>
-                            {stickyActiveDropdown === "budget" && (
-                              <motion.div
-                                initial={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                animate={{
-                                  opacity: 1,
-                                  clipPath: "inset(0% 0% 0% 0%)",
-                                }}
-                                exit={{
-                                  opacity: 0,
-                                  clipPath: "inset(0% 0% 100% 0%)",
-                                }}
-                                transition={{
-                                  type: "tween",
-                                  ease: "easeOut",
-                                  duration: 0.2,
-                                }}
-                                className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left"
-                              >
-                                <div className="space-y-2 md:space-y-3">
-                                  <div className="grid grid-cols-1 gap-1">
-                                    {[
-                                      { label: "₱1k - ₱3k", val: "1500" },
-                                      { label: "₱3k - ₱5k", val: "4000" },
-                                      { label: "₱5k+", val: "6000" },
-                                    ].map((range) => (
-                                      <button
-                                        key={range.label}
-                                        onClick={() => {
-                                          setSelectedStickyBudget(range.label);
-                                          setStickyActiveDropdown(null);
-                                        }}
-                                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
-                                      >
-                                        <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">
-                                          {range.label}
-                                        </span>
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-
-                        {/* Search Button */}
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (stickyHasSelections) {
-                              const terms = [];
-                              if (selectedStickyLocation)
-                                terms.push(selectedStickyLocation);
-                              if (selectedStickyDateStr)
-                                terms.push(selectedStickyDateStr);
-                              if (selectedStickyBudget)
-                                terms.push(selectedStickyBudget);
-                              setSearchQuery(terms.join(" "));
-                              setStickyActiveDropdown(null);
-                              const searchAnchor = document.getElementById(
-                                "search-results-anchor",
-                              );
-                              if (searchAnchor) {
-                                searchAnchor.scrollIntoView({
-                                  behavior: "smooth",
-                                });
-                              }
-                            } else {
-                              addSearch(searchQuery);
-                              setSearchQuery("");
-                              setIsStickySearchActive(true);
-                              setStickyActiveDropdown(null);
                             }
                           }}
+                          placeholder="Search rooms, location..."
+                          className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
+                          autoFocus
+                        />
+                        {searchQuery && (
+                          <button
+                            onClick={() => {
+                              setSearchQuery("");
+                              setHideStickyDropdown(true);
+                            }}
+                            className="p-1 hover:bg-neutral-100 rounded-full mr-2 flex-shrink-0"
+                            aria-label="Clear search"
+                          >
+                            <X className="w-3.5 h-3.5 text-neutral-500" />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => {
+                            addSearch(searchQuery);
+                            setIsStickySearchActive(false);
+                          }}
+                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                           aria-label="Search"
-                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                         >
                           <Search
                             size={16}
-                            className="text-white group-hover:stroke-[3px] transition-all"
+                            className="text-white"
                           />
                         </button>
-                      </>
-                    )}
-                  </div>
+                      </div>
+                      {!hideStickyDropdown && (
+                        <SearchDropdown
+                          searchQuery={searchQuery}
+                          setSearchQuery={(val) => {
+                            setSearchQuery(val);
+                            setHideStickyDropdown(true);
+                          }}
+                          onClose={() => {
+                            setHideStickyDropdown(true);
+                            setIsStickySearchActive(false);
+                          }}
+                          onSelectListing={(id) => handleListingClick(id)}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {/* Sticky Location Section */}
+                      <div className="flex-[1.2] min-w-0">
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          aria-label="Location: Location"
+                          onClick={() => {
+                            setStickyActiveDropdown(
+                              stickyActiveDropdown === "location"
+                                ? null
+                                : "location",
+                            );
+                          }}
+                          onKeyDown={(e) =>
+                            (e.key === "Enter" || e.key === " ") &&
+                            (e.preventDefault(),
+                            setStickyActiveDropdown(
+                              stickyActiveDropdown === "location"
+                                ? null
+                                : "location",
+                            ))
+                          }
+                          className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
+                            stickyActiveDropdown === "location"
+                              ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
+                              : "hover:bg-neutral-50 rounded-full"
+                          }`}
+                        >
+                          <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
+                            <MapPin className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                            <span
+                              className={`text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
+                            >
+                              {selectedStickyLocation
+                                ? selectedStickyLocation
+                                : "Location"}
+                            </span>
+                          </div>
+                          <ChevronDown
+                            className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "location" ? "rotate-180" : ""}`}
+                          />
+                        </div>
+
+                        {stickyActiveDropdown === "location" && (
+                          <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-50 text-left cursor-default">
+                            <div className="space-y-3">
+                              <div>
+                                <div
+                                  className="flex items-center px-2.5 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 cursor-text"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    (
+                                      e.currentTarget.querySelector(
+                                        "input",
+                                      ) as HTMLInputElement
+                                    )?.focus();
+                                  }}
+                                >
+                                  <Search className="w-3.5 h-3.5 text-neutral-400 mr-1.5 flex-shrink-0" />
+                                  <input
+                                    type="text"
+                                    placeholder="Search..."
+                                    value={searchQuery}
+                                    onChange={(e) =>
+                                      setSearchQuery(e.target.value)
+                                    }
+                                    className="w-full bg-transparent border-none outline-none text-xs font-semibold text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  {POPULAR_LOCATIONS.map((loc) => (
+                                    <button
+                                      key={loc}
+                                      onClick={() => {
+                                        setSelectedStickyLocation(loc);
+                                        setStickyActiveDropdown(null);
+                                      }}
+                                      className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 group"
+                                    >
+                                      <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white flex-shrink-0">
+                                        <MapPin size={12} />
+                                      </div>
+                                      <span className="font-medium text-neutral-800 text-xs whitespace-nowrap">
+                                        {loc}
+                                      </span>
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="w-[1px] h-3 sm:h-4 bg-white/20 flex-shrink-0 self-center" />
+
+                      {/* Sticky Dates Section */}
+                      <div className="flex-1 min-w-0">
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          aria-label="Add dates"
+                          onClick={() => {
+                            setStickyActiveDropdown(
+                              stickyActiveDropdown === "dates"
+                                ? null
+                                : "dates",
+                            );
+                          }}
+                          onKeyDown={(e) =>
+                            (e.key === "Enter" || e.key === " ") &&
+                            (e.preventDefault(),
+                            setStickyActiveDropdown(
+                              stickyActiveDropdown === "dates"
+                                ? null
+                                : "dates",
+                            ))
+                          }
+                          className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-4 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
+                            stickyActiveDropdown === "dates"
+                              ? "bg-neutral-100 rounded-full text-black relative z-[60] shadow-sm"
+                              : "hover:bg-neutral-50 rounded-full"
+                          }`}
+                        >
+                          <div className="flex items-center gap-1 md:gap-3 min-w-0">
+                            <CalendarIcon
+                              className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]"
+                              strokeWidth={2}
+                            />
+                            <span
+                              className={`text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
+                            >
+                              {selectedStickyDateStr
+                                ? selectedStickyDateStr
+                                : "Dates"}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1 md:gap-2">
+                            <ChevronDown
+                              className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "dates" ? "rotate-180 opacity-50" : ""}`}
+                            />
+                          </div>
+                        </div>
+
+                        {stickyActiveDropdown === "dates" && (
+                          <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 overflow-hidden z-50 text-left">
+                            <DateScrollPicker
+                              viewportHeight={132}
+                              onDateChange={(m, d, y) => {
+                                setSelectedStickyDateStr(`${m} ${d}, ${y}`);
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
+
+                      {/* Sticky Budget Section */}
+                      <div className="flex-1 min-w-0">
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          aria-label="Add budget"
+                          onClick={() => {
+                            setStickyActiveDropdown(
+                              stickyActiveDropdown === "budget"
+                                ? null
+                                : "budget",
+                            );
+                          }}
+                          onKeyDown={(e) =>
+                            (e.key === "Enter" || e.key === " ") &&
+                            (e.preventDefault(),
+                            setStickyActiveDropdown(
+                              stickyActiveDropdown === "budget"
+                                ? null
+                                : "budget",
+                            ))
+                          }
+                          className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
+                            stickyActiveDropdown === "budget"
+                              ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
+                              : "hover:bg-neutral-50 rounded-full"
+                          }`}
+                        >
+                          <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
+                            <Wallet className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                            <span
+                              className={`text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
+                            >
+                              {selectedStickyBudget
+                                ? selectedStickyBudget
+                                : "Budget"}
+                            </span>
+                          </div>
+                          <ChevronDown
+                            className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "budget" ? "rotate-180" : ""}`}
+                          />
+                        </div>
+
+                        {stickyActiveDropdown === "budget" && (
+                          <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left">
+                            <div className="space-y-2 md:space-y-3">
+                              <div className="grid grid-cols-1 gap-1">
+                                {[
+                                  { label: "₱1k - ₱3k", val: "1500" },
+                                  { label: "₱3k - ₱5k", val: "4000" },
+                                  { label: "₱5k+", val: "6000" },
+                                ].map((range) => (
+                                  <button
+                                    key={range.label}
+                                    onClick={() => {
+                                      setSelectedStickyBudget(range.label);
+                                      setStickyActiveDropdown(null);
+                                    }}
+                                    className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
+                                  >
+                                    <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">
+                                      {range.label}
+                                    </span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Search Button */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (stickyHasSelections) {
+                            const terms = [];
+                            if (selectedStickyLocation)
+                              terms.push(selectedStickyLocation);
+                            if (selectedStickyDateStr)
+                              terms.push(selectedStickyDateStr);
+                            if (selectedStickyBudget)
+                              terms.push(selectedStickyBudget);
+                            setSearchQuery(terms.join(" "));
+                            setStickyActiveDropdown(null);
+                            const searchAnchor = document.getElementById(
+                              "search-results-anchor",
+                            );
+                            if (searchAnchor) {
+                              searchAnchor.scrollIntoView({
+                                behavior: "smooth",
+                              });
+                            }
+                          } else {
+                            addSearch(searchQuery);
+                            setSearchQuery("");
+                            setIsStickySearchActive(true);
+                            setStickyActiveDropdown(null);
+                          }
+                        }}
+                        aria-label="Search"
+                        className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                      >
+                        <Search
+                          size={16}
+                          className="text-white"
+                        />
+                      </button>
+                    </>
+                  )}
                 </div>
-                <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
-                  <Filters
-                    currentFilters={filters}
-                    onFilterChange={setFilters}
-                  />
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="categories"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center justify-between w-full"
-              >
-                <div className="flex-1 min-w-0 relative group/cat pl-2 sm:pl-0">
-                  <Categories
-                    selectedCategory={selectedCategory}
-                    onSelect={setSelectedCategory}
-                  />
-                </div>
-                <div className="pl-1 sm:pl-4 pr-2 sm:pr-0">
-                  <Filters
-                    currentFilters={filters}
-                    onFilterChange={setFilters}
-                  />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+              <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
+                <Filters
+                  currentFilters={filters}
+                  onFilterChange={setFilters}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between w-full">
+              <div className="flex-1 min-w-0 relative group/cat pl-2 sm:pl-0">
+                <Categories
+                  selectedCategory={selectedCategory}
+                  onSelect={setSelectedCategory}
+                />
+              </div>
+              <div className="pl-1 sm:pl-4 pr-2 sm:pr-0">
+                <Filters
+                  currentFilters={filters}
+                  onFilterChange={setFilters}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -727,7 +647,7 @@ export default function Home() {
                 setIsStickySearchActive(false);
                 setHideStickyDropdown(true);
               }}
-              className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800 transition"
+              className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800"
             >
               Clear all filters & search
             </button>

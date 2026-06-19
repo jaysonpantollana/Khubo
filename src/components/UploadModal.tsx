@@ -7,7 +7,7 @@
 // @known-issues: MAX_FILE_SIZE is hardcoded at 10MB; no image/video preview before upload
 
 import React, { useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { Upload, X, Shield, FileText } from 'lucide-react';
 
 interface UploadModalProps {

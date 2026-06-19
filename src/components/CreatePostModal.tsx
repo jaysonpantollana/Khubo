@@ -7,7 +7,7 @@
 // @known-issues: New post ID uses Math.random() (not stable stable for SSR)
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+
 import { X } from 'lucide-react';
 import { Roommate } from '../types';
 
@@ -76,22 +76,13 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
   if (!isOpen) return null;
 
   return (
-    <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
+        <div
           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           onClick={onClose}
         />
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+        <div
           className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden max-h-[90vh]"
         >
           {/* Header */}
@@ -225,8 +216,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
               Post
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
   );
 }

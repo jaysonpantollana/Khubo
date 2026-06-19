@@ -30,7 +30,6 @@
 
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy } from 'react';
-import { MotionConfig } from 'motion/react';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ThemeProvider } from './lib/ThemeContext';
 import { AuthProvider } from './lib/AuthContext';
@@ -71,8 +70,7 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <ToastProvider>
-          <MotionConfig reducedMotion="user">
-            <Router>
+          <Router>
               <SkipLink />
               <ScrollToTop />
               <ErrorBoundary fallback={<PageError />}>
@@ -92,7 +90,6 @@ export default function App() {
                 </Suspense>
               </ErrorBoundary>
             </Router>
-          </MotionConfig>
         </ToastProvider>
       </AuthProvider>
     </ThemeProvider>

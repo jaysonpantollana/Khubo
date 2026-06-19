@@ -7,23 +7,17 @@
 
 import { Star, ShieldCheck } from 'lucide-react';
 import { Listing } from '../types';
-import { motion } from 'motion/react';
 
 interface ListingCardProps {
   listing: Listing;
   onClick: () => void;
   compact?: boolean;
-  disableInitialAnimation?: boolean;
 }
 
-export default function ListingCard({ listing, onClick, compact, disableInitialAnimation }: ListingCardProps) {
+export default function ListingCard({ listing, onClick, compact }: ListingCardProps) {
   if (compact) {
     return (
-      <motion.div 
-        initial={disableInitialAnimation ? false : { opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        transition={{ duration: 0.2 }}
+      <div 
         onClick={onClick}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -33,7 +27,7 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
         }}
         tabIndex={0}
         role="button"
-        className="col-span-1 cursor-pointer bg-white rounded-xl p-2 sm:p-2.5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] flex flex-row gap-3 h-[96px] sm:h-[104px]"
+        className="col-span-1 cursor-pointer bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] flex flex-row gap-3 h-[96px] sm:h-[104px]"
       >
         <div className="aspect-[4/3] h-full relative overflow-hidden rounded-lg flex-shrink-0">
           <img
@@ -44,7 +38,7 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
               const target = e.target as HTMLImageElement;
               target.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800';
             }}
-            className="object-cover h-full w-full group-hover:scale-105 transition duration-700"
+            className="object-cover h-full w-full"
           />
           <div aria-hidden="true" className="absolute top-1 right-1 z-10 px-1.5 py-0.5 bg-black/60 backdrop-blur-sm rounded-md text-white text-[7px] font-bold">
             {listing.date}
@@ -70,16 +64,12 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.div 
-      initial={disableInitialAnimation ? false : { opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.3 }}
+    <div 
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -90,7 +80,7 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
       tabIndex={0}
       role="button"
       aria-label={`View details for ${listing.title} at ${listing.location}. Price P${listing.price} per month. Rating ${listing.rating.toFixed(2)} stars.`}
-      className="col-span-1 cursor-pointer bg-white rounded-2xl p-2 sm:p-3 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] focus-visible:ring-offset-2"
+      className="col-span-1 cursor-pointer bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent hover:border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] focus-visible:ring-offset-2"
     >
       <div className="flex flex-col gap-2.5 sm:gap-3 w-full">
         <div className="aspect-[4/3] relative overflow-hidden rounded-xl">
@@ -102,7 +92,7 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
               const target = e.target as HTMLImageElement;
               target.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800';
             }}
-            className="object-cover h-full w-full group-hover:scale-105 transition duration-700"
+            className="object-cover h-full w-full"
           />
           <div aria-hidden="true" className="absolute top-2.5 right-2.5 z-10 px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded-full text-white text-[9px] sm:text-[10px] font-bold">
             {listing.date}
@@ -142,6 +132,6 @@ export default function ListingCard({ listing, onClick, compact, disableInitialA
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -11,15 +11,3 @@
     }
   }
 }
-{
-  "permission": {
-    "external_directory": {
-      "C:\\**": "allow"
-    }
-  }
-}
-"permission": {
-  "external_directory": {
-    "~/.config/jayson-chrome/**": "allow"
-  }
-}

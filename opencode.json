@@ -11,3 +11,10 @@
     }
   }
 }
+{
+  "permission": {
+    "external_directory": {
+      "C:\\**": "allow"
+    }
+  }
+}

@@ -9,5 +9,13 @@
       ],
       "enabled": true
     }
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "rm *": "deny",
+      "*": "allow"
+    },
+    "browser": "allow"
   }
 }

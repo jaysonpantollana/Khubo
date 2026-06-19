@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, GraduationCap, Briefcase, Clock } from 'lucide-react';
 import { cn } from '../lib/utils';
+import type { OnboardingData } from './OnboardingFlow';
 
 interface OccupationOption {
   id: string;
@@ -32,13 +33,14 @@ const occupations: OccupationOption[] = [
 ];
 
 interface OccupationStepProps {
+  data: OnboardingData;
   onBack?: () => void;
   onClose?: () => void;
   onContinue?: (occupation: string) => void;
 }
 
-export function OccupationStep({ onBack, onClose, onContinue }: OccupationStepProps) {
-  const [selected, setSelected] = useState<string | null>(null);
+export function OccupationStep({ data, onBack, onClose, onContinue }: OccupationStepProps) {
+  const [selected, setSelected] = useState<string | null>(data.occupation);
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">

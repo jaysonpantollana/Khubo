@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { X, Camera, MapPin, ChevronDown, User, Mail, Phone, BookOpen } from 'lucide-react';
+import type { OnboardingData } from './OnboardingFlow';
 
 interface OnboardingModalProps {
   isOpen: boolean;
+  data: OnboardingData;
   onClose: () => void;
-  onComplete: () => void;
+  onComplete: (data: Partial<OnboardingData>) => void;
 }
 
 const PHILIPPINE_CITIES = [
@@ -35,18 +37,19 @@ const BARANGAYS_ILIGAN: Record<string, string[]> = {
   ]
 };
 
-export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModalProps) {
+export function OnboardingModal({ isOpen, data, onClose, onComplete }: OnboardingModalProps) {
   const [step] = useState(1);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [bio, setBio] = useState('');
-  const [city, setCity] = useState('');
-  const [barangay, setBarangay] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
+  const [username, setUsername] = useState(data.username);
+  const [email, setEmail] = useState(data.email);
+  const [phone, setPhone] = useState(data.phone);
+  const [bio, setBio] = useState(data.bio);
+  const [city, setCity] = useState(data.city);
+  const [barangay, setBarangay] = useState(data.barangay);
+  const [streetAddress, setStreetAddress] = useState(data.streetAddress);
+  const [gender, setGender] = useState(data.gender);
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [showBarangayDropdown, setShowBarangayDropdown] = useState(false);
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(data.profilePhoto);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +62,7 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
   };
 
   const handleContinue = () => {
-    onComplete();
+    onComplete({ username, email, phone, bio, city, barangay, streetAddress, gender, profilePhoto });
   };
 
   if (!isOpen) return null;
@@ -190,6 +193,8 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
               </label>
               <div className="relative">
                 <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
                   className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 appearance-none cursor-pointer"
                 >
                   <option value="">Select gender</option>

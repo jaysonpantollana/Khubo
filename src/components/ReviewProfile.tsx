@@ -1,10 +1,13 @@
 import { X, Pencil, AlertCircle, User, Mail, Phone, BookOpen, MapPin, Briefcase, Moon, Users, Sparkles } from 'lucide-react';
 import { cn } from '../lib/utils';
+import type { OnboardingData } from './OnboardingFlow';
 
 interface ReviewProfileProps {
+  data: OnboardingData;
   onBack?: () => void;
   onClose?: () => void;
   onContinue?: () => void;
+  onEditStep?: (step: number) => void;
 }
 
 interface FieldRowProps {

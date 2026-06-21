@@ -254,7 +254,7 @@ export default function Maps() {
 
     map.current.on("zoom", () => {
       const zoom = map.current!.getZoom();
-      if (zoom < 14 && selectedListingRef.current) {
+      if (zoom < 15 && selectedListingRef.current) {
         setSelectedListing(null);
       }
     });

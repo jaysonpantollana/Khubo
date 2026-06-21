@@ -12,6 +12,7 @@ import { X, Upload, XCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
 import { Listing } from '../types';
+import MapPicker from './MapPicker';
 
 interface EditListingModalProps {
   isOpen: boolean;
@@ -39,6 +40,8 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
   // For images, we track existing URL strings and new File objects separately
   const [existingImages, setExistingImages] = useState<string[]>([]);
   const [newImages, setNewImages] = useState<File[]>([]);
+  const [pinLat, setPinLat] = useState<number | null>(null);
+  const [pinLng, setPinLng] = useState<number | null>(null);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,6 +65,8 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
       
       setExistingImages(listing.gallery || (listing.image ? [listing.image] : []));
       setNewImages([]);
+      setPinLat(listing.lat ?? null);
+      setPinLng(listing.lng ?? null);
       setError(null);
     }
   }, [isOpen, listing]);
@@ -144,6 +149,8 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
         amenities: selectedAmenities,
         image: finalGallery[0], // Main image
         gallery: finalGallery,
+        lat: pinLat,
+        lng: pinLng,
       };
 
       const { error: dbError } = await supabase
@@ -249,6 +256,20 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Location</label>
                   <input required value={location} onChange={e => setLocation(e.target.value)} type="text" placeholder="e.g. Tibanga, Iligan City" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                 </div>
+
+                {/* Map Pin Location */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-neutral-800 mb-2">Pin Exact Location</label>
+                  <MapPicker
+                    lat={pinLat}
+                    lng={pinLng}
+                    onLocationSelect={(lat, lng) => {
+                      setPinLat(lat);
+                      setPinLng(lng);
+                    }}
+                  />
+                </div>
+
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Description</label>
                   <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the listing..." className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] resize-none" />

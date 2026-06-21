@@ -35,6 +35,8 @@ export interface Listing {
   lng?: number;
   reviews: Review[];
   host?: HostInfo;
+  tenants?: TenantInfo[];
+  isActive?: boolean;
 }
 
 export interface Review {
@@ -55,6 +57,17 @@ export interface HostInfo {
   work: string;
   location: string;
   tenantCount?: number;
+}
+
+export interface TenantInfo {
+  id: string;
+  name: string;
+  image: string;
+  email: string;
+  phone?: string;
+  moveInDate: string;
+  status: 'active' | 'leaving' | 'moved_out';
+  paymentStatus: 'paid' | 'pending' | 'overdue';
 }
 
 // @context: Listing category

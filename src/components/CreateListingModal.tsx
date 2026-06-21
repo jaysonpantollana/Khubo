@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { X, Upload, XCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
+import MapPicker from './MapPicker';
 
 interface CreateListingModalProps {
   isOpen: boolean;
@@ -34,6 +35,8 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
   const [images, setImages] = useState<File[]>([]);
+  const [pinLat, setPinLat] = useState<number | null>(null);
+  const [pinLng, setPinLng] = useState<number | null>(null);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -110,7 +113,9 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         image: imageUrls[0], // Main image
         gallery: imageUrls,
         rating: 0,
-        host_id: user.id
+        host_id: user.id,
+        lat: pinLat,
+        lng: pinLng,
       };
 
       const { error: dbError } = await supabase
@@ -130,6 +135,8 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setCategory(CATEGORIES[0]);
       setSelectedAmenities([]);
       setImages([]);
+      setPinLat(null);
+      setPinLng(null);
 
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred while creating listing.');
@@ -208,6 +215,20 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Location</label>
                   <input required value={location} onChange={e => setLocation(e.target.value)} type="text" placeholder="e.g. Tibanga, Iligan City" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                 </div>
+
+                {/* Map Pin Location */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-neutral-800 mb-2">Pin Exact Location</label>
+                  <MapPicker
+                    lat={pinLat}
+                    lng={pinLng}
+                    onLocationSelect={(lat, lng) => {
+                      setPinLat(lat);
+                      setPinLng(lng);
+                    }}
+                  />
+                </div>
+
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Description</label>
                   <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the listing..." className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] resize-none" />

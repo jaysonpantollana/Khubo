@@ -5,15 +5,17 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Listing } from '../types';
+import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
   Settings, HelpCircle, LogOut, Bell, Building, Check, X,
+  MoreVertical, Copy, User, Users,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../lib/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { supabase } from '../mocks/supabase';
+import { updateListing } from '../lib/api/listings';
 import { EditListingModal } from '../components/EditListingModal';
 import { CreateListingModal } from '../components/CreateListingModal';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
@@ -22,6 +24,7 @@ import { AnalyticsModal } from '../components/AnalyticsModal';
 import { TenantsModal } from '../components/TenantsModal';
 import { PropertiesModal } from '../components/PropertiesModal';
 import { InquiriesModal } from '../components/InquiriesModal';
+import { ListingDetailModal } from '../components/ListingDetailModal';
 import EditProfileModal from '../components/profile/EditProfileModal';
 import LogoutModal from '../components/profile/LogoutModal';
 import LandlordSignupModal from '../components/profile/LandlordSignupModal';
@@ -37,6 +40,7 @@ export default function Profile() {
   const [isTenantsModalOpen, setIsTenantsModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
+  const [selectedListingDetail, setSelectedListingDetail] = useState<Listing | null>(null);
 
   useEffect(() => {
     document.title = "Profile | Khubo";
@@ -52,6 +56,8 @@ export default function Profile() {
   const [loadingListings, setLoadingListings] = useState(false);
   const [editingListing, setEditingListing] = useState<Listing | null>(null);
   const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
+  const [listingVisibility, setListingVisibility] = useState<Record<string, boolean>>({});
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   const [profileName, setProfileName] = useState('Micheal B. Jordan');
   const [profileDetails, setProfileDetails] = useState('MSU-IIT | 20yrs old | Female');
@@ -148,7 +154,8 @@ export default function Profile() {
       isCreateListingOpen || showSignupModal || isAnalyticsModalOpen ||
       isTenantsModalOpen || isPropertiesModalOpen || isInquiriesModalOpen ||
       isEditProfileOpen || selectedStatModal !== null || editingListing !== null ||
-      isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen;
+      isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
+      selectedListingDetail !== null;
 
     document.body.style.overflow = isAnyModalOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -156,7 +163,39 @@ export default function Profile() {
     isCreateListingOpen, showSignupModal, isAnalyticsModalOpen, isTenantsModalOpen,
     isPropertiesModalOpen, isInquiriesModalOpen, isEditProfileOpen, selectedStatModal,
     editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
+    selectedListingDetail,
   ]);
+
+  useEffect(() => {
+    if (myListings.length > 0) {
+      const initial: Record<string, boolean> = {};
+      myListings.forEach(l => { initial[l.id] = l.isActive !== false; });
+      setListingVisibility(initial);
+    }
+  }, [myListings]);
+
+  useEffect(() => {
+    const handleClickOutside = () => setOpenMenuId(null);
+    if (openMenuId) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [openMenuId]);
+
+  const handleToggleListing = useCallback(async (listingId: string) => {
+    const currentVisible = listingVisibility[listingId] !== false;
+    const newVisible = !currentVisible;
+    setListingVisibility(prev => ({ ...prev, [listingId]: newVisible }));
+    setMyListings(prev => prev.map(l => l.id === listingId ? { ...l, isActive: newVisible } : l));
+    const { error } = await updateListing(listingId, { isActive: newVisible });
+    if (error) {
+      setListingVisibility(prev => ({ ...prev, [listingId]: currentVisible }));
+      setMyListings(prev => prev.map(l => l.id === listingId ? { ...l, isActive: currentVisible } : l));
+      showToast('Failed to update listing', 'error');
+    } else {
+      showToast(newVisible ? 'Listing is now active' : 'Listing hidden from search', 'success');
+    }
+  }, [listingVisibility, showToast]);
 
   const fetchMyListings = useCallback(async () => {
     if (!user) return;
@@ -192,6 +231,8 @@ export default function Profile() {
         { title: 'Roommate', count: '6', sub: 'Applications' },
         { title: 'Invitation', count: '0', sub: 'Received' },
       ];
+
+  const mockListed = listingVisibility['mock-listing'] ?? true;
 
   const handleStatClick = (title: string) => {
     if (title === 'Revenue') setIsAnalyticsModalOpen(true);
@@ -386,7 +427,7 @@ export default function Profile() {
               ))}
             </div>
           ) : myListings.length === 0 ? (
-            <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors mb-16">
+            <div className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors mb-16 ${!mockListed ? 'opacity-60' : ''}`}>
               <img
                 src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800"
                 alt="Mock listing"
@@ -396,9 +437,52 @@ export default function Profile() {
                 <div>
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
                     <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">Premium Apartment</h3>
-                    <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto shrink-0">
-                      Active Listing
-                    </span>
+                    <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+                      <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${mockListed ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
+                        {mockListed ? 'Active Listing' : 'Unlisted'}
+                      </span>
+                      <div className="relative" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          onClick={() => setOpenMenuId(openMenuId === 'mock-listing' ? null : 'mock-listing')}
+                          className="p-2 hover:bg-neutral-100 rounded-full transition cursor-pointer"
+                        >
+                          <MoreVertical size={18} className="text-neutral-600" />
+                        </button>
+                        {openMenuId === 'mock-listing' && (
+                          <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-neutral-100 py-1 z-50 min-w-[160px]">
+                            <button
+                              onClick={() => {
+                                setEditingListing({
+                                  id: 'mock-listing',
+                                  title: 'Premium Apartment',
+                                  description: 'A beautiful apartment in Tibanga, Iligan City.',
+                                  price: 5000,
+                                  location: 'Tibanga, Iligan City',
+                                  category: 'apartment',
+                                  amenities: ['Wifi', 'AC'],
+                                  image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800',
+                                  gallery: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800'],
+                                  rating: 5,
+                                  reviews: [],
+                                  date: '2026-01-01',
+                                });
+                                setOpenMenuId(null);
+                              }}
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                            >
+                              <Edit2 size={14} /> Edit
+                            </button>
+                            <div className="h-px bg-neutral-100 my-1" />
+                            <button
+                              onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                            >
+                              <Copy size={14} /> Copy link
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                   <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
                     <MapPin size={16} className="shrink-0" /> Tibanga, Iligan City
@@ -419,14 +503,24 @@ export default function Profile() {
                     <span className="text-2xl md:text-[28px] font-black text-black">₱5,000</span>
                     <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                   </div>
+                  <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      onClick={() => setListingVisibility(prev => ({ ...prev, 'mock-listing': !mockListed }))}
+                      className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${mockListed ? 'bg-[#4CAF50]' : 'bg-neutral-300'}`}
+                    >
+                      <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${mockListed ? 'left-6' : 'left-1'}`} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           ) : (
             <div className="flex flex-col gap-6 mb-16">
-              {myListings.map(listing => (
-                <div key={listing.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full">
-                  <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] shrink-0 relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in" onClick={() => handleOpenGallery(listing)}>
+              {myListings.map(listing => {
+                const isListed = listingVisibility[listing.id] ?? true;
+                return (
+                <div key={listing.id} onClick={() => setSelectedListingDetail(listing)} className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 ${!isListed ? 'opacity-60' : ''}`}>
+                  <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] shrink-0 relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group">
                     <img
                       src={listing.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800'}
                       alt={listing.title}
@@ -438,24 +532,60 @@ export default function Profile() {
                     <div>
                       <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
                         <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">{listing.title}</h3>
-                        <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto shrink-0">
-                          Active Listing
-                        </span>
+                        <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+                          <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${isListed ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
+                            {isListed ? 'Active Listing' : 'Unlisted'}
+                          </span>
+                          <div className="relative" onClick={(e) => e.stopPropagation()}>
+                            <button
+                              onClick={() => setOpenMenuId(openMenuId === listing.id ? null : listing.id)}
+                              className="p-2 hover:bg-neutral-100 rounded-full transition cursor-pointer"
+                            >
+                              <MoreVertical size={18} className="text-neutral-600" />
+                            </button>
+                            {openMenuId === listing.id && (
+                              <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-neutral-100 py-1 z-50 min-w-[160px]">
+                                <button
+                                  onClick={() => { setEditingListing(listing); setOpenMenuId(null); }}
+                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                                >
+                                  <Edit2 size={14} /> Edit
+                                </button>
+                                <div className="h-px bg-neutral-100 my-1" />
+                                <button
+                                  onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
+                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                                >
+                                  <Copy size={14} /> Copy link
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
                       <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
                         <MapPin size={16} className="shrink-0" /> {listing.location}
                       </p>
+                      <p className="text-neutral-500 text-xs md:text-sm mb-3 line-clamp-2 leading-relaxed">{listing.description}</p>
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <span className="px-3 py-1 bg-neutral-50 border border-neutral-100 rounded-full text-xs font-bold text-neutral-600">{listing.category}</span>
+                        <span className="px-3 py-1 bg-neutral-50 border border-neutral-100 rounded-full text-xs font-bold text-neutral-600">{listing.date}</span>
+                      </div>
                       <div className="flex flex-wrap items-center gap-4">
                         {listing.rating > 0 && (
                           <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
                             <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                            <span className="text-sm font-bold text-neutral-800">{listing.rating.toFixed(2)}</span>
+                            <span className="text-sm font-bold text-neutral-800">{listing.rating.toFixed(1)}</span>
+                            <span className="text-xs text-neutral-400">({listing.reviews.length})</span>
                           </div>
                         )}
                         <div className="flex flex-wrap gap-2">
-                          {listing.amenities?.slice(0, 3).map((amenity: string, idx: number) => (
-                            <span key={idx} className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">{amenity}</span>
+                          {listing.amenities?.slice(0, 4).map((amenity: string, idx: number) => (
+                            <span key={idx} className="px-3 py-1 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">{amenity}</span>
                           ))}
+                          {listing.amenities && listing.amenities.length > 4 && (
+                            <span className="px-3 py-1 border border-neutral-200 rounded-full text-xs font-bold text-neutral-400">+{listing.amenities.length - 4}</span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -465,17 +595,23 @@ export default function Profile() {
                         <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                       </div>
                       <div className="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto">
-                        <button onClick={() => setEditingListing(listing)} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold hover:bg-neutral-50 transition active:scale-95 text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
+                        <button onClick={(e) => { e.stopPropagation(); setEditingListing(listing); }} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold hover:bg-neutral-50 transition active:scale-95 text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
                           <Edit2 size={16} className="text-neutral-600" /> Edit
                         </button>
-                        <button className="flex-1 md:flex-none px-8 py-3 bg-[#4CAF50] text-white rounded-full font-bold hover:bg-[#43A047] shadow-lg shadow-[#4CAF50]/30 transition active:scale-95 text-sm md:text-base whitespace-nowrap">
-                          Manage Tenants
-                        </button>
+                        <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
+                          <button
+                            onClick={() => handleToggleListing(listing.id)}
+                            className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${isListed ? 'bg-[#4CAF50]' : 'bg-neutral-300'}`}
+                          >
+                            <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${isListed ? 'left-6' : 'left-1'}`} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
           )
         ) : (
@@ -637,6 +773,13 @@ export default function Profile() {
       <TenantsModal isOpen={isTenantsModalOpen} onClose={() => setIsTenantsModalOpen(false)} />
       <PropertiesModal isOpen={isPropertiesModalOpen} onClose={() => setIsPropertiesModalOpen(false)} listings={myListings} />
       <InquiriesModal isOpen={isInquiriesModalOpen} onClose={() => setIsInquiriesModalOpen(false)} />
+      {selectedListingDetail && (
+        <ListingDetailModal
+          isOpen={true}
+          onClose={() => setSelectedListingDetail(null)}
+          listing={selectedListingDetail}
+        />
+      )}
     </div>
   );
 }

@@ -25,6 +25,7 @@ import RoommateModal from "../components/RoommateModal";
 import { Roommate } from "../types";
 import RoommateSearchDropdown from "../components/RoommateSearchDropdown";
 import CreatePostModal from "../components/CreatePostModal";
+import { RoommatesPopup } from "../components/RoommatesPopup";
 
 const TAGS = [
   "ALL",
@@ -66,6 +67,8 @@ export default function RoommateFinder() {
   const [hideStickyDropdown, setHideStickyDropdown] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+  const [findingPopupOpen, setFindingPopupOpen] = useState(false);
+  const [applyingPopupOpen, setApplyingPopupOpen] = useState(false);
 
   const [roommates, setRoommates] = useState<Roommate[]>(() => {
     const saved = localStorage.getItem("custom_roommates");
@@ -656,7 +659,10 @@ export default function RoommateFinder() {
           {(loading || filteredRoommates.length > 0) && (
             <div className="flex flex-col gap-5 md:gap-6">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 group cursor-pointer min-w-0">
+                <div
+                  className="flex items-center gap-2 group cursor-pointer min-w-0"
+                  onClick={() => setFindingPopupOpen(true)}
+                >
                   <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
                     Finding Roommate
                   </h2>
@@ -716,7 +722,10 @@ export default function RoommateFinder() {
           {(loading || filteredRoommates.length > 0) && (
             <div className="flex flex-col gap-5 md:gap-6">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 group cursor-pointer min-w-0">
+                <div
+                  className="flex items-center gap-2 group cursor-pointer min-w-0"
+                  onClick={() => setApplyingPopupOpen(true)}
+                >
                   <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
                     Applying as Roommate
                   </h2>
@@ -816,6 +825,23 @@ export default function RoommateFinder() {
         onClose={() => setIsCreatePostOpen(false)}
         postMode={postMode}
         onPostCreated={handlePostCreated}
+      />
+
+      <RoommatesPopup
+        isOpen={findingPopupOpen}
+        onClose={() => setFindingPopupOpen(false)}
+        title="Finding Roommate"
+        roommates={filteredRoommates.slice(0, 10)}
+        onProfileClick={openProfile}
+      />
+
+      <RoommatesPopup
+        isOpen={applyingPopupOpen}
+        onClose={() => setApplyingPopupOpen(false)}
+        title="Applying as Roommate"
+        roommates={filteredRoommates.slice().reverse().slice(0, 10)}
+        onProfileClick={openProfile}
+        actionLabel="Accept as Roommate"
       />
     </div>
   );

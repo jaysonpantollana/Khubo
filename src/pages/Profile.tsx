@@ -127,6 +127,20 @@ export default function Profile() {
     checkLandlordAccount();
   }, [checkLandlordAccount]);
 
+  const MOCK_TENANTS: TenantInfo[] = [
+    { id: 't1', name: 'Maria Santos', image: 'https://i.pravatar.cc/150?u=t1', email: 'maria@email.com', phone: '09171234567', moveInDate: '2025-01-15', status: 'active', paymentStatus: 'paid' },
+    { id: 't2', name: 'Juan Dela Cruz', image: 'https://i.pravatar.cc/150?u=t2', email: 'juan@email.com', phone: '09181234567', moveInDate: '2025-02-01', status: 'active', paymentStatus: 'paid' },
+    { id: 't3', name: 'Ana Reyes', image: 'https://i.pravatar.cc/150?u=t3', email: 'ana@email.com', phone: '09191234567', moveInDate: '2025-03-10', status: 'leaving', paymentStatus: 'pending' },
+    { id: 't4', name: 'Carlos Garcia', image: 'https://i.pravatar.cc/150?u=t4', email: 'carlos@email.com', phone: '09201234567', moveInDate: '2025-04-01', status: 'active', paymentStatus: 'paid' },
+    { id: 't5', name: 'Sofia Lim', image: 'https://i.pravatar.cc/150?u=t5', email: 'sofia@email.com', phone: '09211234567', moveInDate: '2025-05-15', status: 'moved_out', paymentStatus: 'overdue' },
+  ];
+
+  const getTenantsForListing = useCallback((listingId: string): TenantInfo[] => {
+    const hash = listingId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const count = (hash % 4) + 2;
+    return MOCK_TENANTS.slice(0, Math.min(count, MOCK_TENANTS.length));
+  }, []);
+
   const handleOpenGallery = (listing: Listing | null, fallbackSrc: string = '') => {
     const fallbackImages = [
       'https://images.unsplash.com/photo-1555819485-99aaa4aee26b?auto=format&fit=crop&q=80&w=800',
@@ -497,6 +511,33 @@ export default function Profile() {
                       <span className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">AC</span>
                     </div>
                   </div>
+                  <div className="mt-4 pt-3 border-t border-neutral-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Users size={14} className="text-neutral-500" />
+                        <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Tenants</span>
+                      </div>
+                      <div className="flex items-center">
+                        {MOCK_TENANTS.slice(0, 4).map((t, i) => (
+                          <img
+                            key={t.id}
+                            src={t.image}
+                            alt={t.name}
+                            className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
+                            style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
+                          />
+                        ))}
+                        {MOCK_TENANTS.length > 4 && (
+                          <span
+                            className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                            style={{ marginLeft: '-8px', zIndex: 0 }}
+                          >
+                            +{MOCK_TENANTS.length - 4}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0 pt-4 border-t border-neutral-50 lg:border-none lg:pt-0">
                   <div className="flex items-baseline gap-1">
@@ -586,6 +627,41 @@ export default function Profile() {
                           {listing.amenities && listing.amenities.length > 4 && (
                             <span className="px-3 py-1 border border-neutral-200 rounded-full text-xs font-bold text-neutral-400">+{listing.amenities.length - 4}</span>
                           )}
+                        </div>
+                      </div>
+                      <div className="mt-4 pt-3 border-t border-neutral-100">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Users size={14} className="text-neutral-500" />
+                            <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Tenants</span>
+                          </div>
+                          {(() => {
+                            const listingTenants = getTenantsForListing(listing.id);
+                            const visible = listingTenants.slice(0, 4);
+                            const remaining = listingTenants.length - 4;
+                            return (
+                              <div className="flex items-center">
+                                {visible.map((tenant, i) => (
+                                  <img
+                                    key={tenant.id}
+                                    src={tenant.image}
+                                    alt={tenant.name}
+                                    className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
+                                    style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
+                                    title={tenant.name}
+                                  />
+                                ))}
+                                {remaining > 0 && (
+                                  <span
+                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                                    style={{ marginLeft: '-8px', zIndex: 0 }}
+                                  >
+                                    +{remaining}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </div>
                       </div>
                     </div>

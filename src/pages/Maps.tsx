@@ -64,7 +64,6 @@ export default function Maps() {
   const map = useRef<any>(null);
   const markers = useRef<{ [key: string]: any }>({});
   const markerPopups = useRef<{ [key: string]: HTMLElement }>({});
-  const markerPins = useRef<{ [key: string]: HTMLElement }>({});
   const sdkRef = useRef<any>(null);
   const filters: FilterState = {
     minPrice: 0,
@@ -113,23 +112,6 @@ export default function Maps() {
     selectedListingRef.current = selectedListing;
   }, [selectedListing]);
 
-  const updateMarkerScale = React.useCallback(() => {
-    if (!map.current) return;
-    const zoom = map.current.getZoom();
-    const scale = Math.pow(1.25, zoom - 14);
-    const clampedScale = Math.min(Math.max(scale, 0.3), 3);
-
-    Object.values(markerPopups.current).forEach((popup) => {
-      popup.style.transform = `translateX(-50%) scale(${clampedScale})`;
-      popup.style.transformOrigin = 'bottom center';
-    });
-
-    Object.values(markerPins.current).forEach((pin) => {
-      pin.style.transform = `scale(${clampedScale})`;
-      pin.style.transformOrigin = 'center bottom';
-    });
-  }, []);
-
   const updateMarkers = React.useCallback(() => {
     if (!map.current || !sdkRef.current) return;
 
@@ -160,7 +142,6 @@ export default function Maps() {
             width: 160px;
             z-index: 10;
             pointer-events: none;
-            transform-origin: bottom center;
           ">
             <img src="${listing.image}" alt="${listing.title}" style="width: 100%; height: 100px; object-fit: cover;" />
             <div style="padding: 6px 8px;">
@@ -168,7 +149,7 @@ export default function Maps() {
               <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
             </div>
           </div>
-          <div class="marker-pin" style="cursor: pointer; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); display: flex; align-items: center; justify-content: center; transform-origin: center bottom;">
+          <div class="marker-pin" style="cursor: pointer; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); display: flex; align-items: center; justify-content: center;">
             <svg width="26" height="34" viewBox="0 0 26 34" fill="none">
               <path d="M13 0C5.8 0 0 5.8 0 13c0 2.5 1 4.8 2.6 6.5L13 34l10.4-14.5C24 17.8 25 15.5 25 13 25 5.8 20.2 0 13 0z" fill="#EA4335"/>
               <circle cx="13" cy="11.5" r="4.25" fill="#fff"/>
@@ -183,10 +164,6 @@ export default function Maps() {
         // Store popup element
         const popupEl = el.querySelector('.marker-popup') as HTMLElement;
         if (popupEl) markerPopups.current[listing.id] = popupEl;
-
-        // Store pin element
-        const pinEl = el.querySelector('.marker-pin') as HTMLElement;
-        if (pinEl) markerPins.current[listing.id] = pinEl;
 
         el.addEventListener("click", () => {
           setSelectedListing(listing.id);
@@ -213,16 +190,12 @@ export default function Maps() {
         markers.current[listing.id] = marker;
       }
     });
-
-    updateMarkerScale();
-  }, [filteredListings, updateMarkerScale]);
+  }, [filteredListings]);
 
   const updateMarkersRef = useRef(updateMarkers);
-  const updateMarkerScaleRef = useRef(updateMarkerScale);
   useEffect(() => {
     updateMarkersRef.current = updateMarkers;
-    updateMarkerScaleRef.current = updateMarkerScale;
-  }, [updateMarkers, updateMarkerScale]);
+  }, [updateMarkers]);
 
   useEffect(() => {
     if (map.current) return;

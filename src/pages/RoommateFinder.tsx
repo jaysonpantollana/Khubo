@@ -8,7 +8,7 @@ import RoommateHero from "../components/RoommateHero";
 import RoommateCard from "../components/RoommateCard";
 import RoommateCardSkeleton from "../components/RoommateCardSkeleton";
 import BottomNav from "../components/BottomNav";
-import Filters, { FilterState } from "../components/Filters";
+
 import Footer from "../components/Footer";
 import { ROOMMATES } from "../mocks/roommates";
 import {
@@ -114,12 +114,7 @@ export default function RoommateFinder() {
   const searchObserverRef = useRef<HTMLDivElement>(null);
   const recommendedRef = useRef<HTMLDivElement>(null);
   const nearMsuIitRef = useRef<HTMLDivElement>(null);
-  const [filters, setFilters] = useState<FilterState>({
-    minPrice: 0,
-    maxPrice: 50000,
-    minRating: 0,
-    sortBy: "relevance",
-  });
+
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   React.useEffect(() => {
@@ -589,12 +584,6 @@ export default function RoommateFinder() {
                   <div
                     className="w-4 md:w-12 h-1 flex-shrink-0"
                     aria-hidden="true"
-                  />
-                </div>
-                <div className="pl-4 pr-2 sm:pr-0">
-                  <Filters
-                    currentFilters={filters}
-                    onFilterChange={setFilters}
                   />
                 </div>
               </div>

@@ -1,5 +1,7 @@
 <div align="center">
 
+![Khubo Home Page](public/homepage-screenshot.png)
+
 # KHUBO
 
 **Accommodation & Roommate Finder Platform**

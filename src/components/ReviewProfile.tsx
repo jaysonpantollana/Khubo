@@ -1,4 +1,5 @@
-import { X, Pencil, AlertCircle, User, Mail, Phone, BookOpen, MapPin, Briefcase, Moon, Users, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { X, Pencil, Check, ChevronDown, User, Mail, Phone, BookOpen, MapPin, Briefcase, Moon, Users, Sparkles, AlertCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { OnboardingData } from './OnboardingFlow';
 
@@ -8,6 +9,7 @@ interface ReviewProfileProps {
   onClose?: () => void;
   onContinue?: () => void;
   onEditStep?: (step: number) => void;
+  onUpdateData?: (partial: Partial<OnboardingData>) => void;
 }
 
 interface FieldRowProps {
@@ -28,19 +30,101 @@ function FieldRow({ label, value, icon }: FieldRowProps) {
   );
 }
 
-function SectionCard({ title, onEdit, children }: { title: string; onEdit?: () => void; children: React.ReactNode }) {
+interface EditableFieldProps {
+  label: string;
+  value: string;
+  onChange: (val: string) => void;
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select';
+  options?: { value: string; label: string }[];
+  icon?: React.ReactNode;
+  placeholder?: string;
+}
+
+function EditableField({ label, value, onChange, type = 'text', options, icon, placeholder }: EditableFieldProps) {
+  const baseClasses = "w-full px-3 py-2 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-white text-sm font-medium text-[#17294F]";
+
+  return (
+    <div>
+      <div className="flex items-center gap-1.5 mb-1">
+        {icon && <span className="text-neutral-400">{icon}</span>}
+        <label className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">{label}</label>
+      </div>
+      {type === 'textarea' ? (
+        <textarea
+          rows={3}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className={cn(baseClasses, "resize-none")}
+        />
+      ) : type === 'select' ? (
+        <div className="relative">
+          <select
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className={cn(baseClasses, "appearance-none cursor-pointer pr-8")}
+          >
+            <option value="">Select...</option>
+            {options?.map((opt) => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
+            <ChevronDown size={14} />
+          </div>
+        </div>
+      ) : (
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className={baseClasses}
+        />
+      )}
+    </div>
+  );
+}
+
+function SectionCard({ title, onEdit, editing, onSave, onCancel, children }: {
+  title: string;
+  onEdit?: () => void;
+  editing?: boolean;
+  onSave?: () => void;
+  onCancel?: () => void;
+  children: React.ReactNode;
+}) {
   return (
     <div className="border border-neutral-200 rounded-2xl bg-white overflow-hidden">
       <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-100">
         <h3 className="text-sm font-bold text-[#17294F]">{title}</h3>
-        {onEdit && (
-          <button
-            type="button"
-            onClick={onEdit}
-            className="p-1.5 hover:bg-neutral-100 rounded-full transition-colors cursor-pointer"
-          >
-            <Pencil size={14} className="text-neutral-400 hover:text-[#2252D6] transition-colors" />
-          </button>
+        {editing ? (
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={onCancel}
+              className="p-1.5 hover:bg-neutral-100 rounded-full transition-colors cursor-pointer"
+            >
+              <X size={14} className="text-neutral-400 hover:text-red-500 transition-colors" />
+            </button>
+            <button
+              type="button"
+              onClick={onSave}
+              className="p-1.5 hover:bg-[#2252D6]/10 rounded-full transition-colors cursor-pointer"
+            >
+              <Check size={14} className="text-neutral-400 hover:text-[#2252D6] transition-colors" />
+            </button>
+          </div>
+        ) : (
+          onEdit && (
+            <button
+              type="button"
+              onClick={onEdit}
+              className="p-1.5 hover:bg-neutral-100 rounded-full transition-colors cursor-pointer"
+            >
+              <Pencil size={14} className="text-neutral-400 hover:text-[#2252D6] transition-colors" />
+            </button>
+          )
         )}
       </div>
       <div className="p-5">
@@ -50,7 +134,82 @@ function SectionCard({ title, onEdit, children }: { title: string; onEdit?: () =
   );
 }
 
-export function ReviewProfile({ onBack, onClose, onContinue }: ReviewProfileProps) {
+export function ReviewProfile({ data, onBack, onClose, onContinue, onUpdateData }: ReviewProfileProps) {
+  const [editingSection, setEditingSection] = useState<'identity' | 'occupation' | 'lifestyle' | null>(null);
+
+  const [identityDraft, setIdentityDraft] = useState({
+    username: data.username,
+    email: data.email,
+    phone: data.phone,
+    gender: data.gender,
+    bio: data.bio,
+    city: data.city,
+    barangay: data.barangay,
+    streetAddress: data.streetAddress,
+  });
+
+  const [occupationDraft, setOccupationDraft] = useState(data.occupation || '');
+
+  const [lifestyleDraft, setLifestyleDraft] = useState({
+    sleepSchedule: 'Night Owl',
+    lifestyle: 'Quiet & Focused',
+    socialPreference: 'Low-key',
+    cleanliness: 'Tidy',
+  });
+
+  const formatAddress = (city: string, barangay: string, street: string) => {
+    const parts = [barangay, city].filter(Boolean).join(', ');
+    return street ? `${parts} — ${street}` : parts;
+  };
+
+  const handleSaveIdentity = () => {
+    onUpdateData?.({
+      username: identityDraft.username,
+      email: identityDraft.email,
+      phone: identityDraft.phone,
+      gender: identityDraft.gender,
+      bio: identityDraft.bio,
+      city: identityDraft.city,
+      barangay: identityDraft.barangay,
+      streetAddress: identityDraft.streetAddress,
+    });
+    setEditingSection(null);
+  };
+
+  const handleSaveOccupation = () => {
+    onUpdateData?.({ occupation: occupationDraft || null });
+    setEditingSection(null);
+  };
+
+  const handleCancelIdentity = () => {
+    setIdentityDraft({
+      username: data.username,
+      email: data.email,
+      phone: data.phone,
+      gender: data.gender,
+      bio: data.bio,
+      city: data.city,
+      barangay: data.barangay,
+      streetAddress: data.streetAddress,
+    });
+    setEditingSection(null);
+  };
+
+  const handleCancelOccupation = () => {
+    setOccupationDraft(data.occupation || '');
+    setEditingSection(null);
+  };
+
+  const handleCancelLifestyle = () => {
+    setLifestyleDraft({
+      sleepSchedule: 'Night Owl',
+      lifestyle: 'Quiet & Focused',
+      socialPreference: 'Low-key',
+      cleanliness: 'Tidy',
+    });
+    setEditingSection(null);
+  };
+
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       <div
@@ -96,8 +255,8 @@ export function ReviewProfile({ onBack, onClose, onContinue }: ReviewProfileProp
                 <User size={28} className="text-neutral-400" />
               </div>
             </div>
-            <p className="text-sm font-bold text-[#17294F]">juan_delacruz</p>
-            <p className="text-xs text-neutral-400 font-medium">juan@email.com</p>
+            <p className="text-sm font-bold text-[#17294F]">{data.username || '—'}</p>
+            <p className="text-xs text-neutral-400 font-medium">{data.email || '—'}</p>
 
             <div className="w-full bg-amber-50/80 border border-amber-200/70 rounded-2xl p-3 flex items-center gap-2.5 mt-4">
               <AlertCircle size={16} className="text-amber-600 flex-shrink-0" />
@@ -108,32 +267,175 @@ export function ReviewProfile({ onBack, onClose, onContinue }: ReviewProfileProp
           </div>
 
           <div className="space-y-4">
-            <SectionCard title="Identity & Location" onEdit={() => {}}>
-              <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-                <FieldRow label="Username" value="juan_delacruz" icon={<User size={13} />} />
-                <FieldRow label="Email" value="juan@email.com" icon={<Mail size={13} />} />
-                <FieldRow label="Phone" value="+63 912 345 6789" icon={<Phone size={13} />} />
-                <FieldRow label="Gender" value="Male" />
-              </div>
-              <div className="mt-4">
-                <FieldRow label="Short Bio" value="Looking for a quiet place near the university. I enjoy reading and playing video games on weekends." icon={<BookOpen size={13} />} />
-              </div>
-              <div className="mt-4">
-                <FieldRow label="Address" value="Tibanga, Iligan City — 123 Rizal St." icon={<MapPin size={13} />} />
-              </div>
+            <SectionCard
+              title="Identity & Location"
+              editing={editingSection === 'identity'}
+              onEdit={() => setEditingSection('identity')}
+              onSave={handleSaveIdentity}
+              onCancel={handleCancelIdentity}
+            >
+              {editingSection === 'identity' ? (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                    <EditableField
+                      label="Username"
+                      value={identityDraft.username}
+                      onChange={(val) => setIdentityDraft({ ...identityDraft, username: val })}
+                      icon={<User size={13} />}
+                      placeholder="e.g. juan_delacruz"
+                    />
+                    <EditableField
+                      label="Email"
+                      value={identityDraft.email}
+                      onChange={(val) => setIdentityDraft({ ...identityDraft, email: val })}
+                      type="email"
+                      icon={<Mail size={13} />}
+                      placeholder="e.g. juan@email.com"
+                    />
+                    <EditableField
+                      label="Phone"
+                      value={identityDraft.phone}
+                      onChange={(val) => setIdentityDraft({ ...identityDraft, phone: val })}
+                      type="tel"
+                      icon={<Phone size={13} />}
+                      placeholder="e.g. +63 912 345 6789"
+                    />
+                    <EditableField
+                      label="Gender"
+                      value={identityDraft.gender}
+                      onChange={(val) => setIdentityDraft({ ...identityDraft, gender: val })}
+                      type="select"
+                      options={[
+                        { value: 'male', label: 'Male' },
+                        { value: 'female', label: 'Female' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                    />
+                  </div>
+                  <EditableField
+                    label="Short Bio"
+                    value={identityDraft.bio}
+                    onChange={(val) => setIdentityDraft({ ...identityDraft, bio: val })}
+                    type="textarea"
+                    icon={<BookOpen size={13} />}
+                    placeholder="Tell us about yourself..."
+                  />
+                  <EditableField
+                    label="Address"
+                    value={identityDraft.streetAddress}
+                    onChange={(val) => setIdentityDraft({ ...identityDraft, streetAddress: val })}
+                    icon={<MapPin size={13} />}
+                    placeholder="e.g. 123 Rizal St."
+                  />
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                    <FieldRow label="Username" value={data.username} icon={<User size={13} />} />
+                    <FieldRow label="Email" value={data.email} icon={<Mail size={13} />} />
+                    <FieldRow label="Phone" value={data.phone} icon={<Phone size={13} />} />
+                    <FieldRow label="Gender" value={data.gender} />
+                  </div>
+                  <div className="mt-4">
+                    <FieldRow label="Short Bio" value={data.bio} icon={<BookOpen size={13} />} />
+                  </div>
+                  <div className="mt-4">
+                    <FieldRow label="Address" value={formatAddress(data.city, data.barangay, data.streetAddress)} icon={<MapPin size={13} />} />
+                  </div>
+                </>
+              )}
             </SectionCard>
 
-            <SectionCard title="Occupation" onEdit={() => {}}>
-              <FieldRow label="Status" value="Student" icon={<Briefcase size={13} />} />
+            <SectionCard
+              title="Occupation"
+              editing={editingSection === 'occupation'}
+              onEdit={() => setEditingSection('occupation')}
+              onSave={handleSaveOccupation}
+              onCancel={handleCancelOccupation}
+            >
+              {editingSection === 'occupation' ? (
+                <EditableField
+                  label="Status"
+                  value={occupationDraft}
+                  onChange={setOccupationDraft}
+                  type="select"
+                  icon={<Briefcase size={13} />}
+                  options={[
+                    { value: 'student', label: 'Student' },
+                    { value: 'professional', label: 'Professional' },
+                    { value: 'working-student', label: 'Working Student' },
+                  ]}
+                />
+              ) : (
+                <FieldRow label="Status" value={data.occupation || '—'} icon={<Briefcase size={13} />} />
+              )}
             </SectionCard>
 
-            <SectionCard title="Lifestyle Preferences" onEdit={() => {}}>
-              <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-                <FieldRow label="Sleep Schedule" value="Night Owl" icon={<Moon size={13} />} />
-                <FieldRow label="Lifestyle" value="Quiet & Focused" icon={<Sparkles size={13} />} />
-                <FieldRow label="Social Preference" value="Low-key" icon={<Users size={13} />} />
-                <FieldRow label="Cleanliness" value="Tidy" />
-              </div>
+            <SectionCard
+              title="Lifestyle Preferences"
+              editing={editingSection === 'lifestyle'}
+              onEdit={() => setEditingSection('lifestyle')}
+              onSave={() => setEditingSection(null)}
+              onCancel={handleCancelLifestyle}
+            >
+              {editingSection === 'lifestyle' ? (
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                  <EditableField
+                    label="Sleep Schedule"
+                    value={lifestyleDraft.sleepSchedule}
+                    onChange={(val) => setLifestyleDraft({ ...lifestyleDraft, sleepSchedule: val })}
+                    type="select"
+                    icon={<Moon size={13} />}
+                    options={[
+                      { value: 'Night Owl', label: 'Night Owl' },
+                      { value: 'Early Bird', label: 'Early Bird' },
+                      { value: 'Flexible', label: 'Flexible' },
+                    ]}
+                  />
+                  <EditableField
+                    label="Lifestyle"
+                    value={lifestyleDraft.lifestyle}
+                    onChange={(val) => setLifestyleDraft({ ...lifestyleDraft, lifestyle: val })}
+                    type="select"
+                    icon={<Sparkles size={13} />}
+                    options={[
+                      { value: 'Quiet & Focused', label: 'Quiet & Focused' },
+                      { value: 'Social & Active', label: 'Social & Active' },
+                      { value: 'Balanced', label: 'Balanced' },
+                    ]}
+                  />
+                  <EditableField
+                    label="Social Preference"
+                    value={lifestyleDraft.socialPreference}
+                    onChange={(val) => setLifestyleDraft({ ...lifestyleDraft, socialPreference: val })}
+                    type="select"
+                    icon={<Users size={13} />}
+                    options={[
+                      { value: 'Low-key', label: 'Low-key' },
+                      { value: 'Social', label: 'Social' },
+                      { value: 'Very Social', label: 'Very Social' },
+                    ]}
+                  />
+                  <EditableField
+                    label="Cleanliness"
+                    value={lifestyleDraft.cleanliness}
+                    onChange={(val) => setLifestyleDraft({ ...lifestyleDraft, cleanliness: val })}
+                    type="select"
+                    options={[
+                      { value: 'Tidy', label: 'Tidy' },
+                      { value: 'Moderate', label: 'Moderate' },
+                      { value: 'Relaxed', label: 'Relaxed' },
+                    ]}
+                  />
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                  <FieldRow label="Sleep Schedule" value="Night Owl" icon={<Moon size={13} />} />
+                  <FieldRow label="Lifestyle" value="Quiet & Focused" icon={<Sparkles size={13} />} />
+                  <FieldRow label="Social Preference" value="Low-key" icon={<Users size={13} />} />
+                  <FieldRow label="Cleanliness" value="Tidy" />
+                </div>
+              )}
             </SectionCard>
           </div>
         </div>

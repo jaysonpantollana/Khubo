@@ -127,12 +127,13 @@ export default function Maps() {
       if (listing.lat && listing.lng) {
         const el = document.createElement("div");
         el.className = "custom-marker";
+        el.style.cssText = "position: relative; display: flex; flex-direction: column; align-items: center;";
 
         el.innerHTML = `
           <div class="marker-popup" style="
             display: none;
             position: absolute;
-            bottom: 38px;
+            bottom: 42px;
             left: 50%;
             transform: translateX(-50%);
             background: white;
@@ -171,10 +172,6 @@ export default function Maps() {
 
         el.addEventListener("click", () => {
           setSelectedListing(listing.id);
-          // Show this popup, hide all others
-          Object.entries(markerPopups.current).forEach(([id, popup]) => {
-            popup.style.display = id === listing.id ? "block" : "none";
-          });
           map.current?.flyTo({
             center: [listing.lng, listing.lat],
             zoom: 16,
@@ -263,11 +260,8 @@ export default function Maps() {
     });
 
     map.current.on("click", (e: any) => {
-      // If click is not on a marker, hide all popups
       if (!e.originalEvent?.target?.closest?.('.custom-marker')) {
-        Object.values(markerPopups.current).forEach((popup) => {
-          popup.style.display = "none";
-        });
+        setSelectedListing(null);
       }
     });
 
@@ -293,6 +287,12 @@ export default function Maps() {
     updateMarkers();
   }, [updateMarkers]);
 
+  useEffect(() => {
+    Object.entries(markerPopups.current).forEach(([id, popup]) => {
+      popup.style.display = id === selectedListing ? "block" : "none";
+    });
+  }, [selectedListing]);
+
   // Reset preloader on unmount so Home.tsx can re-init on next visit
   useEffect(() => {
     return () => {
@@ -304,9 +304,6 @@ export default function Maps() {
 
   const handleListingClick = (listing: Listing) => {
     setSelectedListing(listing.id);
-    Object.entries(markerPopups.current).forEach(([id, popup]) => {
-      popup.style.display = id === listing.id ? "block" : "none";
-    });
     if (listing.lat && listing.lng && map.current) {
       map.current.flyTo({
         center: [listing.lng, listing.lat],

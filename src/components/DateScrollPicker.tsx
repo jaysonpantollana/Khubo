@@ -11,6 +11,7 @@ interface DateScrollPickerProps {
   viewportHeight: number; // e.g. 156 or 180
   onDateChange?: (month: string, day: string, year: string) => void;
   onMonthClick?: (month: string) => void;
+  onInvalidYear?: (invalid: boolean) => void;
 }
 
 const ALL_MONTHS = [
@@ -32,6 +33,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
   viewportHeight,
   onDateChange,
   onMonthClick,
+  onInvalidYear,
 }) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -176,6 +178,12 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
     }
   }, [selectedMonth, selectedDay, selectedYear, onDateChange, SELECTABLE_YEARS]);
 
+  useEffect(() => {
+    if (onInvalidYear) {
+      onInvalidYear(!SELECTABLE_YEARS.has(selectedYear));
+    }
+  }, [selectedYear, onInvalidYear, SELECTABLE_YEARS]);
+
   // Handle Scroll to update selection state
   const handleScrollColumn = (
     ref: React.RefObject<HTMLDivElement | null>,
@@ -229,7 +237,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
         onScroll={() =>
           handleScrollColumn(monthRef, MONTHS, setSelectedMonth, "month")
         }
-        className="flex-[1.2] h-full overflow-y-auto no-scrollbar snap-y snap-proximity relative z-10 scroll-smooth overscroll-contain"
+        className="flex-[1.2] h-full overflow-y-auto no-scrollbar relative z-10 scroll-smooth overscroll-contain"
       >
         <div
           style={{ height: `${topSpacerHeight}px` }}
@@ -249,7 +257,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
                 }
                 if (onMonthClick) onMonthClick(m);
               }}
-              className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
+              className={`flex items-center justify-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
                 isActive
                   ? "text-neutral-800 text-[15px] md:text-[17px] scale-100"
                   : "text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98"
@@ -269,7 +277,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
       <div
         ref={dayRef}
         onScroll={() => handleScrollColumn(dayRef, DAYS, setSelectedDay, "day")}
-        className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-proximity relative z-10 scroll-smooth text-center"
+        className="flex-1 h-full overflow-y-auto no-scrollbar relative z-10 scroll-smooth overscroll-contain text-center"
       >
         <div
           style={{ height: `${topSpacerHeight}px` }}
@@ -288,7 +296,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
                   dayRef.current.scrollTop = DAYS.indexOf(d) * itemHeight;
                 }
               }}
-              className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
+              className={`flex items-center justify-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
                 isActive
                   ? "text-neutral-800 text-[15px] md:text-[17px] scale-100"
                   : "text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98"
@@ -310,7 +318,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
         onScroll={() =>
           handleScrollColumn(yearRef, YEARS, setSelectedYear, "year")
         }
-        className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-proximity relative z-10 scroll-smooth text-center"
+        className="flex-1 h-full overflow-y-auto no-scrollbar relative z-10 scroll-smooth overscroll-contain text-center"
       >
         <div
           style={{ height: `${topSpacerHeight}px` }}
@@ -330,7 +338,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
                   yearRef.current.scrollTop = YEARS.indexOf(y) * itemHeight;
                 }
               }}
-              className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 rounded-xl whitespace-nowrap font-medium ${
+              className={`flex items-center justify-center transition-all duration-200 shrink-0 rounded-xl whitespace-nowrap font-medium ${
                 isSelectable ? "cursor-pointer" : "cursor-default"
               } ${
                 isActive

@@ -163,6 +163,7 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
           onClose={onClose}
           onContinue={() => setStep(5)}
           onEditStep={(s) => setStep(s)}
+          onUpdateData={updateData}
         />
       );
     case 5:

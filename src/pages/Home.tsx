@@ -51,6 +51,7 @@ export default function Home() {
     string | null
   >(null);
   const [dateYearWarning, setDateYearWarning] = useState(false);
+  const [dateYearInvalid, setDateYearInvalid] = useState(false);
 
   const currentYear = new Date().getFullYear();
 
@@ -440,6 +441,7 @@ export default function Home() {
                               onDateChange={(m, d, y) => {
                                 setSelectedStickyDateStr(`${m} ${d}, ${y}`);
                               }}
+                              onInvalidYear={setDateYearInvalid}
                             />
                           </div>
                         )}
@@ -524,15 +526,9 @@ export default function Home() {
                           e.preventDefault();
                           e.stopPropagation();
                           if (stickyHasSelections) {
-                            if (selectedStickyDateStr) {
-                              const yearMatch = selectedStickyDateStr.match(/(\d{4})/);
-                              if (yearMatch) {
-                                const year = parseInt(yearMatch[1], 10);
-                                if (year < currentYear || year > currentYear + 1) {
-                                  setDateYearWarning(true);
-                                  return;
-                                }
-                              }
+                            if (dateYearInvalid) {
+                              setDateYearWarning(true);
+                              return;
                             }
                             const terms = [];
                             if (selectedStickyLocation)

@@ -6,7 +6,7 @@
 import Hero from "../components/Hero";
 import Categories from "../components/Categories";
 import BottomNav from "../components/BottomNav";
-import Filters, { FilterState } from "../components/Filters";
+import { FilterState } from "../components/Filters";
 import Footer from "../components/Footer";
 import { ListingCarousel } from "../components/ListingCarousel";
 import { useListings } from "../hooks/useListings";
@@ -576,10 +576,6 @@ export default function Home() {
                 </div>
               </div>
               <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
-                <Filters
-                  currentFilters={filters}
-                  onFilterChange={setFilters}
-                />
               </div>
             </div>
           ) : (
@@ -591,10 +587,6 @@ export default function Home() {
                 />
               </div>
               <div className="pl-1 sm:pl-4 pr-2 sm:pr-0">
-                <Filters
-                  currentFilters={filters}
-                  onFilterChange={setFilters}
-                />
               </div>
             </div>
           )}

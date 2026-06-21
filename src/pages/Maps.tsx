@@ -64,6 +64,7 @@ export default function Maps() {
   const map = useRef<any>(null);
   const markers = useRef<{ [key: string]: any }>({});
   const markerPins = useRef<{ [key: string]: HTMLElement }>({});
+  const markerPopups = useRef<{ [key: string]: HTMLElement }>({});
   const sdkRef = useRef<any>(null);
   const filters: FilterState = {
     minPrice: 0,
@@ -128,6 +129,26 @@ export default function Maps() {
         el.className = "custom-marker";
 
         el.innerHTML = `
+          <div class="marker-popup" style="
+            display: none;
+            position: absolute;
+            bottom: 38px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            width: 160px;
+            z-index: 10;
+            pointer-events: none;
+          ">
+            <img src="${listing.image}" alt="${listing.title}" style="width: 100%; height: 100px; object-fit: cover;" />
+            <div style="padding: 6px 8px;">
+              <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
+              <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
+            </div>
+          </div>
           <div class="marker-pin" style="cursor: pointer; transform-origin: center bottom; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); display: flex; align-items: center; justify-content: center;">
             <svg width="26" height="34" viewBox="0 0 26 34" fill="none">
               <path d="M13 0C5.8 0 0 5.8 0 13c0 2.5 1 4.8 2.6 6.5L13 34l10.4-14.5C24 17.8 25 15.5 25 13 25 5.8 20.2 0 13 0z" fill="#EA4335"/>
@@ -144,8 +165,21 @@ export default function Maps() {
         const pinEl = el.querySelector('.marker-pin') as HTMLElement;
         if (pinEl) markerPins.current[listing.id] = pinEl;
 
+        // Store popup element
+        const popupEl = el.querySelector('.marker-popup') as HTMLElement;
+        if (popupEl) markerPopups.current[listing.id] = popupEl;
+
         el.addEventListener("click", () => {
           setSelectedListing(listing.id);
+          // Show this popup, hide all others
+          Object.entries(markerPopups.current).forEach(([id, popup]) => {
+            popup.style.display = id === listing.id ? "block" : "none";
+          });
+          map.current?.flyTo({
+            center: [listing.lng, listing.lat],
+            zoom: 16,
+            duration: 1500,
+          });
           if (window.innerWidth >= 768) {
             const element = document.getElementById(`listing-${listing.id}`);
             element?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -228,6 +262,15 @@ export default function Maps() {
       updateMarkersRef.current();
     });
 
+    map.current.on("click", (e: any) => {
+      // If click is not on a marker, hide all popups
+      if (!e.originalEvent?.target?.closest?.('.custom-marker')) {
+        Object.values(markerPopups.current).forEach((popup) => {
+          popup.style.display = "none";
+        });
+      }
+    });
+
     map.current.on("zoom", () => {
       const zoom = map.current!.getZoom();
       Object.values(markerPins.current).forEach((pin) => {
@@ -261,6 +304,9 @@ export default function Maps() {
 
   const handleListingClick = (listing: Listing) => {
     setSelectedListing(listing.id);
+    Object.entries(markerPopups.current).forEach(([id, popup]) => {
+      popup.style.display = id === listing.id ? "block" : "none";
+    });
     if (listing.lat && listing.lng && map.current) {
       map.current.flyTo({
         center: [listing.lng, listing.lat],
@@ -296,7 +342,7 @@ export default function Maps() {
         <div className="flex-[3] flex justify-center min-w-0 w-full">
           <div
             ref={dropdownRef}
-            className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 rounded-full flex items-center h-[46px] sm:h-[52px] md:h-[56px] text-neutral-800 shadow-lg w-full sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] relative z-40 pointer-events-auto cursor-default"
+            className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 rounded-full flex items-center h-[46px] sm:h-[52px] md:h-[56px] text-neutral-800 shadow-lg w-full sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] relative z-40 pointer-events-auto cursor-default self-center"
           >
             {isSearchActive ? (
               <>
@@ -535,7 +581,7 @@ export default function Maps() {
           </div>
         </div>
 
-
+        <div className="hidden md:flex flex-1 justify-end"></div>
       </div>
 
       <div className="flex flex-1 overflow-hidden relative">

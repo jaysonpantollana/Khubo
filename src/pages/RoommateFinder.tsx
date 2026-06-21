@@ -169,6 +169,7 @@ export default function RoommateFinder() {
   }, [displaySearch]);
 
   const stickyDropdownRef = useRef<HTMLDivElement>(null);
+  const tagsScrollRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -544,39 +545,58 @@ export default function RoommateFinder() {
                 </div>
               </div>
               <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
-                <Filters
-                  currentFilters={filters}
-                  onFilterChange={setFilters}
-                />
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-between w-full px-4 md:px-0">
-              <div className="flex-1 flex flex-row items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full touch-pan-x">
-                {TAGS.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => setSelectedTag(tag)}
-                    className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 active:scale-95 cursor-pointer ${
-                      selectedTag === tag
-                        ? "bg-neutral-900 text-white border-neutral-900 shadow-sm"
-                        : "bg-white text-neutral-700 border-neutral-200 hover:border-neutral-800 hover:text-neutral-900"
-                    }`}
-                  >
-                    {tag.toUpperCase()}
-                  </button>
-                ))}
-                {/* End Spacer to guarantee the rightmost items can be scrolled into view without clipping */}
+            <div className="relative bg-white w-full">
+              <div className="hidden sm:block absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+              <div className="hidden sm:block absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+              <button
+                onClick={() => scroll(tagsScrollRef, "left")}
+                className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 active:scale-95 transition-all hidden md:flex"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft size={16} strokeWidth={2} />
+              </button>
+
+              <button
+                onClick={() => scroll(tagsScrollRef, "right")}
+                className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 active:scale-95 transition-all hidden md:flex"
+                aria-label="Scroll right"
+              >
+                <ChevronRight size={16} strokeWidth={2} />
+              </button>
+
+              <div className="flex items-center justify-between w-full">
                 <div
-                  className="w-4 md:w-12 h-1 flex-shrink-0"
-                  aria-hidden="true"
-                />
-              </div>
-              <div className="pl-4">
-                <Filters
-                  currentFilters={filters}
-                  onFilterChange={setFilters}
-                />
+                  ref={tagsScrollRef}
+                  className="flex-1 flex flex-row items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth pl-4 md:pl-12 py-1 w-full touch-pan-x"
+                >
+                  {TAGS.map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => setSelectedTag(tag)}
+                      className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 active:scale-95 cursor-pointer ${
+                        selectedTag === tag
+                          ? "bg-neutral-900 text-white border-neutral-900 shadow-sm"
+                          : "bg-white text-neutral-700 border-neutral-200 hover:border-neutral-800 hover:text-neutral-900"
+                      }`}
+                    >
+                      {tag.toUpperCase()}
+                    </button>
+                  ))}
+                  <div
+                    className="w-4 md:w-12 h-1 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="pl-4 pr-2 sm:pr-0">
+                  <Filters
+                    currentFilters={filters}
+                    onFilterChange={setFilters}
+                  />
+                </div>
               </div>
             </div>
           )}

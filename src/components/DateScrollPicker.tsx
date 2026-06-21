@@ -44,8 +44,16 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
   const tomorrowMonthIdx = tomorrowDate.getMonth();
   const tomorrowDay = tomorrowDate.getDate();
 
-  const YEARS = useMemo(
-    () => [String(currentYear), String(currentYear + 1)],
+  const YEARS = useMemo(() => {
+    const years: string[] = [];
+    for (let i = currentYear - 3; i <= currentYear + 3; i++) {
+      years.push(String(i));
+    }
+    return years;
+  }, [currentYear]);
+
+  const SELECTABLE_YEARS = useMemo(
+    () => new Set([String(currentYear), String(currentYear + 1)]),
     [currentYear],
   );
 
@@ -71,12 +79,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const MONTHS = useMemo(() => {
-    if (selectedYear === String(currentYear)) {
-      return ALL_MONTHS.slice(currentMonthIdx);
-    }
-    return ALL_MONTHS;
-  }, [selectedYear, currentYear, currentMonthIdx]);
+  const MONTHS = useMemo(() => ALL_MONTHS, []);
 
   const DAYS = useMemo(() => {
     const monthIdx = ALL_MONTHS.indexOf(selectedMonth);
@@ -120,8 +123,8 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
   // Standard high precision target row sizing
   const itemHeight = isMobile ? 42 : 44;
 
-  // To display the highlight at the top:
-  const topSpacerHeight = 8;
+  // Center the highlight in the viewport
+  const topSpacerHeight = (viewportHeight - itemHeight) / 2;
   const bottomSpacerHeight = viewportHeight - itemHeight - topSpacerHeight;
 
   // Use a Ref lock to block programmatic layout scrolls from triggering state updates
@@ -168,10 +171,10 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
   ]);
 
   useEffect(() => {
-    if (onDateChange) {
+    if (onDateChange && SELECTABLE_YEARS.has(selectedYear)) {
       onDateChange(selectedMonth, selectedDay, selectedYear);
     }
-  }, [selectedMonth, selectedDay, selectedYear, onDateChange]);
+  }, [selectedMonth, selectedDay, selectedYear, onDateChange, SELECTABLE_YEARS]);
 
   // Handle Scroll to update selection state
   const handleScrollColumn = (
@@ -191,9 +194,11 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
 
     if (items[index] !== undefined) {
       const selectedValue = items[index];
+      const isYearBlocked = type === "year" && !SELECTABLE_YEARS.has(selectedValue);
+
       updateState(selectedValue);
 
-      if (onDateChange) {
+      if (onDateChange && !isYearBlocked) {
         const m = type === "month" ? selectedValue : selectedMonth;
         const d = type === "day" ? selectedValue : selectedDay;
         const y = type === "year" ? selectedValue : selectedYear;
@@ -224,7 +229,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
         onScroll={() =>
           handleScrollColumn(monthRef, MONTHS, setSelectedMonth, "month")
         }
-        className="flex-[1.2] h-full overflow-y-auto no-scrollbar snap-y snap-mandatory relative z-10 scroll-smooth"
+        className="flex-[1.2] h-full overflow-y-auto no-scrollbar snap-y snap-proximity relative z-10 scroll-smooth overscroll-contain"
       >
         <div
           style={{ height: `${topSpacerHeight}px` }}
@@ -264,7 +269,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
       <div
         ref={dayRef}
         onScroll={() => handleScrollColumn(dayRef, DAYS, setSelectedDay, "day")}
-        className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-mandatory relative z-10 scroll-smooth text-center"
+        className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-proximity relative z-10 scroll-smooth text-center"
       >
         <div
           style={{ height: `${topSpacerHeight}px` }}
@@ -305,7 +310,7 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
         onScroll={() =>
           handleScrollColumn(yearRef, YEARS, setSelectedYear, "year")
         }
-        className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-mandatory relative z-10 scroll-smooth text-center"
+        className="flex-1 h-full overflow-y-auto no-scrollbar snap-y snap-proximity relative z-10 scroll-smooth text-center"
       >
         <div
           style={{ height: `${topSpacerHeight}px` }}
@@ -313,24 +318,36 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
         />
         {YEARS.map((y) => {
           const isActive = y === selectedYear;
+          const isSelectable = SELECTABLE_YEARS.has(y);
           return (
             <div
               key={y}
               style={{ height: `${itemHeight}px` }}
               onClick={() => {
-                if (isInitializing.current) return;
+                if (isInitializing.current || !isSelectable) return;
                 setSelectedYear(y);
                 if (yearRef.current) {
                   yearRef.current.scrollTop = YEARS.indexOf(y) * itemHeight;
                 }
               }}
-              className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
+              className={`flex items-center justify-center snap-center transition-all duration-200 shrink-0 rounded-xl whitespace-nowrap font-medium ${
+                isSelectable ? "cursor-pointer" : "cursor-default"
+              } ${
                 isActive
                   ? "text-neutral-800 text-[15px] md:text-[17px] scale-100"
-                  : "text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98"
+                  : isSelectable
+                    ? "text-neutral-800/70 hover:text-neutral-800 text-[14px] md:text-[16px] scale-98"
+                    : "text-neutral-300 text-[14px] md:text-[16px] scale-98"
               }`}
             >
-              {y}
+              <span className="flex flex-col items-center leading-tight">
+                <span>{y}</span>
+                {isActive && !isSelectable && (
+                  <span className="text-[9px] text-amber-500 font-normal tracking-wide">
+                    Unavailable
+                  </span>
+                )}
+              </span>
             </div>
           );
         })}

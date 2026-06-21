@@ -5,7 +5,7 @@
 // @dependencies: lucide-react (ArrowRight, ChevronDown)
 
 import React, { useState } from 'react';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -16,28 +16,10 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#F7F7F7] border-t border-neutral-200 py-12 md:py-16 md:pb-16 pb-28">
-      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 flex flex-col lg:flex-row justify-between gap-8 lg:gap-20">
+      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4">
         
-        {/* Newsletter Section */}
-        <div className="max-w-md w-full lg:w-1/3 flex flex-col gap-6">
-          <h3 className="text-xl md:text-2xl font-bold text-[#17294F] tracking-tight leading-snug">
-            Keep up to date with our quarterly newsletter, "You've got mail."
-          </h3>
-          <div className="flex flex-col gap-4">
-            <input 
-              type="email" 
-              placeholder="Enter Your Email"
-              className="w-full bg-white border border-neutral-200 text-[#17294F] placeholder:text-neutral-400 rounded-xl px-5 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-all font-medium shadow-sm"
-            />
-            <button className="self-start flex items-center gap-2 bg-[#17294F] text-white hover:bg-[#17294F]/90 px-6 py-3 rounded-full font-medium transition-all shadow-sm active:scale-95">
-              <span>Subscribe</span>
-              <ArrowRight size={18} />
-            </button>
-          </div>
-        </div>
-
         {/* Links Grid / Accordion */}
-        <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4 mt-2 lg:mt-0 border-t border-neutral-200 md:border-t-0">
+        <div className="mx-auto w-fit grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-40 mt-2 lg:mt-0 border-t border-neutral-200 md:border-t-0">
           
           <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
             <button 

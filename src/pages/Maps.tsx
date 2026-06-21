@@ -63,7 +63,7 @@ export default function Maps() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<any>(null);
   const markers = useRef<{ [key: string]: any }>({});
-  const markerPopups = useRef<{ [key: string]: HTMLElement }>({});
+  const mapPopups = useRef<{ [key: string]: any }>({});
   const sdkRef = useRef<any>(null);
   const filters: FilterState = {
     minPrice: 0,
@@ -115,40 +115,21 @@ export default function Maps() {
   const updateMarkers = React.useCallback(() => {
     if (!map.current || !sdkRef.current) return;
 
-    // Remove existing markers
+    // Remove existing markers and popups
     (Object.values(markers.current) as any[]).forEach((marker) =>
       marker.remove(),
     );
+    (Object.values(mapPopups.current) as any[]).forEach((popup) =>
+      popup.remove(),
+    );
     markers.current = {};
-    markerPopups.current = {};
+    mapPopups.current = {};
 
     filteredListings.forEach((listing) => {
       if (listing.lat && listing.lng) {
         const el = document.createElement("div");
         el.className = "custom-marker";
-        el.style.cssText = "position: relative;";
-
         el.innerHTML = `
-          <div class="marker-popup" style="
-            display: none;
-            position: absolute;
-            bottom: 42px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-            width: 160px;
-            z-index: 10;
-            pointer-events: none;
-          ">
-            <img src="${listing.image}" alt="${listing.title}" style="width: 100%; height: 100px; object-fit: cover;" />
-            <div style="padding: 6px 8px;">
-              <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
-              <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
-            </div>
-          </div>
           <div class="marker-pin" style="cursor: pointer; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); display: flex; align-items: center; justify-content: center;">
             <svg width="26" height="34" viewBox="0 0 26 34" fill="none">
               <path d="M13 0C5.8 0 0 5.8 0 13c0 2.5 1 4.8 2.6 6.5L13 34l10.4-14.5C24 17.8 25 15.5 25 13 25 5.8 20.2 0 13 0z" fill="#EA4335"/>
@@ -161,9 +142,22 @@ export default function Maps() {
           .setLngLat([listing.lng, listing.lat])
           .addTo(map.current!);
 
-        // Store popup element
-        const popupEl = el.querySelector('.marker-popup') as HTMLElement;
-        if (popupEl) markerPopups.current[listing.id] = popupEl;
+        const popup = new sdkRef.current.Popup({
+          closeButton: false,
+          closeOnClick: false,
+          offset: 24,
+          className: 'listing-thumbnail-popup',
+        }).setHTML(`
+          <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); width: 160px;">
+            <img src="${listing.image}" alt="${listing.title}" style="width: 100%; height: 100px; object-fit: cover;" />
+            <div style="padding: 6px 8px;">
+              <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
+              <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
+            </div>
+          </div>
+        `);
+
+        mapPopups.current[listing.id] = popup;
 
         el.addEventListener("click", () => {
           setSelectedListing(listing.id);
@@ -269,10 +263,17 @@ export default function Maps() {
   }, [updateMarkers]);
 
   useEffect(() => {
-    Object.entries(markerPopups.current).forEach(([id, popup]) => {
-      popup.style.display = id === selectedListing ? "block" : "none";
+    Object.entries(mapPopups.current).forEach(([id, popup]) => {
+      if (id === selectedListing && map.current) {
+        const listing = filteredListings.find((l) => l.id === id);
+        if (listing?.lat && listing?.lng) {
+          popup.setLngLat([listing.lng, listing.lat]).addTo(map.current);
+        }
+      } else {
+        popup.remove();
+      }
     });
-  }, [selectedListing]);
+  }, [selectedListing, filteredListings]);
 
   // Reset preloader on unmount so Home.tsx can re-init on next visit
   useEffect(() => {

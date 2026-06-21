@@ -590,6 +590,11 @@ interface ToastContextType {
 - Wraps async/sync error handling
 - Integrates with ErrorBoundary
 
+#### useBodyScrollLock
+- Singleton-pattern scroll lock using a module-level counter
+- Prevents background scrolling when modals/overlays are open
+- Handles nested modal scenarios (count-based toggling)
+
 ---
 
 ## 🎨 Styling & Design System

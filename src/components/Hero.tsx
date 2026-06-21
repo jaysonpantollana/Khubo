@@ -46,6 +46,7 @@ export default function Hero({
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+  const [heroDateYearInvalid, setHeroDateYearInvalid] = useState(false);
 
   const hasSelections = selectedLocation || selectedDateStr || selectedBudget;
 
@@ -327,6 +328,7 @@ export default function Hero({
                             onDateChange={(m, d, y) =>
                               setSelectedDateStr(`${m} ${d}, ${y}`)
                             }
+                            onInvalidYear={setHeroDateYearInvalid}
                           />
                         </div>
                       )}
@@ -399,6 +401,7 @@ export default function Hero({
                       e.preventDefault();
                       e.stopPropagation();
                       if (hasSelections) {
+                        if (heroDateYearInvalid) return;
                         const terms = [];
                         if (selectedLocation) terms.push(selectedLocation);
                         if (selectedDateStr) terms.push(selectedDateStr);

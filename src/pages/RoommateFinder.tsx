@@ -28,17 +28,20 @@ import CreatePostModal from "../components/CreatePostModal";
 
 const TAGS = [
   "ALL",
-  "Near MSU-IIT",
-  "All Female",
-  "Solo Room",
-  "Shared Room",
-  "All Male",
-  "Affordable",
+  "Shared",
   "Bed Spacer",
-  "Boarding House",
-  "Studio",
+  "No Curfew",
+  "Gated",
+  "Condominium",
+  "Dormitory",
+  "Quite Hours",
   "Apartment",
-  "Transient",
+  "Room 4 Rent",
+  "Study Area",
+  "Boarding House",
+  "Free Water",
+  "Free Electricity",
+  "Near MSU-IIT",
 ];
 
 export default function RoommateFinder() {

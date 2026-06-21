@@ -145,7 +145,8 @@ export default function Maps() {
         const popup = new sdkRef.current.Popup({
           closeButton: false,
           closeOnClick: false,
-          offset: 24,
+          anchor: 'bottom',
+          offset: 36,
           className: 'listing-thumbnail-popup',
         }).setHTML(`
           <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); width: 160px;">
@@ -160,6 +161,10 @@ export default function Maps() {
         mapPopups.current[listing.id] = popup;
 
         el.addEventListener("click", () => {
+          if (selectedListingRef.current === listing.id) {
+            setSelectedListing(null);
+            return;
+          }
           setSelectedListing(listing.id);
           map.current?.flyTo({
             center: [listing.lng, listing.lat],
@@ -243,6 +248,13 @@ export default function Maps() {
 
     map.current.on("click", (e: any) => {
       if (!e.originalEvent?.target?.closest?.('.custom-marker')) {
+        setSelectedListing(null);
+      }
+    });
+
+    map.current.on("zoom", () => {
+      const zoom = map.current!.getZoom();
+      if (zoom < 13 && selectedListingRef.current) {
         setSelectedListing(null);
       }
     });

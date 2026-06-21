@@ -10,6 +10,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Listing } from '../types';
 import ListingCard from './ListingCard';
 import ListingCardSkeleton from './ListingCardSkeleton';
+import { ListingsPopup } from './ListingsPopup';
 
 interface ListingCarouselProps {
   title: string;
@@ -40,6 +41,7 @@ export function ListingCarousel({
   onNavigateCategory,
 }: ListingCarouselProps) {
   const ref = React.useRef<HTMLDivElement>(null);
+  const [showPopup, setShowPopup] = React.useState(false);
 
   const scroll = (direction: 'left' | 'right') => {
     if (ref.current) {
@@ -56,7 +58,7 @@ export function ListingCarousel({
       <div className="flex items-center justify-between">
         <div
           className="flex items-center gap-2 group cursor-pointer min-w-0"
-          onClick={() => onNavigateCategory(categoryPath)}
+          onClick={() => setShowPopup(true)}
         >
           <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
             {title}
@@ -108,6 +110,14 @@ export function ListingCarousel({
           ))
         )}
       </div>
+
+      <ListingsPopup
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        title={title}
+        listings={listings.slice(sliceStart, sliceEnd)}
+        onListingClick={onListingClick}
+      />
     </div>
   );
 }

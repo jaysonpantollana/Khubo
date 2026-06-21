@@ -43,6 +43,15 @@ export default function Maps() {
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+  const [dateYearWarning, setDateYearWarning] = useState(false);
+
+  const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    if (!dateYearWarning) return;
+    const t = setTimeout(() => setDateYearWarning(false), 2000);
+    return () => clearTimeout(t);
+  }, [dateYearWarning]);
 
   useEffect(() => {
     document.title = "Maps | Khubo";
@@ -489,6 +498,16 @@ export default function Maps() {
                   onClick={(e) => {
                     e.stopPropagation();
                     if (hasSelections) {
+                      if (selectedDateStr) {
+                        const yearMatch = selectedDateStr.match(/(\d{4})/);
+                        if (yearMatch) {
+                          const year = parseInt(yearMatch[1], 10);
+                          if (year < currentYear || year > currentYear + 1) {
+                            setDateYearWarning(true);
+                            return;
+                          }
+                        }
+                      }
                       const terms = [];
                       if (selectedLocation) terms.push(selectedLocation);
                       if (selectedDateStr) terms.push(selectedDateStr);
@@ -506,6 +525,11 @@ export default function Maps() {
                 >
                   <Search className="w-4 h-4 sm:w-[18px] sm:h-[18px] md:w-[18px] md:h-[18px] text-white" />
                 </button>
+                {dateYearWarning && (
+                  <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-lg z-50 whitespace-nowrap animate-pulse">
+                    Only current and next year allowed
+                  </div>
+                )}
               </>
             )}
           </div>

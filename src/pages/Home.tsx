@@ -50,6 +50,15 @@ export default function Home() {
   const [selectedStickyBudget, setSelectedStickyBudget] = useState<
     string | null
   >(null);
+  const [dateYearWarning, setDateYearWarning] = useState(false);
+
+  const currentYear = new Date().getFullYear();
+
+  React.useEffect(() => {
+    if (!dateYearWarning) return;
+    const t = setTimeout(() => setDateYearWarning(false), 2000);
+    return () => clearTimeout(t);
+  }, [dateYearWarning]);
 
   React.useEffect(() => {
     document.title = "Home | Khubo";
@@ -515,6 +524,16 @@ export default function Home() {
                           e.preventDefault();
                           e.stopPropagation();
                           if (stickyHasSelections) {
+                            if (selectedStickyDateStr) {
+                              const yearMatch = selectedStickyDateStr.match(/(\d{4})/);
+                              if (yearMatch) {
+                                const year = parseInt(yearMatch[1], 10);
+                                if (year < currentYear || year > currentYear + 1) {
+                                  setDateYearWarning(true);
+                                  return;
+                                }
+                              }
+                            }
                             const terms = [];
                             if (selectedStickyLocation)
                               terms.push(selectedStickyLocation);
@@ -547,6 +566,11 @@ export default function Home() {
                           className="text-white"
                         />
                       </button>
+                      {dateYearWarning && (
+                        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-lg z-50 whitespace-nowrap animate-pulse">
+                          Only current and next year allowed
+                        </div>
+                      )}
                     </>
                   )}
                 </div>

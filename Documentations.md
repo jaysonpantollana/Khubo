@@ -72,10 +72,10 @@ Every technique below is annotated directly in the source code as context-aware 
 All source files are annotated with `@context`, `@purpose`, and domain-specific tags:
 
 - **Pages (8)**: Home, CategoryListings, ListingDetail, Messages, Maps, Profile, RoommateFinder, ManageListings
-- **Components (48)**: AnalyticsModal, AnnouncementsOverlay, AuthModal, BottomNav, CameraOverlay, Categories, chat/ChatMessage, chat/ChatSidebar, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailSkeleton, ListingModal, MapTilerView, Navbar, NotificationDialog, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommateSearchDropdown, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal
-- **Hooks (8)**: useErrorHandler, useFocusTrap, useListing, useListings, useListingsFilter, useReducedMotion, useSearchHistory
+- **Components (52)**: AnalyticsModal, AnnouncementsOverlay, AuthModal, BottomNav, CameraOverlay, Categories, chat/ChatMessage, chat/ChatSidebar, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailSkeleton, ListingModal, ListingsPopup, MapTilerView, Navbar, NotificationDialog, OccupationStep, OnboardingFlow, OnboardingModal, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, ReviewProfile, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommatePreferences, RoommateSearchDropdown, RoommatesPopup, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal, VerificationStep
+- **Hooks (9)**: useBodyScrollLock, useErrorHandler, useFocusTrap, useListing, useListings, useListingsFilter, useReducedMotion, useSearchHistory
 - **API (8)**: auth, client, client.test, index (barrel), listings, messages, roommates, types
-- **Lib (6)**: AuthContext, ThemeContext, animations, utils, utils.test, api/index
+- **Lib (7)**: AuthContext, ThemeContext, animations, mapPreloader, utils, utils.test, api/index
 - **Mocks (4)**: listings, messages, roommates, supabase
 - **Config (5)**: App, main, index.css, vite.config, eslint.config
 - **Root (3)**: types, package.json, .env.example
@@ -89,7 +89,9 @@ All source files are annotated with `@context`, `@purpose`, and domain-specific 
 - **Data layer**: All mock — `src/mocks/*.ts` with 500ms simulated delay
 - **Auth**: Email-only mock, no password, localStorage-backed — `src/lib/AuthContext.tsx`, `src/lib/api/auth.ts`
 - **Animations**: Motion library with centralized presets in `src/lib/animations.ts`
-- **Maps**: MapTiler SDK v4, requires `VITE_MAPTILER_API_KEY`
+- **Maps**: MapTiler SDK v4 with preloader singleton in `src/lib/mapPreloader.ts`; requires `VITE_MAPTILER_API_KEY`
+- **Onboarding**: 5-step wizard (identity → occupation → ID verification → review → finish) in `src/components/OnboardingFlow.tsx`
+- **Body scroll lock**: Nested-modal-safe lock via `src/hooks/useBodyScrollLock.ts`
 - **Testing**: Vitest + React Testing Library + jsdom; setup in `src/test/setup.ts`
 - **AI**: `@google/genai` package NOT installed (mentioned in earlier docs but not in dependencies)
 
@@ -246,17 +248,24 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │   ├── ListingCarousel.tsx
 │   │   ├── ListingDetailSkeleton.tsx
 │   │   ├── ListingModal.tsx
+│   │   ├── ListingsPopup.tsx
 │   │   ├── MapTilerView.tsx
 │   │   ├── Navbar.tsx
 │   │   ├── NotificationDialog.tsx
+│   │   ├── OccupationStep.tsx
+│   │   ├── OnboardingFlow.tsx
+│   │   ├── OnboardingModal.tsx
 │   │   ├── PhotoCarouselOverlay.tsx
 │   │   ├── PropertiesModal.tsx
 │   │   ├── ReviewBreakdown.tsx
+│   │   ├── ReviewProfile.tsx
 │   │   ├── RoommateCard.tsx
 │   │   ├── RoommateCardSkeleton.tsx
 │   │   ├── RoommateHero.tsx
 │   │   ├── RoommateModal.tsx
+│   │   ├── RoommatePreferences.tsx
 │   │   ├── RoommateSearchDropdown.tsx
+│   │   ├── RoommatesPopup.tsx
 │   │   ├── ScrollToTop.tsx
 │   │   ├── SearchDropdown.tsx
 │   │   ├── SearchHistory.tsx
@@ -264,9 +273,11 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │   ├── ThemeToggle.tsx
 │   │   ├── Toast.tsx
 │   │   ├── ToastProvider.tsx
-│   │   └── UploadModal.tsx
+│   │   ├── UploadModal.tsx
+│   │   └── VerificationStep.tsx
 │   │
 │   ├── hooks/                # Custom React hooks
+│   │   ├── useBodyScrollLock.ts
 │   │   ├── useErrorHandler.ts
 │   │   ├── useFocusTrap.ts
 │   │   ├── useListing.ts
@@ -289,6 +300,7 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │   ├── AuthContext.tsx
 │   │   ├── ThemeContext.tsx
 │   │   ├── animations.ts
+│   │   ├── mapPreloader.ts
 │   │   ├── utils.ts
 │   │   └── utils.test.ts
 │   │

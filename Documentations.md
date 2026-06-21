@@ -424,7 +424,29 @@ const { addToast } = useToast();
 addToast({ message: 'Success!', type: 'success' });
 ```
 
-### 8. Chat System
+### 8. Onboarding Flow
+
+**Location**: `src/components/OnboardingFlow.tsx`
+
+A 5-step post-auth wizard for new users:
+- **Step 1** (`OnboardingModal`): Collects identity info (username, email, phone, bio, gender, address with cascading city/barangay dropdowns, profile photo)
+- **Step 2** (`OccupationStep`): Selects occupation — Student, Professional, or Working Student
+- **Step 3** (`VerificationStep`): Uploads a government/school ID for identity verification (supports images and PDFs, max 50MB)
+- **Step 4** (`ReviewProfile`): Reviews all data with inline editing for identity, occupation, and lifestyle preferences
+- **Step 5**: "Almost Done" thank-you screen
+
+**Data Flow**:
+```
+Navbar Auth → OnboardingFlow → OnboardingData → localStorage → Profile
+```
+
+### 9. Map Preloader
+
+**Location**: `src/lib/mapPreloader.ts`
+
+A singleton service that initializes MapTiler in a hidden off-screen div on the Home page, so the interactive map is fully rendered when the user navigates to `/maps`. Provides `isMapReady()` and `takeMap()` for seamless handoff.
+
+### 10. Chat System
 
 **Components**:
 - `ChatSidebar` - Conversation list with filters
@@ -432,7 +454,7 @@ addToast({ message: 'Success!', type: 'success' });
 
 **Location**: `src/components/chat/`
 
-### 9. Profile Management
+### 11. Profile Management
 
 **Components**:
 - `EditProfileModal` - Edit profile form
@@ -463,6 +485,7 @@ addToast({ message: 'Success!', type: 'success' });
 | `ListingCarousel` | Horizontal scrollable row of listings with arrows |
 | `ListingModal` | Full-screen modal with listing details |
 | `ListingDetailSkeleton` | Loading skeleton for detail view |
+| `ListingsPopup` | Reusable modal popup with grid of listing cards |
 | `PhotoCarouselOverlay` | Image gallery with fullscreen mode |
 
 ### Roommate Components
@@ -472,7 +495,9 @@ addToast({ message: 'Success!', type: 'success' });
 | `RoommateCardSkeleton` | Loading skeleton for roommate cards |
 | `RoommateHero` | Header section for roommate finder |
 | `RoommateModal` | Detailed roommate profile modal |
+| `RoommatePreferences` | Wizard step for selecting roommate lifestyle preference |
 | `RoommateSearchDropdown` | Filter dropdown for roommate search |
+| `RoommatesPopup` | Reusable modal popup with grid of roommate cards |
 
 ### UI Primitives
 | Component | Description |
@@ -493,6 +518,16 @@ addToast({ message: 'Success!', type: 'success' });
 | `LandlordSignupModal` | Landlord auth modal (`src/components/profile/`) |
 | `LogoutModal` | Logout confirmation (`src/components/profile/`) |
 | `StatCardModal` | Stat detail overlay (`src/components/profile/`) |
+
+### Onboarding Components
+| Component | Description |
+|-----------|-------------|
+| `OnboardingFlow` | 5-step wizard orchestrator (identity → occupation → verification → review → finish) |
+| `OnboardingModal` | Step 1 — collects identity, address, and profile photo |
+| `OccupationStep` | Step 2 — selects occupation (Student / Professional / Working Student) |
+| `RoommatePreferences` | Step 3 (variant) — selects roommate lifestyle preference |
+| `VerificationStep` | Step 3 — uploads government/school ID for verification |
+| `ReviewProfile` | Step 4 — reviews all data with inline editing |
 
 ### Utility Components
 | Component | Description |

@@ -45,7 +45,7 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Landlord Signup** - Dedicated flow for hosts to upgrade their account
 
 ### User Experience
-- **Onboarding Flow** - Multi-step profile setup with occupation and verification steps
+- **5-Step Onboarding Wizard** - Post-auth profile setup: identity → occupation → ID verification → review → finish
 - **Authentication** - Secure sign-up and login functionality
 - **Dark/Light Mode** - Toggle between themes for comfortable viewing in any environment
 - **Responsive Design** - Fully optimized for mobile, tablet, and desktop devices
@@ -56,6 +56,8 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Camera Capture** - Take photos directly from your device camera for uploads
 - **File Upload** - Drag-and-drop and file picker for image and document uploads
 - **Announcements Overlay** - In-app notifications and announcements
+- **Listings & Roommates Popups** - Reusable modal grids for filtered search results
+- **Map Preloading** - Background MapTiler initialization on Home page for instant /maps navigation
 
 ---
 
@@ -190,12 +192,12 @@ khubo/
 │   │   ├── chat/                 # Chat components (ChatMessage, ChatSidebar)
 │   │   ├── profile/              # Profile modals (Edit, Landlord Signup, Logout, StatCard)
 │   │   ├── example/              # Example components for reference
-│   │   └── *.tsx                 # Feature components (50+ files)
+│   │   └── *.tsx                 # Feature components (55+ files)
 │   ├── pages/                    # Route-level components (8 pages)
 │   ├── hooks/                    # Custom React hooks (9 hooks)
+│   │   ├── useBodyScrollLock.ts  # Nested-modal-safe body scroll lock
 │   │   ├── useErrorHandler.ts    # Error handling hook
 │   │   ├── useFocusTrap.ts       # Focus trap for modals
-│   │   ├── useBodyScrollLock.ts  # Prevents body scroll when modals open
 │   │   ├── useListing.ts         # Single listing fetcher
 │   │   ├── useListings.ts        # Listings collection fetcher
 │   │   ├── useListingsFilter.ts  # Client-side listings filtering
@@ -212,7 +214,7 @@ khubo/
 │   │   ├── AuthContext.tsx        # Authentication provider
 │   │   ├── ThemeContext.tsx       # Theme provider
 │   │   ├── animations.ts         # Animation presets and variants
-│   │   ├── mapPreloader.ts       # Map SDK preloading
+│   │   ├── mapPreloader.ts       # Map SDK singleton preloader (hidden off-screen init)
 │   │   └── utils.ts              # Utility functions
 │   ├── mocks/                    # Mock data for development
 │   │   ├── listings.ts           # Mock listing data

@@ -513,28 +513,30 @@ export default function Profile() {
                   </div>
                   <div className="mt-4 pt-3 border-t border-neutral-100">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Users size={14} className="text-neutral-500" />
-                        <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Tenants</span>
-                      </div>
-                      <div className="flex items-center">
-                        {MOCK_TENANTS.slice(0, 4).map((t, i) => (
-                          <img
-                            key={t.id}
-                            src={t.image}
-                            alt={t.name}
-                            className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
-                            style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
-                          />
-                        ))}
-                        {MOCK_TENANTS.length > 4 && (
-                          <span
-                            className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
-                            style={{ marginLeft: '-8px', zIndex: 0 }}
-                          >
-                            +{MOCK_TENANTS.length - 4}
-                          </span>
-                        )}
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-2">
+                          <Users size={14} className="text-neutral-500" />
+                          <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Tenants</span>
+                        </div>
+                        <div className="flex items-center">
+                          {MOCK_TENANTS.slice(0, 4).map((t, i) => (
+                            <img
+                              key={t.id}
+                              src={t.image}
+                              alt={t.name}
+                              className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
+                              style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
+                            />
+                          ))}
+                          {MOCK_TENANTS.length > 4 && (
+                            <span
+                              className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                              style={{ marginLeft: '-8px', zIndex: 0 }}
+                            >
+                              +{MOCK_TENANTS.length - 4}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -59,13 +59,13 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
     [currentYear],
   );
 
-  // Set default initial selection to tomorrow
-  const [selectedYear, setSelectedYear] = useState(String(tomorrowYear));
+  // Set default initial selection to today
+  const [selectedYear, setSelectedYear] = useState(String(currentYear));
   const [selectedMonth, setSelectedMonth] = useState(
-    ALL_MONTHS[tomorrowMonthIdx],
+    ALL_MONTHS[currentMonthIdx],
   );
   const [selectedDay, setSelectedDay] = useState(
-    String(tomorrowDay).padStart(2, "0"),
+    String(currentDay).padStart(2, "0"),
   );
 
   // Scroll container refs

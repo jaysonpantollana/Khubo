@@ -9,7 +9,7 @@ import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
   Settings, HelpCircle, LogOut, Bell, Building, Check, X,
-  MoreVertical, Copy, User, Users,
+  MoreVertical, Copy, User, Users, FileText, Shield,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../lib/AuthContext';
@@ -52,6 +52,8 @@ export default function Profile() {
     { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
     { title: 'Account settings', icon: Settings, action: () => showToast('Account settings clicked', 'info') },
     { title: 'Help Center', icon: HelpCircle, action: () => showToast('Help Center clicked', 'info') },
+    { title: 'Terms of Service', icon: FileText, action: () => showToast('Terms of Service clicked', 'info') },
+    { title: 'Privacy Policy', icon: Shield, action: () => showToast('Privacy Policy clicked', 'info') },
   ];
 
   const [myListings, setMyListings] = useState<Listing[]>([]);

@@ -1,62 +1,18 @@
 // @context: Bottom navigation bar — fixed mobile navigation
-// @purpose: Five-tab bottom nav (Home, Messages, Roommate, Maps, Profile) with active state and badge indicator
-// @behavior: Fetches unread message count from supabase mock; listens to real-time changes; shows badge on Messages tab
-// @dependencies: react-router-dom, motion, lucide-react, useAuth, supabase mock
+// @purpose: Four-tab bottom nav (Home, Roommate, Maps, Profile) with active state
+// @dependencies: react-router-dom, lucide-react, useAuth
 
-import { useEffect, useState } from 'react';
-import { Home, MessageSquare, Users, Map, User } from 'lucide-react';
+import { Home, Users, Map, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext';
-import { supabase } from '../mocks/supabase';
 
 export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [unreadCount, setUnreadCount] = useState(0);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const fetchUnreadCount = async () => {
-      // Intentionally suppressing errors as the table might not exist yet
-      const { count } = await supabase
-        .from('messages')
-        .select('*', { count: 'exact', head: true })
-        .eq('recipient_id', user.id)
-        .eq('is_read', false);
-      
-      if (count !== null) {
-        setUnreadCount(count);
-      }
-    };
-
-    fetchUnreadCount();
-
-    const channel = supabase
-      .channel('messages_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'messages',
-          filter: `recipient_id=eq.${user.id}`,
-        },
-        () => {
-          fetchUnreadCount();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user]);
 
   const items = [
     { icon: Home, label: 'Home', path: '/' },
-    { icon: MessageSquare, label: 'Messages', path: '/messages', badge: unreadCount },
     { icon: Users, label: 'Roommate', path: '/roommate' },
     { icon: Map, label: 'Maps', path: '/maps' },
     { icon: User, label: 'Profile', path: '/profile' },
@@ -79,11 +35,6 @@ export default function BottomNav() {
             >
               <div className={`p-1 sm:p-2 rounded-xl sm:rounded-2xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
                 <item.icon className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px]" strokeWidth={isActive ? 2.5 : 2} />
-                {item.badge !== undefined && item.badge > 0 && (
-                  <span className="absolute top-0 right-0 sm:-top-1 sm:-right-1 bg-red-500 text-white text-[10px] sm:text-xs font-bold w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full border-2 border-transparent">
-                    {item.badge > 99 ? '99+' : item.badge}
-                  </span>
-                )}
               </div>
               <span className={`text-[8px] sm:text-[9.5px] font-black uppercase tracking-wider text-center transition-colors duration-200 mt-0.5 block truncate max-w-full ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
                 {item.label}

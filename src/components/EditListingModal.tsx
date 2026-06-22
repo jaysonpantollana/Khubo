@@ -357,17 +357,23 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
               {/* Months of Advance Payment */}
               <div>
                 <label className="block text-sm font-semibold text-neutral-800 mb-2">Months of Advance Payment</label>
-                <div className="flex flex-wrap gap-2">
-                  {[1, 2, 3, 6, 12].map(months => (
-                    <button
-                      key={months}
-                      type="button"
-                      onClick={() => setAdvancePaymentMonths(months)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${advancePaymentMonths === months ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 hover:border-neutral-300'}`}
-                    >
-                      {months} {months === 1 ? 'month' : 'months'}
-                    </button>
-                  ))}
+                <div className="relative">
+                  <select
+                    value={advancePaymentMonths}
+                    onChange={(e) => setAdvancePaymentMonths(Number(e.target.value))}
+                    className="w-full appearance-none bg-[#1a1a1a] text-neutral-300 text-sm rounded-xl px-4 py-3 pr-10 border border-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500"
+                  >
+                    <option value={1}>1 month</option>
+                    <option value={2}>2 months</option>
+                    <option value={3}>3 months</option>
+                    <option value={6}>6 months</option>
+                    <option value={12}>12 months</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <svg className="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
 

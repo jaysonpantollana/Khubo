@@ -1,6 +1,6 @@
 // @context: App root — routing and global layout
 // @purpose: HashRouter with lazy-loaded routes for all pages; wraps app in providers (Auth, Theme, Toast, ErrorBoundary)
-// @behavior: Route definitions for /, /category/:categoryId, /listing/:id, /messages, /maps, /profile, /manage-listings, /roommate
+// @behavior: Route definitions for /, /category/:categoryId, /listing/:id, /maps, /profile, /manage-listings, /roommate
 // @dependencies: react-router-dom, AuthProvider, ThemeProvider, ToastProvider, ErrorBoundary, ScrollToTop
 //
 // @adr: ADR-001 — HashRouter over BrowserRouter: chosen for static hosting without server URL rewriting
@@ -41,7 +41,6 @@ import PageError from './components/ui/ErrorScreen';
 const Home = lazy(() => import('./pages/Home'));
 const ListingDetail = lazy(() => import('./pages/ListingDetail'));
 const CategoryListings = lazy(() => import('./pages/CategoryListings'));
-const Messages = lazy(() => import('./pages/Messages'));
 const Maps = lazy(() => import('./pages/Maps'));
 const RoommateFinder = lazy(() => import('./pages/RoommateFinder'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -81,7 +80,6 @@ export default function App() {
                       <Route path="/listing/:id" element={<ListingDetail />} />
                       <Route path="/category/:categoryId" element={<CategoryListings />} />
                       <Route path="/maps" element={<Maps />} />
-                      <Route path="/messages" element={<Messages />} />
                       <Route path="/roommate" element={<RoommateFinder />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/manage-listings" element={<ManageListings />} />

@@ -8,7 +8,6 @@
 import React, { useState } from 'react';
 
 import { X, Home } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 interface InquiriesModalProps {
   isOpen: boolean;
@@ -64,7 +63,6 @@ const DUMMY_INQUIRIES = [
 
 export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
   const [filter, setFilter] = useState<string>('All');
-  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -77,7 +75,6 @@ export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
 
   const handleInquiryClick = () => {
     onClose();
-    navigate('/messages');
   };
 
   return (

@@ -147,9 +147,6 @@ export default function Navbar() {
                       </div>
                       <div className="py-2">
                         <button className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition">
-                          Messages
-                        </button>
-                        <button className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition">
                           Trips
                         </button>
                         <button className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition">

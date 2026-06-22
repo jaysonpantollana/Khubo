@@ -29,6 +29,7 @@ import EditProfileModal from '../components/profile/EditProfileModal';
 import LogoutModal from '../components/profile/LogoutModal';
 import LandlordSignupModal from '../components/profile/LandlordSignupModal';
 import StatCardModal from '../components/profile/StatCardModal';
+import TenantProfileModal from '../components/TenantProfileModal';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export default function Profile() {
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
   const [selectedListingDetail, setSelectedListingDetail] = useState<Listing | null>(null);
+  const [selectedTenant, setSelectedTenant] = useState<TenantInfo | null>(null);
 
   useEffect(() => {
     document.title = "Profile | Khubo";
@@ -128,11 +130,11 @@ export default function Profile() {
   }, [checkLandlordAccount]);
 
   const MOCK_TENANTS: TenantInfo[] = [
-    { id: 't1', name: 'Maria Santos', image: 'https://i.pravatar.cc/150?u=t1', email: 'maria@email.com', phone: '09171234567', moveInDate: '2025-01-15', status: 'active', paymentStatus: 'paid' },
-    { id: 't2', name: 'Juan Dela Cruz', image: 'https://i.pravatar.cc/150?u=t2', email: 'juan@email.com', phone: '09181234567', moveInDate: '2025-02-01', status: 'active', paymentStatus: 'paid' },
-    { id: 't3', name: 'Ana Reyes', image: 'https://i.pravatar.cc/150?u=t3', email: 'ana@email.com', phone: '09191234567', moveInDate: '2025-03-10', status: 'leaving', paymentStatus: 'pending' },
-    { id: 't4', name: 'Carlos Garcia', image: 'https://i.pravatar.cc/150?u=t4', email: 'carlos@email.com', phone: '09201234567', moveInDate: '2025-04-01', status: 'active', paymentStatus: 'paid' },
-    { id: 't5', name: 'Sofia Lim', image: 'https://i.pravatar.cc/150?u=t5', email: 'sofia@email.com', phone: '09211234567', moveInDate: '2025-05-15', status: 'moved_out', paymentStatus: 'overdue' },
+    { id: 't1', name: 'Maria Santos', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MariaSantos&backgroundColor=b6e3f4', email: 'maria@email.com', phone: '09171234567', moveInDate: '2025-01-15', status: 'active', paymentStatus: 'paid' },
+    { id: 't2', name: 'Juan Dela Cruz', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=JuanDelaCruz&backgroundColor=b6e3f4', email: 'juan@email.com', phone: '09181234567', moveInDate: '2025-02-01', status: 'active', paymentStatus: 'paid' },
+    { id: 't3', name: 'Ana Reyes', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=AnaReyes&backgroundColor=b6e3f4', email: 'ana@email.com', phone: '09191234567', moveInDate: '2025-03-10', status: 'leaving', paymentStatus: 'pending' },
+    { id: 't4', name: 'Carlos Garcia', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=CarlosGarcia&backgroundColor=b6e3f4', email: 'carlos@email.com', phone: '09201234567', moveInDate: '2025-04-01', status: 'active', paymentStatus: 'paid' },
+    { id: 't5', name: 'Sofia Lim', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SofiaLim&backgroundColor=b6e3f4', email: 'sofia@email.com', phone: '09211234567', moveInDate: '2025-05-15', status: 'moved_out', paymentStatus: 'overdue' },
   ];
 
   const getTenantsForListing = useCallback((listingId: string): TenantInfo[] => {
@@ -524,14 +526,16 @@ export default function Profile() {
                               key={t.id}
                               src={t.image}
                               alt={t.name}
-                              className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
+                              className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all"
                               style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
+                              onClick={(e) => { e.stopPropagation(); setSelectedTenant(t); }}
                             />
                           ))}
                           {MOCK_TENANTS.length > 4 && (
                             <span
-                              className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                              className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                               style={{ marginLeft: '-8px', zIndex: 0 }}
+                              onClick={(e) => { e.stopPropagation(); setSelectedTenant(MOCK_TENANTS[4]); }}
                             >
                               +{MOCK_TENANTS.length - 4}
                             </span>
@@ -648,15 +652,17 @@ export default function Profile() {
                                     key={tenant.id}
                                     src={tenant.image}
                                     alt={tenant.name}
-                                    className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
+                                    className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all"
                                     style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
                                     title={tenant.name}
+                                    onClick={(e) => { e.stopPropagation(); setSelectedTenant(tenant); }}
                                   />
                                 ))}
                                 {remaining > 0 && (
                                   <span
-                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                                     style={{ marginLeft: '-8px', zIndex: 0 }}
+                                    onClick={(e) => { e.stopPropagation(); setSelectedTenant(listingTenants[4]); }}
                                   >
                                     +{remaining}
                                   </span>
@@ -858,6 +864,11 @@ export default function Profile() {
           listing={selectedListingDetail}
         />
       )}
+      <TenantProfileModal
+        tenant={selectedTenant}
+        isOpen={!!selectedTenant}
+        onClose={() => setSelectedTenant(null)}
+      />
     </div>
   );
 }

@@ -36,6 +36,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
   const [availableAmenities, setAvailableAmenities] = useState<string[]>(AMENITIES);
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
+  const [advancePaymentMonths, setAdvancePaymentMonths] = useState<number>(1);
   
   // For images, we track existing URL strings and new File objects separately
   const [existingImages, setExistingImages] = useState<string[]>([]);
@@ -54,6 +55,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
       setLocation(listing.location || '');
       setCategory(listing.category || CATEGORIES[0]);
       setSelectedAmenities(listing.amenities || []);
+      setAdvancePaymentMonths(listing.advancePaymentMonths || 1);
       
       // Ensure any existing amenities not in the default list are added to availableAmenities
       if (listing.amenities && listing.amenities.length > 0) {
@@ -147,6 +149,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
         location,
         category,
         amenities: selectedAmenities,
+        advance_payment_months: advancePaymentMonths,
         image: finalGallery[0], // Main image
         gallery: finalGallery,
         lat: pinLat,
@@ -348,6 +351,23 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       + Add
                     </button>
                   )}
+                </div>
+              </div>
+
+              {/* Months of Advance Payment */}
+              <div>
+                <label className="block text-sm font-semibold text-neutral-800 mb-2">Months of Advance Payment</label>
+                <div className="flex flex-wrap gap-2">
+                  {[1, 2, 3, 6, 12].map(months => (
+                    <button
+                      key={months}
+                      type="button"
+                      onClick={() => setAdvancePaymentMonths(months)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${advancePaymentMonths === months ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 hover:border-neutral-300'}`}
+                    >
+                      {months} {months === 1 ? 'month' : 'months'}
+                    </button>
+                  ))}
                 </div>
               </div>
 

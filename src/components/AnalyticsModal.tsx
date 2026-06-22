@@ -33,7 +33,7 @@ interface AnalyticsModalProps {
 }
 
 export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
-  const [timeframe, setTimeframe] = useState<'Daily' | 'Weekly' | 'Monthly'>('Weekly');
+  const [timeframe, setTimeframe] = useState<'Monthly'>('Monthly');
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} maxWidth="max-w-5xl" className="h-[80vh] flex flex-col">
@@ -53,19 +53,11 @@ export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-neutral-500 font-medium tracking-tight">Total Revenue</h3>
                 <div className="flex bg-neutral-100 rounded-full p-1 border border-neutral-200/50 shadow-inner">
-                  {(['Daily', 'Weekly', 'Monthly'] as const).map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => setTimeframe(t)}
-                      className={`px-3 py-1 rounded-full text-xs font-bold font-sans transition-all ${
-                        timeframe === t
-                          ? 'bg-white text-neutral-900 shadow-sm'
-                          : 'text-neutral-500 hover:text-neutral-900'
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  ))}
+                  <button
+                    className="px-3 py-1 rounded-full text-xs font-bold font-sans transition-all bg-white text-neutral-900 shadow-sm"
+                  >
+                    Monthly
+                  </button>
                 </div>
               </div>
 

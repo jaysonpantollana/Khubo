@@ -18,6 +18,8 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
   const map = useRef<maptilersdk.Map | null>(null);
   const marker = useRef<maptilersdk.Marker | null>(null);
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
+  const onLocationSelectRef = useRef(onLocationSelect);
+  onLocationSelectRef.current = onLocationSelect;
 
   const createMarkerElement = useCallback(() => {
     const el = document.createElement('div');
@@ -67,11 +69,11 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
       } catch { /* ignore */ }
     });
 
-    if (lat && lng) {
-      marker.current = new maptilersdk.Marker({ element: createMarkerElement(), anchor: 'bottom' })
-        .setLngLat([lng, lat])
-        .addTo(map.current);
-    }
+    map.current.on('load', () => {
+      requestAnimationFrame(() => {
+        map.current?.resize();
+      });
+    });
 
     map.current.on('click', (e: { lngLat: { lat: number; lng: number } }) => {
       const { lat: clickedLat, lng: clickedLng } = e.lngLat;
@@ -84,7 +86,7 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
           .addTo(map.current!);
       }
 
-      onLocationSelect(clickedLat, clickedLng);
+      onLocationSelectRef.current(clickedLat, clickedLng);
     });
 
     return () => {
@@ -93,10 +95,24 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!map.current || lat === null || lng === null) return;
+
+    if (marker.current) {
+      marker.current.setLngLat([lng, lat]);
+    } else {
+      marker.current = new maptilersdk.Marker({ element: createMarkerElement(), anchor: 'bottom' })
+        .setLngLat([lng, lat])
+        .addTo(map.current);
+    }
+
+    map.current.flyTo({ center: [lng, lat], zoom: 15 });
+  }, [lat, lng, createMarkerElement]);
+
   return (
     <div className="w-full">
-      <div className="relative w-full h-64 rounded-xl overflow-hidden border border-neutral-300">
-        <div ref={mapContainer} className="w-full h-full" />
+      <div className="relative w-full h-64 rounded-xl border border-neutral-300 overflow-hidden" style={{ position: 'relative', isolation: 'isolate' }}>
+        <div ref={mapContainer} className="w-full h-full" style={{ position: 'relative', zIndex: 0, transform: 'translateZ(0)' }} />
 
 
       </div>

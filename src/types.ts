@@ -31,6 +31,7 @@ export interface Listing {
   category: string;
   date: string;
   amenities: string[];
+  advancePaymentMonths?: number;
   lat?: number;
   lng?: number;
   reviews: Review[];

@@ -34,6 +34,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
   const [availableAmenities, setAvailableAmenities] = useState<string[]>(AMENITIES);
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
+  const [advancePaymentMonths, setAdvancePaymentMonths] = useState<number>(1);
   const [images, setImages] = useState<File[]>([]);
   const [pinLat, setPinLat] = useState<number | null>(null);
   const [pinLng, setPinLng] = useState<number | null>(null);
@@ -110,6 +111,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         location,
         category,
         amenities: selectedAmenities,
+        advance_payment_months: advancePaymentMonths,
         image: imageUrls[0], // Main image
         gallery: imageUrls,
         rating: 0,
@@ -134,6 +136,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setLocation('');
       setCategory(CATEGORIES[0]);
       setSelectedAmenities([]);
+      setAdvancePaymentMonths(1);
       setImages([]);
       setPinLat(null);
       setPinLng(null);
@@ -307,6 +310,23 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       + Add
                     </button>
                   )}
+                </div>
+              </div>
+
+              {/* Months of Advance Payment */}
+              <div>
+                <label className="block text-sm font-semibold text-neutral-800 mb-2">Months of Advance Payment</label>
+                <div className="flex flex-wrap gap-2">
+                  {[1, 2, 3, 6, 12].map(months => (
+                    <button
+                      key={months}
+                      type="button"
+                      onClick={() => setAdvancePaymentMonths(months)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${advancePaymentMonths === months ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 hover:border-neutral-300'}`}
+                    >
+                      {months} {months === 1 ? 'month' : 'months'}
+                    </button>
+                  ))}
                 </div>
               </div>
 

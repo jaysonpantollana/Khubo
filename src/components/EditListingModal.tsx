@@ -6,9 +6,9 @@
 // @dependencies: supabase mock, useAuth, Listing type, motion, lucide-react
 // @known-issues: Mock supabase update returns success without actual persistence
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-import { X, Upload, XCircle, Loader2 } from 'lucide-react';
+import { X, Upload, XCircle, Loader2, ChevronDown } from 'lucide-react';
 import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
 import { Listing } from '../types';
@@ -37,6 +37,8 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
   const [advancePaymentMonths, setAdvancePaymentMonths] = useState<number>(1);
+  const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
+  const monthDropdownRef = useRef<HTMLDivElement>(null);
   
   // For images, we track existing URL strings and new File objects separately
   const [existingImages, setExistingImages] = useState<string[]>([]);
@@ -72,6 +74,16 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
       setError(null);
     }
   }, [isOpen, listing]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (monthDropdownRef.current && !monthDropdownRef.current.contains(event.target as Node)) {
+        setIsMonthDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   if (!isOpen || !listing) return null;
 
@@ -273,6 +285,42 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                   />
                 </div>
 
+                {/* Months of Advance Payment */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-neutral-800 mb-2">Months of Advance Payment</label>
+                  <div className="relative" ref={monthDropdownRef}>
+                    <button
+                      type="button"
+                      onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
+                      className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 cursor-pointer flex items-center justify-between"
+                    >
+                      <span>{advancePaymentMonths} {advancePaymentMonths === 1 ? 'month' : 'months'}</span>
+                      <ChevronDown size={16} className={`text-neutral-400 transition-transform ${isMonthDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {isMonthDropdownOpen && (
+                      <div className="absolute z-50 mt-1 w-full bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden">
+                        {[1, 2, 3, 6, 12].map(months => (
+                          <button
+                            key={months}
+                            type="button"
+                            onClick={() => {
+                              setAdvancePaymentMonths(months);
+                              setIsMonthDropdownOpen(false);
+                            }}
+                            className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
+                              advancePaymentMonths === months
+                                ? 'bg-[#2252D6] text-white'
+                                : 'text-neutral-800 hover:bg-neutral-50'
+                            }`}
+                          >
+                            {months} {months === 1 ? 'month' : 'months'}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Description</label>
                   <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the listing..." className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] resize-none" />
@@ -352,30 +400,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                     </button>
                   )}
                 </div>
-              </div>
-
-              {/* Months of Advance Payment */}
-              <div>
-                <label className="block text-sm font-semibold text-neutral-800 mb-2">Months of Advance Payment</label>
-                <div className="relative">
-                  <select
-                    value={advancePaymentMonths}
-                    onChange={(e) => setAdvancePaymentMonths(Number(e.target.value))}
-                    className="w-full appearance-none bg-[#1a1a1a] text-neutral-300 text-sm rounded-xl px-4 py-3 pr-10 border border-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500"
-                  >
-                    <option value={1}>1 month</option>
-                    <option value={2}>2 months</option>
-                    <option value={3}>3 months</option>
-                    <option value={6}>6 months</option>
-                    <option value={12}>12 months</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                    <svg className="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
                 </div>
-              </div>
 
             </form>
           </div>

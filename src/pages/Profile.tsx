@@ -52,8 +52,8 @@ export default function Profile() {
     { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
     { title: 'Account settings', icon: Settings, action: () => showToast('Account settings clicked', 'info') },
     { title: 'Help Center', icon: HelpCircle, action: () => showToast('Help Center clicked', 'info') },
-    { title: 'Terms of Service', icon: FileText, action: () => showToast('Terms of Service clicked', 'info') },
-    { title: 'Privacy Policy', icon: Shield, action: () => showToast('Privacy Policy clicked', 'info') },
+    { title: 'Terms of Service', icon: FileText, action: () => navigate('/terms') },
+    { title: 'Privacy Policy', icon: Shield, action: () => navigate('/privacy') },
   ];
 
   const [myListings, setMyListings] = useState<Listing[]>([]);
@@ -456,6 +456,9 @@ export default function Profile() {
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
                     <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">Premium Apartment</h3>
                     <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+                      <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
+                        6 Available
+                      </span>
                       <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${mockListed ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
                         {mockListed ? 'Active Listing' : 'Unlisted'}
                       </span>
@@ -582,6 +585,9 @@ export default function Profile() {
                       <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
                         <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">{listing.title}</h3>
                         <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+                          <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
+                            {listing.date || '6 Available'}
+                          </span>
                           <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${isListed ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
                             {isListed ? 'Active Listing' : 'Unlisted'}
                           </span>
@@ -737,11 +743,11 @@ export default function Profile() {
                   <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                 </div>
                 <div className="flex items-center justify-end gap-3 w-full md:w-auto">
-                  <button className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-red-500 text-red-500 rounded-full font-bold hover:bg-red-50 transition active:scale-95 text-sm md:text-base whitespace-nowrap">
-                    Cancel Reservation
-                  </button>
                   <button className="flex-1 md:flex-none px-8 py-3 bg-[#4CAF50] text-white rounded-full font-bold hover:bg-[#43A047] shadow-lg shadow-[#4CAF50]/30 transition active:scale-95 text-sm md:text-base whitespace-nowrap">
                     Apply now
+                  </button>
+                  <button className="flex-1 md:flex-none px-4 py-2 border-[1.5px] border-neutral-400 text-neutral-500 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-xs md:text-sm whitespace-nowrap">
+                    Cancel
                   </button>
                 </div>
               </div>

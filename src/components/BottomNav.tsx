@@ -20,10 +20,10 @@ export default function BottomNav() {
 
   return (
     <div 
-      className="fixed bottom-[calc(12px+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-50 w-[calc(100%-24px)] max-w-[420px] pointer-events-none"
+      className="fixed bottom-[calc(12px+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-50 w-[calc(100%-32px)] max-w-[380px] pointer-events-none"
     >
       <nav 
-        className="bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-2 sm:px-4 py-1.5 sm:py-2 flex items-center justify-around gap-1 pointer-events-auto"
+        className="bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-3 sm:px-6 py-1.5 sm:py-2 flex items-center justify-around pointer-events-auto"
       >
         {items.map((item, idx) => {
           const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '') || (item.path !== '/' && location.pathname.startsWith(item.path));

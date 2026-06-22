@@ -20,6 +20,10 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
   const onLocationSelectRef = useRef(onLocationSelect);
   onLocationSelectRef.current = onLocationSelect;
+  const latRef = useRef(lat);
+  const lngRef = useRef(lng);
+  latRef.current = lat;
+  lngRef.current = lng;
 
   const createMarkerElement = useCallback(() => {
     const el = document.createElement('div');
@@ -41,6 +45,16 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
     `;
     return el;
   }, []);
+
+  const placeMarker = useCallback((mapInst: maptilersdk.Map, latVal: number, lngVal: number) => {
+    if (marker.current) {
+      marker.current.setLngLat([lngVal, latVal]);
+    } else {
+      marker.current = new maptilersdk.Marker({ element: createMarkerElement(), anchor: 'bottom' })
+        .setLngLat([lngVal, latVal])
+        .addTo(mapInst);
+    }
+  }, [createMarkerElement]);
 
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
@@ -73,6 +87,13 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
       requestAnimationFrame(() => {
         map.current?.resize();
       });
+
+      const currentLat = latRef.current;
+      const currentLng = lngRef.current;
+      if (currentLat !== null && currentLng !== null && map.current) {
+        placeMarker(map.current, currentLat, currentLng);
+        map.current.flyTo({ center: [currentLng, currentLat], zoom: 15 });
+      }
     });
 
     map.current.on('click', (e: { lngLat: { lat: number; lng: number } }) => {
@@ -98,16 +119,9 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
   useEffect(() => {
     if (!map.current || lat === null || lng === null) return;
 
-    if (marker.current) {
-      marker.current.setLngLat([lng, lat]);
-    } else {
-      marker.current = new maptilersdk.Marker({ element: createMarkerElement(), anchor: 'bottom' })
-        .setLngLat([lng, lat])
-        .addTo(map.current);
-    }
-
+    placeMarker(map.current, lat, lng);
     map.current.flyTo({ center: [lng, lat], zoom: 15 });
-  }, [lat, lng, createMarkerElement]);
+  }, [lat, lng, placeMarker]);
 
   return (
     <div className="w-full">

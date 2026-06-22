@@ -42,7 +42,7 @@ export default function Profile() {
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
   const [selectedListingDetail, setSelectedListingDetail] = useState<Listing | null>(null);
-  const [selectedTenant, setSelectedTenant] = useState<TenantInfo | null>(null);
+  const [selectedTenants, setSelectedTenants] = useState<TenantInfo[]>([]);
 
   useEffect(() => {
     document.title = "Profile | Khubo";
@@ -528,14 +528,14 @@ export default function Profile() {
                               alt={t.name}
                               className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all"
                               style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
-                              onClick={(e) => { e.stopPropagation(); setSelectedTenant(t); }}
+                              onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                             />
                           ))}
                           {MOCK_TENANTS.length > 4 && (
                             <span
                               className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                               style={{ marginLeft: '-8px', zIndex: 0 }}
-                              onClick={(e) => { e.stopPropagation(); setSelectedTenant(MOCK_TENANTS[4]); }}
+                              onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                             >
                               +{MOCK_TENANTS.length - 4}
                             </span>
@@ -655,14 +655,14 @@ export default function Profile() {
                                     className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all"
                                     style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
                                     title={tenant.name}
-                                    onClick={(e) => { e.stopPropagation(); setSelectedTenant(tenant); }}
+                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
                                   />
                                 ))}
                                 {remaining > 0 && (
                                   <span
                                     className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                                     style={{ marginLeft: '-8px', zIndex: 0 }}
-                                    onClick={(e) => { e.stopPropagation(); setSelectedTenant(listingTenants[4]); }}
+                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
                                   >
                                     +{remaining}
                                   </span>
@@ -865,9 +865,9 @@ export default function Profile() {
         />
       )}
       <TenantProfileModal
-        tenant={selectedTenant}
-        isOpen={!!selectedTenant}
-        onClose={() => setSelectedTenant(null)}
+        tenants={selectedTenants}
+        isOpen={selectedTenants.length > 0}
+        onClose={() => setSelectedTenants([])}
       />
     </div>
   );

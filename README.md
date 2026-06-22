@@ -10,7 +10,7 @@ A modern, full-featured web application designed to help users in Iligan City fi
 
 Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 
-[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev)
+[![React](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-6.2-646CFF?style=flat-square&logo=vite)](https://vitejs.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
@@ -35,13 +35,14 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Smart Matching** - Find compatible roommates based on university, budget, location preferences, and lifestyle tags
 - **Create Posts** - Post roommate listings in "applying" or "finding" mode with personality traits
 - **Detailed Profiles** - View potential roommates' bios, preferences, and compatibility factors
-- **Direct Communication** - Integrated messaging system to connect with potential roommates or hosts
 
 ### For Hosts
 - **Listing Management** - Create, edit, and manage your property listings through an intuitive dashboard
 - **Profile Customization** - Showcase your hosting experience, work background, and property details
 - **Review System** - Build trust through authentic guest reviews and ratings
 - **Analytics Dashboard** - Track property performance with charts and statistics
+- **Tenant Management** - View and manage tenants with status tracking (active, leaving, moved out) and payment status
+- **Location Picker** - Interactive MapTiler-based map picker for precise property location selection
 - **Landlord Signup** - Dedicated flow for hosts to upgrade their account
 
 ### User Experience
@@ -55,9 +56,7 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Error Boundaries** - Graceful error handling with fallback UI components
 - **Camera Capture** - Take photos directly from your device camera for uploads
 - **File Upload** - Drag-and-drop and file picker for image and document uploads
-- **Announcements Overlay** - In-app notifications and announcements
-- **Listings & Roommates Popups** - Reusable modal grids for filtered search results
-- **Map Preloading** - Background MapTiler initialization on Home page for instant /maps navigation
+- **Legal Pages** - Terms of Service and Privacy Policy pages
 
 ---
 
@@ -123,10 +122,11 @@ docker compose up --build
 | `/listing/:id` | Detailed view of a specific property with photo gallery, reviews, and booking |
 | `/category/:categoryId` | Browse listings filtered by category |
 | `/maps` | Split-panel map view with sidebar listing cards and MapTiler map |
-| `/messages` | Two-panel chat interface with conversation list and active chat |
 | `/roommate` | Roommate finder with hero search, filter tags, and create post |
 | `/profile` | User profile with stats, settings, landlord signup, and modals |
 | `/manage-listings` | Host dashboard for managing properties with edit functionality |
+| `/terms` | Terms of Service page |
+| `/privacy` | Privacy Policy page |
 
 ---
 
@@ -189,11 +189,10 @@ khubo/
 │   ├── components/               # Reusable UI components
 │   │   ├── ui/                   # Base UI components (Modal, ErrorScreen)
 │   │   ├── errors/               # Error boundary components
-│   │   ├── chat/                 # Chat components (ChatMessage, ChatSidebar)
 │   │   ├── profile/              # Profile modals (Edit, Landlord Signup, Logout, StatCard)
 │   │   ├── example/              # Example components for reference
 │   │   └── *.tsx                 # Feature components (55+ files)
-│   ├── pages/                    # Route-level components (8 pages)
+│   ├── pages/                    # Route-level components (9 pages)
 │   ├── hooks/                    # Custom React hooks (9 hooks)
 │   │   ├── useBodyScrollLock.ts  # Nested-modal-safe body scroll lock
 │   │   ├── useErrorHandler.ts    # Error handling hook
@@ -208,7 +207,6 @@ khubo/
 │   │   │   ├── auth.ts           # Authentication API
 │   │   │   ├── client.ts         # API client setup
 │   │   │   ├── listings.ts       # Listings API
-│   │   │   ├── messages.ts       # Messages API
 │   │   │   ├── roommates.ts      # Roommates API
 │   │   │   └── types.ts          # API type definitions
 │   │   ├── AuthContext.tsx        # Authentication provider
@@ -218,7 +216,6 @@ khubo/
 │   │   └── utils.ts              # Utility functions
 │   ├── mocks/                    # Mock data for development
 │   │   ├── listings.ts           # Mock listing data
-│   │   ├── messages.ts           # Mock message data
 │   │   ├── roommates.ts          # Mock roommate data
 │   │   └── supabase.ts           # Mock Supabase client
 │   ├── test/                     # Test setup and configuration

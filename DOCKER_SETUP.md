@@ -9,7 +9,7 @@
 
 ```bash
 # 1. Clone the repo and enter the directory
-cd KHUBO_2
+cd Khubo
 
 # 2. Create your .env from the example
 cp .env.example .env

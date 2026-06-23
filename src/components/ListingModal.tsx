@@ -31,6 +31,7 @@ interface ListingModalProps {
   endDate: Date | null;
   onSelect: (date: Date) => void;
   availableRooms?: number;
+  onAuthRequired?: () => void;
 }
 
 const DAY_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -135,6 +136,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   startDate, 
   onSelect,
   availableRooms = 0,
+  onAuthRequired,
 }) => {
   const [tempDate, setTempDate] = React.useState<Date>(startDate || new Date());
 
@@ -147,6 +149,10 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   if (!isOpen) return null;
 
   const handleConfirm = () => {
+    if (onAuthRequired) {
+      onAuthRequired();
+      return;
+    }
     onSelect(tempDate);
     onClose();
   };

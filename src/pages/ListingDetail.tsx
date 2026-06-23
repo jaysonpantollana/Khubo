@@ -690,10 +690,6 @@ export default function ListingDetail() {
               <div className="flex flex-col gap-3 mt-auto">
                 <button 
                   onClick={() => {
-                    if (!isAuthenticated) {
-                      setIsAuthModalOpen(true);
-                      return;
-                    }
                     if (startDate) {
                       // Reserve logic
                     } else {
@@ -748,10 +744,6 @@ export default function ListingDetail() {
           </button>
           <button 
             onClick={() => {
-              if (!isAuthenticated) {
-                setIsAuthModalOpen(true);
-                return;
-              }
               if (startDate) {
                 // Reserve logic
               } else {
@@ -772,6 +764,7 @@ export default function ListingDetail() {
         endDate={null}
         onSelect={(date) => setStartDate(date)}
         availableRooms={listing ? parseInt(listing.date) || 0 : 0}
+        onAuthRequired={!isAuthenticated ? () => { setIsModalOpen(false); setIsAuthModalOpen(true); } : undefined}
       />
 
       <AuthModal 

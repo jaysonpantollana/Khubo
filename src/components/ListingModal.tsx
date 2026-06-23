@@ -6,17 +6,21 @@
 // @known-issues: Only supports single date selection (no range); inline version in ListingDetail duplicates this
 
 import React from 'react';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { 
   format, 
   getMonth,
   getYear,
   getDate,
-  getDaysInMonth,
-  setMonth as setDateMonth,
-  setYear as setDateYear,
-  setDate as setDateDay,
+  startOfMonth,
+  endOfMonth,
+  getDay,
+  isBefore,
+  startOfDay,
+  addMonths,
+  subMonths,
+  isSameDay,
 } from 'date-fns';
 import { cn } from '../lib/utils';
 
@@ -28,82 +32,97 @@ interface ListingModalProps {
   onSelect: (date: Date) => void;
 }
 
-const WheelPicker = ({ 
-  items, 
-  value, 
-  onChange,
-  label
-}: { 
-  items: readonly string[] | readonly number[], 
-  value: string | number, 
-  onChange: (val: string | number) => void,
-  label: string
+const DAY_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+const CalendarGrid = ({
+  tempDate,
+  onDateChange,
+}: {
+  tempDate: Date;
+  onDateChange: (date: Date) => void;
 }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [itemHeight, setItemHeight] = React.useState(40);
+  const today = startOfDay(new Date());
+  const monthStart = startOfMonth(tempDate);
+  const monthEnd = endOfMonth(tempDate);
+  const startDow = getDay(monthStart);
+  const totalDays = getDate(monthEnd);
 
-  React.useEffect(() => {
-    const updateHeight = () => {
-      setItemHeight(window.innerWidth >= 768 ? 40 : 32);
-    };
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
-    return () => window.removeEventListener('resize', updateHeight);
-  }, []);
+  const cells: (number | null)[] = [];
+  for (let i = 0; i < startDow; i++) cells.push(null);
+  for (let d = 1; d <= totalDays; d++) cells.push(d);
 
-  React.useEffect(() => {
-    const index = (items as readonly (string | number)[]).indexOf(value);
-    if (index !== -1 && containerRef.current) {
-      containerRef.current.scrollTop = index * itemHeight;
-    }
-  }, [value, items, itemHeight]);
-
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const scrollPos = containerRef.current.scrollTop;
-    const index = Math.round(scrollPos / itemHeight);
-    if (items[index] !== undefined && items[index] !== value) {
-      onChange(items[index]);
-    }
+  const isPast = (d: number) => {
+    const date = new Date(getYear(tempDate), getMonth(tempDate), d);
+    return isBefore(date, today);
   };
 
+  const isToday = (d: number) =>
+    isSameDay(new Date(getYear(tempDate), getMonth(tempDate), d), today);
+
+  const isSelected = (d: number) =>
+    isSameDay(new Date(getYear(tempDate), getMonth(tempDate), d), tempDate);
+
   return (
-    <div className="flex flex-col items-center flex-1">
-      <span className="text-[8px] md:text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-2 md:mb-3">{label}</span>
-      <div className={cn(
-        "relative w-full overflow-hidden transition-all duration-300",
-        "h-[96px] md:h-[140px]"
-      )}>
-        {/* Selection Mask */}
-        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 border-y border-neutral-100 pointer-events-none z-10 bg-neutral-100/20 h-[32px] md:h-[40px]" />
-        
-        {/* Edge Gradients */}
-        <div className="absolute top-0 left-0 right-0 h-[24px] md:h-[40px] bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 h-[24px] md:h-[40px] bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
-        
-        <div 
-          ref={containerRef}
-          onScroll={handleScroll}
-          className={cn(
-            "h-full overflow-y-scroll scroll-smooth snap-y snap-mandatory no-scrollbar",
-            "pb-[64px] pt-[32px] md:pb-[100px] md:pt-[50px]"
-          )}
+    <div>
+      <div className="flex items-center justify-between mb-3 px-1">
+        <button
+          onClick={() => onDateChange(subMonths(tempDate, 1))}
+          className="p-1.5 rounded-lg hover:bg-neutral-100 transition-colors"
+          aria-label="Previous month"
         >
-          {items.map((item, i) => (
-            <div 
-              key={i}
-              style={{ height: `${itemHeight}px` }}
+          <ChevronLeft size={18} className="text-neutral-600" />
+        </button>
+        <span className="text-sm font-bold text-neutral-800">
+          {format(tempDate, 'MMMM yyyy')}
+        </span>
+        <button
+          onClick={() => onDateChange(addMonths(tempDate, 1))}
+          className="p-1.5 rounded-lg hover:bg-neutral-100 transition-colors"
+          aria-label="Next month"
+        >
+          <ChevronRight size={18} className="text-neutral-600" />
+        </button>
+      </div>
+
+      <div className="grid grid-cols-7 mb-1">
+        {DAY_LABELS.map((label) => (
+          <div
+            key={label}
+            className="text-center text-[10px] md:text-xs font-semibold text-neutral-400 py-1"
+          >
+            {label}
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-7 gap-0.5">
+        {cells.map((d, i) => {
+          if (d === null) return <div key={`empty-${i}`} className="aspect-square" />;
+
+          const past = isPast(d);
+          const todayCell = isToday(d);
+          const selected = isSelected(d);
+
+          return (
+            <button
+              key={d}
+              onClick={() => onDateChange(new Date(getYear(tempDate), getMonth(tempDate), d))}
+              disabled={past}
               className={cn(
-                "flex items-center justify-center snap-center transition-all duration-200",
-                item === value 
-                  ? "text-[#17294F] font-black text-sm md:text-lg" 
-                  : "text-neutral-300 font-bold text-[10px] md:text-xs scale-90"
+                "aspect-square flex items-center justify-center rounded-full text-xs md:text-sm font-medium transition-all",
+                selected
+                  ? "bg-[#17294F] text-white shadow-md"
+                  : todayCell
+                    ? "bg-neutral-100 text-[#17294F] font-bold"
+                    : past
+                      ? "text-neutral-300 cursor-not-allowed"
+                      : "text-neutral-700 hover:bg-neutral-100 cursor-pointer"
               )}
             >
-              {typeof item === 'number' && item < 10 ? `0${item}` : item}
-            </div>
-          ))}
-        </div>
+              {d}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -124,29 +143,6 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   }, [isOpen, startDate]);
 
   if (!isOpen) return null;
-
-  const years = Array.from({ length: 10 }, (_, i) => getYear(new Date()) + i);
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  const daysInMonth = getDaysInMonth(tempDate);
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-
-  const handleYearChange = (year: string | number) => {
-    const y = typeof year === 'string' ? parseInt(year, 10) : year;
-    setTempDate(setDateYear(tempDate, y));
-  };
-
-  const handleMonthChange = (monthName: string | number) => {
-    const m = typeof monthName === 'number' ? monthName : months.indexOf(monthName);
-    setTempDate(setDateMonth(tempDate, m));
-  };
-
-  const handleDayChange = (day: string | number) => {
-    const d = typeof day === 'string' ? parseInt(day, 10) : day;
-    setTempDate(setDateDay(tempDate, d));
-  };
 
   const handleConfirm = () => {
     onSelect(tempDate);
@@ -187,26 +183,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
               </div>
 
               <div className="bg-white rounded-xl border border-neutral-100 p-3">
-                <div className="flex gap-1.5">
-                  <WheelPicker 
-                    label="Month"
-                    items={months} 
-                    value={months[getMonth(tempDate)]} 
-                    onChange={handleMonthChange} 
-                  />
-                  <WheelPicker 
-                    label="Day"
-                    items={days} 
-                    value={getDate(tempDate)} 
-                    onChange={handleDayChange} 
-                  />
-                  <WheelPicker 
-                    label="Year"
-                    items={years} 
-                    value={getYear(tempDate)} 
-                    onChange={handleYearChange} 
-                  />
-                </div>
+                <CalendarGrid tempDate={tempDate} onDateChange={setTempDate} />
               </div>
             </div>
           </div>

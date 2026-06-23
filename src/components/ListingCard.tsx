@@ -102,14 +102,7 @@ export default function ListingCard({ listing, onClick, compact }: ListingCardPr
         </div>
         
         <div className="px-1.5 sm:px-1 flex flex-col gap-1">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="font-display font-extrabold text-[15px] sm:text-[16px] leading-tight truncate text-[#1a1a1a]">{listing.title}</h3>
-            {listing.date && (
-              <span className="bg-[#4E4F50] text-white text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap shrink-0">
-                {listing.date}
-              </span>
-            )}
-          </div>
+          <h3 className="font-display font-extrabold text-[15px] sm:text-[16px] leading-tight truncate text-[#1a1a1a]">{listing.title}</h3>
           
           <div className="flex items-center justify-between gap-1.5 mt-0.5">
             <div className="text-[11px] sm:text-[12px] text-gray-500 font-medium truncate flex-1">{listing.location}</div>

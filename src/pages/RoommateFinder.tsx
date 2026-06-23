@@ -648,7 +648,7 @@ export default function RoommateFinder() {
                     className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === "finding" ? "text-white" : "text-neutral-400 group-hover:text-neutral-600"}`}
                   />
                   <span className="font-semibold text-[11px] sm:text-[15px]">
-                    Finding Roommate
+                    Finding a roommate
                   </span>
                 </button>
               </div>
@@ -664,7 +664,7 @@ export default function RoommateFinder() {
                   onClick={() => setFindingPopupOpen(true)}
                 >
                   <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
-                    Finding Roommate
+                    Finding a roommate
                   </h2>
                   <div className="flex items-center gap-1 px-3 py-1 bg-[#17294F] text-white rounded-full ml-1 sm:ml-2 flex-shrink-0">
                     <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap">
@@ -830,7 +830,7 @@ export default function RoommateFinder() {
       <RoommatesPopup
         isOpen={findingPopupOpen}
         onClose={() => setFindingPopupOpen(false)}
-        title="Finding Roommate"
+        title="Finding a roommate"
         roommates={filteredRoommates.slice(0, 10)}
         onProfileClick={openProfile}
       />

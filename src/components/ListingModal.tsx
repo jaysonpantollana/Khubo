@@ -6,7 +6,7 @@
 // @known-issues: Only supports single date selection (no range); inline version in ListingDetail duplicates this
 
 import React from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, AlertTriangle, CheckCircle } from 'lucide-react';
 
 import { 
   format, 
@@ -30,6 +30,7 @@ interface ListingModalProps {
   startDate: Date | null;
   endDate: Date | null;
   onSelect: (date: Date) => void;
+  availableRooms?: number;
 }
 
 const DAY_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -132,7 +133,8 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   isOpen, 
   onClose, 
   startDate, 
-  onSelect 
+  onSelect,
+  availableRooms = 0,
 }) => {
   const [tempDate, setTempDate] = React.useState<Date>(startDate || new Date());
 
@@ -148,6 +150,8 @@ export const ListingModal: React.FC<ListingModalProps> = ({
     onSelect(tempDate);
     onClose();
   };
+
+  const isAvailable = availableRooms > 0;
 
   return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -175,10 +179,20 @@ export const ListingModal: React.FC<ListingModalProps> = ({
             <div className="flex flex-col gap-3 md:gap-5">
               <div className="border border-neutral-200 rounded-xl md:rounded-2xl p-3 md:p-4 bg-neutral-50">
                 <div className="px-2 md:px-3">
-                  <div className="text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest text-[#17294F] mb-0.5">Move-in Date</div>
-                  <div className="font-bold text-neutral-800 text-xs md:text-base">
-                    {format(tempDate, 'MMMM d, yyyy')}
-                  </div>
+                  {isAvailable ? (
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5 bg-emerald-100 px-2.5 py-1 rounded-full">
+                        <CheckCircle size={12} className="text-emerald-600" />
+                        <span className="text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest text-emerald-700">Available</span>
+                      </div>
+                      <span className="text-[9px] md:text-[11px] text-neutral-500 font-medium">{availableRooms} room{availableRooms !== 1 ? 's' : ''} left</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5 bg-red-100 px-2.5 py-1 rounded-full">
+                      <AlertTriangle size={12} className="text-red-600" />
+                      <span className="text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest text-red-700">Not Available</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -188,18 +202,12 @@ export const ListingModal: React.FC<ListingModalProps> = ({
             </div>
           </div>
 
-          <div className="mt-5 md:mt-7 flex gap-2 md:gap-3">
-            <button 
-              onClick={() => setTempDate(new Date())}
-              className="flex-1 py-2.5 md:py-3.5 text-xs md:text-sm text-neutral-500 font-bold hover:bg-neutral-50 rounded-xl transition"
-            >
-              Today
-            </button>
+          <div className="mt-5 md:mt-7">
             <button 
               onClick={handleConfirm}
-              className="flex-[2] py-2.5 md:py-3.5 bg-[#17294F] text-white text-xs md:text-sm font-bold rounded-xl shadow-lg shadow-indigo-100 hover:bg-[#1e3566] transition"
+              className="w-full py-2.5 md:py-3.5 bg-[#17294F] text-white text-xs md:text-sm font-bold rounded-xl shadow-lg shadow-indigo-100 hover:bg-[#1e3566] transition"
             >
-              Confirm Move-in
+              Check Availability
             </button>
           </div>
         </div>

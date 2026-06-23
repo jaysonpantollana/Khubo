@@ -44,7 +44,7 @@ const WheelPicker = ({
 
   React.useEffect(() => {
     const updateHeight = () => {
-      setItemHeight(window.innerWidth >= 768 ? 56 : 40);
+      setItemHeight(window.innerWidth >= 768 ? 40 : 32);
     };
     updateHeight();
     window.addEventListener('resize', updateHeight);
@@ -69,24 +69,24 @@ const WheelPicker = ({
 
   return (
     <div className="flex flex-col items-center flex-1">
-      <span className="text-[9px] md:text-[11px] font-black text-neutral-400 uppercase tracking-widest mb-3 md:mb-5">{label}</span>
+      <span className="text-[8px] md:text-[10px] font-black text-neutral-400 uppercase tracking-widest mb-2 md:mb-3">{label}</span>
       <div className={cn(
         "relative w-full overflow-hidden transition-all duration-300",
-        "h-[120px] md:h-[180px]"
+        "h-[96px] md:h-[140px]"
       )}>
         {/* Selection Mask */}
-        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 border-y border-neutral-100 pointer-events-none z-10 bg-neutral-100/20 h-[40px] md:h-[56px]" />
+        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 border-y border-neutral-100 pointer-events-none z-10 bg-neutral-100/20 h-[32px] md:h-[40px]" />
         
         {/* Edge Gradients */}
-        <div className="absolute top-0 left-0 right-0 h-[30px] md:h-[50px] bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 h-[30px] md:h-[50px] bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-[24px] md:h-[40px] bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-[24px] md:h-[40px] bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
         
         <div 
           ref={containerRef}
           onScroll={handleScroll}
           className={cn(
             "h-full overflow-y-scroll scroll-smooth snap-y snap-mandatory no-scrollbar",
-            "pb-[80px] pt-[40px] md:pb-[124px] md:pt-[62px]"
+            "pb-[64px] pt-[32px] md:pb-[100px] md:pt-[50px]"
           )}
         >
           {items.map((item, i) => (
@@ -96,8 +96,8 @@ const WheelPicker = ({
               className={cn(
                 "flex items-center justify-center snap-center transition-all duration-200",
                 item === value 
-                  ? "text-[#17294F] font-black text-base md:text-2xl" 
-                  : "text-neutral-300 font-bold text-xs md:text-sm scale-90"
+                  ? "text-[#17294F] font-black text-sm md:text-lg" 
+                  : "text-neutral-300 font-bold text-[10px] md:text-xs scale-90"
               )}
             >
               {typeof item === 'number' && item < 10 ? `0${item}` : item}
@@ -118,10 +118,10 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   const [tempDate, setTempDate] = React.useState<Date>(startDate || new Date());
 
   React.useEffect(() => {
-    if (startDate) {
-      setTempDate(startDate);
+    if (isOpen) {
+      setTempDate(startDate || new Date());
     }
-  }, [startDate]);
+  }, [isOpen, startDate]);
 
   if (!isOpen) return null;
 
@@ -161,34 +161,33 @@ export const ListingModal: React.FC<ListingModalProps> = ({
         />
         
         <div
-          className="relative bg-white w-full max-w-[400px] md:max-w-[540px] rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden p-6 md:p-12"
+          className="relative bg-white w-full max-w-[340px] md:max-w-[440px] rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden p-5 md:p-8"
         >
-          <div className="flex items-center justify-between mb-6 md:mb-10">
+          <div className="flex items-center justify-between mb-4 md:mb-6">
             <div>
-              <h2 className="text-2xl md:text-4xl font-extrabold font-display text-[#17294F]">Select Move-in</h2>
-              <p className="text-sm md:text-base text-neutral-500 mt-0.5 md:mt-2">Select your planned move-in date</p>
+              <h2 className="text-xl md:text-3xl font-extrabold font-display text-[#17294F]">Check Availability</h2>
             </div>
             <button 
               onClick={onClose}
-              className="p-2.5 md:p-3.5 hover:bg-neutral-100 rounded-full transition-colors"
+              className="p-2 md:p-2.5 hover:bg-neutral-100 rounded-full transition-colors"
             >
-              <X size={24} />
+              <X size={20} />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:gap-10">
-            <div className="flex flex-col gap-5 md:gap-8">
-              <div className="border border-neutral-200 rounded-2xl md:rounded-3xl p-3.5 md:p-6 bg-neutral-50">
-                <div className="px-3 md:px-4">
-                  <div className="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-[#17294F] mb-0.5 md:mb-1">Move-in Date</div>
-                  <div className="font-bold text-neutral-800 text-sm md:text-xl">
+          <div className="grid grid-cols-1 gap-4 md:gap-6">
+            <div className="flex flex-col gap-3 md:gap-5">
+              <div className="border border-neutral-200 rounded-xl md:rounded-2xl p-3 md:p-4 bg-neutral-50">
+                <div className="px-2 md:px-3">
+                  <div className="text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest text-[#17294F] mb-0.5">Move-in Date</div>
+                  <div className="font-bold text-neutral-800 text-xs md:text-base">
                     {format(tempDate, 'MMMM d, yyyy')}
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-neutral-100 p-4">
-                <div className="flex gap-2">
+              <div className="bg-white rounded-xl border border-neutral-100 p-3">
+                <div className="flex gap-1.5">
                   <WheelPicker 
                     label="Month"
                     items={months} 
@@ -212,16 +211,16 @@ export const ListingModal: React.FC<ListingModalProps> = ({
             </div>
           </div>
 
-          <div className="mt-8 md:mt-12 flex gap-3 md:gap-5">
+          <div className="mt-5 md:mt-7 flex gap-2 md:gap-3">
             <button 
               onClick={() => setTempDate(new Date())}
-              className="flex-1 py-3 md:py-5 text-sm md:text-base text-neutral-500 font-bold hover:bg-neutral-50 rounded-xl md:rounded-2xl transition"
+              className="flex-1 py-2.5 md:py-3.5 text-xs md:text-sm text-neutral-500 font-bold hover:bg-neutral-50 rounded-xl transition"
             >
               Today
             </button>
             <button 
               onClick={handleConfirm}
-              className="flex-[2] py-3 md:py-5 bg-[#17294F] text-white text-sm md:text-lg font-bold rounded-xl md:rounded-2xl shadow-lg shadow-indigo-100 hover:bg-[#1e3566] transition"
+              className="flex-[2] py-2.5 md:py-3.5 bg-[#17294F] text-white text-xs md:text-sm font-bold rounded-xl shadow-lg shadow-indigo-100 hover:bg-[#1e3566] transition"
             >
               Confirm Move-in
             </button>

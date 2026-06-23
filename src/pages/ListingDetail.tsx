@@ -691,7 +691,6 @@ export default function ListingDetail() {
               <div className="flex flex-col gap-3 px-0.5 min-h-0">
                 <div className="mt-0">
                   <div className="mb-2.5 flex items-center justify-between px-1">
-                    <h4 className="text-[11px] font-black text-[#17294F] uppercase tracking-widest leading-none">Move-in Date</h4>
                     {startDate && (
                       <button 
                         onClick={() => setIsModalOpen(true)}

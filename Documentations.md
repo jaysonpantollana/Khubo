@@ -92,6 +92,14 @@ All source files are annotated with `@context`, `@purpose`, and domain-specific 
 - **Maps**: MapTiler SDK v4 with preloader singleton in `src/lib/mapPreloader.ts`; requires `VITE_MAPTILER_API_KEY`
 - **Onboarding**: 5-step wizard (identity → occupation → ID verification → review → finish) in `src/components/OnboardingFlow.tsx`
 - **Body scroll lock**: Nested-modal-safe lock via `src/hooks/useBodyScrollLock.ts`
+- **Focus trap**: Keyboard focus trap for modals via `src/hooks/useFocusTrap.ts`
+- **Reduced motion**: Accessibility support via `src/hooks/useReducedMotion.ts`
+- **Search history**: localStorage-backed recent searches via `src/hooks/useSearchHistory.ts`
+- **API client**: Retry (2x), timeout (15s), abort signals, auth headers — `src/lib/api/client.ts`
+- **Camera**: getUserMedia with front/rear toggle and native fallback — `src/components/CameraOverlay.tsx`
+- **File upload**: Drag-and-drop with type filtering and size validation — `src/components/UploadModal.tsx`
+- **Photo gallery**: Full-screen overlay with keyboard nav and thumbnails — `src/components/PhotoCarouselOverlay.tsx`
+- **Review breakdown**: 6-dimension rating with star distribution chart — `src/components/ReviewBreakdown.tsx`
 - **Testing**: Vitest + React Testing Library + jsdom; setup in `src/test/setup.ts`
 - **AI**: `@google/genai` package NOT installed (mentioned in earlier docs but not in dependencies)
 
@@ -483,6 +491,291 @@ An interactive MapTiler-based location picker for listing creation and editing. 
 
 **Location**: `src/components/profile/`
 
+### 13. Listing Detail Page
+
+**Location**: `src/pages/ListingDetail.tsx` (865 lines)
+
+A full-featured property detail page with the following sections:
+
+**Photo Gallery**:
+- **Mobile**: Full-width hero carousel (55vh) with CSS snap scrolling, image indicator badge (`currentIndex / total`), tap to open full gallery
+- **Desktop**: 5-image grid (`grid-cols-4 grid-rows-2`) with first image spanning 2x2, hover zoom effect, "Show all photos" button
+- Fallback images from Unsplash if gallery has fewer than 5 images
+
+**PhotoCarouselOverlay** (`src/components/PhotoCarouselOverlay.tsx`):
+- Full-screen image viewer with backdrop blur
+- Left/right arrow navigation buttons
+- Keyboard support: ArrowRight, ArrowLeft, Escape
+- Image counter badge (`currentIndex / total`)
+- Thumbnail strip at bottom for direct image selection
+- Click outside to close
+
+**About This Place**: Description section with `whitespace-pre-wrap` formatting
+
+**Amenities** (`What this place offers`):
+- 2-column grid with circular icon + label per amenity
+- 10 amenities: Kitchen, Wifi, TV, Elevator, Patio/Balcony, Luggage Dropoff, Refrigerator, Microwave, Paid Parking, Security Cameras
+- Expandable "Show all" / "Show less" toggle (first 4 visible by default)
+
+**House Rules**:
+- 2-column grid with icon + rule text
+- 7 rules: Curfew (10 PM), No Visitors after 9 PM, No Smoking, Quiet Hours (10 PM - 7 AM), Kitchen Cleanup, No Loud Music, Garbage Disposal
+- Expandable "Show more rules" / "Show less" toggle (first 4 visible by default)
+
+**Pre-contractual Document**:
+- Clickable card with file icon, "Standard Lease Agreement" title, "PDF - 2.4 MB" subtitle
+- Download button opens document in new tab (placeholder URL)
+
+**Reviews Section**:
+- Header: Star icon + rating score + review count
+- Review cards (2-column grid): User avatar, name with verified badge, handle (`@username`), comment, date, like/share buttons
+- Click-to-expand modal with full review detail
+- "Show all N reviews" toggle (first 4 shown by default)
+
+**ReviewBreakdown** (`src/components/ReviewBreakdown.tsx`):
+- Left column: Overall rating with star distribution bar chart (5-star to 1-star percentages)
+- Right column: 6-dimension rating grid (Cleanliness, Accuracy, Move-in, Communication, Location, Value) with scores and visual separators
+- Responsive: 2 cols mobile → 3 cols sm → 6 cols lg
+
+**Host Profile Card** (`src/components/HostProfile.tsx`):
+- Avatar with verified badge, name, "Landlord" subtitle
+- Stats grid: Reviews count, Rating, Hosting Duration, Tenants count
+- Info rows: Work, Location with icons
+- "Message Landlord" button (triggers auth check if not authenticated)
+
+**Interactive Map**:
+- Inline MapTiler map with location marker (540px tall)
+- Hover overlay with "Click to Expand" pill
+- Full-screen map modal with backdrop blur, location pill with coordinates, close button
+
+**Booking Sidebar** (Desktop, `lg+` breakpoint):
+- Sticky positioning at `top-[100px]`
+- Price display (`P4,700 /month`) with rating badge
+- Inline calendar (non-interactive, opens booking modal on click)
+- "Check Availability" / "Reserve Now" button
+- Price breakdown: Monthly Rent + Cleaning Fee + Service Fee + Grand Total
+
+**Mobile Action Bar**:
+- Fixed bottom bar with date button and reserve button
+- Tap feedback with `active:scale-95`
+
+**Booking Modal** (`ListingModal`):
+- Full-screen overlay with centered card
+- Availability indicator (green "Available" / red "Not Available" with room count)
+- Calendar grid with month navigation, today highlight, selected date styling, past dates disabled
+- Confirm button triggers auth check or sets date
+
+**State Management**: 13 state variables for gallery, booking, map, auth, reviews, and amenity/rule toggles
+
+### 14. Map View Page
+
+**Location**: `src/pages/Maps.tsx` (725 lines)
+
+A split-panel map-based listing discovery page:
+
+**Layout**:
+- Collapsible sidebar (left) + full-width MapTiler map (right)
+- Sidebar auto-collapses on mobile (`window.innerWidth < 768`)
+- Map auto-resizes after sidebar transition (305ms delay)
+
+**Map Markers**:
+- Custom SVG pin markers (red pin with white circle) for each listing with lat/lng
+- Marker popups: Thumbnail image, title, price on hover/click
+- Fly-to animation on marker click (zoom 16, 1500ms duration)
+- Deselect on map click (if not clicking a marker)
+- Deselect on zoom out (zoom < 15)
+
+**Map Preloader Integration**:
+- Takes pre-initialized map from Home page's hidden preloader via `takeMap()`
+- Re-parents preloaded container into layout for instant map readiness
+- Falls back to creating new map if preloader unavailable
+- Resets preloader on unmount via `resetMapPreload()`
+
+**Sidebar**:
+- Desktop: Scrollable listing cards with active-state ring highlight synced to selected marker
+- Mobile: Bottom overlay with horizontally scrollable listing cards, snap-to-center
+- Collapse/expand toggle button with chevron
+
+**Search Bar**:
+- Location dropdown (quick-select popular locations)
+- Date scroll picker (Month/Day/Year with year validation)
+- Budget dropdown (preset ranges)
+- Text search with SearchDropdown autocomplete
+- Clear-all-filters button when selections active
+
+**Custom Zoom Controls**: +/- buttons on bottom-right of map
+
+**Missing API Key**: Friendly "Map unavailable" screen with link to get MapTiler API key
+
+### 15. Home Page Enhancements
+
+**Location**: `src/pages/Home.tsx` (694 lines)
+
+**Hero Search Bar**:
+- Prominent search with location, date, and budget fields
+- Real-time autocomplete via `SearchDropdown` with trending tags and matching listings
+
+**Scroll-Driven Sticky Header**:
+- `IntersectionObserver`-based sticky header that transitions between category tabs and search bar
+- Two observers: one for sticky state, one for search activation (70px threshold)
+- Sticky search bar with Location, Dates, Budget dropdowns + text search
+- Mobile: search activates only when sticky + scrolled past 70px
+
+**Category Filter Tabs**:
+- 17 categories + ALL tab: Boarding House, Apartment, Bed Spacer, Dormitory, Room 4 Rent, Condominium, All Males, Shared, All Females, No Pets, Quiet Hours, Free Water, Free Electricity, No Curfew, Gated, Study Area, Near MSU-IIT
+
+**Search History** (`SearchHistory` component):
+- localStorage-backed recent searches (max 5)
+- Displayed under Hero with add/remove/select functionality
+
+**Budget Filter**: Preset ranges: P1k-P3k, P3k-P5k, P5k+
+
+**Date Scroll Picker** (`DateScrollPicker`):
+- Three-column scrollable Month/Day/Year picker with snap-to-center
+- Year validation: current year + next year only
+
+**Listing Carousels**:
+- Three carousels: "Recommended", "Top Listing", "Near MSU-IIT"
+- Horizontal scroll with snap and navigation arrows
+- Responsive item widths (2 cols mobile → 3 cols md → 5 cols lg)
+
+**Map Preloader**: Hidden off-screen MapTiler container initialized on Home for instant map readiness on Maps page
+
+### 16. Profile Page
+
+**Location**: `src/pages/Profile.tsx` (882 lines)
+
+**Hero Banner**: Full-width background image with gradient overlay, announcements button
+
+**Profile Card**:
+- Avatar with online/offline status dot (green/gray)
+- Name, school/age/gender details, location
+- Editable bio/quote
+- "Edit Profile" button opens `EditProfileModal`
+
+**Personality Tags**:
+- Editable tag chips with add/remove functionality
+- Persisted in `localStorage` key `user_profile_tags`
+- Default tags: Introvert, Pet-friendly, Night owl, Studious, Non-smoker
+
+**Landlord/Tenant Mode Toggle**:
+- Switch between tenant and landlord views
+- Different stat cards and features per mode
+
+**Stat Cards**:
+- **Tenant Mode**: Saved (12 Houses), Reservation (2 Houses), Roommate Applications (6), Invitations (0 Received)
+- **Landlord Mode**: Properties (4 Listed), Tenants (12 Active), Inquiries (8 Pending), Revenue (P42k This Month)
+- Clickable cards open dedicated modals (Analytics, Tenants, Properties, Inquiries, or generic StatCardModal)
+
+**My Properties** (Landlord):
+- List of host's listings with image, title, location, rating, amenities, availability badge, price
+- Edit button opens `EditListingModal`
+- Context menu with Edit and Copy Link
+- Listing visibility toggle (green/gray) to show/h�藏 from search
+- Tenant avatars with count badge
+- Add Listing button opens `CreateListingModal`
+
+**My Reservation** (Tenant):
+- Display of reserved property with apply/cancel buttons
+
+**Settings Menu**:
+- Notifications (opens AnnouncementsOverlay)
+- Account Settings (toast placeholder)
+- Help Center (toast placeholder)
+- Terms of Service (navigates to `/terms`)
+- Privacy Policy (navigates to `/privacy`)
+
+**Logout**: Confirmation modal with cancel/continue flow
+
+### 17. Landlord Dashboard Modals
+
+**Analytics Modal** (`src/components/AnalyticsModal.tsx`):
+- Recharts `LineChart` showing daily revenue trends (14 data points)
+- Total revenue display (₱42,000) with percentage trend (+14.2%)
+- Monthly timeframe toggle (currently Monthly only)
+- Stats breakdown: Avg. daily revenue (₱3,000), Top earning day (₱5,000)
+
+**Inquiries Modal** (`src/components/InquiriesModal.tsx`):
+- Tab-based filtering: All, Unread, Responded
+- Unread count badge on filter button
+- Inquiry cards with: Name, message preview, property reference badge, unread dot indicator
+- 4 mock inquiries with different statuses (Unread, Responded, Read)
+- Empty state for filtered results
+
+**Properties Modal** (`src/components/PropertiesModal.tsx`):
+- Property cards with status badges (Active/Review/Maintenance)
+- Occupancy info, star ratings
+- Click to view listing detail
+
+**Tenants Modal** (`src/components/TenantsModal.tsx`):
+- Tabular view of tenants with room number, payment status (Paid/Review/Pending/Draft), tenancy status (Staying/Leaving/Moved out), email
+
+**Tenant Profile Modal** (`src/components/TenantProfileModal.tsx`):
+- Individual tenant detail view
+
+### 18. Camera & File Upload
+
+**Camera Overlay** (`src/components/CameraOverlay.tsx`):
+- Full-screen camera view using `getUserMedia` API
+- Live video preview with front/rear camera toggle (`user`/`environment` facing modes)
+- Capture button (large circular shutter)
+- Preview captured image with Retake/Use Photo options
+- Front camera mirroring (CSS `-scale-x-100`)
+- Native camera fallback (`<input capture="environment">`) for permission-denied or unsupported browsers
+- Error state with "Take Photo with Device" fallback button
+- Stream cleanup on unmount (stops all tracks)
+
+**Upload Modal** (`src/components/UploadModal.tsx`):
+- Drag-and-drop zone with click-to-browse fallback
+- File type filtering via `acceptedTypes` prop
+- Max file size validation (default 25MB configurable via `maxSizeMB`)
+- Selected files preview with name, size (MB), remove button
+- Multi-file support
+- "Securely encrypted" indicator
+- Discard/Add Attachments buttons
+
+### 19. API Client Details
+
+**Location**: `src/lib/api/client.ts` (125 lines)
+
+**HTTP Client** (`apiRequest`):
+- Base URL from `VITE_API_URL` env var (defaults to `/api`)
+- Default timeout: 15,000ms (configurable per request)
+- Max retries: 2 (exponential backoff: 200ms, 400ms)
+- Retry conditions: HTTP 429 (rate limit) or 5xx (server error)
+- Abort signal combination: Merges caller's signal with timeout signal
+
+**Auth Headers**:
+- Automatic Bearer token injection from `sessionStorage.getItem('auth_token')`
+- Token included in all requests via `getAuthHeaders()`
+
+**CRUD Helpers**:
+- `apiGet<T>(endpoint, params?)` - GET with optional query params
+- `apiPost<T>(endpoint, body)` - POST with JSON body
+- `apiPut<T>(endpoint, body)` - PUT with JSON body
+- `apiDelete<T>(endpoint)` - DELETE
+
+**Error Handling**:
+- Non-OK responses: Parses error body for message/code, returns `ApiError`
+- AbortError: Returns "Request was cancelled"
+- Network errors: Returns error message string
+- Max retries exceeded: Returns "Max retries exceeded"
+
+### 20. Notification System
+
+**Components**:
+- `ToastProvider` - Context provider for toast management
+- `Toast` - Individual notification component with 3s auto-dismiss
+- `NotificationDialog` - Persistent notification history with timestamps
+
+**Toast Types**: success, error, info
+
+**Usage**:
+```tsx
+const { addToast } = useToast();
+addToast({ message: 'Success!', type: 'success' });
+```
+
 ---
 
 ## 🧩 Component Library
@@ -581,6 +874,18 @@ An interactive MapTiler-based location picker for listing creation and editing. 
 |-----------|-------------|
 | `ErrorBoundary` | Class component for catching render errors (`src/components/errors/`) |
 | `ErrorExample` | Development example for error handling (`src/components/example/`) |
+
+### Map Components
+| Component | Description |
+|-----------|-------------|
+| `MapTilerView` | Interactive MapTiler SDK map with markers, popups, and fly-to animation |
+| `MapPicker` | Interactive location picker for listing creation/editing with draggable marker |
+
+### Legal & Info Pages
+| Component | Description |
+|-----------|-------------|
+| `TermsOfService` | 10-section legal page (`/terms`) |
+| `PrivacyPolicy` | 9-section legal page (`/privacy`) |
 
 ---
 
@@ -755,12 +1060,22 @@ The app respects the `prefers-reduced-motion` media query:
 **Location**: `src/lib/api/`
 
 **Structure**:
-- `client.ts` - Base HTTP client with error handling
-- `auth.ts` - Authentication operations
-- `listings.ts` - Listing CRUD operations
-- `roommates.ts` - Roommate operations
-- `types.ts` - API type definitions (ApiResponse, PaginatedResponse, ApiError)
+- `client.ts` - Base HTTP client with retry (2 retries on 429/5xx), timeout (15s default), abort signal combination, and automatic Bearer token injection from sessionStorage
+- `auth.ts` - Authentication operations (signIn, signUp, signOut, getSession)
+- `listings.ts` - Listing CRUD operations (getListings, getListing, createListing, updateListing, deleteListing)
+- `roommates.ts` - Roommate operations (getRoommates, getRoommate, createRoommateRequest)
+- `types.ts` - API type definitions (ApiResponse, PaginatedResponse, PaginationParams, ApiError)
 - `index.ts` - Barrel export
+
+**Client Features**:
+- `apiRequest<T>(endpoint, options)` - Generic fetch wrapper with retry, timeout, and auth
+- `apiGet<T>(endpoint, params?)` - GET with optional query params
+- `apiPost<T>(endpoint, body)` - POST with JSON body
+- `apiPut<T>(endpoint, body)` - PUT with JSON body
+- `apiDelete<T>(endpoint)` - DELETE
+- Exponential backoff: 200ms × 2^attempt
+- AbortError handling: Returns "Request was cancelled"
+- Max retries exceeded: Returns "Max retries exceeded"
 
 ### Mock Data
 
@@ -773,12 +1088,21 @@ The app respects the `prefers-reduced-motion` media query:
 
 ### MapTiler
 
-**Usage**: Interactive maps in `Maps.tsx` and `MapTilerView.tsx`
+**Usage**: Interactive maps in `Maps.tsx`, `MapTilerView.tsx`, `MapPicker.tsx`, and `ListingDetail.tsx`
 
 ```ts
-import { maptilerSdk } from '@maptiler/sdk';
-maptilerSdk.key = import.meta.env.VITE_MAPTILER_API_KEY;
+import { maptilersdk } from '@maptiler/sdk';
+maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_API_KEY;
 ```
+
+**Features**:
+- Custom SVG pin markers with drop shadows
+- Marker popups with thumbnail, title, and price
+- Fly-to animation (zoom 16, 1500ms duration)
+- Map preloader singleton for instant map readiness
+- Full-screen map modal with location pill
+- Interactive location picker for listing creation
+- Missing API key fallback screen
 
 ---
 
@@ -906,9 +1230,50 @@ interface Category {
 ### API Types (`src/lib/api/types.ts`)
 
 ```ts
-interface ApiResponse<T> { data: T; error: null; }
-interface ApiError { data: null; error: { message: string; code: string; }; }
-interface PaginatedResponse<T> extends ApiResponse<T[]> { total: number; page: number; }
+interface ApiResponse<T> {
+  data: T;
+  error: string | null;
+}
+
+interface PaginatedResponse<T> {
+  data: T[];
+  count: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
+interface PaginationParams {
+  page?: number;
+  pageSize?: number;
+}
+
+interface ApiError {
+  message: string;
+  status: number;
+  code?: string;
+}
+```
+
+### Auth Types (`src/lib/AuthContext.tsx`)
+
+```ts
+interface MockUser {
+  id?: string;
+  email?: string;
+}
+
+interface MockSession {
+  user: MockUser;
+}
+
+interface AuthContextType {
+  session: MockSession | null;
+  user: MockUser | null;
+  isLoading: boolean;
+  signOut: () => Promise<void>;
+  signIn: (email: string) => void;
+}
 ```
 
 ---

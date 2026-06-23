@@ -72,7 +72,7 @@ Every technique below is annotated directly in the source code as context-aware 
 All source files are annotated with `@context`, `@purpose`, and domain-specific tags:
 
 - **Pages (9)**: Home, CategoryListings, ListingDetail, Maps, Profile, RoommateFinder, ManageListings, TermsOfService, PrivacyPolicy
-- **Components (55+)**: AnalyticsModal, BottomNav, Categories, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailModal, ListingDetailSkeleton, ListingModal, ListingsPopup, MapPicker, MapTilerView, Navbar, NotificationDialog, OccupationStep, OnboardingFlow, OnboardingModal, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, ReviewProfile, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommatePreferences, RoommateSearchDropdown, RoommatesPopup, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, TenantProfileModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal, VerificationStep
+- **Components (60+)**: AnalyticsModal, AnnouncementsOverlay, BottomNav, CameraOverlay, Categories, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailModal, ListingDetailSkeleton, ListingModal, ListingsPopup, MapPicker, MapTilerView, Navbar, NotificationDialog, OccupationStep, OnboardingFlow, OnboardingModal, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, ReviewProfile, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommatePreferences, RoommateSearchDropdown, RoommatesPopup, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, TenantProfileModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal, VerificationStep
 - **Hooks (9)**: useBodyScrollLock, useErrorHandler, useFocusTrap, useListing, useListings, useListingsFilter, useReducedMotion, useSearchHistory
 - **API (7)**: auth, client, client.test, index (barrel), listings, roommates, types
 - **Lib (7)**: AuthContext, ThemeContext, animations, mapPreloader, utils, utils.test, api/index
@@ -226,6 +226,7 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │   │   ├── ErrorScreen.tsx
 │   │   │   └── Modal.tsx
 │   │   ├── AnalyticsModal.tsx
+│   │   ├── AnnouncementsOverlay.tsx
 │   │   ├── AuthModal.tsx
 │   │   ├── BottomNav.tsx
 │   │   ├── CameraOverlay.tsx
@@ -549,7 +550,9 @@ An interactive MapTiler-based location picker for listing creation and editing. 
 ### Utility Components
 | Component | Description |
 |-----------|-------------|
+| `AnnouncementsOverlay` | Modal overlay displaying app news and updates with "New" badges |
 | `AuthModal` | Login/signup modal dialog |
+| `CameraOverlay` | Full-screen camera view with capture, retake, and native camera fallback |
 | `Categories` | Horizontal scrollable category selector |
 | `CreateListingModal` | Form for creating new listings |
 | `CreatePostModal` | Form for creating posts |
@@ -1071,8 +1074,8 @@ npm run clean       # Remove dist/ directory
 
 ---
 
-*Last Updated: June 22, 2026*
-*Version: 2.1.0*
+*Last Updated: June 23, 2026*
+*Version: 2.2.0*
 
 ---
 

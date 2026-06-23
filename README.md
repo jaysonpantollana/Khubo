@@ -54,7 +54,8 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Smooth Animations** - Polished UI transitions using Motion library with accessibility-conscious reduced motion support
 - **Toast Notifications** - Real-time feedback for user actions
 - **Error Boundaries** - Graceful error handling with fallback UI components
-- **Camera Capture** - Take photos directly from your device camera for uploads
+- **Camera Capture** - Take photos directly from your device camera for uploads via CameraOverlay
+- **Announcements** - View app news and updates via AnnouncementsOverlay
 - **File Upload** - Drag-and-drop and file picker for image and document uploads
 - **Legal Pages** - Terms of Service and Privacy Policy pages
 
@@ -191,7 +192,7 @@ khubo/
 │   │   ├── errors/               # Error boundary components
 │   │   ├── profile/              # Profile modals (Edit, Landlord Signup, Logout, StatCard)
 │   │   ├── example/              # Example components for reference
-│   │   └── *.tsx                 # Feature components (55+ files)
+│   │   └── *.tsx                 # Feature components (60+ files)
 │   ├── pages/                    # Route-level components (9 pages)
 │   ├── hooks/                    # Custom React hooks (9 hooks)
 │   │   ├── useBodyScrollLock.ts  # Nested-modal-safe body scroll lock
@@ -262,3 +263,7 @@ chore:    Maintenance tasks
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+*Last Updated: June 23, 2026*

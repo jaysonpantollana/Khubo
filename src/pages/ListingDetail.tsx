@@ -272,6 +272,35 @@ export default function ListingDetail() {
               </div>
             </div>
 
+            <div className="py-10 border-b border-gray-100">
+              <div className="flex items-center gap-2 mb-5">
+                <Users size={18} className="text-neutral-600" />
+                <h3 className="text-sm font-bold text-neutral-500 uppercase tracking-wider">Tenants</h3>
+              </div>
+              <div className="flex items-center">
+                {[
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=MariaSantos&backgroundColor=b6e3f4',
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=JuanDelaCruz&backgroundColor=c0aede',
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=AnaReyes&backgroundColor=ffd5dc',
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=CarlosGarcia&backgroundColor=d1d4f9',
+                ].map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`Tenant ${i + 1}`}
+                    className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm"
+                    style={{ marginLeft: i > 0 ? '-10px' : '0', zIndex: 4 - i }}
+                  />
+                ))}
+                <span
+                  className="w-11 h-11 rounded-full bg-[#4E4F50] text-white text-xs font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                  style={{ marginLeft: '-10px', zIndex: 0 }}
+                >
+                  +{(listing.host?.tenantCount || 12) - 4 > 0 ? (listing.host?.tenantCount || 12) - 4 : 8}
+                </span>
+              </div>
+            </div>
+
             <div className="py-12 border-b border-gray-100">
               <h3 className="text-2xl font-semibold text-neutral-900 mb-8">What this place offers</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-10">
@@ -582,30 +611,30 @@ export default function ListingDetail() {
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Contact</p>
-                  <div className="flex gap-1.5">
-                    <a href="tel:+639123456789" className="flex items-center gap-1.5 px-2.5 py-1.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition">
-                      <Phone size={10} className="text-[#17294F]" />
-                      <span className="text-[9px] font-bold text-[#17294F]">Phone</span>
+                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Contact</p>
+                  <div className="flex gap-2">
+                    <a href="tel:+639123456789" className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+                      <Phone size={16} className="text-[#17294F]" />
+                      <span className="text-sm font-bold text-[#17294F]">Phone</span>
                     </a>
-                    <a href="mailto:layla@khubo.com" className="flex items-center gap-1.5 px-2.5 py-1.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition">
-                      <Mail size={10} className="text-[#17294F]" />
-                      <span className="text-[9px] font-bold text-[#17294F]">Email</span>
+                    <a href="mailto:layla@khubo.com" className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+                      <Mail size={16} className="text-[#17294F]" />
+                      <span className="text-sm font-bold text-[#17294F]">Email</span>
                     </a>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Social Media</p>
-                  <div className="flex gap-1.5">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:opacity-90 transition">
-                      <Instagram size={14} />
+                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Social Media</p>
+                  <div className="flex gap-2">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:opacity-90 transition">
+                      <Instagram size={18} />
                     </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-8 h-8 bg-[#1877F2] text-white rounded-lg hover:opacity-90 transition">
-                      <Facebook size={14} />
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-xl hover:opacity-90 transition">
+                      <Facebook size={18} />
                     </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-8 h-8 bg-black text-white rounded-lg hover:opacity-90 transition">
-                      <Twitter size={14} />
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-black text-white rounded-xl hover:opacity-90 transition">
+                      <Twitter size={18} />
                     </a>
                   </div>
                 </div>

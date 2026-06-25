@@ -2,7 +2,7 @@
 // @purpose: Four-tab bottom nav (Home, Roommate, Maps, Profile) with active state
 // @dependencies: react-router-dom, lucide-react, useAuth
 
-import { Home, Users, Map, User } from 'lucide-react';
+import { Home, Users, Map, MessageCircle, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext';
 
@@ -15,6 +15,7 @@ export default function BottomNav() {
     { icon: Home, label: 'Home', path: '/' },
     { icon: Users, label: 'Roommate', path: '/roommate' },
     { icon: Map, label: 'Maps', path: '/maps' },
+    { icon: MessageCircle, label: 'Messages', path: '/messages' },
     { icon: User, label: 'Profile', path: '/profile' },
   ];
 

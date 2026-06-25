@@ -448,7 +448,8 @@ export default function Profile() {
               ))}
             </div>
           ) : myListings.length === 0 ? (
-            <div className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors mb-16 ${!mockListed ? 'opacity-60' : ''}`}>
+            <>
+            <div className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors mb-6 ${!mockListed ? 'opacity-60' : ''}`}>
               <img
                 src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800"
                 alt="Mock listing"
@@ -569,6 +570,56 @@ export default function Profile() {
                 </div>
               </div>
             </div>
+            <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors mb-16 opacity-60">
+              <img
+                src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800"
+                alt="Mock listing"
+                className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] object-cover rounded-2xl md:rounded-[1.5rem] shrink-0"
+              />
+              <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
+                <div>
+                  <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">Sunset Boarding House</h3>
+                    <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+                      <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
+                        3 Available
+                      </span>
+                      <span className="text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap bg-neutral-400">
+                        Unlisted
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
+                    <MapPin size={16} className="shrink-0" /> Pala-o, Iligan City
+                  </p>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
+                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                      <span className="text-sm font-bold text-neutral-800">4.75</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">Wifi</span>
+                      <span className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">Water</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0 pt-4 border-t border-neutral-50 lg:border-none lg:pt-0">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl md:text-[28px] font-black text-black">₱3,500</span>
+                    <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
+                  </div>
+                  <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      onClick={() => setListingVisibility(prev => ({ ...prev, 'mock-listing-2': !prev['mock-listing-2'] }))}
+                      className="relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer bg-neutral-300"
+                    >
+                      <div className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </>
           ) : (
             <div className="flex flex-col gap-6 mb-6">
               {(showAllProperties ? myListings : myListings.slice(0, 1)).map(listing => {

@@ -457,10 +457,10 @@ export default function ListingDetail() {
                 onClick={() => setIsMapModalOpen(true)}
               >
                 <div className="absolute inset-0 z-20 group-hover:bg-black/5 transition-colors rounded-3xl" />
-                <MapTilerView 
-                  lat={8.2280} 
-                  lng={124.2452} 
-                  title={listing.title} 
+                <MapTilerView
+                  lat={listing.lat || 8.2280}
+                  lng={listing.lng || 124.2452}
+                  title={listing.title}
                 />
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-all scale-95 group-hover:scale-100">
                   <div className="bg-[#17294F] text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-2xl border border-white/20 backdrop-blur-md">
@@ -535,20 +535,20 @@ export default function ListingDetail() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 mb-4 py-3 border-y border-neutral-100">
+                <div className="grid grid-cols-3 gap-1 mb-3 py-2 border-y border-neutral-100">
                   <div className="text-center">
-                    <div className="font-bold text-sm text-[#17294F] flex items-center justify-center gap-0.5">
-                      {listing.host?.rating || 5.0} <Star size={10} className="fill-[#17294F] text-[#17294F]" />
+                    <div className="font-bold text-xs text-[#17294F] flex items-center justify-center gap-0.5">
+                      {listing.host?.rating || 5.0} <Star size={8} className="fill-[#17294F] text-[#17294F]" />
                     </div>
-                    <span className="text-[8px] font-semibold text-neutral-400 uppercase tracking-wider">Rating</span>
+                    <span className="text-[7px] font-semibold text-neutral-400 uppercase tracking-wider">Rating</span>
                   </div>
                   <div className="text-center border-x border-neutral-100">
-                    <div className="font-bold text-sm text-[#17294F]">{listing.host?.reviews || 35}</div>
-                    <span className="text-[8px] font-semibold text-neutral-400 uppercase tracking-wider">Reviews</span>
+                    <div className="font-bold text-xs text-[#17294F]">{listing.host?.reviews || 35}</div>
+                    <span className="text-[7px] font-semibold text-neutral-400 uppercase tracking-wider">Reviews</span>
                   </div>
                   <div className="text-center">
-                    <div className="font-bold text-sm text-[#17294F]">{listing.host?.tenantCount || 12}</div>
-                    <span className="text-[8px] font-semibold text-neutral-400 uppercase tracking-wider">Tenants</span>
+                    <div className="font-bold text-xs text-[#17294F]">{listing.host?.tenantCount || 12}</div>
+                    <span className="text-[7px] font-semibold text-neutral-400 uppercase tracking-wider">Tenants</span>
                   </div>
                 </div>
 
@@ -703,10 +703,10 @@ export default function ListingDetail() {
             </div>
 
             <div className="flex-1 w-full h-full">
-              <MapTilerView 
-                lat={8.2280} 
-                lng={124.2452} 
-                title={listing.title} 
+              <MapTilerView
+                lat={listing.lat || 8.2280}
+                lng={listing.lng || 124.2452}
+                title={listing.title}
                 loadImmediately={true}
               />
             </div>

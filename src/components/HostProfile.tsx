@@ -4,7 +4,7 @@
 // @dependencies: lucide-react (Star, MessageCircle, BadgeCheck)
 
 import React from 'react';
-import { Star, MessageCircle, BadgeCheck } from 'lucide-react';
+import { Star, BadgeCheck } from 'lucide-react';
 
 interface HostProfileProps {
   name: string;
@@ -75,14 +75,6 @@ const HostProfile: React.FC<HostProfileProps> = ({
                "I take pride in providing a seamless luxury experience for my guests. From the moment you arrive until you check out, your comfort is my top priority."
              </p>
           </div>
-          
-          <button 
-             onClick={onMessageClick}
-             className="md:w-max w-full flex items-center justify-center gap-2 bg-white border border-neutral-300 text-[#17294F] px-6 py-3.5 rounded-xl font-bold text-sm hover:border-[#17294F] hover:bg-neutral-50 transition-colors shadow-sm"
-          >
-             <MessageCircle size={18} />
-             Message Landlord
-          </button>
         </div>
       </div>
     </div>

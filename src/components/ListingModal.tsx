@@ -11,7 +11,6 @@ interface ListingModalProps {
   isOpen: boolean;
   onClose: () => void;
   host?: HostInfo;
-  availableRooms?: number;
   onAuthRequired?: () => void;
   onContactOwner?: () => void;
 }
@@ -20,7 +19,6 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   isOpen,
   onClose,
   host,
-  availableRooms = 0,
   onAuthRequired,
   onContactOwner,
 }) => {
@@ -66,15 +64,6 @@ export const ListingModal: React.FC<ListingModalProps> = ({
             <X size={20} />
           </button>
         </div>
-
-        {/* Availability Badge */}
-        {availableRooms > 0 && (
-          <div className="mb-4 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-xl">
-            <span className="text-[10px] md:text-xs font-bold text-emerald-700 uppercase tracking-wider">
-              {availableRooms} room{availableRooms !== 1 ? 's' : ''} available
-            </span>
-          </div>
-        )}
 
         {/* Landlord Info */}
         <div className="flex items-center gap-4 mb-5">

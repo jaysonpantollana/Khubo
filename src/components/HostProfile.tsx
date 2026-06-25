@@ -1,10 +1,10 @@
 // @context: Host profile card — displayed on listing detail page
 // @purpose: Shows host avatar, name, rating, review count, hosting duration, work, location; message button
 // @behavior: Displays host stats inline; "Message host" button triggers onMessageClick callback
-// @dependencies: lucide-react (Star, Briefcase, Globe, MessageCircle, BadgeCheck)
+// @dependencies: lucide-react (Star, MessageCircle, BadgeCheck)
 
 import React from 'react';
-import { Star, Briefcase, Globe, MessageCircle, BadgeCheck } from 'lucide-react';
+import { Star, MessageCircle, BadgeCheck } from 'lucide-react';
 
 interface HostProfileProps {
   name: string;
@@ -65,17 +65,6 @@ const HostProfile: React.FC<HostProfileProps> = ({
              <div className="flex flex-col border-l border-neutral-100 pl-4 sm:pl-6 pt-4 sm:pt-0">
                 <span className="font-bold text-xl text-[#17294F]">{tenantCount}</span>
                 <span className="text-xs font-semibold text-neutral-400 mt-1 uppercase tracking-wider">Tenants</span>
-             </div>
-          </div>
-          
-          <div className="flex flex-col gap-4">
-             <div className="flex items-center gap-4 text-neutral-600">
-                <Briefcase size={20} className="text-neutral-400" />
-                <span className="text-[15px]">Works at <span className="font-semibold text-[#17294F]">{work}</span></span>
-             </div>
-             <div className="flex items-center gap-4 text-neutral-600">
-                <Globe size={20} className="text-neutral-400" />
-                <span className="text-[15px]">Lives in <span className="font-semibold text-[#17294F]">{location}</span></span>
              </div>
           </div>
         </div>

@@ -147,9 +147,12 @@ export default function Maps() {
           offset: 36,
           className: 'listing-thumbnail-popup',
         }).setHTML(`
-          <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); padding: 8px 10px;">
-            <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
-            <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
+          <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); width: 160px;">
+            <img src="${listing.image}" alt="${listing.title}" style="width: 100%; height: 100px; object-fit: cover;" />
+            <div style="padding: 6px 8px;">
+              <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
+              <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
+            </div>
           </div>
         `);
 
@@ -184,6 +187,20 @@ export default function Maps() {
         markers.current[listing.id] = marker;
       }
     });
+
+    if (filteredListings.length > 0) {
+      const coords = filteredListings
+        .filter((l) => l.lat && l.lng)
+        .map((l) => [l.lng, l.lat] as [number, number]);
+      if (coords.length === 1) {
+        map.current.setCenter(coords[0]);
+        map.current.setZoom(15);
+      } else if (coords.length > 1) {
+        const bounds = new sdkRef.current.LngLatBounds();
+        coords.forEach((c) => bounds.extend(c));
+        map.current.fitBounds(bounds, { padding: 60, maxZoom: 15, duration: 1000 });
+      }
+    }
   }, [filteredListings]);
 
   const updateMarkersRef = useRef(updateMarkers);

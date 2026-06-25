@@ -4,7 +4,7 @@
 // @dependencies: lucide-react, HostInfo type
 
 import React from 'react';
-import { X, Star, Briefcase, Globe, BadgeCheck, Instagram, Facebook, Twitter, Phone, Mail, MessageCircle } from 'lucide-react';
+import { X, Star, BadgeCheck, Instagram, Facebook, Twitter, Phone, Mail, MessageCircle } from 'lucide-react';
 import { HostInfo } from '../types';
 
 interface ListingModalProps {
@@ -106,18 +106,6 @@ export const ListingModal: React.FC<ListingModalProps> = ({
           <div className="text-center">
             <div className="font-bold text-lg text-[#17294F]">{landlord.tenantCount || 0}</div>
             <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">Tenants</span>
-          </div>
-        </div>
-
-        {/* Details */}
-        <div className="flex flex-col gap-3 mb-5">
-          <div className="flex items-center gap-3 text-neutral-600">
-            <Briefcase size={16} className="text-neutral-400" />
-            <span className="text-sm">Works at <span className="font-semibold text-[#17294F]">{landlord.work}</span></span>
-          </div>
-          <div className="flex items-center gap-3 text-neutral-600">
-            <Globe size={16} className="text-neutral-400" />
-            <span className="text-sm">Lives in <span className="font-semibold text-[#17294F]">{landlord.location}</span></span>
           </div>
         </div>
 

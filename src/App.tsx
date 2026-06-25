@@ -44,7 +44,6 @@ const CategoryListings = lazy(() => import('./pages/CategoryListings'));
 const Maps = lazy(() => import('./pages/Maps'));
 const RoommateFinder = lazy(() => import('./pages/RoommateFinder'));
 const Profile = lazy(() => import('./pages/Profile'));
-const Messages = lazy(() => import('./pages/Messages'));
 const ManageListings = lazy(() => import('./pages/ManageListings'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -85,7 +84,6 @@ export default function App() {
                       <Route path="/maps" element={<Maps />} />
                       <Route path="/roommate" element={<RoommateFinder />} />
                       <Route path="/profile" element={<Profile />} />
-                      <Route path="/messages" element={<Messages />} />
                       <Route path="/manage-listings" element={<ManageListings />} />
                       <Route path="/terms" element={<TermsOfService />} />
                       <Route path="/privacy" element={<PrivacyPolicy />} />

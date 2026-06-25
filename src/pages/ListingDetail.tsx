@@ -603,7 +603,7 @@ export default function ListingDetail() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3 mt-auto">
+                <div className="flex flex-col gap-3 mt-4">
                 <button
                   onClick={() => {
                     if (!isAuthenticated) {
@@ -644,6 +644,9 @@ export default function ListingDetail() {
               </div>
             </div>
           </div>
+        </div>
+        </div>
+        </div>
         </div>
     </main>
 

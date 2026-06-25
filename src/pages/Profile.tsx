@@ -588,6 +588,47 @@ export default function Profile() {
                       <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${(listingVisibility['mock-listing-2'] ?? false) ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
                         {(listingVisibility['mock-listing-2'] ?? false) ? 'Active Listing' : 'Unlisted'}
                       </span>
+                      <div className="relative" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          onClick={() => setOpenMenuId(openMenuId === 'mock-listing-2' ? null : 'mock-listing-2')}
+                          className="p-2 hover:bg-neutral-100 rounded-full transition cursor-pointer"
+                        >
+                          <MoreVertical size={18} className="text-neutral-600" />
+                        </button>
+                        {openMenuId === 'mock-listing-2' && (
+                          <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-neutral-100 py-1 z-50 min-w-[160px]">
+                            <button
+                              onClick={() => {
+                                setEditingListing({
+                                  id: 'mock-listing-2',
+                                  title: 'Sunset Boarding House',
+                                  description: 'A cozy boarding house in Pala-o, Iligan City.',
+                                  price: 3500,
+                                  location: 'Pala-o, Iligan City',
+                                  category: 'boarding house',
+                                  amenities: ['Wifi', 'Water'],
+                                  image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800',
+                                  gallery: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800'],
+                                  rating: 4.75,
+                                  reviews: [],
+                                  date: '2026-03-01',
+                                });
+                                setOpenMenuId(null);
+                              }}
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                            >
+                              <Edit2 size={14} /> Edit
+                            </button>
+                            <div className="h-px bg-neutral-100 my-1" />
+                            <button
+                              onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                            >
+                              <Copy size={14} /> Copy link
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">

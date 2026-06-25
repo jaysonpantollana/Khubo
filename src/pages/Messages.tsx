@@ -127,7 +127,15 @@ export default function Messages() {
     <div className="flex flex-col h-full bg-white">
       {/* Header */}
       <div className="px-5 pt-5 pb-3">
-        <h1 className="text-3xl font-extrabold text-neutral-900 mb-4">Messages</h1>
+        <div className="flex items-center gap-2 mb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 -ml-2 rounded-full hover:bg-neutral-100 transition"
+          >
+            <ArrowLeft size={22} className="text-neutral-900" />
+          </button>
+          <h1 className="text-3xl font-extrabold text-neutral-900">Messages</h1>
+        </div>
         <div className="relative mb-4">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
           <input

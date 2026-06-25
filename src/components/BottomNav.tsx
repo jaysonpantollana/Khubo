@@ -14,8 +14,8 @@ export default function BottomNav() {
   const items = [
     { icon: Home, label: 'Home', path: '/' },
     { icon: Users, label: 'Roommate', path: '/roommate' },
-    { icon: Map, label: 'Maps', path: '/maps' },
     { icon: MessageCircle, label: 'Messages', path: '/messages' },
+    { icon: Map, label: 'Maps', path: '/maps' },
     { icon: User, label: 'Profile', path: '/profile' },
   ];
 

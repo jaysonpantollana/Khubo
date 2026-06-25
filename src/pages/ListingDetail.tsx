@@ -549,7 +549,7 @@ export default function ListingDetail() {
 
               {/* Landlord Profile */}
               <div className="bg-white rounded-[1.5rem] p-5 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3">
                   <img
                     src={displayHost.image}
                     alt={displayHost.name}
@@ -563,47 +563,48 @@ export default function ListingDetail() {
                     <p className="text-[10px] text-neutral-500 font-medium">Landlord</p>
                   </div>
                 </div>
+              </div>
 
-                <div className="mb-4">
-                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Contact</p>
-                  <div className="flex flex-col gap-2">
-                    <a href="tel:+639123456789" className="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
-                      <div className="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0">
-                        <Phone size={16} className="text-[#17294F]" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-[#17294F]">Phone</p>
-                        <p className="text-xs text-neutral-500">+63 912 345 6789</p>
-                      </div>
-                    </a>
-                    <a href="mailto:layla@khubo.com" className="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
-                      <div className="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0">
-                        <Mail size={16} className="text-[#17294F]" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-[#17294F]">Email</p>
-                        <p className="text-xs text-neutral-500">layla@khubo.com</p>
-                      </div>
-                    </a>
-                  </div>
+              <div className="mb-4">
+                <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Contact</p>
+                <div className="flex flex-col gap-2">
+                  <a href="tel:+639123456789" className="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+                    <div className="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0">
+                      <Phone size={16} className="text-[#17294F]" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#17294F]">Phone</p>
+                      <p className="text-xs text-neutral-500">+63 912 345 6789</p>
+                    </div>
+                  </a>
+                  <a href="mailto:layla@khubo.com" className="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+                    <div className="w-10 h-10 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0">
+                      <Mail size={16} className="text-[#17294F]" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#17294F]">Email</p>
+                      <p className="text-xs text-neutral-500">layla@khubo.com</p>
+                    </div>
+                  </a>
                 </div>
+              </div>
 
-                <div>
-                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Social Media</p>
-                  <div className="flex gap-2">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:opacity-90 transition">
-                      <Instagram size={18} />
-                    </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-xl hover:opacity-90 transition">
-                      <Facebook size={18} />
-                    </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-black text-white rounded-xl hover:opacity-90 transition">
-                      <Twitter size={18} />
-                    </a>
-                  </div>
+              <div>
+                <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Social Media</p>
+                <div className="flex gap-2">
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:opacity-90 transition">
+                    <Instagram size={18} />
+                  </a>
+                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-xl hover:opacity-90 transition">
+                    <Facebook size={18} />
+                  </a>
+                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-black text-white rounded-xl hover:opacity-90 transition">
+                    <Twitter size={18} />
+                  </a>
                 </div>
+              </div>
 
-                <div className="flex flex-col gap-3 mt-4">
+              <div className="flex flex-col gap-3 mt-4">
                 <button
                   onClick={() => {
                     if (!isAuthenticated) {

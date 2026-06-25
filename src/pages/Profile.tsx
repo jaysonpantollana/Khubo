@@ -241,7 +241,7 @@ export default function Profile() {
     ? [
         { title: 'Properties', count: '4', sub: 'Listed' },
         { title: 'Tenants', count: '12', sub: 'Active' },
-        { title: 'Inquiries', count: '8', sub: 'Pending' },
+        { title: 'Reservations', count: '8', sub: 'Pending' },
         { title: 'Revenue', count: 'P42k', sub: 'This Month' },
       ]
     : [
@@ -257,7 +257,7 @@ export default function Profile() {
     if (title === 'Revenue') setIsAnalyticsModalOpen(true);
     else if (title === 'Tenants') setIsTenantsModalOpen(true);
     else if (title === 'Properties') setIsPropertiesModalOpen(true);
-    else if (title === 'Inquiries') setIsInquiriesModalOpen(true);
+    else if (title === 'Reservations') setIsInquiriesModalOpen(true);
     else setSelectedStatModal(title);
   };
 

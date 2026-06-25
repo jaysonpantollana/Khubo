@@ -33,9 +33,7 @@ export default function Maps() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [selectedListing, setSelectedListing] = useState<string | null>(null);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
-    window.innerWidth < 768,
-  );
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<
     "location" | "dates" | "budget" | "general" | null
   >(null);
@@ -226,6 +224,9 @@ export default function Maps() {
       style: maptilersdk.MapStyle.STREETS,
       center: [124.2442, 8.2415],
       zoom: 13,
+      pitch: 60,
+      bearing: -20,
+      antialias: true,
       navigationControl: false,
       geolocateControl: false,
       fadeDuration: 0,
@@ -252,9 +253,9 @@ export default function Maps() {
       }
     });
 
-    map.current.on("zoom", () => {
+    map.current.on("moveend", () => {
       const zoom = map.current!.getZoom();
-      if (zoom < 15 && selectedListingRef.current) {
+      if (zoom < 16 && selectedListingRef.current) {
         setSelectedListing(null);
       }
     });

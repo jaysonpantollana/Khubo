@@ -707,16 +707,14 @@ export default function Profile() {
                 </div>
               );
               })}
-              {myListings.length > 1 && (
-                <div className="flex justify-center">
-                  <button
-                    onClick={() => setShowAllProperties(!showAllProperties)}
-                    className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
-                  >
-                    {showAllProperties ? 'Show Less' : 'Show All'}
-                  </button>
-                </div>
-              )}
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setShowAllProperties(!showAllProperties)}
+                  className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
+                >
+                  {showAllProperties ? 'Show Less' : 'Show All'}
+                </button>
+              </div>
             </div>
           )
         ) : (

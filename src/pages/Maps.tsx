@@ -165,7 +165,7 @@ export default function Maps() {
             popup.remove();
             map.current?.flyTo({
               center: [124.2442, 8.2415],
-              zoom: 13,
+              zoom: 12,
               duration: 1500,
             });
           } else {
@@ -186,7 +186,7 @@ export default function Maps() {
             setSelectedListing(null);
             map.current?.flyTo({
               center: [124.2442, 8.2415],
-              zoom: 13,
+              zoom: 12,
               duration: 1500,
             });
             return;
@@ -239,7 +239,7 @@ export default function Maps() {
       container: mapContainer.current!,
       style: maptilersdk.MapStyle.STREETS,
       center: [124.2442, 8.2415],
-      zoom: 13,
+      zoom: 12,
       pitch: 60,
       bearing: -20,
       navigationControl: false,
@@ -285,8 +285,9 @@ export default function Maps() {
         const el = document.getElementById(`listing-${selectedListing}`);
         const sidebar = sidebarRef.current;
         if (el && sidebar) {
-          const scrollTop = el.offsetTop - sidebar.clientHeight / 2 + el.clientHeight / 2;
-          sidebar.scrollTo({ top: scrollTop, behavior: 'smooth' });
+          const elTop = el.getBoundingClientRect().top - sidebar.getBoundingClientRect().top + sidebar.scrollTop;
+          const scrollTo = elTop - sidebar.clientHeight / 2 + el.clientHeight / 2;
+          sidebar.scrollTo({ top: scrollTo, behavior: 'smooth' });
         }
       }, 100);
     }

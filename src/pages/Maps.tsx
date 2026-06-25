@@ -147,11 +147,9 @@ export default function Maps() {
           offset: 36,
           className: 'listing-thumbnail-popup',
         }).setHTML(`
-          <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); width: 160px;">
-            <div style="padding: 6px 8px;">
-              <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
-              <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
-            </div>
+          <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); padding: 8px 10px;">
+            <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
+            <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
           </div>
         `);
 
@@ -247,20 +245,6 @@ export default function Maps() {
 
     map.current.on("click", (e: any) => {
       if (!e.originalEvent?.target?.closest?.('.custom-marker')) {
-        setSelectedListing(null);
-      }
-    });
-
-    map.current.on("zoomend", () => {
-      const zoom = map.current!.getZoom();
-      if (zoom < 16 && selectedListingRef.current) {
-        setSelectedListing(null);
-      }
-    });
-
-    map.current.on("moveend", () => {
-      const zoom = map.current!.getZoom();
-      if (zoom < 16 && selectedListingRef.current) {
         setSelectedListing(null);
       }
     });

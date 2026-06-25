@@ -5,7 +5,7 @@
 
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
-import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail, Globe } from 'lucide-react';
+import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail } from 'lucide-react';
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -549,17 +549,6 @@ export default function ListingDetail() {
                   <div className="text-center">
                     <div className="font-bold text-xs text-[#17294F]">{listing.host?.tenantCount || 12}</div>
                     <span className="text-[7px] font-semibold text-neutral-400 uppercase tracking-wider">Tenants</span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 mb-4">
-                  <div className="flex items-center gap-2 text-neutral-600">
-                    <Briefcase size={12} className="text-neutral-400" />
-                    <span className="text-[11px]">{listing.host?.work || 'Property Manager'}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-neutral-600">
-                    <Globe size={12} className="text-neutral-400" />
-                    <span className="text-[11px]">{listing.host?.location || 'Iligan City'}</span>
                   </div>
                 </div>
 

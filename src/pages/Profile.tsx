@@ -570,7 +570,8 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors mb-16 opacity-60">
+            {showAllProperties && (
+            <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-auto max-w-[340px] md:max-w-none w-full text-left relative overflow-hidden transition-colors mb-6">
               <img
                 src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800"
                 alt="Mock listing"
@@ -584,8 +585,8 @@ export default function Profile() {
                       <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
                         3 Available
                       </span>
-                      <span className="text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap bg-neutral-400">
-                        Unlisted
+                      <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${(listingVisibility['mock-listing-2'] ?? false) ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
+                        {(listingVisibility['mock-listing-2'] ?? false) ? 'Active Listing' : 'Unlisted'}
                       </span>
                     </div>
                   </div>
@@ -609,15 +610,29 @@ export default function Profile() {
                     <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                   </div>
                   <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
-                    <button
-                      onClick={() => setListingVisibility(prev => ({ ...prev, 'mock-listing-2': !prev['mock-listing-2'] }))}
-                      className="relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer bg-neutral-300"
-                    >
-                      <div className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300" />
-                    </button>
+                    {(() => {
+                      const mockListed2 = listingVisibility['mock-listing-2'] ?? false;
+                      return (
+                        <button
+                          onClick={() => setListingVisibility(prev => ({ ...prev, 'mock-listing-2': !mockListed2 }))}
+                          className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${mockListed2 ? 'bg-[#4CAF50]' : 'bg-neutral-300'}`}
+                        >
+                          <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${mockListed2 ? 'left-6' : 'left-1'}`} />
+                        </button>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
+            </div>
+            )}
+            <div className="flex justify-center">
+              <button
+                onClick={() => setShowAllProperties(!showAllProperties)}
+                className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
+              >
+                {showAllProperties ? 'Show Less' : 'Show All'}
+              </button>
             </div>
             </>
           ) : (

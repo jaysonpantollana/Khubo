@@ -158,9 +158,37 @@ export default function Maps() {
 
         mapPopups.current[listing.id] = popup;
 
+        popup.getElement()?.addEventListener('click', (e: MouseEvent) => {
+          e.stopPropagation();
+          if (selectedListingRef.current === listing.id) {
+            setSelectedListing(null);
+            popup.remove();
+            map.current?.flyTo({
+              center: [124.2442, 8.2415],
+              zoom: 13,
+              duration: 1500,
+            });
+          } else {
+            setSelectedListing(listing.id);
+            scrollToListing(listing.id);
+            if (listing.lat && listing.lng && map.current) {
+              map.current.flyTo({
+                center: [listing.lng, listing.lat],
+                zoom: 16,
+                duration: 1500,
+              });
+            }
+          }
+        });
+
         el.addEventListener("click", () => {
           if (selectedListingRef.current === listing.id) {
             setSelectedListing(null);
+            map.current?.flyTo({
+              center: [124.2442, 8.2415],
+              zoom: 13,
+              duration: 1500,
+            });
             return;
           }
           setSelectedListing(listing.id);
@@ -240,25 +268,14 @@ export default function Maps() {
       }
     });
 
-    let zoomWhenSelected = 0;
-
-    map.current.on("zoomstart", () => {
-      if (selectedListingRef.current && zoomWhenSelected === 0) {
-        zoomWhenSelected = map.current!.getZoom();
-      }
-    });
-
-    map.current.on("zoom", () => {
-      if (!selectedListingRef.current) {
-        zoomWhenSelected = 0;
-        return;
-      }
-      const currentZoom = map.current!.getZoom();
-      if (zoomWhenSelected > 0 && currentZoom < zoomWhenSelected - 0.1) {
+    const container = mapContainer.current;
+    const handleWheel = () => {
+      if (selectedListingRef.current) {
+        Object.values(mapPopups.current).forEach((p: any) => p.remove());
         setSelectedListing(null);
-        zoomWhenSelected = 0;
       }
-    });
+    };
+    container?.addEventListener('wheel', handleWheel, { passive: true });
 
   }, [apiKey]);
 
@@ -266,7 +283,11 @@ export default function Maps() {
     if (selectedListing) {
       setTimeout(() => {
         const el = document.getElementById(`listing-${selectedListing}`);
-        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const sidebar = sidebarRef.current;
+        if (el && sidebar) {
+          const scrollTop = el.offsetTop - sidebar.clientHeight / 2 + el.clientHeight / 2;
+          sidebar.scrollTo({ top: scrollTop, behavior: 'smooth' });
+        }
       }, 100);
     }
   }, [selectedListing]);

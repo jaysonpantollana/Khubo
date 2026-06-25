@@ -164,43 +164,17 @@ export default function Maps() {
             return;
           }
           setSelectedListing(listing.id);
+          scrollToListing(listing.id);
           map.current?.flyTo({
             center: [listing.lng, listing.lat],
             zoom: 16,
             duration: 1500,
           });
-          if (window.innerWidth >= 768) {
-            const element = document.getElementById(`listing-${listing.id}`);
-            element?.scrollIntoView({ behavior: "smooth", block: "center" });
-          } else {
-            const element = document.getElementById(
-              `mobile-listing-${listing.id}`,
-            );
-            element?.scrollIntoView({
-              behavior: "smooth",
-              inline: "center",
-              block: "nearest",
-            });
-          }
         });
 
         markers.current[listing.id] = marker;
       }
     });
-
-    if (filteredListings.length > 0) {
-      const coords = filteredListings
-        .filter((l) => l.lat && l.lng)
-        .map((l) => [l.lng, l.lat] as [number, number]);
-      if (coords.length === 1) {
-        map.current.setCenter(coords[0]);
-        map.current.setZoom(15);
-      } else if (coords.length > 1) {
-        const bounds = new sdkRef.current.LngLatBounds();
-        coords.forEach((c) => bounds.extend(c));
-        map.current.fitBounds(bounds, { padding: 60, maxZoom: 15, duration: 1000 });
-      }
-    }
   }, [filteredListings]);
 
   const updateMarkersRef = useRef(updateMarkers);
@@ -266,7 +240,36 @@ export default function Maps() {
       }
     });
 
+    let zoomWhenSelected = 0;
+
+    map.current.on("zoomstart", () => {
+      if (selectedListingRef.current && zoomWhenSelected === 0) {
+        zoomWhenSelected = map.current!.getZoom();
+      }
+    });
+
+    map.current.on("zoom", () => {
+      if (!selectedListingRef.current) {
+        zoomWhenSelected = 0;
+        return;
+      }
+      const currentZoom = map.current!.getZoom();
+      if (zoomWhenSelected > 0 && currentZoom < zoomWhenSelected - 0.1) {
+        setSelectedListing(null);
+        zoomWhenSelected = 0;
+      }
+    });
+
   }, [apiKey]);
+
+  useEffect(() => {
+    if (selectedListing) {
+      setTimeout(() => {
+        const el = document.getElementById(`listing-${selectedListing}`);
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  }, [selectedListing]);
 
   useEffect(() => {
     // If map exists, we need to tell it to resize when sidebar collapses/expands
@@ -307,8 +310,30 @@ export default function Maps() {
 
 
 
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const scrollToListing = (listingId: string) => {
+    const el = document.getElementById(`listing-${listingId}`);
+    const container = sidebarRef.current;
+    if (el && container) {
+      let offsetTop = 0;
+      let current: HTMLElement | null = el;
+      while (current && current !== container) {
+        offsetTop += current.offsetTop;
+        current = current.offsetParent as HTMLElement;
+      }
+      const elHeight = el.offsetHeight;
+      const containerHeight = container.clientHeight;
+      container.scrollTo({
+        top: offsetTop - containerHeight / 2 + elHeight / 2,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   const handleListingClick = (listing: Listing) => {
     setSelectedListing(listing.id);
+    scrollToListing(listing.id);
     if (listing.lat && listing.lng && map.current) {
       map.current.flyTo({
         center: [listing.lng, listing.lat],
@@ -591,7 +616,7 @@ export default function Maps() {
         <div
           className={`hidden md:block h-full overflow-hidden border-r border-neutral-100 bg-white z-20 flex-shrink-0 ${isSidebarCollapsed ? "w-0" : "md:portrait:w-[330px] md:landscape:w-[420px] lg:w-[480px]"}`}
         >
-          <div className="w-full md:portrait:w-[330px] md:landscape:w-[420px] lg:w-[480px] h-full overflow-y-auto p-4 flex flex-col gap-6">
+          <div ref={sidebarRef} className="w-full md:portrait:w-[330px] md:landscape:w-[420px] lg:w-[480px] h-full overflow-y-auto p-4 flex flex-col gap-6">
             <div className="flex flex-col gap-3">
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => (

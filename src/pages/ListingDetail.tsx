@@ -243,6 +243,35 @@ export default function ListingDetail() {
               </p>
             </div>
 
+            <div className="py-10 border-b border-gray-100">
+              <div className="flex items-center gap-2 mb-5">
+                <Users size={18} className="text-neutral-600" />
+                <h3 className="text-sm font-bold text-neutral-500 uppercase tracking-wider">Tenants</h3>
+              </div>
+              <div className="flex items-center">
+                {[
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=MariaSantos&backgroundColor=b6e3f4',
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=JuanDelaCruz&backgroundColor=c0aede',
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=AnaReyes&backgroundColor=ffd5dc',
+                  'https://api.dicebear.com/7.x/avataaars/svg?seed=CarlosGarcia&backgroundColor=d1d4f9',
+                ].map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`Tenant ${i + 1}`}
+                    className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm"
+                    style={{ marginLeft: i > 0 ? '-10px' : '0', zIndex: 4 - i }}
+                  />
+                ))}
+                <span
+                  className="w-11 h-11 rounded-full bg-[#4E4F50] text-white text-xs font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                  style={{ marginLeft: '-10px', zIndex: 0 }}
+                >
+                  +{(listing.host?.tenantCount || 12) - 4 > 0 ? (listing.host?.tenantCount || 12) - 4 : 8}
+                </span>
+              </div>
+            </div>
+
             <div className="py-12 border-b border-gray-100">
               <h3 className="text-2xl font-semibold text-neutral-900 mb-8">What this place offers</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-10">

@@ -24,13 +24,15 @@ interface ToastContextType {
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
+let toastId = 0;
+
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [toasts, setToasts] = useState<{ id: number; message: string; type: ToastType }[]>([]);
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const showToast = useCallback((message: string, type: ToastType = 'success') => {
-    const id = Date.now();
+    const id = ++toastId;
     setToasts((prev) => [...prev, { id, message, type }]);
     setNotifications((prev) => [{ id, message, type, timestamp: new Date() }, ...prev]);
     setTimeout(() => {

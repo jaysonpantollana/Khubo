@@ -298,6 +298,10 @@ export default function Maps() {
   // Reset preloader on unmount so Home.tsx can re-init on next visit
   useEffect(() => {
     return () => {
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
       resetMapPreload();
     };
   }, []);

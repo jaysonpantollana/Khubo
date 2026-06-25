@@ -580,17 +580,14 @@ export default function ListingDetail() {
                 <div>
                   <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Social Media</p>
                   <div className="flex gap-1.5">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-[9px] font-bold hover:opacity-90 transition">
-                      <Instagram size={10} />
-                      IG
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:opacity-90 transition">
+                      <Instagram size={14} />
                     </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1877F2] text-white rounded-lg text-[9px] font-bold hover:opacity-90 transition">
-                      <Facebook size={10} />
-                      FB
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-8 h-8 bg-[#1877F2] text-white rounded-lg hover:opacity-90 transition">
+                      <Facebook size={14} />
                     </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2.5 py-1.5 bg-black text-white rounded-lg text-[9px] font-bold hover:opacity-90 transition">
-                      <Twitter size={10} />
-                      X
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-8 h-8 bg-black text-white rounded-lg hover:opacity-90 transition">
+                      <Twitter size={14} />
                     </a>
                   </div>
                 </div>
@@ -670,7 +667,7 @@ export default function ListingDetail() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         host={listing?.host}
-        availableRooms={listing ? parseInt(listing.date) || 0 : 0}
+        availableRooms={listing ? (listing.date && !listing.date.includes('-') ? parseInt(listing.date) || 0 : 0) : 0}
         onAuthRequired={!isAuthenticated ? () => { setIsModalOpen(false); setIsAuthModalOpen(true); } : undefined}
         onContactOwner={() => showToast('Message sent to owner!')}
       />

@@ -123,11 +123,12 @@ export default function Profile() {
 
   const checkLandlordAccount = useCallback(async () => {
     if (!user) return;
-    await supabase
+    const { data } = await supabase
       .from('landlord_profiles')
       .select('id')
       .eq('user_id', user.id)
       .maybeSingle();
+    if (data) setIsLandlord(true);
   }, [user]);
 
   useEffect(() => {

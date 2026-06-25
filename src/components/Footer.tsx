@@ -6,6 +6,7 @@
 
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -23,50 +24,49 @@ const Footer: React.FC = () => {
           
           <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
             <button 
-              onClick={() => toggleSection('solutions')}
+              onClick={() => toggleSection('support')}
               className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
             >
-              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Solutions</h4>
-              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'solutions' ? 'rotate-180' : ''}`} size={18} />
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Support</h4>
+              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'support' ? 'rotate-180' : ''}`} size={18} />
             </button>
-            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'solutions' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Transactional Emails</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Marketing Emails</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Email Automation</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Email Builder</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">SMTP</a>
+            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'support' ? 'flex' : 'hidden md:flex'}`}>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Help Center</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Contact Us</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Safety Resources</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Report an Issue</a>
             </div>
           </div>
 
           <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
             <button 
-              onClick={() => toggleSection('docs')}
+              onClick={() => toggleSection('community')}
               className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
             >
-              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Docs</h4>
-              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'docs' ? 'rotate-180' : ''}`} size={18} />
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Community</h4>
+              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'community' ? 'rotate-180' : ''}`} size={18} />
             </button>
-            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'docs' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Getting Started</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">API Reference</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Guides</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Transactional Emails</a>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
-            <button 
-              onClick={() => toggleSection('resources')}
-              className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
-            >
-              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Resources</h4>
-              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'resources' ? 'rotate-180' : ''}`} size={18} />
-            </button>
-            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'resources' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">FAQ</a>
+            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'community' ? 'flex' : 'hidden md:flex'}`}>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Blog</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Glossary</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Changelog</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Roommate Finder</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Reviews</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Stories</a>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
+            <button 
+              onClick={() => toggleSection('hosting')}
+              className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
+            >
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Hosting</h4>
+              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'hosting' ? 'rotate-180' : ''}`} size={18} />
+            </button>
+            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'hosting' ? 'flex' : 'hidden md:flex'}`}>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">List Your Property</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Host Resources</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Community Forum</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Hosting Tips</a>
             </div>
           </div>
 
@@ -80,8 +80,8 @@ const Footer: React.FC = () => {
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'legal' ? 'flex' : 'hidden md:flex'}`}>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Fair Use</a>
-              <a href="#/terms" className="hover:text-[#17294F] transition hover:underline">Terms of Service</a>
-              <a href="#/privacy" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</a>
+              <Link to="/terms" className="hover:text-[#17294F] transition hover:underline">Terms of Service</Link>
+              <Link to="/privacy" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</Link>
             </div>
           </div>
 

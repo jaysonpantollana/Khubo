@@ -27,7 +27,7 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
     'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800',
   ];
 
-  let images = listing.gallery?.length > 0 ? listing.gallery : [listing.image];
+  let images = listing.gallery?.length > 0 ? listing.gallery : [listing.image].filter(Boolean);
   if (images.length < 4) {
     images = [...images, ...fallbackImages.slice(0, 4 - images.length)];
   }
@@ -119,8 +119,8 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-50 rounded-full border border-neutral-100">
                 <Star size={16} className="fill-yellow-400 text-yellow-400" />
-                <span className="text-sm font-bold text-neutral-800">{listing.rating.toFixed(1)}</span>
-                <span className="text-sm text-neutral-400">({listing.reviews.length} reviews)</span>
+                <span className="text-sm font-bold text-neutral-800">{listing.rating?.toFixed(1)}</span>
+                <span className="text-sm text-neutral-400">({listing.reviews?.length || 0} reviews)</span>
               </div>
             </div>
 

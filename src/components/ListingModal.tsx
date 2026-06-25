@@ -213,7 +213,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
               onClick={handleConfirm}
               className="w-full py-2.5 md:py-3.5 bg-[#17294F] text-white text-xs md:text-sm font-bold rounded-xl shadow-lg shadow-indigo-100 hover:bg-[#1e3566] transition"
             >
-              Check Availability
+              Reserve
             </button>
           </div>
         </div>

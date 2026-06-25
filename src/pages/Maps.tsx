@@ -253,6 +253,13 @@ export default function Maps() {
       }
     });
 
+    map.current.on("zoomend", () => {
+      const zoom = map.current!.getZoom();
+      if (zoom < 16 && selectedListingRef.current) {
+        setSelectedListing(null);
+      }
+    });
+
     map.current.on("moveend", () => {
       const zoom = map.current!.getZoom();
       if (zoom < 16 && selectedListingRef.current) {

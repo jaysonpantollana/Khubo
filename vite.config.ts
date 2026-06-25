@@ -63,6 +63,8 @@ export default defineConfig(({mode}) => {
       }
     },
     server: {
+      port: 3002,
+      strictPort: true,
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };

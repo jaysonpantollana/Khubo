@@ -859,7 +859,7 @@ export default function Profile() {
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl md:text-[28px] font-black text-black">P6000</span>
+                  <span className="text-2xl md:text-[28px] font-black text-black">₱6,000</span>
                   <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                 </div>
                 <div className="flex items-center justify-end gap-3 w-full md:w-auto">
@@ -907,7 +907,7 @@ export default function Profile() {
               </div>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl md:text-[28px] font-black text-black">P6000</span>
+                  <span className="text-2xl md:text-[28px] font-black text-black">₱6,000</span>
                   <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                 </div>
                 <div className="flex items-center justify-end gap-3 w-full md:w-auto">

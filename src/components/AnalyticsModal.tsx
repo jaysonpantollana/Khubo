@@ -35,6 +35,10 @@ interface AnalyticsModalProps {
 export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
   const [timeframe, setTimeframe] = useState<'Monthly'>('Monthly');
 
+  const totalRevenue = data.reduce((sum, d) => sum + d.value, 0);
+  const avgDaily = Math.round(totalRevenue / data.length);
+  const topDay = Math.max(...data.map(d => d.value));
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} maxWidth="max-w-5xl" className="h-[80vh] flex flex-col">
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
@@ -63,7 +67,7 @@ export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
 
               {/* Value and Trend */}
               <div className="flex items-end gap-3 mb-6">
-                <span className="text-4xl text-[#0A2B4E] font-bold tracking-tight">₱42,000</span>
+                <span className="text-4xl text-[#0A2B4E] font-bold tracking-tight">₱{totalRevenue.toLocaleString()}</span>
                 <div className="flex items-center text-green-700 font-bold text-sm bg-green-100 px-2 py-0.5 rounded-full mb-1">
                   <ArrowUpRight size={16} className="mr-0.5" strokeWidth={3} />
                   +14.2%
@@ -108,14 +112,14 @@ export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
                     <TrendingUp size={16} />
                     <span>Avg. daily revenue</span>
                   </div>
-                  <span className="text-[#0A2B4E] font-bold">₱3,000</span>
+                  <span className="text-[#0A2B4E] font-bold">₱{avgDaily.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                   <div className="flex items-center gap-2 text-neutral-500">
                     <DollarSign size={16} />
                     <span>Top earning day</span>
                   </div>
-                  <span className="text-[#0A2B4E] font-bold">₱5,000</span>
+                  <span className="text-[#0A2B4E] font-bold">₱{topDay.toLocaleString()}</span>
                 </div>
               </div>
             </div>

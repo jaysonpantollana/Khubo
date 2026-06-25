@@ -148,7 +148,6 @@ export default function Maps() {
           className: 'listing-thumbnail-popup',
         }).setHTML(`
           <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); width: 160px;">
-            <img src="${listing.image}" alt="${listing.title}" style="width: 100%; height: 100px; object-fit: cover;" />
             <div style="padding: 6px 8px;">
               <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
               <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
@@ -226,7 +225,6 @@ export default function Maps() {
       zoom: 13,
       pitch: 60,
       bearing: -20,
-      antialias: true,
       navigationControl: false,
       geolocateControl: false,
       fadeDuration: 0,

@@ -160,7 +160,7 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
             )}
 
             {/* Reviews Preview */}
-            {listing.reviews.length > 0 && (
+            {listing.reviews?.length > 0 && (
               <div>
                 <h4 className="text-sm font-black text-neutral-400 uppercase tracking-widest mb-3">Recent Reviews</h4>
                 <div className="space-y-3">

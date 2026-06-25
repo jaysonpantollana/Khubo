@@ -215,6 +215,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
             >
               Reserve
             </button>
+            <p className="text-center text-xs text-gray-400 mt-3">NO CHARGES YET</p>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
 
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
-import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2 } from 'lucide-react';
+import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail, Globe } from 'lucide-react';
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -15,129 +15,9 @@ import MapTilerView from '../components/MapTilerView';
 import Footer from '../components/Footer';
 import HostProfile from '../components/HostProfile';
 import ReviewBreakdown from '../components/ReviewBreakdown';
-import { format, 
-  isSameDay, 
-  isBefore,
-  startOfToday,
-  startOfDay,
-  addMonths,
-  subMonths,
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  isSameMonth,
-  eachDayOfInterval,
-  isWithinInterval,
-} from 'date-fns';
+import { format } from 'date-fns';
 import { AuthModal } from '../components/AuthModal';
 import ListingDetailSkeleton from '../components/ListingDetailSkeleton';
-
-const Calendar = ({ 
-  startDate, 
-  endDate, 
-  onSelect 
-}: { 
-  startDate: Date | null, 
-  endDate: Date | null, 
-  onSelect: (date: Date) => void 
-}) => {
-  const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
-  const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
-  const today = startOfToday();
-
-  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
-  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
-
-  const days = useMemo(() => {
-    const start = startOfWeek(startOfMonth(currentMonth));
-    const end = endOfWeek(endOfMonth(currentMonth));
-    return eachDayOfInterval({ start, end });
-  }, [currentMonth]);
-
-  const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-  return (
-    <div className="w-full select-none">
-      <div className="flex items-center justify-between mb-1.5 px-1">
-        <h3 className="font-bold text-[#17294F] text-[10px] uppercase tracking-tight">{format(currentMonth, 'MMM yyyy')}</h3>
-        <div className="flex gap-0.5">
-          <button 
-            onClick={prevMonth}
-            className="p-0.5 hover:bg-neutral-100 rounded-full transition-colors group"
-          >
-            <ChevronLeft size={12} className="text-neutral-500 group-hover:text-neutral-900" />
-          </button>
-          <button 
-            onClick={nextMonth}
-            className="p-0.5 hover:bg-neutral-100 rounded-full transition-colors group"
-          >
-            <ChevronRight size={12} className="text-neutral-500 group-hover:text-neutral-900" />
-          </button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-7 gap-y-0 text-[8px]">
-        {weekDays.map((day, idx) => (
-          <div key={`${day}-${idx}`} className="text-center font-black text-neutral-400 pb-0.5 uppercase tracking-widest">
-            {day}
-          </div>
-        ))}
-        {days.map((day, idx) => {
-          const isSelectedStart = startDate && isSameDay(day, startDate);
-          const isSelectedEnd = endDate && isSameDay(day, endDate);
-          const isSelected = isSelectedStart || isSelectedEnd;
-          
-          let isInRange = false;
-          if (startDate && endDate) {
-            isInRange = isWithinInterval(day, { start: startDate, end: endDate });
-          } else if (startDate && hoveredDate && !isBefore(hoveredDate, startDate)) {
-            isInRange = isWithinInterval(day, { start: startDate, end: hoveredDate });
-          }
-
-          const isPast = isBefore(startOfDay(day), startOfDay(today));
-          const isToday = isSameDay(day, today);
-          const isDifferentMonth = !isSameMonth(day, currentMonth);
-
-          return (
-            <div 
-              key={day.toISOString()}
-              onMouseEnter={() => !isPast && setHoveredDate(day)}
-              onMouseLeave={() => setHoveredDate(null)}
-              onClick={() => !isPast && onSelect(day)}
-              className={cn(
-                "relative h-6 flex items-center justify-center transition-all duration-200",
-                isPast ? "cursor-not-allowed" : "cursor-pointer group",
-                isDifferentMonth && !isInRange && "opacity-25",
-                isInRange && "bg-blue-50/50",
-                isSelectedStart && "rounded-l-full",
-                isSelectedEnd && "rounded-r-full",
-                idx % 7 === 0 && isInRange && "rounded-l-full",
-                idx % 7 === 6 && isInRange && "rounded-r-full"
-              )}
-            >
-              {isSelected && (
-                <div 
-                   className="absolute inset-0 bg-[#17294F] rounded-full z-0" 
-                />
-              )}
-              {isToday && !isSelected && (
-                 <div className="absolute inset-0 bg-[#17294F] rounded-full z-0" />
-              )}
-              <span className={cn(
-                "relative z-10 text-[9px] font-bold",
-                (isSelected || isToday) ? "text-white" : "text-neutral-700",
-                isPast && "text-neutral-300 font-normal"
-              )}>
-                {format(day, 'd')}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
 
 export default function ListingDetail() {
   const { id } = useParams();
@@ -638,52 +518,81 @@ export default function ListingDetail() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 px-0.5 min-h-0">
-                <div className="mt-0">
-                  <div className="mb-2.5 flex items-center justify-between px-1">
-                    {startDate && (
-                      <button 
-                        onClick={() => setIsModalOpen(true)}
-                        className="text-[9px] font-black text-blue-600 uppercase tracking-widest hover:underline"
-                      >
-                        Change
-                      </button>
-                    )}
+              {/* Landlord Profile */}
+              <div className="bg-white rounded-[1.5rem] p-5 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100">
+                <div className="flex items-center gap-3 mb-4">
+                  <img
+                    src={listing.host?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Layla88'}
+                    alt={listing.host?.name || 'Landlord'}
+                    className="w-12 h-12 rounded-full object-cover ring-2 ring-neutral-100"
+                  />
+                  <div>
+                    <h3 className="text-sm font-bold text-[#17294F] flex items-center gap-1">
+                      {listing.host?.name || 'Layla M. Santos'}
+                      <BadgeCheck size={14} className="text-[#2252D6]" />
+                    </h3>
+                    <p className="text-[10px] text-neutral-500 font-medium">Landlord</p>
                   </div>
-                  
-                  {startDate ? (
-                    <div
-                      onClick={() => setIsModalOpen(true)}
-                      className="bg-white rounded-[1.5rem] p-5 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100 cursor-pointer hover:border-[#17294F]/20 transition-all hover:bg-neutral-50/50 flex items-center gap-4 group"
-                    >
-                      <div className="w-12 h-12 bg-[#17294F] rounded-2xl flex flex-col items-center justify-center text-white shrink-0 group-hover:scale-105 transition-transform shadow-md">
-                        <span className="text-[8px] font-black uppercase tracking-widest opacity-80">{format(startDate, 'MMM')}</span>
-                        <span className="text-xl font-black leading-none">{format(startDate, 'd')}</span>
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-base font-black text-[#17294F]">{format(startDate, 'EEEE')}</span>
-                        <span className="text-xs font-bold text-neutral-400">{format(startDate, 'yyyy')}</span>
-                      </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 mb-4 py-3 border-y border-neutral-100">
+                  <div className="text-center">
+                    <div className="font-bold text-sm text-[#17294F] flex items-center justify-center gap-0.5">
+                      {listing.host?.rating || 5.0} <Star size={10} className="fill-[#17294F] text-[#17294F]" />
                     </div>
-                  ) : (
-                    <div 
-                      onClick={() => setIsModalOpen(true)}
-                      className="bg-white rounded-[1.5rem] p-3 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100 cursor-pointer hover:border-[#17294F]/20 transition-all hover:bg-neutral-50/50 group relative"
-                    >
-                      <div className="pointer-events-none">
-                        <Calendar 
-                          startDate={startDate} 
-                          endDate={null} 
-                          onSelect={(date) => setStartDate(date)}
-                        />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-white/40 backdrop-blur-[2px] rounded-[1.5rem]">
-                         <div className="bg-[#17294F] text-white px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg">
-                           Set Date
-                         </div>
-                      </div>
-                    </div>
-                  )}
+                    <span className="text-[8px] font-semibold text-neutral-400 uppercase tracking-wider">Rating</span>
+                  </div>
+                  <div className="text-center border-x border-neutral-100">
+                    <div className="font-bold text-sm text-[#17294F]">{listing.host?.reviews || 35}</div>
+                    <span className="text-[8px] font-semibold text-neutral-400 uppercase tracking-wider">Reviews</span>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-bold text-sm text-[#17294F]">{listing.host?.tenantCount || 12}</div>
+                    <span className="text-[8px] font-semibold text-neutral-400 uppercase tracking-wider">Tenants</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 mb-4">
+                  <div className="flex items-center gap-2 text-neutral-600">
+                    <Briefcase size={12} className="text-neutral-400" />
+                    <span className="text-[11px]">{listing.host?.work || 'Property Manager'}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-neutral-600">
+                    <Globe size={12} className="text-neutral-400" />
+                    <span className="text-[11px]">{listing.host?.location || 'Iligan City'}</span>
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Contact</p>
+                  <div className="flex gap-1.5">
+                    <a href="tel:+639123456789" className="flex items-center gap-1.5 px-2.5 py-1.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition">
+                      <Phone size={10} className="text-[#17294F]" />
+                      <span className="text-[9px] font-bold text-[#17294F]">Phone</span>
+                    </a>
+                    <a href="mailto:layla@khubo.com" className="flex items-center gap-1.5 px-2.5 py-1.5 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition">
+                      <Mail size={10} className="text-[#17294F]" />
+                      <span className="text-[9px] font-bold text-[#17294F]">Email</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-[8px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Social Media</p>
+                  <div className="flex gap-1.5">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-[9px] font-bold hover:opacity-90 transition">
+                      <Instagram size={10} />
+                      IG
+                    </a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1877F2] text-white rounded-lg text-[9px] font-bold hover:opacity-90 transition">
+                      <Facebook size={10} />
+                      FB
+                    </a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 px-2.5 py-1.5 bg-black text-white rounded-lg text-[9px] font-bold hover:opacity-90 transition">
+                      <Twitter size={10} />
+                      X
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -698,7 +607,7 @@ export default function ListingDetail() {
                   }}
                   className="w-full py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all active:scale-95 shadow-lg bg-[#17294F] text-white hover:shadow-xl hover:bg-[#1e3466]"
                 >
-                  {startDate ? 'Reserve Now' : 'Check Availability'}
+            {startDate ? 'Reserve Now' : 'Contact Owner'}
                 </button>
 
                 <div className="text-center text-[9px] font-bold text-neutral-400 uppercase tracking-tight">
@@ -752,7 +661,7 @@ export default function ListingDetail() {
             }}
             className="flex-1 py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest bg-[#17294F] text-white shadow-lg shadow-blue-900/10 transition-all active:scale-95"
           >
-            {startDate ? 'Reserve Now' : 'Check Availability'}
+            {startDate ? 'Reserve Now' : 'Contact Owner'}
           </button>
         </div>
       </div>
@@ -760,11 +669,10 @@ export default function ListingDetail() {
       <ListingModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        startDate={startDate}
-        endDate={null}
-        onSelect={(date) => setStartDate(date)}
+        host={listing?.host}
         availableRooms={listing ? parseInt(listing.date) || 0 : 0}
         onAuthRequired={!isAuthenticated ? () => { setIsModalOpen(false); setIsAuthModalOpen(true); } : undefined}
+        onContactOwner={() => showToast('Message sent to owner!')}
       />
 
       <AuthModal 

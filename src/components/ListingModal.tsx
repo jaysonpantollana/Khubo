@@ -1,223 +1,179 @@
-// @context: Listing booking modal — date selection and reserve
-// @purpose: Calendar-based date picker for move-in date selection; shows monthly calendar with navigation
-// @behavior: Inline calendar with prev/next month; selects start date; calls onSelect callback
-// @behavior: Uses date-fns for all date calculations; styled to match listing detail design
-// @dependencies: motion, date-fns, cn utility, lucide-react
-// @known-issues: Only supports single date selection (no range); inline version in ListingDetail duplicates this
+// @context: Listing modal — landlord profile and contact
+// @purpose: Shows landlord info, social media, contact details, and "Contact Owner" button
+// @behavior: Replaces calendar with landlord profile section
+// @dependencies: lucide-react, HostInfo type
 
 import React from 'react';
-import { X, ChevronLeft, ChevronRight, AlertTriangle, CheckCircle } from 'lucide-react';
-
-import { 
-  format, 
-  getMonth,
-  getYear,
-  getDate,
-  startOfMonth,
-  endOfMonth,
-  getDay,
-  isBefore,
-  startOfDay,
-  addMonths,
-  subMonths,
-  isSameDay,
-} from 'date-fns';
-import { cn } from '../lib/utils';
+import { X, Star, Briefcase, Globe, BadgeCheck, Instagram, Facebook, Twitter, Phone, Mail, MessageCircle } from 'lucide-react';
+import { HostInfo } from '../types';
 
 interface ListingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  startDate: Date | null;
-  endDate: Date | null;
-  onSelect: (date: Date) => void;
+  host?: HostInfo;
   availableRooms?: number;
   onAuthRequired?: () => void;
+  onContactOwner?: () => void;
 }
 
-const DAY_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
-const CalendarGrid = ({
-  tempDate,
-  onDateChange,
-}: {
-  tempDate: Date;
-  onDateChange: (date: Date) => void;
-}) => {
-  const today = startOfDay(new Date());
-  const monthStart = startOfMonth(tempDate);
-  const monthEnd = endOfMonth(tempDate);
-  const startDow = getDay(monthStart);
-  const totalDays = getDate(monthEnd);
-
-  const cells: (number | null)[] = [];
-  for (let i = 0; i < startDow; i++) cells.push(null);
-  for (let d = 1; d <= totalDays; d++) cells.push(d);
-
-  const isPast = (d: number) => {
-    const date = new Date(getYear(tempDate), getMonth(tempDate), d);
-    return isBefore(date, today);
-  };
-
-  const isToday = (d: number) =>
-    isSameDay(new Date(getYear(tempDate), getMonth(tempDate), d), today);
-
-  const isSelected = (d: number) =>
-    isSameDay(new Date(getYear(tempDate), getMonth(tempDate), d), tempDate);
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-3 px-1">
-        <button
-          onClick={() => onDateChange(subMonths(tempDate, 1))}
-          className="p-1.5 rounded-lg hover:bg-neutral-100 transition-colors"
-          aria-label="Previous month"
-        >
-          <ChevronLeft size={18} className="text-neutral-600" />
-        </button>
-        <span className="text-sm font-bold text-neutral-800">
-          {format(tempDate, 'MMMM yyyy')}
-        </span>
-        <button
-          onClick={() => onDateChange(addMonths(tempDate, 1))}
-          className="p-1.5 rounded-lg hover:bg-neutral-100 transition-colors"
-          aria-label="Next month"
-        >
-          <ChevronRight size={18} className="text-neutral-600" />
-        </button>
-      </div>
-
-      <div className="grid grid-cols-7 mb-1">
-        {DAY_LABELS.map((label) => (
-          <div
-            key={label}
-            className="text-center text-[10px] md:text-xs font-semibold text-neutral-400 py-1"
-          >
-            {label}
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-7 gap-0.5">
-        {cells.map((d, i) => {
-          if (d === null) return <div key={`empty-${i}`} className="aspect-square" />;
-
-          const past = isPast(d);
-          const todayCell = isToday(d);
-          const selected = isSelected(d);
-
-          return (
-            <button
-              key={d}
-              onClick={() => onDateChange(new Date(getYear(tempDate), getMonth(tempDate), d))}
-              disabled={past}
-              className={cn(
-                "aspect-square flex items-center justify-center rounded-full text-xs md:text-sm font-medium transition-all",
-                selected
-                  ? "bg-[#17294F] text-white shadow-md"
-                  : todayCell
-                    ? "bg-neutral-100 text-[#17294F] font-bold"
-                    : past
-                      ? "text-neutral-300 cursor-not-allowed"
-                      : "text-neutral-700 hover:bg-neutral-100 cursor-pointer"
-              )}
-            >
-              {d}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-export const ListingModal: React.FC<ListingModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  startDate, 
-  onSelect,
+export const ListingModal: React.FC<ListingModalProps> = ({
+  isOpen,
+  onClose,
+  host,
   availableRooms = 0,
   onAuthRequired,
+  onContactOwner,
 }) => {
-  const [tempDate, setTempDate] = React.useState<Date>(startDate || new Date());
-
-  React.useEffect(() => {
-    if (isOpen) {
-      setTempDate(startDate || new Date());
-    }
-  }, [isOpen, startDate]);
-
   if (!isOpen) return null;
 
-  const handleConfirm = () => {
+  const handleContact = () => {
     if (onAuthRequired) {
       onAuthRequired();
       return;
     }
-    onSelect(tempDate);
+    onContactOwner?.();
     onClose();
   };
 
-  const isAvailable = availableRooms > 0;
+  const defaultHost: HostInfo = {
+    name: 'Layla M. Santos',
+    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Layla88',
+    reviews: 35,
+    rating: 5.0,
+    hostingDuration: '2 years',
+    work: 'Property Manager',
+    location: 'Iligan City',
+    tenantCount: 12,
+  };
+
+  const landlord = host || defaultHost;
 
   return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div
-           onClick={onClose}
-           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        />
-        
-        <div
-          className="relative bg-white w-full max-w-[340px] md:max-w-[440px] rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden p-5 md:p-8"
-        >
-          <div className="flex items-center justify-between mb-4 md:mb-6">
-            <div>
-              <h2 className="text-xl md:text-3xl font-extrabold font-display text-[#17294F]">Check Availability</h2>
-            </div>
-            <button 
-              onClick={onClose}
-              className="p-2 md:p-2.5 hover:bg-neutral-100 rounded-full transition-colors"
-            >
-              <X size={20} />
-            </button>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div
+        onClick={onClose}
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+      />
+
+      <div className="relative bg-white w-full max-w-[380px] md:max-w-[460px] rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden p-5 md:p-7 max-h-[85vh] overflow-y-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl md:text-2xl font-extrabold text-[#17294F]">Landlord Profile</h2>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-neutral-100 rounded-full transition-colors"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Availability Badge */}
+        {availableRooms > 0 && (
+          <div className="mb-4 px-3 py-2 bg-emerald-50 border border-emerald-100 rounded-xl">
+            <span className="text-[10px] md:text-xs font-bold text-emerald-700 uppercase tracking-wider">
+              {availableRooms} room{availableRooms !== 1 ? 's' : ''} available
+            </span>
           </div>
+        )}
 
-          <div className="grid grid-cols-1 gap-4 md:gap-6">
-            <div className="flex flex-col gap-3 md:gap-5">
-              <div className="border border-neutral-200 rounded-xl md:rounded-2xl p-3 md:p-4 bg-neutral-50">
-                <div className="px-2 md:px-3">
-                  {isAvailable ? (
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1.5 bg-emerald-100 px-2.5 py-1 rounded-full">
-                        <CheckCircle size={12} className="text-emerald-600" />
-                        <span className="text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest text-emerald-700">Available</span>
-                      </div>
-                      <span className="text-[9px] md:text-[11px] text-neutral-500 font-medium">{availableRooms} room{availableRooms !== 1 ? 's' : ''} left</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1.5 bg-red-100 px-2.5 py-1 rounded-full">
-                      <AlertTriangle size={12} className="text-red-600" />
-                      <span className="text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest text-red-700">Not Available</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl border border-neutral-100 p-3">
-                <CalendarGrid tempDate={tempDate} onDateChange={setTempDate} />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-5 md:mt-7">
-            <button 
-              onClick={handleConfirm}
-              className="w-full py-2.5 md:py-3.5 bg-[#17294F] text-white text-xs md:text-sm font-bold rounded-xl shadow-lg shadow-indigo-100 hover:bg-[#1e3566] transition"
-            >
-              Reserve
-            </button>
-            <p className="text-center text-xs text-gray-400 mt-3">NO CHARGES YET</p>
+        {/* Landlord Info */}
+        <div className="flex items-center gap-4 mb-5">
+          <img
+            src={landlord.image}
+            alt={landlord.name}
+            className="w-16 h-16 rounded-full object-cover ring-4 ring-neutral-100"
+          />
+          <div>
+            <h3 className="text-lg font-bold text-[#17294F] flex items-center gap-1.5">
+              {landlord.name} <BadgeCheck size={16} className="text-[#2252D6]" />
+            </h3>
+            <p className="text-xs text-neutral-500 font-medium">Landlord</p>
           </div>
         </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-3 mb-5 py-4 border-y border-neutral-100">
+          <div className="text-center">
+            <div className="font-bold text-lg text-[#17294F] flex items-center justify-center gap-1">
+              {landlord.rating} <Star size={12} className="fill-[#17294F] text-[#17294F]" />
+            </div>
+            <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">Rating</span>
+          </div>
+          <div className="text-center border-x border-neutral-100">
+            <div className="font-bold text-lg text-[#17294F]">{landlord.reviews}</div>
+            <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">Reviews</span>
+          </div>
+          <div className="text-center">
+            <div className="font-bold text-lg text-[#17294F]">{landlord.tenantCount || 0}</div>
+            <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">Tenants</span>
+          </div>
+        </div>
+
+        {/* Details */}
+        <div className="flex flex-col gap-3 mb-5">
+          <div className="flex items-center gap-3 text-neutral-600">
+            <Briefcase size={16} className="text-neutral-400" />
+            <span className="text-sm">Works at <span className="font-semibold text-[#17294F]">{landlord.work}</span></span>
+          </div>
+          <div className="flex items-center gap-3 text-neutral-600">
+            <Globe size={16} className="text-neutral-400" />
+            <span className="text-sm">Lives in <span className="font-semibold text-[#17294F]">{landlord.location}</span></span>
+          </div>
+        </div>
+
+        {/* Contact Info */}
+        <div className="mb-5">
+          <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-3">Contact</h4>
+          <div className="flex flex-col gap-2.5">
+            <a href="tel:+639123456789" className="flex items-center gap-3 p-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+              <div className="w-8 h-8 rounded-full bg-[#17294F]/10 flex items-center justify-center">
+                <Phone size={14} className="text-[#17294F]" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-[#17294F]">Phone</p>
+                <p className="text-xs text-neutral-500">+63 912 345 6789</p>
+              </div>
+            </a>
+            <a href="mailto:layla@khubo.com" className="flex items-center gap-3 p-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+              <div className="w-8 h-8 rounded-full bg-[#17294F]/10 flex items-center justify-center">
+                <Mail size={14} className="text-[#17294F]" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-[#17294F]">Email</p>
+                <p className="text-xs text-neutral-500">layla@khubo.com</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        {/* Social Media */}
+        <div className="mb-6">
+          <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-3">Social Media</h4>
+          <div className="flex gap-2">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl text-xs font-bold hover:opacity-90 transition">
+              <Instagram size={14} />
+              Instagram
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-[#1877F2] text-white rounded-xl text-xs font-bold hover:opacity-90 transition">
+              <Facebook size={14} />
+              Facebook
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-xl text-xs font-bold hover:opacity-90 transition">
+              <Twitter size={14} />
+              Twitter
+            </a>
+          </div>
+        </div>
+
+        {/* Contact Button */}
+        <button
+          onClick={handleContact}
+          className="w-full py-3 bg-[#17294F] text-white text-sm font-bold rounded-xl shadow-lg hover:bg-[#1e3566] transition flex items-center justify-center gap-2"
+        >
+          <MessageCircle size={18} />
+          Contact Owner
+        </button>
       </div>
+    </div>
   );
 };

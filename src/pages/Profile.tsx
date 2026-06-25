@@ -12,6 +12,7 @@ import {
   MoreVertical, Copy, User, Users, FileText, Shield,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
+import Footer from '../components/Footer';
 import { useAuth } from '../lib/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { supabase } from '../mocks/supabase';
@@ -118,6 +119,7 @@ export default function Profile() {
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [showAllReservations, setShowAllReservations] = useState(false);
+  const [showAllProperties, setShowAllProperties] = useState(false);
 
   const checkLandlordAccount = useCallback(async () => {
     if (!user) return;
@@ -568,8 +570,8 @@ export default function Profile() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-6 mb-16">
-              {myListings.map(listing => {
+            <div className="flex flex-col gap-6 mb-6">
+              {(showAllProperties ? myListings : myListings.slice(0, 1)).map(listing => {
                 const isListed = listingVisibility[listing.id] ?? true;
                 return (
                 <div key={listing.id} onClick={() => setSelectedListingDetail(listing)} className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 ${!isListed ? 'opacity-60' : ''}`}>
@@ -705,6 +707,16 @@ export default function Profile() {
                 </div>
               );
               })}
+              {myListings.length > 1 && (
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => setShowAllProperties(!showAllProperties)}
+                    className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
+                  >
+                    {showAllProperties ? 'Show Less' : 'Show All'}
+                  </button>
+                </div>
+              )}
             </div>
           )
         ) : (
@@ -865,6 +877,7 @@ export default function Profile() {
         </div>
       </div>
 
+      <Footer />
       <BottomNav />
 
       {/* Modals */}

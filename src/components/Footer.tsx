@@ -80,9 +80,8 @@ const Footer: React.FC = () => {
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'legal' ? 'flex' : 'hidden md:flex'}`}>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Fair Use</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Terms & Conditions</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Subprocessors</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</a>
+              <a href="#/terms" className="hover:text-[#17294F] transition hover:underline">Terms of Service</a>
+              <a href="#/privacy" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</a>
             </div>
           </div>
 

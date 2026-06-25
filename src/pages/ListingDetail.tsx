@@ -645,8 +645,6 @@ export default function ListingDetail() {
             </div>
           </div>
         </div>
-        </div>
-      </div>
     </main>
 
       {/* Persistent Mobile Action Bar */}

@@ -72,7 +72,7 @@ Every technique below is annotated directly in the source code as context-aware 
 All source files are annotated with `@context`, `@purpose`, and domain-specific tags:
 
 - **Pages (9)**: Home, CategoryListings, ListingDetail, Maps, Profile, RoommateFinder, ManageListings, TermsOfService, PrivacyPolicy
-- **Components (60+)**: AnalyticsModal, AnnouncementsOverlay, BottomNav, CameraOverlay, Categories, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailModal, ListingDetailSkeleton, ListingModal, ListingsPopup, MapPicker, MapTilerView, Navbar, NotificationDialog, OccupationStep, OnboardingFlow, OnboardingModal, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, ReviewProfile, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommatePreferences, RoommateSearchDropdown, RoommatesPopup, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, TenantProfileModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal, VerificationStep
+- **Components (60+)**: AnalyticsModal, AnnouncementsOverlay, BottomNav, CameraOverlay, Categories, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailModal, ListingDetailSkeleton, ListingsPopup, MapPicker, MapTilerView, Navbar, NotificationDialog, OccupationStep, OnboardingFlow, OnboardingModal, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, ReviewProfile, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommatePreferences, RoommateSearchDropdown, RoommatesPopup, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, TenantProfileModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal, VerificationStep
 - **Hooks (9)**: useBodyScrollLock, useErrorHandler, useFocusTrap, useListing, useListings, useListingsFilter, useReducedMotion, useSearchHistory
 - **API (7)**: auth, client, client.test, index (barrel), listings, roommates, types
 - **Lib (7)**: AuthContext, ThemeContext, animations, mapPreloader, utils, utils.test, api/index
@@ -253,7 +253,6 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │   ├── ListingCarousel.tsx
 │   │   ├── ListingDetailModal.tsx
 │   │   ├── ListingDetailSkeleton.tsx
-│   │   ├── ListingModal.tsx
 │   │   ├── ListingsPopup.tsx
 │   │   ├── MapPicker.tsx
 │   │   ├── MapTilerView.tsx
@@ -493,7 +492,7 @@ An interactive MapTiler-based location picker for listing creation and editing. 
 
 ### 13. Listing Detail Page
 
-**Location**: `src/pages/ListingDetail.tsx` (865 lines)
+**Location**: `src/pages/ListingDetail.tsx`
 
 A full-featured property detail page with the following sections:
 
@@ -550,22 +549,23 @@ A full-featured property detail page with the following sections:
 
 **Booking Sidebar** (Desktop, `lg+` breakpoint):
 - Sticky positioning at `top-[100px]`
-- Price display (`P4,700 /month`) with rating badge
-- Inline calendar (non-interactive, opens booking modal on click)
-- "Check Availability" / "Reserve Now" button
+- Price display (₱4,700 /month) with rating badge
+- Landlord Profile card with avatar, name, and verified badge
+- Contact section with card-style rows (circular icon + label + detail):
+  - Phone row with tel link
+  - Email row with mailto link
+- Social Media icons (Instagram, Facebook, Twitter)
+- "Contact Owner" button inside the card
+- Unregistered users: Clicking "Contact Owner" opens the auth modal directly
 - Price breakdown: Monthly Rent + Cleaning Fee + Service Fee + Grand Total
 
 **Mobile Action Bar**:
-- Fixed bottom bar with date button and reserve button
+- Fixed bottom bar with "Contact Owner" button
+- Unregistered users: Clicking opens auth modal directly
+- Registered users: Shows toast "Message sent to owner!"
 - Tap feedback with `active:scale-95`
 
-**Booking Modal** (`ListingModal`):
-- Full-screen overlay with centered card
-- Availability indicator (green "Available" / red "Not Available" with room count)
-- Calendar grid with month navigation, today highlight, selected date styling, past dates disabled
-- Confirm button triggers auth check or sets date
-
-**State Management**: 13 state variables for gallery, booking, map, auth, reviews, and amenity/rule toggles
+**State Management**: State variables for gallery, booking, map, auth, reviews, and amenity/rule toggles
 
 ### 14. Map View Page
 
@@ -795,7 +795,6 @@ addToast({ message: 'Success!', type: 'success' });
 | `ListingCard` | Card displaying listing preview |
 | `ListingCardSkeleton` | Loading skeleton for listing cards |
 | `ListingCarousel` | Horizontal scrollable row of listings with arrows |
-| `ListingModal` | Full-screen modal with listing details |
 | `ListingDetailSkeleton` | Loading skeleton for detail view |
 | `ListingsPopup` | Reusable modal popup with grid of listing cards |
 | `PhotoCarouselOverlay` | Image gallery with fullscreen mode |
@@ -854,7 +853,6 @@ addToast({ message: 'Success!', type: 'success' });
 | `Filters` | Multi-option filter panel |
 | `HostProfile` | Host information display |
 | `InquiriesModal` | Inquiries display modal |
-| `ListingDetailModal` | Listing detail modal with gallery, reviews, and amenities for manage dashboard |
 | `MapPicker` | Interactive MapTiler-based location picker for listing creation/editing |
 | `MapTilerView` | Interactive map component |
 | `NotificationDialog` | Notification history with timestamps |
@@ -1439,8 +1437,8 @@ npm run clean       # Remove dist/ directory
 
 ---
 
-*Last Updated: June 23, 2026*
-*Version: 2.2.0*
+*Last Updated: June 25, 2026*
+*Version: 2.3.0*
 
 ---
 
@@ -1743,6 +1741,7 @@ The messaging feature has been removed from the application. This optimization i
 | Extract profile modals | ✅ Done | `src/components/profile/` (EditProfileModal, LandlordSignupModal, LogoutModal, StatCardModal) |
 | ~~Add chat components~~ | ❌ Removed | Chat system removed from application |
 | ~~Messaging feature~~ | ❌ Removed | Messages page, API, and mocks removed |
+| ~~ListingModal on listing page~~ | ❌ Removed | ListingModal removed from listing page; landlord info displayed directly in sticky sidebar |
 | Add tenant management | ✅ Done | `TenantProfileModal`, `TenantsModal`, `TenantInfo` type |
 | Add map picker | ✅ Done | `MapPicker.tsx` for interactive location selection |
 | Add listing detail modal | ✅ Done | `ListingDetailModal.tsx` for manage dashboard |

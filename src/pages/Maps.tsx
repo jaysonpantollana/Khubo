@@ -281,15 +281,20 @@ export default function Maps() {
 
   useEffect(() => {
     if (selectedListing) {
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const el = document.getElementById(`listing-${selectedListing}`);
         const sidebar = sidebarRef.current;
         if (el && sidebar) {
-          const elTop = el.getBoundingClientRect().top - sidebar.getBoundingClientRect().top + sidebar.scrollTop;
-          const scrollTo = elTop - sidebar.clientHeight / 2 + el.clientHeight / 2;
-          sidebar.scrollTo({ top: scrollTo, behavior: 'smooth' });
+          let offsetTop = 0;
+          let current: HTMLElement | null = el;
+          while (current && current !== sidebar) {
+            offsetTop += current.offsetTop;
+            current = current.offsetParent as HTMLElement;
+          }
+          const scrollTo = offsetTop - sidebar.clientHeight / 2 + el.clientHeight / 2;
+          sidebar.scrollTo({ top: Math.max(0, scrollTo), behavior: 'smooth' });
         }
-      }, 100);
+      });
     }
   }, [selectedListing]);
 

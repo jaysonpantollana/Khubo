@@ -835,7 +835,7 @@ export default function Profile() {
               reviews: 35,
               amenities: ['Free Wifi', 'Water'],
               available: '6 available',
-              tenants: MOCK_TENANTS.slice(0, 4),
+              tenants: MOCK_TENANTS.slice(0, 5),
             },
             {
               id: 'res-2',
@@ -859,7 +859,7 @@ export default function Profile() {
               reviews: 18,
               amenities: ['AC', 'Free Wifi'],
               available: '2 available',
-              tenants: MOCK_TENANTS.slice(0, 3),
+              tenants: MOCK_TENANTS.slice(0, 4),
             },
           ];
 

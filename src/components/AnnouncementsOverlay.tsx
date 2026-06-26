@@ -20,13 +20,6 @@ const MOCK_ANNOUNCEMENTS = [
     date: "2026-06-01",
     isNew: true
   },
-  {
-    id: 2,
-    title: "New feature: Maps Search",
-    message: "You can now search for properties and roommates directly on the map view.",
-    date: "2026-05-28",
-    isNew: false
-  }
 ];
 
 export function AnnouncementsOverlay({ isOpen, onClose }: AnnouncementsOverlayProps) {

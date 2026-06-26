@@ -1,13 +1,12 @@
 // @context: Roommate profile modal — full detail view
-// @purpose: Displays full roommate profile: avatar, name, details, bio, budget, tags, social links, message button
-// @behavior: Opens as overlay modal with backdrop; shows all roommate fields; "Send Message" button
+// @purpose: Displays full roommate profile: avatar, name, details, bio, budget, tags, social links
+// @behavior: Opens as overlay modal with backdrop; shows all roommate fields
 // @behavior: Social media link icons (Instagram, Twitter, Facebook) — currently non-functional
 // @dependencies: motion, lucide-react, Roommate type
-// @known-issues: Social media buttons have no href or onClick; send message is a placeholder
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import { X, MapPin, GraduationCap, Wallet, Heart, MessageSquare, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles } from 'lucide-react';
+import { X, MapPin, GraduationCap, Wallet, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles, Heart } from 'lucide-react';
 import { Roommate } from '../types';
 
 interface RoommateModalProps {
@@ -18,6 +17,8 @@ interface RoommateModalProps {
 
 export default function RoommateModal({ roommate, isOpen, onClose }: RoommateModalProps) {
   if (!roommate) return null;
+
+  const [isSaved, setIsSaved] = useState(false);
 
   return (
     <>
@@ -34,10 +35,10 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
             <div
               className="bg-[#F9F9F9] w-full max-w-lg md:max-w-3xl pointer-events-auto rounded-[40px] overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.2)] flex flex-col md:flex-row max-h-[90vh] relative"
             >
-              {/* Close Button - Desktop */}
-              <button 
+              {/* Close Button */}
+              <button
                 onClick={onClose}
-                className="hidden md:flex absolute top-6 right-6 z-50 w-10 h-10 items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full hover:bg-white/20 transition-all active:scale-90"
+                className="absolute top-6 right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 transition-all active:scale-90 shadow-sm"
               >
                 <X size={20} />
               </button>
@@ -50,14 +51,6 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                
-                {/* Mobile Close Button */}
-                <button 
-                  onClick={onClose}
-                  className="md:hidden absolute top-5 right-5 bg-black/20 backdrop-blur-md text-white p-2.5 rounded-full hover:bg-black/40 transition-all"
-                >
-                  <X size={20} />
-                </button>
 
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <div className="flex items-center gap-2 mb-3">
@@ -138,16 +131,19 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                         <Facebook size={20} className="text-neutral-300 hover:text-blue-600 transition-colors cursor-pointer" />
                       </div>
                     </div>
+                  </section>
 
-                    <div className="flex items-center gap-2.5 w-full md:w-auto">
-                      <button className="flex-1 md:flex-none h-14 w-14 flex items-center justify-center border-2 border-neutral-100 rounded-2xl text-neutral-400 hover:text-red-500 hover:border-red-500 transition-all active:scale-90">
-                        <Heart size={20} />
-                      </button>
-                      <button className="flex-[3] md:flex-none h-14 px-8 bg-[#17294F] text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-[#1e325c] transition-all active:scale-95 flex items-center justify-center gap-2.5">
-                        <MessageSquare size={16} />
-                        Say Hello
-                      </button>
-                    </div>
+                  {/* Save Button */}
+                  <section className="pt-2">
+                    <button
+                      onClick={() => setIsSaved(!isSaved)}
+                      className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-xs uppercase tracking-[0.1em] transition-all shadow-md ${
+                        isSaved ? "bg-white border-2 border-[#FF385C] text-[#FF385C]" : "bg-[#17294F] text-white"
+                      }`}
+                    >
+                      <Heart size={16} className={isSaved ? "fill-[#FF385C] text-[#FF385C]" : "text-white"} />
+                      <span>{isSaved ? 'Saved' : 'Save'}</span>
+                    </button>
                   </section>
 
                 </div>

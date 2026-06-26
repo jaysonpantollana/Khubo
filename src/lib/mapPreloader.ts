@@ -27,7 +27,7 @@ export function initMapPreload(container: HTMLDivElement, apiKey: string) {
   mapInstance = new maptilersdk.Map({
     container: mapContainer,
     style: maptilersdk.MapStyle.STREETS,
-    center: [124.2442, 8.2415],
+    center: [124.2442, 8.2280],
     zoom: 13,
     navigationControl: false,
     geolocateControl: false,

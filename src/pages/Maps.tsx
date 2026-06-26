@@ -164,8 +164,8 @@ export default function Maps() {
             setSelectedListing(null);
             popup.remove();
             map.current?.flyTo({
-              center: [124.2442, 8.2415],
-              zoom: 12,
+              center: [124.25, 8.235],
+              zoom: 12.8,
               duration: 1500,
             });
           } else {
@@ -185,8 +185,8 @@ export default function Maps() {
           if (selectedListingRef.current === listing.id) {
             setSelectedListing(null);
             map.current?.flyTo({
-              center: [124.2442, 8.2415],
-              zoom: 12,
+              center: [124.25, 8.235],
+              zoom: 12.8,
               duration: 1500,
             });
             return;
@@ -238,10 +238,11 @@ export default function Maps() {
     map.current = new maptilersdk.Map({
       container: mapContainer.current!,
       style: maptilersdk.MapStyle.STREETS,
-      center: [124.2442, 8.2415],
-      zoom: 12,
-      pitch: 60,
-      bearing: -20,
+      center: [124.25, 8.235],
+      zoom: 12.8,
+      pitch: 50,
+      bearing: -5,
+      maxPitch: 60,
       navigationControl: false,
       geolocateControl: false,
       fadeDuration: 0,

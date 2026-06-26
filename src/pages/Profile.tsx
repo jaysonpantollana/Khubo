@@ -119,6 +119,7 @@ export default function Profile() {
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [showAllProperties, setShowAllProperties] = useState(false);
+  const [showAllReservations, setShowAllReservations] = useState(false);
 
   const checkLandlordAccount = useCallback(async () => {
     if (!user) return;
@@ -520,34 +521,34 @@ export default function Profile() {
                     </div>
                   </div>
                   <div className="mt-4 pt-3 border-t border-neutral-100">
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2">
-                          <Users size={14} className="text-neutral-500" />
-                          <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Tenants</span>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Users size={16} className="text-neutral-600" />
+                      <span className="text-xs font-bold text-neutral-800 uppercase tracking-wider">Tenants</span>
+                    </div>
+                    <div className="flex items-center">
+                      {MOCK_TENANTS.slice(0, 4).map((t, i) => (
+                        <div
+                          key={t.id}
+                          className="w-10 h-10 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                          style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
+                          onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
+                        >
+                          <img
+                            src={t.image}
+                            alt={t.name}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
-                        <div className="flex items-center">
-                          {MOCK_TENANTS.slice(0, 4).map((t, i) => (
-                            <img
-                              key={t.id}
-                              src={t.image}
-                              alt={t.name}
-                              className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all"
-                              style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
-                              onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
-                            />
-                          ))}
-                          {MOCK_TENANTS.length > 4 && (
-                            <span
-                              className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
-                              style={{ marginLeft: '-8px', zIndex: 0 }}
-                              onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
-                            >
-                              +{MOCK_TENANTS.length - 4}
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                      ))}
+                      {MOCK_TENANTS.length > 4 && (
+                        <span
+                          className="w-10 h-10 rounded-full bg-[#4E4F50] text-white text-[11px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                          style={{ marginLeft: '-8px', zIndex: 0 }}
+                          onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
+                        >
+                          +{MOCK_TENANTS.length - 4}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -751,41 +752,43 @@ export default function Profile() {
                         </div>
                       </div>
                       <div className="mt-4 pt-3 border-t border-neutral-100">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Users size={14} className="text-neutral-500" />
-                            <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Tenants</span>
-                          </div>
-                          {(() => {
-                            const listingTenants = getTenantsForListing(listing.id);
-                            const visible = listingTenants.slice(0, 4);
-                            const remaining = listingTenants.length - 4;
-                            return (
-                              <div className="flex items-center">
-                                {visible.map((tenant, i) => (
+                        <div className="flex items-center gap-2 mb-2">
+                          <Users size={16} className="text-neutral-600" />
+                          <span className="text-xs font-bold text-neutral-800 uppercase tracking-wider">Tenants</span>
+                        </div>
+                        {(() => {
+                          const listingTenants = getTenantsForListing(listing.id);
+                          const visible = listingTenants.slice(0, 4);
+                          const remaining = listingTenants.length - 4;
+                          return (
+                            <div className="flex items-center">
+                              {visible.map((tenant, i) => (
+                                <div
+                                  key={tenant.id}
+                                  className="w-10 h-10 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                                  style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
+                                  title={tenant.name}
+                                  onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
+                                >
                                   <img
-                                    key={tenant.id}
                                     src={tenant.image}
                                     alt={tenant.name}
-                                    className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all"
-                                    style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
-                                    title={tenant.name}
-                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
+                                    className="w-full h-full object-cover"
                                   />
-                                ))}
-                                {remaining > 0 && (
-                                  <span
-                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
-                                    style={{ marginLeft: '-8px', zIndex: 0 }}
-                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
-                                  >
-                                    +{remaining}
-                                  </span>
-                                )}
-                              </div>
-                            );
-                          })()}
-                        </div>
+                                </div>
+                              ))}
+                              {remaining > 0 && (
+                                <span
+                                  className="w-10 h-10 rounded-full bg-[#4E4F50] text-white text-[11px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                                  style={{ marginLeft: '-8px', zIndex: 0 }}
+                                  onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
+                                >
+                                  +{remaining}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0 pt-4 border-t border-neutral-50 lg:border-none lg:pt-0">
@@ -821,57 +824,138 @@ export default function Profile() {
               </div>
             </div>
           )
-        ) : (
-          <>
-          <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none mb-6">
-            <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in shrink-0" onClick={() => handleOpenGallery(null, 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800')}>
-              <img
-                src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800"
-                alt="Property"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
-            </div>
-            <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
-              <div>
-                <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
-                  <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight">Layla's Residences & Dorminitory</h3>
-                  <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto">
-                    6 available
-                  </span>
-                </div>
-                <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4">Iligan City, Lanao del norte 9200</p>
-                <div className="flex flex-wrap items-center gap-4">
-                  <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
-                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    <span className="text-sm font-bold text-neutral-800">5.00</span>
-                    <span className="text-sm text-neutral-400">(35)</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">Free Wifi</span>
-                    <span className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">Water</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-2xl md:text-[28px] font-black text-black">₱6,000</span>
-                  <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
-                </div>
-                <div className="flex items-center justify-end gap-3 w-full md:w-auto">
-                  <button className="flex-1 md:flex-none px-8 py-3 bg-neutral-400 text-white rounded-full font-bold cursor-not-allowed text-sm md:text-base whitespace-nowrap" disabled>
-                    Waiting for invitation
-                  </button>
-                  <button className="flex-1 md:flex-none px-4 py-2 border-[1.5px] border-neutral-400 text-neutral-500 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-xs md:text-sm whitespace-nowrap">
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+        ) : (() => {
+          const reservations = [
+            {
+              id: 'res-1',
+              title: "Layla's Residences & Dorminitory",
+              location: 'Iligan City, Lanao del norte 9200',
+              image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800',
+              price: 6000,
+              rating: 5.0,
+              reviews: 35,
+              amenities: ['Free Wifi', 'Water'],
+              available: '6 available',
+              tenants: MOCK_TENANTS.slice(0, 4),
+            },
+            {
+              id: 'res-2',
+              title: 'Sunset Boarding House',
+              location: 'Pala-o, Iligan City 9200',
+              image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800',
+              price: 3500,
+              rating: 4.75,
+              reviews: 22,
+              amenities: ['Wifi', 'Water'],
+              available: '3 available',
+              tenants: MOCK_TENANTS.slice(1, 5),
+            },
+            {
+              id: 'res-3',
+              title: 'Greenview Apartments',
+              location: 'Santiago, Iligan City 9200',
+              image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800',
+              price: 4500,
+              rating: 4.8,
+              reviews: 18,
+              amenities: ['AC', 'Free Wifi'],
+              available: '2 available',
+              tenants: MOCK_TENANTS.slice(0, 3),
+            },
+          ];
 
-          </>
-        )}
+          const visibleReservations = showAllReservations ? reservations : reservations.slice(0, 1);
+
+          return (
+            <div className="flex flex-col gap-6 mb-6">
+              {visibleReservations.map((res) => (
+                <div key={res.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full">
+                  <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in shrink-0" onClick={() => handleOpenGallery(null, res.image)}>
+                    <img
+                      src={res.image}
+                      alt={res.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+                  </div>
+                  <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
+                    <div>
+                      <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
+                        <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight">{res.title}</h3>
+                        <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto">
+                          {res.available}
+                        </span>
+                      </div>
+                      <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
+                        <MapPin size={16} className="shrink-0" /> {res.location}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
+                          <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                          <span className="text-sm font-bold text-neutral-800">{res.rating.toFixed(2)}</span>
+                          <span className="text-sm text-neutral-400">({res.reviews})</span>
+                        </div>
+                        <div className="flex gap-2">
+                          {res.amenities.map((amenity) => (
+                            <span key={amenity} className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">{amenity}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="mt-4 pt-3 border-t border-neutral-100">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Users size={16} className="text-neutral-600" />
+                          <span className="text-xs font-bold text-neutral-800 uppercase tracking-wider">Tenants</span>
+                        </div>
+                        <div className="flex items-center">
+                          {res.tenants.slice(0, 4).map((t, i) => (
+                            <div
+                              key={t.id}
+                              className="w-10 h-10 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                              style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: res.tenants.length - i }}
+                              title={t.name}
+                              onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
+                            >
+                              <img
+                                src={t.image}
+                                alt={t.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ))}
+                          {res.tenants.length > 4 && (
+                            <span
+                              className="w-10 h-10 rounded-full bg-[#4E4F50] text-white text-[11px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                              style={{ marginLeft: '-8px', zIndex: 0 }}
+                              onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
+                            >
+                              +{res.tenants.length - 4}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0 pt-4 border-t border-neutral-50 lg:border-none lg:pt-0">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-2xl md:text-[28px] font-black text-black">₱{res.price.toLocaleString()}</span>
+                        <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {reservations.length > 1 && (
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => setShowAllReservations(!showAllReservations)}
+                    className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
+                  >
+                    {showAllReservations ? 'Show Less' : 'Show All'}
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Settings & Preferences */}
         <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 sm:p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.03)] border border-neutral-100 mb-16">

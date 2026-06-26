@@ -119,7 +119,6 @@ export default function Profile() {
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [showAllProperties, setShowAllProperties] = useState(false);
-  const [showAllReservations, setShowAllReservations] = useState(false);
 
   const checkLandlordAccount = useCallback(async () => {
     if (!user) return;
@@ -864,11 +863,9 @@ export default function Profile() {
             },
           ];
 
-          const visibleReservations = showAllReservations ? reservations : reservations.slice(0, 1);
-
           return (
             <div className="flex flex-col gap-6 mb-6">
-              {visibleReservations.map((res) => (
+              {reservations.slice(0, 1).map((res) => (
                 <div key={res.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full">
                   <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in shrink-0" onClick={() => handleOpenGallery(null, res.image)}>
                     <img
@@ -943,16 +940,6 @@ export default function Profile() {
                   </div>
                 </div>
               ))}
-              {reservations.length > 1 && (
-                <div className="flex justify-center">
-                  <button
-                    onClick={() => setShowAllReservations(!showAllReservations)}
-                    className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
-                  >
-                    {showAllReservations ? 'Show Less' : 'Show All'}
-                  </button>
-                </div>
-              )}
             </div>
           );
         })()}

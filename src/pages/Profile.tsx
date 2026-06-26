@@ -118,7 +118,6 @@ export default function Profile() {
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const [showAllReservations, setShowAllReservations] = useState(false);
   const [showAllProperties, setShowAllProperties] = useState(false);
 
   const checkLandlordAccount = useCallback(async () => {
@@ -244,7 +243,6 @@ export default function Profile() {
     ? [
         { title: 'Properties', count: '4', sub: 'Listed' },
         { title: 'Tenants', count: '12', sub: 'Active' },
-        { title: 'Reservations', count: '8', sub: 'Pending' },
         { title: 'Revenue', count: 'P42k', sub: 'This Month' },
       ]
     : [
@@ -259,7 +257,6 @@ export default function Profile() {
     if (title === 'Revenue') setIsAnalyticsModalOpen(true);
     else if (title === 'Tenants') setIsTenantsModalOpen(true);
     else if (title === 'Properties') setIsPropertiesModalOpen(true);
-    else if (title === 'Reservations') setIsInquiriesModalOpen(true);
     else setSelectedStatModal(title);
   };
 
@@ -383,7 +380,7 @@ export default function Profile() {
       {/* Main Content Body */}
       <div className="max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 relative z-20 mt-2 md:mt-8">
         {/* Stat Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 drop-shadow-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 drop-shadow-sm">
           {statCards.map((stat, i) => (
             <div
               key={stat.title}
@@ -405,7 +402,7 @@ export default function Profile() {
         {/* Properties Section */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-12 mb-6 px-1 gap-4">
           <h2 className="text-2xl md:text-3xl font-bold text-black">
-            {isLandlord ? 'My Properties' : 'My Reservation'}
+            {isLandlord ? 'My Properties' : 'My Living Space'}
           </h2>
           {isLandlord && (
             <button
@@ -873,63 +870,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {showAllReservations && (
-          <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none mb-6">
-            <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800"
-                alt="Property"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
-            </div>
-            <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
-              <div>
-                <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
-                  <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight">Layla's Residences & Dorminitory</h3>
-                  <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto">
-                    6 available
-                  </span>
-                </div>
-                <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4">Iligan City, Lanao del norte 9200</p>
-                <div className="flex flex-wrap items-center gap-4">
-                  <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
-                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    <span className="text-sm font-bold text-neutral-800">5.00</span>
-                    <span className="text-sm text-neutral-400">(35)</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">Free Wifi</span>
-                    <span className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">Water</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-2xl md:text-[28px] font-black text-black">₱6,000</span>
-                  <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
-                </div>
-                <div className="flex items-center justify-end gap-3 w-full md:w-auto">
-                  <button className="flex-1 md:flex-none px-8 py-3 bg-[#4CAF50] text-white rounded-full font-bold hover:bg-[#43A047] shadow-lg shadow-[#4CAF50]/30 transition active:scale-95 text-sm md:text-base whitespace-nowrap">
-                    confirm invitation
-                  </button>
-                  <button className="flex-1 md:flex-none px-4 py-2 border-[1.5px] border-neutral-400 text-neutral-500 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-xs md:text-sm whitespace-nowrap">
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          )}
-
-          <div className="flex justify-center mb-8">
-            <button
-              onClick={() => setShowAllReservations(!showAllReservations)}
-              className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
-            >
-              {showAllReservations ? 'Show Less' : 'Show All'}
-            </button>
-          </div>
           </>
         )}
 

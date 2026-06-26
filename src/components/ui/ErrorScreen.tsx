@@ -21,7 +21,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
   onRetry, 
   onGoBack 
 }) => {
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = import.meta.env.DEV;
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-slate-900 flex items-center justify-center p-4">

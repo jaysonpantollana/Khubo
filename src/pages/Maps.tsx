@@ -561,6 +561,9 @@ export default function Maps() {
             )}
           </div>
         </div>
+
+        {/* Right spacer to balance back button and center search bar */}
+        <div className="hidden md:block flex-1" />
       </div>
 
       <main id="main-content" className="flex flex-1 overflow-hidden relative">

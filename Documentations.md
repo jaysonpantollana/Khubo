@@ -6,7 +6,8 @@
 
 1. [AI Context & Documentation Map](#ai-context--documentation-map)
 2. [README_TECHNICALS.md — Technical Documentation](#readme_technicals-md--technical-documentation)
-3. [CODE_ANALYSIS_AND_PLAN.md — Codebase Analysis & Implementation Plan](#code_analysis_and_plan-md--codebase-analysis--implementation-plan)
+3. [Docker Setup](#docker-setup)
+4. [CODE_ANALYSIS_AND_PLAN.md — Codebase Analysis & Implementation Plan](#code_analysis_and_plan-md--codebase-analysis--implementation-plan)
 
 ---
 
@@ -141,20 +142,16 @@ Comprehensive technical documentation for the Khubo accommodation and roommate f
 - **Vite 6.2** - Next-generation frontend build tool with HMR and fast builds
 - **@vitejs/plugin-react** - Official React plugin for Vite
 - **Tailwind CSS 4.1** - Utility-first CSS framework with Vite plugin integration
-- **PostCSS & Autoprefixer** - CSS processing and vendor prefixing
 
 ### UI & Animation Libraries
 - **Motion (Framer Motion)** - Production-ready animation library for React
 - **Lucide React** - Beautiful, consistent icon set
 - **clsx & tailwind-merge** - Conditional className utilities for Tailwind
 - **Recharts** - Charting library for analytics dashboards
+- **Zod 4.4** - TypeScript-first schema validation
 
 ### Backend & Services
-- **Supabase** - Backend-as-a-Service for authentication and database (mock only)
 - **MapTiler SDK 4.0** - Interactive maps and geolocation services
-
-### Utilities
-- **date-fns** - Modern JavaScript date utility library
 
 ### Code Quality
 - **ESLint 9** - JavaScript/TypeScript linting
@@ -253,6 +250,7 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │   ├── ListingCarousel.tsx
 │   │   ├── ListingDetailModal.tsx
 │   │   ├── ListingDetailSkeleton.tsx
+│   │   ├── ListingModal.tsx
 │   │   ├── ListingsPopup.tsx
 │   │   ├── MapPicker.tsx
 │   │   ├── MapTilerView.tsx
@@ -285,6 +283,7 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │
 │   ├── hooks/                # Custom React hooks
 │   │   ├── useBodyScrollLock.ts
+│   │   ├── useClickOutside.ts
 │   │   ├── useErrorHandler.ts
 │   │   ├── useFocusTrap.ts
 │   │   ├── useListing.ts
@@ -299,7 +298,6 @@ The application follows a **Feature-Based Architecture** with the following laye
 │   │   │   ├── auth.ts
 │   │   │   ├── client.ts
 │   │   │   ├── client.test.ts
-│   │   │   ├── index.ts      # Barrel export
 │   │   │   ├── listings.ts
 │   │   │   ├── roommates.ts
 │   │   │   └── types.ts
@@ -1351,7 +1349,7 @@ git commit -m "feat(roommate): add budget filter to roommate search"
 npm run dev
 ```
 
-Runs on `http://localhost:3000` with HMR enabled.
+Runs on `http://localhost:3002` with HMR enabled.
 
 ### Production Build
 
@@ -1439,6 +1437,73 @@ npm run clean       # Remove dist/ directory
 
 *Last Updated: June 25, 2026*
 *Version: 2.3.0*
+
+---
+
+# Docker Setup
+
+## Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows / Mac / Linux)
+- Git
+
+## Quick Start
+
+```bash
+# 1. Clone the repo and enter the directory
+cd Khubo
+
+# 2. Create your .env with your MapTiler API key
+#    Edit .env and set:
+#    VITE_MAPTILER_API_KEY=your_key_here
+
+# 3. Build and start the container
+docker compose up -d
+
+# 4. Open the app
+#    → http://localhost:8080
+```
+
+## Useful Commands
+
+| Action | Command |
+|---|---|
+| **Build & start** | `docker compose up -d` |
+| **Stop (keep data)** | `docker compose stop` |
+| **Stop & remove** | `docker compose down` |
+| **View logs** | `docker compose logs -f` |
+| **Rebuild after code changes** | `docker compose up -d --build` |
+| **Shell into container** | `docker compose exec app sh` |
+| **Verify health** | `docker compose ps` |
+
+## How It Works
+
+The Docker setup uses a **multi-stage build**:
+
+1. **Build Stage** (`node:20-alpine`): Installs dependencies with `npm ci`, copies source code, and runs `npm run build` to produce the `dist/` folder.
+2. **Production Stage** (`nginx:1.27-alpine`): Copies the built `dist/` into an Nginx container with SPA fallback (`try_files $uri $uri/ /index.html`), static asset caching (6 months), and security headers.
+
+### Key Configuration
+
+- **Port**: Container maps `8080:80` — change the left side to any free port
+- **Environment**: `.env` file is loaded via `env_file` and build args pass `VITE_MAPTILER_API_KEY` into the Vite build
+- **Health Check**: wget-based check every 30s on `http://localhost:80/`
+- **Restart Policy**: `unless-stopped` — auto-recovers after host restart
+- **Logging**: JSON file driver, max 3 files × 10MB each
+
+## Common Mistakes & How This Setup Prevents Crashes
+
+| Mistake | Prevention |
+|---|---|
+| **Missing `.env` file** | `docker compose up` fails fast with a clear error |
+| **Node modules mismatch** | `npm ci` inside the builder runs against a locked `package-lock.json` — exact versions guaranteed |
+| **Port conflict (e.g. port 80 in use)** | Container maps to `8080:80` — change the left side to any free port |
+| **SPA 404 on page refresh** | Nginx `try_files $uri $uri/ /index.html` rewrites all routes to `index.html` |
+| **OS path issues** | Docker normalises paths — works identically on Windows, Mac, Linux |
+| **Memory / disk fill-up** | Log driver limits to 3×10 MB files; no anonymous volumes leak data |
+| **Crash on VPS boot** | `restart: unless-stopped` auto-recovers after host restart |
+| **Stale cache after deploy** | `docker compose up -d --build` always rebuilds from fresh `npm ci` |
+| **MapTiler API key leaked to git** | `.gitignore` ignores `.env`; `.dockerignore` keeps it out of the image |
 
 ---
 

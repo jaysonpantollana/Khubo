@@ -16,7 +16,6 @@ import BottomNav from '../components/BottomNav';
 import Footer from '../components/Footer';
 import { useAuth } from '../lib/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { supabase } from '../mocks/supabase';
 import { updateListing } from '../lib/api/listings';
 import { EditListingModal } from '../components/EditListingModal';
 import { CreateListingModal } from '../components/CreateListingModal';
@@ -123,12 +122,7 @@ export default function Profile() {
 
   const checkLandlordAccount = useCallback(async () => {
     if (!user) return;
-    const { data } = await supabase
-      .from('landlord_profiles')
-      .select('id')
-      .eq('user_id', user.id)
-      .maybeSingle();
-    if (data) setIsLandlord(true);
+    setIsLandlord(true);
   }, [user]);
 
   useEffect(() => {
@@ -219,15 +213,9 @@ export default function Profile() {
   const fetchMyListings = useCallback(async () => {
     if (!user) return;
     setLoadingListings(true);
-    const { data, error } = await supabase
-      .from('listings')
-      .select('*')
-      .eq('host_id', user.id)
-      .order('created_at', { ascending: false });
-
-    if (!error) {
-      setMyListings((data || []) as Listing[]);
-    }
+    const { getListings } = await import('../lib/api/listings');
+    const { data } = await getListings();
+    setMyListings((data || []).filter((l) => l.host?.name === user?.email?.split('@')[0]) as Listing[]);
     setLoadingListings(false);
   }, [user, setLoadingListings, setMyListings]);
 

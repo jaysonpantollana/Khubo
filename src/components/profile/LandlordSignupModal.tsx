@@ -1,16 +1,12 @@
 // @context: Landlord signup/login modal — separated from Profile.tsx
-// @purpose: Email/password form for landlord registration or login; uses supabase mock auth
+// @purpose: Email/password form for landlord registration or login
 // @behavior: Toggle between login and signup modes; validates email/password; shows toast on errors
-// @behavior: Calls supabase.auth.signInWithPassword (login) or supabase.auth.signUp (signup)
-// @behavior: Creates landlord_profiles record on successful signup
-// @side-effects: Calls supabase mock; shows toast messages
-// @dependencies: supabase mock, useToast, motion, lucide-react
-// @known-issues: Mock supabase may always succeed or always fail depending on stub implementation
+// @side-effects: Shows toast messages
+// @dependencies: useToast, motion, lucide-react
 
 import { useState } from 'react';
 
 import { X, Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { supabase } from '../../mocks/supabase';
 import { useToast } from '../ToastProvider';
 import { FocusTrap } from '../ui/FocusTrap';
 
@@ -34,38 +30,15 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
 
     try {
       if (isLandlordLogin) {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) {
-          showToast('Login failed: ' + error.message, 'error');
-          setIsSigningUp(false);
-          return;
-        }
-        if (data?.user) {
-          const { data: existing } = await supabase
-            .from('landlord_profiles')
-            .select('id')
-            .eq('user_id', data.user.id)
-            .maybeSingle();
-          if (existing) {
-            onSuccess();
-            onClose();
-            showToast('Hey there! Thanks for choosing Khubo!');
-          } else {
-            showToast('This account is not registered as a landlord.', 'error');
-          }
-        }
+        // Mock login - always succeeds
+        showToast('Hey there! Thanks for choosing Khubo!', 'success');
+        onSuccess();
+        onClose();
       } else {
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) {
-          showToast('Signup failed: ' + error.message, 'error');
-          setIsSigningUp(false);
-          return;
-        }
-        if (data?.user) {
-          await supabase.from('landlord_profiles').insert([{ user_id: data.user.id }]);
-          onSuccess();
-          onClose();
-        }
+        // Mock signup - always succeeds
+        showToast('Account created successfully!', 'success');
+        onSuccess();
+        onClose();
       }
     } catch (e: unknown) {
       showToast(e instanceof Error ? e.message : 'An error occurred', 'error');

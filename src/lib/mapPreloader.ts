@@ -10,7 +10,6 @@ let mapInstance: maptilersdk.Map | null = null;
 let mapContainer: HTMLDivElement | null = null;
 let mapReady = false;
 let mapLoading = false;
-let onLoadCallbacks: (() => void)[] = [];
 
 /**
  * Initialize the map preloader with a container element provided by the host component.
@@ -47,21 +46,11 @@ export function initMapPreload(container: HTMLDivElement, apiKey: string) {
 
   mapInstance.on("load", () => {
     mapReady = true;
-    onLoadCallbacks.forEach((cb) => cb());
-    onLoadCallbacks = [];
   });
 }
 
 export function isMapReady() {
   return mapReady;
-}
-
-export function onMapReady(cb: () => void) {
-  if (mapReady) {
-    cb();
-  } else {
-    onLoadCallbacks.push(cb);
-  }
 }
 
 // Returns the pre-initialized container and map instance, then clears the singleton
@@ -89,5 +78,4 @@ export function resetMapPreload() {
   mapInstance = null;
   mapReady = false;
   mapLoading = false;
-  onLoadCallbacks = [];
 }

@@ -1,16 +1,14 @@
 // @context: Create listing modal — form for new property listing
-// @purpose: Multi-field form (title, description, price, category, image, amenities); submits to supabase mock
+// @purpose: Multi-field form (title, description, price, category, image, amenities); submits to mock
 // @behavior: Fields include title, description, price, category select, image upload, amenity checkboxes
 // @behavior: Image upload via URL input; form validation on required fields; loading spinner during submit
-// @side-effects: Calls supabase.from('listings').insert() on submit; creates portal-based modal
-// @dependencies: supabase mock, useAuth, motion, lucide-react
-// @known-issues: Mock supabase insert returns success without actual persistence
+// @side-effects: Calls createListing on submit; creates portal-based modal
+// @dependencies: useAuth, motion, lucide-react
 
 import React, { useState, useRef, useEffect } from 'react';
 import { z } from 'zod';
 
 import { X, Upload, XCircle, Loader2, ChevronDown } from 'lucide-react';
-import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
 import MapPicker from './MapPicker';
 import { FocusTrap } from './ui/FocusTrap';
@@ -112,27 +110,12 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
 
       const imageUrls: string[] = [];
 
-      // 1. Upload images to Supabase Storage
+      // 1. Mock image upload
       for (const file of images) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-        const filePath = `${user.id}/${fileName}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('listing-images')
-          .upload(filePath, file);
-
-        if (uploadError) throw uploadError;
-
-        // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('listing-images')
-          .getPublicUrl(filePath);
-
-        imageUrls.push(publicUrl);
+        imageUrls.push(URL.createObjectURL(file));
       }
 
-      // 2. Save Listing to Supabase Database
+      // 2. Save listing via API
       const newListing = {
         title,
         description,
@@ -145,15 +128,15 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         gallery: imageUrls,
         rating: 0,
         host_id: user.id,
-        lat: pinLat,
-        lng: pinLng,
+        lat: pinLat ?? undefined,
+        lng: pinLng ?? undefined,
       };
 
-      const { error: dbError } = await supabase
-        .from('listings')
-        .insert(newListing);
+      const { error: dbError } = await import('../lib/api/listings').then(m =>
+        m.createListing(newListing)
+      );
 
-      if (dbError) throw dbError;
+      if (dbError) throw new Error(dbError);
 
       if (onSuccess) onSuccess();
       onClose();

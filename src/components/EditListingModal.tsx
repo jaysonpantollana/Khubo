@@ -1,15 +1,13 @@
 // @context: Edit listing modal — update existing property listing
-// @purpose: Pre-filled form with existing listing data; updates via supabase mock on submit
+// @purpose: Pre-filled form with existing listing data; updates mock on submit
 // @behavior: Pre-populates all fields from listing prop; same field set as CreateListingModal
 // @behavior: Image shows current URL with preview; loading state during submit
-// @side-effects: Calls supabase.from('listings').update() on submit; calls onSuccess on completion
-// @dependencies: supabase mock, useAuth, Listing type, motion, lucide-react
-// @known-issues: Mock supabase update returns success without actual persistence
+// @side-effects: Calls updateListing on submit; calls onSuccess on completion
+// @dependencies: useAuth, Listing type, motion, lucide-react
 
 import React, { useState, useEffect, useRef } from 'react';
 
 import { X, Upload, XCircle, Loader2, ChevronDown } from 'lucide-react';
-import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
 import { Listing } from '../types';
 import MapPicker from './MapPicker';
@@ -132,29 +130,14 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
 
       const newlyUploadedUrls: string[] = [];
 
-      // 1. Upload new images to Supabase Storage
+      // 1. Mock image upload
       for (const file of newImages) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-        const filePath = `${user.id}/${fileName}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('listing-images')
-          .upload(filePath, file);
-
-        if (uploadError) throw uploadError;
-
-        // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('listing-images')
-          .getPublicUrl(filePath);
-
-        newlyUploadedUrls.push(publicUrl);
+        newlyUploadedUrls.push(URL.createObjectURL(file));
       }
 
       const finalGallery = [...existingImages, ...newlyUploadedUrls];
 
-      // 2. Update Listing in Supabase Database
+      // 2. Update listing via API
       const updatedListing = {
         title,
         description,
@@ -165,16 +148,15 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
         advance_payment_months: advancePaymentMonths,
         image: finalGallery[0], // Main image
         gallery: finalGallery,
-        lat: pinLat,
-        lng: pinLng,
+        lat: pinLat ?? undefined,
+        lng: pinLng ?? undefined,
       };
 
-      const { error: dbError } = await supabase
-        .from('listings')
-        .update(updatedListing)
-        .eq('id', listing.id);
+      const { error: dbError } = await import('../lib/api/listings').then(m =>
+        m.updateListing(listing.id, updatedListing)
+      );
 
-      if (dbError) throw dbError;
+      if (dbError) throw new Error(dbError);
 
       if (onSuccess) onSuccess();
       onClose();

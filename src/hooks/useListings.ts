@@ -40,7 +40,3 @@ export function useListings(params?: {
 
   return { listings, loading, error };
 }
-
-export function useAllListings() {
-  return useListings();
-}

@@ -569,8 +569,6 @@ export default function Home() {
                   )}
                 </div>
               </div>
-              <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
-              </div>
             </div>
           ) : (
             <div className="flex items-center justify-between w-full">
@@ -579,8 +577,6 @@ export default function Home() {
                   selectedCategory={selectedCategory}
                   onSelect={setSelectedCategory}
                 />
-              </div>
-              <div className="pl-1 sm:pl-4 pr-2 sm:pr-0">
               </div>
             </div>
           )}
@@ -598,7 +594,6 @@ export default function Home() {
             <>
               <ListingCarousel
                 title="Recommended"
-                categoryPath="/category/recommended"
                 listings={filteredListings}
                 loading={listingsLoading}
                 sliceStart={0}
@@ -606,11 +601,9 @@ export default function Home() {
                 skeletonPrefix="rec"
                 carouselItemClass={CAROUSEL_ITEM_CLASS}
                 onListingClick={handleListingClick}
-                onNavigateCategory={navigate}
               />
               <ListingCarousel
                 title="Top Listing"
-                categoryPath="/category/top-listing"
                 listings={filteredListings}
                 loading={listingsLoading}
                 sliceStart={7}
@@ -618,11 +611,9 @@ export default function Home() {
                 skeletonPrefix="top"
                 carouselItemClass={CAROUSEL_ITEM_CLASS}
                 onListingClick={handleListingClick}
-                onNavigateCategory={navigate}
               />
               <ListingCarousel
                 title="Near MSU-IIT"
-                categoryPath="/category/near-msu-iit"
                 listings={filteredListings}
                 loading={listingsLoading}
                 sliceStart={14}
@@ -630,7 +621,6 @@ export default function Home() {
                 skeletonPrefix="msu"
                 carouselItemClass={CAROUSEL_ITEM_CLASS}
                 onListingClick={handleListingClick}
-                onNavigateCategory={navigate}
               />
             </>
           ) : null}

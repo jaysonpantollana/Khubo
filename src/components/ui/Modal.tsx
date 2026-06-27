@@ -50,7 +50,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       portal = true,
       onOpenChange,
     },
-    ref
+    _ref
   ) => {
     const contentRef = useRef<HTMLDivElement>(null);
     const { saveFocus, restoreFocus } = useFocusReturn();
@@ -102,7 +102,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           role="dialog"
           aria-modal="true"
           aria-labelledby={title && !hideTitle ? `${title.replace(/\s+/g, '-').toLowerCase()}-title` : undefined}
-          aria-describedby={description ? `${title.replace(/\s+/g, '-').toLowerCase()}-description` : undefined}
+          aria-describedby={description && title ? `${title.replace(/\s+/g, '-').toLowerCase()}-description` : undefined}
           className={cn(
             'relative w-full bg-white rounded-modal shadow-modal',
             'transform transition-all duration-200',

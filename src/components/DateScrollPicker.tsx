@@ -10,7 +10,6 @@ import React, { useRef, useEffect, useState, useMemo } from "react";
 interface DateScrollPickerProps {
   viewportHeight: number; // e.g. 156 or 180
   onDateChange?: (month: string, day: string, year: string) => void;
-  onMonthClick?: (month: string) => void;
   onInvalidYear?: (invalid: boolean) => void;
 }
 
@@ -32,7 +31,6 @@ const ALL_MONTHS = [
 export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
   viewportHeight,
   onDateChange,
-  onMonthClick,
   onInvalidYear,
 }) => {
   const currentDate = new Date();
@@ -249,7 +247,6 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
                 if (monthRef.current) {
                   monthRef.current.scrollTop = MONTHS.indexOf(m) * itemHeight;
                 }
-                if (onMonthClick) onMonthClick(m);
               }}
               className={`flex items-center justify-center transition-all duration-200 shrink-0 cursor-pointer rounded-xl whitespace-nowrap font-medium ${
                 isActive

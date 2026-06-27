@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 interface FocusTrapProps {
@@ -8,20 +9,16 @@ interface FocusTrapProps {
 }
 
 export function FocusTrap({ children, onClose, className = '', ariaLabel = 'Dialog' }: FocusTrapProps) {
-  const ref = useFocusTrap(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(true, containerRef, onClose);
 
   return (
     <div
-      ref={ref}
+      ref={containerRef}
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel}
       className={className}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape' && onClose) {
-          onClose();
-        }
-      }}
     >
       {children}
     </div>

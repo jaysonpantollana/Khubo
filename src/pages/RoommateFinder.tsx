@@ -545,8 +545,6 @@ export default function RoommateFinder() {
                   )}
                 </div>
               </div>
-              <div className="hidden md:flex flex-1 justify-end pl-2 sm:pl-4 min-w-0">
-              </div>
             </div>
           ) : (
             <div className="relative bg-white w-full">

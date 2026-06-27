@@ -12,10 +12,7 @@ interface HostProfileProps {
   reviews: number;
   rating: number;
   hostingDuration: string;
-  work: string;
-  location: string;
   tenantCount: number;
-  onMessageClick?: () => void;
 }
 
 const HostProfile: React.FC<HostProfileProps> = ({

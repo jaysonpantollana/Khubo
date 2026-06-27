@@ -5,6 +5,7 @@
 
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
+import { useAuth } from '../lib/AuthContext';
 import { X, Star, MapPin, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -15,7 +16,6 @@ import MapTilerView from '../components/MapTilerView';
 import Footer from '../components/Footer';
 import HostProfile from '../components/HostProfile';
 import ReviewBreakdown from '../components/ReviewBreakdown';
-import { format } from 'date-fns';
 import { AuthModal } from '../components/AuthModal';
 import ListingDetailSkeleton from '../components/ListingDetailSkeleton';
 
@@ -32,7 +32,6 @@ export default function ListingDetail() {
   }, [listing]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [startDate, _setStartDate] = useState<Date | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPhotoGalleryOpen, setIsPhotoGalleryOpen] = useState(false);
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
@@ -41,7 +40,8 @@ export default function ListingDetail() {
   const [showAllRules, setShowAllRules] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Simulated auth state
+  const { user } = useAuth();
+  const isAuthenticated = !!user;
   const [selectedReview, setSelectedReview] = useState<{userName: string; userImage: string; comment: string; date: string} | null>(null);
   const [showAllReviewsMobile, setShowAllReviewsMobile] = useState(false);
 
@@ -500,22 +500,13 @@ export default function ListingDetail() {
               </div>
             </div>
 
-            <HostProfile 
+            <HostProfile
               name={displayHost.name}
               image={displayHost.image}
               reviews={displayHost.reviews}
               rating={displayHost.rating}
               hostingDuration={displayHost.hostingDuration}
-              work={displayHost.work}
-              location={displayHost.location}
               tenantCount={displayHost.tenantCount || defaultHost.tenantCount}
-              onMessageClick={() => {
-                if (!isAuthenticated) {
-                  setIsAuthModalOpen(true);
-                } else {
-                  showToast('Message sent to host successfully!');
-                }
-              }}
             />
             <ReviewBreakdown 
               rating={listing.rating}
@@ -612,43 +603,16 @@ export default function ListingDetail() {
               </div>
 
               <div className="flex flex-col gap-3 mt-auto">
-                <button 
-                  onClick={() => {
-                    if (startDate) {
-                      // Reserve logic
-                    } else {
-                      setIsModalOpen(true);
-                    }
-                  }}
+                <button
+                  onClick={() => setIsModalOpen(true)}
                   className="w-full py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all active:scale-95 shadow-lg bg-[#17294F] text-white hover:shadow-xl hover:bg-[#1e3466]"
                 >
-            {startDate ? 'Reserve Now' : 'Contact Owner'}
+                  Contact Owner
                 </button>
 
                 <div className="text-center text-[9px] font-bold text-neutral-400 uppercase tracking-tight">
                   No charges yet
                 </div>
-
-                {startDate && (
-                  <div className="flex flex-col gap-2 pt-4 border-t border-neutral-100">
-                     <div className="flex justify-between items-center text-neutral-600">
-                        <span className="text-[10px] font-bold uppercase tracking-tight">Monthly Rent</span>
-                        <span className="font-black text-neutral-900 text-[10px]">₱{listing.price.toLocaleString()}</span>
-                     </div>
-                     <div className="flex justify-between items-center text-neutral-600">
-                        <span className="text-[10px] font-bold uppercase tracking-tight">Cleaning fee</span>
-                        <span className="font-black text-neutral-900 text-[10px]">₱150</span>
-                     </div>
-                     <div className="flex justify-between items-center text-neutral-600">
-                        <span className="text-[10px] font-bold uppercase tracking-tight">Service fee</span>
-                        <span className="font-black text-neutral-900 text-[10px]">₱100</span>
-                     </div>
-                     <div className="pt-3 mt-1 border-t border-neutral-200 flex justify-between items-center text-[#17294F]">
-                        <span className="text-[10px] font-black uppercase tracking-widest">Grand Total</span>
-                        <span className="text-xl font-black">₱{(listing.price + 250).toLocaleString()}</span>
-                     </div>
-                  </div>
-                )}
               </div>
             </div>
             </div>
@@ -660,23 +624,17 @@ export default function ListingDetail() {
       {/* Persistent Mobile Action Bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 px-4 py-3 z-[150] shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         <div className="flex gap-3 max-w-md mx-auto">
-          <button 
+          <button
             onClick={() => setIsModalOpen(true)}
             className="flex-1 py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest bg-neutral-100 text-[#17294F] transition-all active:scale-95 border border-neutral-200"
           >
-            {startDate ? format(startDate, 'MMM d') : 'Set Date'}
+            Set Date
           </button>
-          <button 
-            onClick={() => {
-              if (startDate) {
-                // Reserve logic
-              } else {
-                setIsModalOpen(true);
-              }
-            }}
+          <button
+            onClick={() => setIsModalOpen(true)}
             className="flex-1 py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest bg-[#17294F] text-white shadow-lg shadow-blue-900/10 transition-all active:scale-95"
           >
-            {startDate ? 'Reserve Now' : 'Contact Owner'}
+            Contact Owner
           </button>
         </div>
       </div>
@@ -689,10 +647,9 @@ export default function ListingDetail() {
         onContactOwner={() => showToast('Message sent to owner!')}
       />
 
-      <AuthModal 
+      <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
-        onLogin={() => setIsAuthenticated(true)}
       />
 
       <Footer />

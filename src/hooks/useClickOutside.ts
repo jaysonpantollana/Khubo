@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function useClickOutside(
   ref: React.RefObject<HTMLElement | null>,
@@ -6,7 +6,10 @@ export function useClickOutside(
   enabled: boolean = true
 ) {
   const handlerRef = useRef(handler);
-  handlerRef.current = handler;
+
+  useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -35,7 +38,10 @@ export function useClickOutsideMultiple(
   enabled: boolean = true
 ) {
   const handlerRef = useRef(handler);
-  handlerRef.current = handler;
+
+  useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
 
   useEffect(() => {
     if (!enabled) return;

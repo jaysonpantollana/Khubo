@@ -306,20 +306,7 @@ export default function Maps() {
 
   useEffect(() => {
     if (selectedListing) {
-      requestAnimationFrame(() => {
-        const el = document.getElementById(`listing-${selectedListing}`);
-        const sidebar = sidebarRef.current;
-        if (el && sidebar) {
-          let offsetTop = 0;
-          let current: HTMLElement | null = el;
-          while (current && current !== sidebar) {
-            offsetTop += current.offsetTop;
-            current = current.offsetParent as HTMLElement;
-          }
-          const scrollTo = offsetTop - sidebar.clientHeight / 2 + el.clientHeight / 2;
-          sidebar.scrollTo({ top: Math.max(0, scrollTo), behavior: 'smooth' });
-        }
-      });
+      requestAnimationFrame(() => scrollToListing(selectedListing));
     }
   }, [selectedListing]);
 
@@ -638,8 +625,6 @@ export default function Maps() {
             )}
           </div>
         </div>
-
-        <div className="hidden md:flex flex-1 justify-end"></div>
       </div>
 
       <main id="main-content" className="flex flex-1 overflow-hidden relative">

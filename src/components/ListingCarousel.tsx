@@ -14,7 +14,6 @@ import { ListingsPopup } from './ListingsPopup';
 
 interface ListingCarouselProps {
   title: string;
-  categoryPath?: string;
   listings: Listing[];
   loading: boolean;
   sliceStart: number;
@@ -22,7 +21,6 @@ interface ListingCarouselProps {
   skeletonPrefix: string;
   carouselItemClass: string;
   onListingClick: (id: string) => void;
-  onNavigateCategory?: (path: string) => void;
 }
 
 const CAROUSEL_SCROLLER_CLASS =

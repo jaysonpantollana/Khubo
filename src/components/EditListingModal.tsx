@@ -13,6 +13,7 @@ import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
 import { Listing } from '../types';
 import MapPicker from './MapPicker';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface EditListingModalProps {
   isOpen: boolean;
@@ -192,7 +193,9 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
           className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         />
         
-        <div 
+        <FocusTrap
+          onClose={onClose}
+          ariaLabel="Edit Listing"
           className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100">
@@ -422,7 +425,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
               )}
             </button>
           </div>
-        </div>
+        </FocusTrap>
       </div>
   );
 }

@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 
 import { X, MapPin, GraduationCap, Wallet, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles, Heart } from 'lucide-react';
 import { Roommate } from '../types';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface RoommateModalProps {
   roommate: Roommate | null;
@@ -16,9 +17,9 @@ interface RoommateModalProps {
 }
 
 export default function RoommateModal({ roommate, isOpen, onClose }: RoommateModalProps) {
-  if (!roommate) return null;
-
   const [isSaved, setIsSaved] = useState(false);
+
+  if (!roommate) return null;
 
   return (
     <>
@@ -31,10 +32,11 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
           />
 
           {/* Modal Container */}
-          <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-[101] p-4 sm:p-6 md:p-8">
-            <div
-              className="bg-[#F9F9F9] w-full max-w-lg md:max-w-3xl pointer-events-auto rounded-[40px] overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.2)] flex flex-col md:flex-row max-h-[90vh] relative"
-            >
+          <FocusTrap
+            onClose={onClose}
+            ariaLabel="Roommate Profile"
+            className="bg-[#F9F9F9] w-full max-w-lg md:max-w-3xl pointer-events-auto rounded-[40px] overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.2)] flex flex-col md:flex-row max-h-[90vh] relative"
+          >
               {/* Close Button */}
               <button
                 onClick={onClose}
@@ -148,8 +150,7 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
 
                 </div>
               </div>
-            </div>
-          </div>
+            </FocusTrap>
         </>
       )}
     </>

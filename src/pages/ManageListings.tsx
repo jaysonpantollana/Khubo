@@ -101,7 +101,7 @@ export default function ManageListings() {
             {listings.map(listing => (
               <div key={listing.id} className="bg-white rounded-3xl p-4 sm:p-6 shadow-sm border border-neutral-100 flex flex-col sm:flex-row gap-6 hover:shadow-md transition-shadow">
                 <div className="w-full sm:w-1/3 md:w-1/4 aspect-[4/3] rounded-2xl overflow-hidden shrink-0">
-                  <img src={listing.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800'} alt={listing.title} className="w-full h-full object-cover" />
+                  <img src={listing.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800'} loading="lazy" alt={listing.title} className="w-full h-full object-cover" />
                 </div>
                 
                 <div className="flex-1 flex flex-col justify-between">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Star, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Listing } from '../types';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface ListingDetailModalProps {
   isOpen: boolean;
@@ -9,11 +10,6 @@ interface ListingDetailModalProps {
 }
 
 const statuses = ['Active', 'Review', 'Maintenance'];
-
-function seededRandom(seed: number) {
-  const x = Math.sin(seed * 9301 + 49297) * 49297;
-  return x - Math.floor(x);
-}
 
 export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -42,8 +38,9 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
       onClick={onClose}
     >
-      <div
-        onClick={(e) => e.stopPropagation()}
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Listing Details"
         className="relative w-full max-w-3xl h-[85vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
       >
         {/* Header */}
@@ -189,7 +186,7 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
             )}
           </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

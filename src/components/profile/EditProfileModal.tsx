@@ -6,6 +6,7 @@
 
 
 import { Edit2, GraduationCap, MapPin, X } from 'lucide-react';
+import { FocusTrap } from '../ui/FocusTrap';
 
 interface Props {
   isOpen: boolean;
@@ -37,7 +38,9 @@ export default function EditProfileModal({
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Edit Profile"
         className="relative w-full max-w-lg bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
       >
         <div className="flex items-center justify-between p-6 border-b border-neutral-100 bg-neutral-50/50">
@@ -147,7 +150,7 @@ export default function EditProfileModal({
             Save Changes
           </button>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { X, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { supabase } from '../../mocks/supabase';
 import { useToast } from '../ToastProvider';
+import { FocusTrap } from '../ui/FocusTrap';
 
 interface Props {
   isOpen: boolean;
@@ -81,7 +82,9 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Landlord Sign Up"
         className="relative w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl z-10"
       >
         <button
@@ -159,7 +162,7 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
             </button>
           </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

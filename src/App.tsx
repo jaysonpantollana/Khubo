@@ -51,7 +51,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 // --- Suspense fallback while lazy chunks load ---
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-white">
-    <span className="loader" />
+    <span className="w-8 h-8 border-4 border-neutral-200 border-t-[#17294F] rounded-full animate-spin" />
   </div>
 );
 

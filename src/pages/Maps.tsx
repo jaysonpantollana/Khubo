@@ -106,9 +106,30 @@ export default function Maps() {
   );
 
   const selectedListingRef = useRef(selectedListing);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     selectedListingRef.current = selectedListing;
   }, [selectedListing]);
+
+  const scrollToListing = (listingId: string) => {
+    const el = document.getElementById(`listing-${listingId}`);
+    const container = sidebarRef.current;
+    if (el && container) {
+      let offsetTop = 0;
+      let current: HTMLElement | null = el;
+      while (current && current !== container) {
+        offsetTop += current.offsetTop;
+        current = current.offsetParent as HTMLElement;
+      }
+      const elHeight = el.offsetHeight;
+      const containerHeight = container.clientHeight;
+      container.scrollTo({
+        top: offsetTop - containerHeight / 2 + elHeight / 2,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   const updateMarkers = React.useCallback(() => {
     if (!map.current || !sdkRef.current) return;
@@ -127,6 +148,9 @@ export default function Maps() {
       if (listing.lat && listing.lng) {
         const el = document.createElement("div");
         el.className = "custom-marker";
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'button');
+        el.setAttribute('aria-label', `${listing.title} - ₱${listing.price.toLocaleString()}/mo`);
         el.innerHTML = `
           <div class="marker-pin" style="cursor: pointer; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); display: flex; align-items: center; justify-content: center;">
             <svg width="26" height="34" viewBox="0 0 26 34" fill="none">
@@ -337,27 +361,6 @@ export default function Maps() {
   }, []);
 
 
-
-  const sidebarRef = useRef<HTMLDivElement>(null);
-
-  const scrollToListing = (listingId: string) => {
-    const el = document.getElementById(`listing-${listingId}`);
-    const container = sidebarRef.current;
-    if (el && container) {
-      let offsetTop = 0;
-      let current: HTMLElement | null = el;
-      while (current && current !== container) {
-        offsetTop += current.offsetTop;
-        current = current.offsetParent as HTMLElement;
-      }
-      const elHeight = el.offsetHeight;
-      const containerHeight = container.clientHeight;
-      container.scrollTo({
-        top: offsetTop - containerHeight / 2 + elHeight / 2,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   const handleListingClick = (listing: Listing) => {
     setSelectedListing(listing.id);
@@ -639,7 +642,7 @@ export default function Maps() {
         <div className="hidden md:flex flex-1 justify-end"></div>
       </div>
 
-      <div className="flex flex-1 overflow-hidden relative">
+      <main id="main-content" className="flex flex-1 overflow-hidden relative">
         {/* Left Sidebar - Scrollable Listings */}
         <div
           className={`hidden md:block h-full overflow-hidden border-r border-neutral-100 bg-white z-20 flex-shrink-0 ${isSidebarCollapsed ? "w-0" : "md:portrait:w-[330px] md:landscape:w-[420px] lg:w-[480px]"}`}
@@ -737,12 +740,14 @@ export default function Maps() {
           <div className="hidden md:flex absolute bottom-10 right-10 flex-col gap-2 z-10">
             <div className="bg-white rounded-2xl shadow-xl border border-neutral-100 overflow-hidden divide-y divide-neutral-100 flex flex-col">
               <button
+                aria-label="Zoom in"
                 className="p-3 hover:bg-neutral-50 font-bold text-neutral-600"
                 onClick={() => map.current?.zoomIn()}
               >
                 +
               </button>
               <button
+                aria-label="Zoom out"
                 className="p-3 hover:bg-neutral-50 font-bold text-neutral-600"
                 onClick={() => map.current?.zoomOut()}
               >
@@ -783,7 +788,7 @@ export default function Maps() {
             ))}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

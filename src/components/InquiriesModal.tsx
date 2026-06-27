@@ -8,6 +8,7 @@
 import React, { useState } from 'react';
 
 import { X, Home } from 'lucide-react';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface InquiriesModalProps {
   isOpen: boolean;
@@ -82,8 +83,9 @@ export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       >
-        <div
-          onClick={(e) => e.stopPropagation()}
+        <FocusTrap
+          onClose={onClose}
+          ariaLabel="Inquiries"
           className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
@@ -167,7 +169,7 @@ export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
               </div>
             </div>
           </div>
-        </div>
+        </FocusTrap>
       </div>
   );
 }

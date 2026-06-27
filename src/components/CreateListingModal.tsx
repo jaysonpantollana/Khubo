@@ -7,11 +7,21 @@
 // @known-issues: Mock supabase insert returns success without actual persistence
 
 import React, { useState, useRef, useEffect } from 'react';
+import { z } from 'zod';
 
 import { X, Upload, XCircle, Loader2, ChevronDown } from 'lucide-react';
 import { supabase } from '../mocks/supabase';
 import { useAuth } from '../lib/AuthContext';
 import MapPicker from './MapPicker';
+import { FocusTrap } from './ui/FocusTrap';
+
+const listingSchema = z.object({
+  title: z.string().min(3, 'Title must be at least 3 characters'),
+  description: z.string().min(10, 'Description must be at least 10 characters'),
+  price: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, 'Price must be a positive number'),
+  location: z.string().min(1, 'Location is required'),
+  category: z.string().min(1, 'Category is required'),
+});
 
 interface CreateListingModalProps {
   isOpen: boolean;
@@ -85,6 +95,13 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setError('You must be logged in to create a listing.');
       return;
     }
+
+    const result = listingSchema.safeParse({ title, description, price, location, category });
+    if (!result.success) {
+      setError(result.error.issues[0].message);
+      return;
+    }
+
     setError(null);
     setIsSubmitting(true);
 
@@ -167,7 +184,9 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
           className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         />
         
-        <div 
+        <FocusTrap
+          onClose={onClose}
+          ariaLabel="Create Listing"
           className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100">
@@ -381,7 +400,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
               )}
             </button>
           </div>
-        </div>
+        </FocusTrap>
       </div>
   );
 }

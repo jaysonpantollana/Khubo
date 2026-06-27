@@ -6,6 +6,7 @@
 import React from 'react';
 import { X, Star, BadgeCheck, Instagram, Facebook, Twitter, Phone, Mail, MessageCircle } from 'lucide-react';
 import { HostInfo } from '../types';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface ListingModalProps {
   isOpen: boolean;
@@ -53,7 +54,11 @@ export const ListingModal: React.FC<ListingModalProps> = ({
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
 
-      <div className="relative bg-white w-full max-w-[380px] md:max-w-[460px] rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden p-5 md:p-7 max-h-[85vh] overflow-y-auto">
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Landlord Profile"
+        className="relative bg-white w-full max-w-[380px] md:max-w-[460px] rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden p-5 md:p-7 max-h-[85vh] overflow-y-auto"
+      >
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-xl md:text-2xl font-extrabold text-[#17294F]">Landlord Profile</h2>
@@ -150,7 +155,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
           <MessageCircle size={18} />
           Contact Owner
         </button>
-      </div>
+      </FocusTrap>
     </div>
   );
 };

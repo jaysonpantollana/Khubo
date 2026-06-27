@@ -6,6 +6,7 @@
 
 
 import { X, ArrowUpRight } from 'lucide-react';
+import { FocusTrap } from '../ui/FocusTrap';
 
 interface Props {
   title: string | null;
@@ -21,7 +22,9 @@ export default function StatCardModal({ title, onClose }: Props) {
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel={title || 'Stat Card'}
         className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
       >
         <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
@@ -43,7 +46,7 @@ export default function StatCardModal({ title, onClose }: Props) {
             </p>
           </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

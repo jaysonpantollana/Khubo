@@ -1,6 +1,6 @@
 // @context: Theme context — dark/light mode provider
 // @purpose: Provides theme and toggleTheme; toggles 'dark' class on document.documentElement
-// @behavior: Adds/removes 'dark' class via useEffect; no localStorage persistence (defaults to light)
+// @behavior: Persists theme preference to localStorage; defaults to system preference
 // @dependencies: React (createContext, useContext, useEffect, useState)
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -14,8 +14,14 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function getInitialTheme(): Theme {
+  const stored = localStorage.getItem('khubo-theme');
+  if (stored === 'dark' || stored === 'light') return stored;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -24,6 +30,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } else {
       root.classList.remove('dark');
     }
+    localStorage.setItem('khubo-theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

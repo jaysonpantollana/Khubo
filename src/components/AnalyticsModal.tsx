@@ -5,7 +5,7 @@
 // @dependencies: Modal (ui/Modal), recharts, lucide-react
 // @known-issues: All data is static mock (no real API integration)
 
-import React, { useState } from 'react';
+import React from 'react';
 import { X, ArrowUpRight, TrendingUp, DollarSign } from 'lucide-react';
 import { LineChart, Line, XAxis, ResponsiveContainer } from 'recharts';
 import { Modal } from './ui/Modal';
@@ -33,8 +33,6 @@ interface AnalyticsModalProps {
 }
 
 export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
-  const [timeframe, setTimeframe] = useState<'Monthly'>('Monthly');
-
   const totalRevenue = data.reduce((sum, d) => sum + d.value, 0);
   const avgDaily = Math.round(totalRevenue / data.length);
   const topDay = Math.max(...data.map(d => d.value));

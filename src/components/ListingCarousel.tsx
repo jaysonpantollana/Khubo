@@ -14,7 +14,7 @@ import { ListingsPopup } from './ListingsPopup';
 
 interface ListingCarouselProps {
   title: string;
-  categoryPath: string;
+  categoryPath?: string;
   listings: Listing[];
   loading: boolean;
   sliceStart: number;
@@ -22,7 +22,7 @@ interface ListingCarouselProps {
   skeletonPrefix: string;
   carouselItemClass: string;
   onListingClick: (id: string) => void;
-  onNavigateCategory: (path: string) => void;
+  onNavigateCategory?: (path: string) => void;
 }
 
 const CAROUSEL_SCROLLER_CLASS =
@@ -30,7 +30,6 @@ const CAROUSEL_SCROLLER_CLASS =
 
 export function ListingCarousel({
   title,
-  categoryPath,
   listings,
   loading,
   sliceStart,
@@ -38,7 +37,6 @@ export function ListingCarousel({
   skeletonPrefix,
   carouselItemClass,
   onListingClick,
-  onNavigateCategory,
 }: ListingCarouselProps) {
   const ref = React.useRef<HTMLDivElement>(null);
   const [showPopup, setShowPopup] = React.useState(false);

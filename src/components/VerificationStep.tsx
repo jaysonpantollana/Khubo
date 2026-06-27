@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { X, AlertCircle, CloudUpload, FileText, Trash2, CheckCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { FocusTrap } from './ui/FocusTrap';
 
 const idTypes = [
   'School ID',
@@ -66,7 +67,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
+      <FocusTrap onClose={onClose} ariaLabel="Verification" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
@@ -288,7 +289,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
             </button>
           </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

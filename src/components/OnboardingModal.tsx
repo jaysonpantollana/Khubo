@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { X, Camera, MapPin, ChevronDown, User, Mail, Phone, BookOpen } from 'lucide-react';
 import type { OnboardingData } from './OnboardingFlow';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface OnboardingModalProps {
   isOpen: boolean;
@@ -73,7 +74,9 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Onboarding"
         className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]"
       >
         <button
@@ -349,7 +352,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
             </button>
           </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

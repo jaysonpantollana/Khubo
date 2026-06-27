@@ -24,10 +24,7 @@ const HostProfile: React.FC<HostProfileProps> = ({
   reviews,
   rating,
   hostingDuration,
-  work,
-  location,
   tenantCount,
-  onMessageClick
 }) => {
   return (
     <div className="py-10 border-t border-neutral-100 mt-6">
@@ -38,7 +35,7 @@ const HostProfile: React.FC<HostProfileProps> = ({
       <div className="flex flex-col md:flex-row gap-8 md:gap-12">
         <div className="flex w-full md:w-1/2 flex-col">
           <div className="flex items-center gap-5 mb-8">
-             <img src={image} alt={name} className="w-16 h-16 rounded-full object-cover bg-neutral-100 ring-4 ring-neutral-50 shadow-sm" />
+              <img src={image} loading="lazy" alt={name} className="w-16 h-16 rounded-full object-cover bg-neutral-100 ring-4 ring-neutral-50 shadow-sm" />
              <div>
                 <h3 className="text-xl font-bold text-[#17294F] flex items-center gap-1.5 font-display">
                   {name} <BadgeCheck size={18} className="text-[#2252D6]" />

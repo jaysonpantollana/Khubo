@@ -9,6 +9,7 @@
 import React, { useRef, useState } from 'react';
 
 import { Upload, X, Shield, FileText } from 'lucide-react';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface UploadModalProps {
   isOpen: boolean;
@@ -82,7 +83,9 @@ export function UploadModal({
             onClick={handleClose}
             className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
           />
-          <div
+          <FocusTrap
+            onClose={handleClose}
+            ariaLabel="Upload"
             className={`fixed left-1/2 top-1/2 z-50 w-[90%] max-w-[500px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl shadow-2xl ${
               isDarkMode ? 'bg-[#1E1F20] text-white border border-[#3A3B3C]' : 'bg-white text-neutral-900 border border-neutral-200'
             }`}
@@ -202,7 +205,7 @@ export function UploadModal({
                 </button>
               </div>
             </div>
-          </div>
+          </FocusTrap>
         </React.Fragment>
       )}
     </>

@@ -40,12 +40,6 @@ export const DateScrollPicker: React.FC<DateScrollPickerProps> = ({
   const currentMonthIdx = currentDate.getMonth();
   const currentDay = currentDate.getDate();
 
-  const tomorrowDate = new Date(currentDate);
-  tomorrowDate.setDate(currentDay + 1);
-  const tomorrowYear = tomorrowDate.getFullYear();
-  const tomorrowMonthIdx = tomorrowDate.getMonth();
-  const tomorrowDay = tomorrowDate.getDate();
-
   const YEARS = useMemo(() => {
     const years: string[] = [];
     for (let i = currentYear - 3; i <= currentYear + 3; i++) {

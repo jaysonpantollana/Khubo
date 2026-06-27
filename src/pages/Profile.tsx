@@ -3,13 +3,14 @@
 // @behavior: Opens EditProfileModal, LandlordSignupModal, LogoutModal, AnalyticsModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal
 // @dependencies: useAuth, BottomNav, EditProfileModal, LandlordSignupModal, LogoutModal, AnalyticsModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal, motion, lucide-react
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
   Settings, HelpCircle, LogOut, Bell, Building, Check, X,
-  MoreVertical, Copy, User, Users, FileText, Shield,
+  MoreVertical, Copy, Users, FileText, Shield,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import Footer from '../components/Footer';
@@ -170,22 +171,19 @@ export default function Profile() {
     setIsPhotoGalleryOpen(true);
   };
 
-  useEffect(() => {
-    const isAnyModalOpen =
-      isCreateListingOpen || showSignupModal || isAnalyticsModalOpen ||
-      isTenantsModalOpen || isPropertiesModalOpen || isInquiriesModalOpen ||
-      isEditProfileOpen || selectedStatModal !== null || editingListing !== null ||
-      isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
-      selectedListingDetail !== null;
+  const isAnyModalOpen = useMemo(() =>
+    isCreateListingOpen || showSignupModal || isAnalyticsModalOpen ||
+    isTenantsModalOpen || isPropertiesModalOpen || isInquiriesModalOpen ||
+    isEditProfileOpen || selectedStatModal !== null || editingListing !== null ||
+    isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
+    selectedListingDetail !== null,
+    [isCreateListingOpen, showSignupModal, isAnalyticsModalOpen, isTenantsModalOpen,
+     isPropertiesModalOpen, isInquiriesModalOpen, isEditProfileOpen, selectedStatModal,
+     editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
+     selectedListingDetail]
+  );
 
-    document.body.style.overflow = isAnyModalOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [
-    isCreateListingOpen, showSignupModal, isAnalyticsModalOpen, isTenantsModalOpen,
-    isPropertiesModalOpen, isInquiriesModalOpen, isEditProfileOpen, selectedStatModal,
-    editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
-    selectedListingDetail,
-  ]);
+  useBodyScrollLock(isAnyModalOpen);
 
   useEffect(() => {
     if (myListings.length > 0) {
@@ -216,7 +214,7 @@ export default function Profile() {
     } else {
       showToast(newVisible ? 'Listing is now active' : 'Listing hidden from search', 'success');
     }
-  }, [listingVisibility, showToast]);
+  }, [listingVisibility, showToast, setListingVisibility, setMyListings]);
 
   const fetchMyListings = useCallback(async () => {
     if (!user) return;
@@ -381,7 +379,7 @@ export default function Profile() {
       <div className="max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 relative z-20 mt-2 md:mt-8">
         {/* Stat Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 drop-shadow-sm">
-          {statCards.map((stat, i) => (
+          {statCards.map((stat) => (
             <div
               key={stat.title}
               onClick={() => handleStatClick(stat.title)}
@@ -558,6 +556,9 @@ export default function Profile() {
                   </div>
                   <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
                     <button
+                      role="switch"
+                      aria-checked={mockListed}
+                      aria-label="Toggle listing visibility"
                       onClick={() => setListingVisibility(prev => ({ ...prev, 'mock-listing': !mockListed }))}
                       className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${mockListed ? 'bg-[#4CAF50]' : 'bg-neutral-300'}`}
                     >
@@ -647,11 +648,14 @@ export default function Profile() {
                     <span className="text-2xl md:text-[28px] font-black text-black">₱3,500</span>
                     <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                   </div>
-                  <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
+                   <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
                     {(() => {
                       const mockListed2 = listingVisibility['mock-listing-2'] ?? false;
                       return (
                         <button
+                          role="switch"
+                          aria-checked={mockListed2}
+                          aria-label="Toggle listing visibility"
                           onClick={() => setListingVisibility(prev => ({ ...prev, 'mock-listing-2': !mockListed2 }))}
                           className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${mockListed2 ? 'bg-[#4CAF50]' : 'bg-neutral-300'}`}
                         >
@@ -801,6 +805,9 @@ export default function Profile() {
                         </button>
                         <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
                           <button
+                            role="switch"
+                            aria-checked={isListed}
+                            aria-label="Toggle listing visibility"
                             onClick={() => handleToggleListing(listing.id)}
                             className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${isListed ? 'bg-[#4CAF50]' : 'bg-neutral-300'}`}
                           >

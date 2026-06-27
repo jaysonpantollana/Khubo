@@ -9,6 +9,7 @@
 import { Bell, X, CheckCircle, Info, AlertTriangle, XCircle, Clock } from 'lucide-react';
 import { ToastType } from './Toast';
 import type { NotificationItem } from './ToastProvider';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface NotificationDialogProps {
   isOpen: boolean;
@@ -47,7 +48,9 @@ export function NotificationDialog({ isOpen, onClose, notifications, onClear }: 
             onClick={onClose}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
-          <div
+          <FocusTrap
+            onClose={onClose}
+            ariaLabel="Notifications"
             className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl z-10 flex flex-col max-h-[70vh]"
           >
             <div className="flex items-center justify-between p-5 border-b border-neutral-100 shrink-0">
@@ -113,7 +116,7 @@ export function NotificationDialog({ isOpen, onClose, notifications, onClear }: 
                 </button>
               </div>
             )}
-          </div>
+          </FocusTrap>
         </div>
       )}
     </>

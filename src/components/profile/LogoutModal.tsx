@@ -4,6 +4,8 @@
 // @dependencies: motion
 
 
+import { FocusTrap } from '../ui/FocusTrap';
+
 
 interface Props {
   isOpen: boolean;
@@ -20,7 +22,9 @@ export default function LogoutModal({ isOpen, onClose, onConfirm }: Props) {
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <div
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Logout Confirmation"
         className="relative w-full max-w-[400px] bg-white p-6 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl z-10 flex flex-col"
       >
         <h2 className="text-xl md:text-2xl font-bold text-neutral-900 mb-2">Are you absolutely sure?</h2>
@@ -41,7 +45,7 @@ export default function LogoutModal({ isOpen, onClose, onConfirm }: Props) {
             Continue
           </button>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

@@ -5,8 +5,8 @@
 
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
-import { X, Star, MapPin, ChevronLeft, ChevronRight, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail } from 'lucide-react';
-import React, { useState, useMemo, useEffect } from 'react';
+import { X, Star, MapPin, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { ListingModal } from '../components/ListingModal';
@@ -32,7 +32,7 @@ export default function ListingDetail() {
   }, [listing]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [startDate, _setStartDate] = useState<Date | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPhotoGalleryOpen, setIsPhotoGalleryOpen] = useState(false);
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
@@ -272,35 +272,6 @@ export default function ListingDetail() {
               </div>
             </div>
 
-            <div className="py-10 border-b border-gray-100">
-              <div className="flex items-center gap-2 mb-5">
-                <Users size={18} className="text-neutral-600" />
-                <h3 className="text-sm font-bold text-neutral-500 uppercase tracking-wider">Tenants</h3>
-              </div>
-              <div className="flex items-center">
-                {[
-                  'https://api.dicebear.com/7.x/avataaars/svg?seed=MariaSantos&backgroundColor=b6e3f4',
-                  'https://api.dicebear.com/7.x/avataaars/svg?seed=JuanDelaCruz&backgroundColor=c0aede',
-                  'https://api.dicebear.com/7.x/avataaars/svg?seed=AnaReyes&backgroundColor=ffd5dc',
-                  'https://api.dicebear.com/7.x/avataaars/svg?seed=CarlosGarcia&backgroundColor=d1d4f9',
-                ].map((src, i) => (
-                  <img
-                    key={i}
-                    src={src}
-                    alt={`Tenant ${i + 1}`}
-                    className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm"
-                    style={{ marginLeft: i > 0 ? '-10px' : '0', zIndex: 4 - i }}
-                  />
-                ))}
-                <span
-                  className="w-11 h-11 rounded-full bg-[#4E4F50] text-white text-xs font-bold flex items-center justify-center border-2 border-white shadow-sm"
-                  style={{ marginLeft: '-10px', zIndex: 0 }}
-                >
-                  +{(listing.host?.tenantCount || 12) - 4 > 0 ? (listing.host?.tenantCount || 12) - 4 : 8}
-                </span>
-              </div>
-            </div>
-
             <div className="py-12 border-b border-gray-100">
               <h3 className="text-2xl font-semibold text-neutral-900 mb-8">What this place offers</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-10">
@@ -450,7 +421,7 @@ export default function ListingDetail() {
                     <div key={idx} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer" onClick={() => setSelectedReview(rev)}>
                        <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
-                             <img src={rev.userImage} className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
+                              <img src={rev.userImage} loading="lazy" className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
                              <div className="flex flex-col">
                                 <div className="flex items-center gap-1.5">
                                    <span className="font-bold text-neutral-900 text-[15px] leading-tight">{rev.userName}</span>
@@ -471,16 +442,16 @@ export default function ListingDetail() {
                           <div className="text-[13px] font-medium">
                              {rev.date}
                           </div>
-                          <div className="flex items-center gap-5 text-neutral-400">
-                             <button className="flex items-center gap-1.5 hover:text-[#2252D6] transition-colors group cursor-pointer pointer-events-auto">
-                                <Heart size={16} className="group-hover:fill-current transition-colors" />
-                                <span className="text-xs font-semibold">{(idx * 7 + 12) % 40 + 10}</span>
-                             </button>
-                             <button className="flex items-center gap-1.5 hover:text-green-500 transition-colors cursor-pointer pointer-events-auto">
-                                <Repeat2 size={16} />
-                                <span className="text-xs font-semibold">{(idx * 3 + 4) % 10 + 1}</span>
-                             </button>
-                          </div>
+                       <div className="flex items-center gap-5 text-neutral-400">
+                              <button aria-label="Like review" className="flex items-center gap-1.5 hover:text-[#2252D6] transition-colors group cursor-pointer pointer-events-auto">
+                                 <Heart size={16} className="group-hover:fill-current transition-colors" />
+                                 <span className="text-xs font-semibold">{(idx * 7 + 12) % 40 + 10}</span>
+                              </button>
+                              <button aria-label="Repeat review" className="flex items-center gap-1.5 hover:text-green-500 transition-colors cursor-pointer pointer-events-auto">
+                                 <Repeat2 size={16} />
+                                 <span className="text-xs font-semibold">{(idx * 3 + 4) % 10 + 1}</span>
+                              </button>
+                           </div>
                        </div>
                     </div>
                   ))}
@@ -567,7 +538,7 @@ export default function ListingDetail() {
                <div className="border border-gray-200 rounded-[2.5rem] py-8 px-8 shadow-2xl flex flex-col gap-5 bg-white overflow-y-auto min-h-0">
                  <div className="flex justify-between items-center bg-neutral-50 px-5 py-4 rounded-[2rem] border border-neutral-100 flex-shrink-0">
                 <div className="flex items-baseline gap-1">
-                   <span className="text-2xl font-black text-[#17294F]">₱4,700</span>
+                   <span className="text-2xl font-black text-[#17294F]">₱{listing.price.toLocaleString()}</span>
                    <span className="text-neutral-500 text-[11px] font-bold uppercase tracking-tight">/month</span>
                 </div>
                 <div className="flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-full">
@@ -662,7 +633,7 @@ export default function ListingDetail() {
                   <div className="flex flex-col gap-2 pt-4 border-t border-neutral-100">
                      <div className="flex justify-between items-center text-neutral-600">
                         <span className="text-[10px] font-bold uppercase tracking-tight">Monthly Rent</span>
-                        <span className="font-black text-neutral-900 text-[10px]">₱4,700</span>
+                        <span className="font-black text-neutral-900 text-[10px]">₱{listing.price.toLocaleString()}</span>
                      </div>
                      <div className="flex justify-between items-center text-neutral-600">
                         <span className="text-[10px] font-bold uppercase tracking-tight">Cleaning fee</span>
@@ -674,7 +645,7 @@ export default function ListingDetail() {
                      </div>
                      <div className="pt-3 mt-1 border-t border-neutral-200 flex justify-between items-center text-[#17294F]">
                         <span className="text-[10px] font-black uppercase tracking-widest">Grand Total</span>
-                        <span className="text-xl font-black">₱4,950</span>
+                        <span className="text-xl font-black">₱{(listing.price + 250).toLocaleString()}</span>
                      </div>
                   </div>
                 )}
@@ -710,11 +681,10 @@ export default function ListingDetail() {
         </div>
       </div>
 
-      <ListingModal 
+      <ListingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         host={listing?.host}
-        availableRooms={listing ? (listing.date && !listing.date.includes('-') ? parseInt(listing.date) || 0 : 0) : 0}
         onAuthRequired={!isAuthenticated ? () => { setIsModalOpen(false); setIsAuthModalOpen(true); } : undefined}
         onContactOwner={() => showToast('Message sent to owner!')}
       />
@@ -782,7 +752,7 @@ export default function ListingDetail() {
           <div className="bg-white rounded-3xl p-6 w-full max-w-lg shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-3">
-                 <img src={selectedReview.userImage} className="w-[50px] h-[50px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={selectedReview.userName} />
+                  <img src={selectedReview.userImage} loading="lazy" className="w-[50px] h-[50px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={selectedReview.userName} />
                  <div className="flex flex-col">
                     <div className="flex items-center gap-1.5">
                        <span className="font-bold text-neutral-900 text-[16px] leading-tight">{selectedReview.userName}</span>

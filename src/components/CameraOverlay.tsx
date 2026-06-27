@@ -6,6 +6,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import { X, RefreshCw, Send } from 'lucide-react';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface CameraOverlayProps {
   isOpen: boolean;
@@ -125,7 +126,9 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
   return (
     <>
       {isOpen && (
-        <div
+        <FocusTrap
+          onClose={handleClose}
+          ariaLabel="Camera"
           className="fixed inset-0 z-[100] bg-black text-white flex flex-col"
         >
           {/* Header */}
@@ -210,7 +213,7 @@ export function CameraOverlay({ isOpen, onClose, onCapture }: CameraOverlayProps
                </div>
             ) : null}
           </div>
-        </div>
+        </FocusTrap>
       )}
     </>
   );

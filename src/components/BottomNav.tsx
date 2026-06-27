@@ -4,12 +4,10 @@
 
 import { Home, Users, Map, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../lib/AuthContext';
 
 export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const items = [
     { icon: Home, label: 'Home', path: '/' },

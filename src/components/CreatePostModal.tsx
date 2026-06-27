@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 
 import { X } from 'lucide-react';
 import { Roommate } from '../types';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -81,8 +82,10 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           onClick={onClose}
         />
-        
-        <div
+
+        <FocusTrap
+          onClose={onClose}
+          ariaLabel="Create Post"
           className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden max-h-[90vh]"
         >
           {/* Header */}
@@ -216,7 +219,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
               Post
             </button>
           </div>
-        </div>
+        </FocusTrap>
       </div>
   );
 }

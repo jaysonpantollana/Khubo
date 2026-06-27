@@ -4,6 +4,7 @@ import { OnboardingModal } from './OnboardingModal';
 import { OccupationStep } from './OccupationStep';
 import { VerificationStep } from './VerificationStep';
 import { ReviewProfile } from './ReviewProfile';
+import { FocusTrap } from './ui/FocusTrap';
 
 export interface OnboardingData {
   username: string;
@@ -41,7 +42,7 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       <div onClick={onClose} className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      <div className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
+      <FocusTrap onClose={onClose} ariaLabel="Onboarding" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
@@ -106,7 +107,7 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
             </button>
           </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

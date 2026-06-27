@@ -9,6 +9,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface PhotoCarouselOverlayProps {
   isOpen: boolean;
@@ -56,7 +57,9 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
   if (!isOpen) return null;
 
   return (
-      <div
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Photo Gallery"
         className="fixed inset-0 z-[200] bg-black/0 backdrop-blur-sm flex flex-col"
       >
         {/* Header */}
@@ -125,11 +128,11 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
                     idx === currentIndex ? 'border-white scale-110' : 'border-transparent opacity-50 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} className="w-full h-full object-cover" alt={`Gallery photo ${idx}`} referrerPolicy="no-referrer" />
+                  <img src={img} loading="lazy" className="w-full h-full object-cover" alt={`Gallery photo ${idx}`} referrerPolicy="no-referrer" />
                 </button>
               ))}
            </div>
         </div>
-      </div>
+      </FocusTrap>
   );
 };

@@ -53,8 +53,6 @@ export default function Home() {
   const [dateYearWarning, setDateYearWarning] = useState(false);
   const [dateYearInvalid, setDateYearInvalid] = useState(false);
 
-  const currentYear = new Date().getFullYear();
-
   React.useEffect(() => {
     if (!dateYearWarning) return;
     const t = setTimeout(() => setDateYearWarning(false), 2000);
@@ -79,7 +77,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const observerRef = useRef<HTMLDivElement>(null);
   const searchObserverRef = useRef<HTMLDivElement>(null);
-  const [filters, setFilters] = useState<FilterState>({
+  const [filters, _setFilters] = useState<FilterState>({
     minPrice: 0,
     maxPrice: 50000,
     minRating: 0,

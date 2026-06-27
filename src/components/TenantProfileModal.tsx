@@ -1,6 +1,7 @@
 import React from 'react';
-import { X, Users, Mail, Phone, Calendar, Shield, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { X, Users, Mail, Shield, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { TenantInfo } from '../types';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface TenantProfileModalProps {
   tenants: TenantInfo[];
@@ -25,8 +26,9 @@ export default function TenantProfileModal({ tenants, isOpen, onClose }: TenantP
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
-      <div
-        onClick={(e) => e.stopPropagation()}
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Tenant Profile"
         className="relative w-full max-w-md bg-white rounded-[2rem] overflow-hidden shadow-2xl max-h-[80vh] flex flex-col"
       >
         {/* Header */}
@@ -84,7 +86,7 @@ export default function TenantProfileModal({ tenants, isOpen, onClose }: TenantP
             </div>
           ))}
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 }

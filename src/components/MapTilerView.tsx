@@ -24,7 +24,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
   const map = useRef<maptilersdk.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
-  const [shouldLoadMap, setShouldLoadMap] = useState(loadImmediately || !!apiKey);
+  const [shouldLoadMap] = useState(loadImmediately || !!apiKey);
 
   useEffect(() => {
     if (!shouldLoadMap) return;

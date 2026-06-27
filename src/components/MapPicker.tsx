@@ -19,11 +19,17 @@ const MapPicker: React.FC<MapPickerProps> = ({ lat, lng, onLocationSelect }) => 
   const marker = useRef<maptilersdk.Marker | null>(null);
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || '';
   const onLocationSelectRef = useRef(onLocationSelect);
-  onLocationSelectRef.current = onLocationSelect;
   const latRef = useRef(lat);
   const lngRef = useRef(lng);
-  latRef.current = lat;
-  lngRef.current = lng;
+
+  useEffect(() => {
+    onLocationSelectRef.current = onLocationSelect;
+  });
+
+  useEffect(() => {
+    latRef.current = lat;
+    lngRef.current = lng;
+  });
 
   const createMarkerElement = useCallback(() => {
     const el = document.createElement('div');

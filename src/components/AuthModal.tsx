@@ -10,6 +10,7 @@ import { X, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { OnboardingFlow } from './OnboardingFlow';
 import { useToast } from './ToastProvider';
+import { FocusTrap } from './ui/FocusTrap';
 
 export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: boolean; onClose: () => void, onLogin?: () => void, onSignUp?: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -59,7 +60,9 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
            onClick={onClose}
            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         />
-        <div
+        <FocusTrap
+           onClose={onClose}
+           ariaLabel={isLogin ? "Sign in" : "Create account"}
            className="relative w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl z-10"
         >
           <button 
@@ -144,7 +147,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
               </button>
             </div>
           </div>
-        </div>
+        </FocusTrap>
       </div>
   );
 

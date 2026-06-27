@@ -10,6 +10,7 @@ import React, { useMemo } from 'react';
 
 import { X, Star } from 'lucide-react';
 import { Listing } from '../types';
+import { FocusTrap } from './ui/FocusTrap';
 
 interface PropertiesModalProps {
   isOpen: boolean;
@@ -84,8 +85,6 @@ function seededRandom(seed: number) {
 }
 
 export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalProps) {
-  if (!isOpen) return null;
-
   const displayListings = listings.length === 0 ? sampleListings : listings;
 
   const propertyStats = useMemo(() =>
@@ -97,13 +96,16 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
     [displayListings]
   );
 
+  if (!isOpen) return null;
+
   return (
       <div
         className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       >
-        <div
-          onClick={(e) => e.stopPropagation()}
+        <FocusTrap
+          onClose={onClose}
+          ariaLabel="Properties"
           className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
@@ -182,7 +184,7 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
               </table>
             </div>
           </div>
-        </div>
+        </FocusTrap>
       </div>
   );
 }

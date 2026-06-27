@@ -17,12 +17,10 @@ import { initMapPreload, isMapReady } from "../lib/mapPreloader";
 import {
   Search,
   MapPin,
-  Calendar as CalendarIcon,
   Wallet,
   ChevronDown,
   X,
 } from "lucide-react";
-import { DateScrollPicker } from "../components/DateScrollPicker";
 import SearchDropdown from "../components/SearchDropdown";
 import { useSearchHistory } from "../hooks/useSearchHistory";
 import { SearchHistory } from "../components/SearchHistory";
@@ -44,27 +42,15 @@ export default function Home() {
   const [selectedStickyLocation, setSelectedStickyLocation] = useState<
     string | null
   >(null);
-  const [selectedStickyDateStr, setSelectedStickyDateStr] = useState<
-    string | null
-  >(null);
   const [selectedStickyBudget, setSelectedStickyBudget] = useState<
     string | null
   >(null);
-  const [dateYearWarning, setDateYearWarning] = useState(false);
-  const [dateYearInvalid, setDateYearInvalid] = useState(false);
-
-  React.useEffect(() => {
-    if (!dateYearWarning) return;
-    const t = setTimeout(() => setDateYearWarning(false), 2000);
-    return () => clearTimeout(t);
-  }, [dateYearWarning]);
-
   React.useEffect(() => {
     document.title = "Home | Khubo";
   }, []);
 
   const stickyHasSelections =
-    selectedStickyLocation || selectedStickyDateStr || selectedStickyBudget;
+    selectedStickyLocation || selectedStickyBudget;
 
   React.useEffect(() => {
     if (isStickySearchActive) {
@@ -85,7 +71,7 @@ export default function Home() {
   });
   const navigate = useNavigate();
   const [stickyActiveDropdown, setStickyActiveDropdown] = useState<
-    "location" | "dates" | "budget" | "general" | null
+    "location" | "budget" | "general" | null
   >(null);
   const stickyDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -380,74 +366,11 @@ export default function Home() {
                             </div>
                           </div>
                         )}
-                      </div>
+                       </div>
 
-                      <div className="w-[1px] h-3 sm:h-4 bg-white/20 flex-shrink-0 self-center" />
+                       <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
 
-                      {/* Sticky Dates Section */}
-                      <div className="flex-1 min-w-0">
-                        <div
-                          role="button"
-                          tabIndex={0}
-                          aria-label="Add dates"
-                          onClick={() => {
-                            setStickyActiveDropdown(
-                              stickyActiveDropdown === "dates"
-                                ? null
-                                : "dates",
-                            );
-                          }}
-                          onKeyDown={(e) =>
-                            (e.key === "Enter" || e.key === " ") &&
-                            (e.preventDefault(),
-                            setStickyActiveDropdown(
-                              stickyActiveDropdown === "dates"
-                                ? null
-                                : "dates",
-                            ))
-                          }
-                          className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-4 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
-                            stickyActiveDropdown === "dates"
-                              ? "bg-neutral-100 rounded-full text-black relative z-[60] shadow-sm"
-                              : "hover:bg-neutral-50 rounded-full"
-                          }`}
-                        >
-                          <div className="flex items-center gap-1 md:gap-3 min-w-0">
-                            <CalendarIcon
-                              className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]"
-                              strokeWidth={2}
-                            />
-                            <span
-                              className={`text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
-                            >
-                              {selectedStickyDateStr
-                                ? selectedStickyDateStr
-                                : "Dates"}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1 md:gap-2">
-                            <ChevronDown
-                              className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "dates" ? "rotate-180 opacity-50" : ""}`}
-                            />
-                          </div>
-                        </div>
-
-                        {stickyActiveDropdown === "dates" && (
-                          <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 overflow-hidden z-50 text-left">
-                            <DateScrollPicker
-                              viewportHeight={132}
-                              onDateChange={(m, d, y) => {
-                                setSelectedStickyDateStr(`${m} ${d}, ${y}`);
-                              }}
-                              onInvalidYear={setDateYearInvalid}
-                            />
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
-
-                      {/* Sticky Budget Section */}
+                       {/* Sticky Budget Section */}
                       <div className="flex-1 min-w-0">
                         <div
                           role="button"
@@ -524,15 +447,9 @@ export default function Home() {
                           e.preventDefault();
                           e.stopPropagation();
                           if (stickyHasSelections) {
-                            if (dateYearInvalid) {
-                              setDateYearWarning(true);
-                              return;
-                            }
                             const terms = [];
                             if (selectedStickyLocation)
                               terms.push(selectedStickyLocation);
-                            if (selectedStickyDateStr)
-                              terms.push(selectedStickyDateStr);
                             if (selectedStickyBudget)
                               terms.push(selectedStickyBudget);
                             setSearchQuery(terms.join(" "));
@@ -559,15 +476,10 @@ export default function Home() {
                           size={16}
                           className="text-white"
                         />
-                      </button>
-                      {dateYearWarning && (
-                        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-lg z-50 whitespace-nowrap animate-pulse">
-                          Only current and next year allowed
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
+                       </button>
+                     </>
+                   )}
+                 </div>
               </div>
             </div>
           ) : (

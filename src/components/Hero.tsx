@@ -11,13 +11,11 @@ import {
   Search,
   MapPin,
   Megaphone,
-  Calendar as CalendarIcon,
   ChevronDown,
   Wallet,
   X,
 } from "lucide-react";
 
-import { DateScrollPicker } from "./DateScrollPicker";
 import SearchDropdown from "./SearchDropdown";
 import { AnnouncementsOverlay } from "./AnnouncementsOverlay";
 
@@ -37,18 +35,16 @@ export default function Hero({
   suppressDropdown = false,
 }: HeroProps) {
   const [activeDropdown, setActiveDropdown] = useState<
-    "location" | "dates" | "budget" | "general" | null
+    "location" | "budget" | "general" | null
   >(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [hideDropdown, setHideDropdown] = useState(false);
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
 
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-  const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
-  const [heroDateYearInvalid, setHeroDateYearInvalid] = useState(false);
 
-  const hasSelections = selectedLocation || selectedDateStr || selectedBudget;
+  const hasSelections = selectedLocation || selectedBudget;
 
   useEffect(() => {
     if (isSearchActive) {
@@ -78,7 +74,7 @@ export default function Hero({
   }, [suppressDropdown, setIsSearchActive]);
 
   const toggleDropdown = (
-    dropdown: "location" | "dates" | "budget" | "general",
+    dropdown: "location" | "budget" | "general",
   ) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
@@ -287,55 +283,6 @@ export default function Hero({
 
                   <div className="w-[1px] h-5 md:h-8 bg-white/20" />
 
-                  {/* Dates Section */}
-                  <div className="flex-1 min-w-0">
-                    <div
-                      role="button"
-                      tabIndex={0}
-                      aria-label="Add dates"
-                      onClick={() => toggleDropdown("dates")}
-                      onKeyDown={(e) =>
-                        (e.key === "Enter" || e.key === " ") &&
-                        (e.preventDefault(), toggleDropdown("dates"))
-                      }
-                      className={`w-full flex items-center justify-between px-1.5 md:pl-6 md:pr-4 py-2.5 md:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
-                        activeDropdown === "dates"
-                          ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md"
-                          : "hover:bg-white/5 rounded-full"
-                      }`}
-                    >
-                      <div className="flex items-center gap-1 md:gap-3 min-w-0">
-                        <CalendarIcon className="text-[#2252D6] flex-shrink-0 w-3 h-3 md:w-[16px] md:h-[16px]" />
-                        <span
-                          className={`text-[10px] md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === "dates" ? "text-neutral-900" : "text-white"}`}
-                        >
-                          {selectedDateStr ? selectedDateStr : "Dates"}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <ChevronDown
-                          className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-all w-3 h-3 md:w-4 md:h-4 ${activeDropdown === "dates" ? "rotate-180 text-neutral-900" : ""}`}
-                        />
-                      </div>
-                    </div>
-
-                      {activeDropdown === "dates" && (
-                        <div
-                          className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 overflow-hidden z-50 text-left"
-                        >
-                          <DateScrollPicker
-                            viewportHeight={132}
-                            onDateChange={(m, d, y) =>
-                              setSelectedDateStr(`${m} ${d}, ${y}`)
-                            }
-                            onInvalidYear={setHeroDateYearInvalid}
-                          />
-                        </div>
-                      )}
-                  </div>
-
-                  <div className="w-[1px] h-5 md:h-8 bg-white/20" />
-
                   {/* Budget Section */}
                   <div className="flex-1 min-w-0">
                     <div
@@ -401,10 +348,8 @@ export default function Hero({
                       e.preventDefault();
                       e.stopPropagation();
                       if (hasSelections) {
-                        if (heroDateYearInvalid) return;
                         const terms = [];
                         if (selectedLocation) terms.push(selectedLocation);
-                        if (selectedDateStr) terms.push(selectedDateStr);
                         if (selectedBudget) terms.push(selectedBudget);
                         setSearchQuery(terms.join(" "));
                         setActiveDropdown(null);

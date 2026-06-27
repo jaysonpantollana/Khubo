@@ -15,13 +15,11 @@ import {
   ChevronRight,
   ArrowLeft,
   X,
-  Calendar as CalendarIcon,
   Wallet,
   ChevronDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Listing } from "../types";
-import { DateScrollPicker } from "../components/DateScrollPicker";
 import SearchDropdown from "../components/SearchDropdown";
 import { FilterState } from "../components/Filters";
 import * as maptilersdk from "@maptiler/sdk";
@@ -35,27 +33,17 @@ export default function Maps() {
   const [selectedListing, setSelectedListing] = useState<string | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<
-    "location" | "dates" | "budget" | "general" | null
+    "location" | "budget" | "general" | null
   >(null);
 
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-  const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
-  const [dateYearWarning, setDateYearWarning] = useState(false);
-
-  const currentYear = new Date().getFullYear();
-
-  useEffect(() => {
-    if (!dateYearWarning) return;
-    const t = setTimeout(() => setDateYearWarning(false), 2000);
-    return () => clearTimeout(t);
-  }, [dateYearWarning]);
 
   useEffect(() => {
     document.title = "Maps | Khubo";
   }, []);
 
-  const hasSelections = selectedLocation || selectedDateStr || selectedBudget;
+  const hasSelections = selectedLocation || selectedBudget;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -85,7 +73,7 @@ export default function Maps() {
   }, []);
 
   const toggleDropdown = (
-    dropdown: "location" | "dates" | "budget" | "general",
+    dropdown: "location" | "budget" | "general",
   ) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
@@ -499,42 +487,6 @@ export default function Maps() {
 
                 <div className="w-[1px] h-5 md:h-6 bg-neutral-300" />
 
-                {/* Dates Section */}
-                <div className="flex-1 min-w-0">
-                  <div
-                    role="button"
-                    onClick={() => toggleDropdown("dates")}
-                    className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group text-black focus-visible:outline-none ${
-                      activeDropdown === "dates"
-                        ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
-                        : "hover:bg-neutral-50 rounded-full"
-                    }`}
-                  >
-                    <div className="flex items-center gap-1 md:gap-3 min-w-0">
-                      <CalendarIcon className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#2252D6] flex-shrink-0" />
-                      <span className="text-[10px] sm:text-sm md:text-base font-semibold truncate">
-                        {selectedDateStr ? selectedDateStr : "Dates"}
-                      </span>
-                    </div>
-                    <ChevronDown
-                      className={`w-3 h-3 md:w-3.5 md:h-3.5 opacity-40 flex-shrink-0 ml-0.5 md:ml-1 ${activeDropdown === "dates" ? "rotate-180 opacity-100" : ""}`}
-                    />
-                  </div>
-
-                  {activeDropdown === "dates" && (
-                    <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 overflow-hidden z-50 text-left">
-                      <DateScrollPicker
-                        viewportHeight={132}
-                        onDateChange={(m, d, y) =>
-                          setSelectedDateStr(`${m} ${d}, ${y}`)
-                        }
-                      />
-                    </div>
-                  )}
-                </div>
-
-                <div className="w-[1px] h-5 md:h-6 bg-neutral-300" />
-
                 {/* Budget Section */}
                 <div className="flex-1 min-w-0">
                   <div
@@ -589,19 +541,8 @@ export default function Maps() {
                   onClick={(e) => {
                     e.stopPropagation();
                     if (hasSelections) {
-                      if (selectedDateStr) {
-                        const yearMatch = selectedDateStr.match(/(\d{4})/);
-                        if (yearMatch) {
-                          const year = parseInt(yearMatch[1], 10);
-                          if (year < currentYear || year > currentYear + 1) {
-                            setDateYearWarning(true);
-                            return;
-                          }
-                        }
-                      }
                       const terms = [];
                       if (selectedLocation) terms.push(selectedLocation);
-                      if (selectedDateStr) terms.push(selectedDateStr);
                       if (selectedBudget) terms.push(selectedBudget);
                       setSearchQuery(terms.join(" "));
                       setActiveDropdown(null);
@@ -616,11 +557,6 @@ export default function Maps() {
                 >
                   <Search className="w-4 h-4 sm:w-[18px] sm:h-[18px] md:w-[18px] md:h-[18px] text-white" />
                 </button>
-                {dateYearWarning && (
-                  <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-lg z-50 whitespace-nowrap animate-pulse">
-                    Only current and next year allowed
-                  </div>
-                )}
               </>
             )}
           </div>

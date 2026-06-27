@@ -74,7 +74,7 @@ All source files are annotated with `@context`, `@purpose`, and domain-specific 
 
 - **Pages (9)**: Home, CategoryListings, ListingDetail, Maps, Profile, RoommateFinder, ManageListings, TermsOfService, PrivacyPolicy
 - **Components (60+)**: AnalyticsModal, AnnouncementsOverlay, BottomNav, CameraOverlay, Categories, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailModal, ListingDetailSkeleton, ListingsPopup, MapPicker, MapTilerView, Navbar, NotificationDialog, OccupationStep, OnboardingFlow, OnboardingModal, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, ReviewProfile, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommatePreferences, RoommateSearchDropdown, RoommatesPopup, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, TenantProfileModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal, VerificationStep
-- **Hooks (9)**: useBodyScrollLock, useErrorHandler, useFocusTrap, useListing, useListings, useListingsFilter, useReducedMotion, useSearchHistory
+- **Hooks (9)**: useBodyScrollLock, useClickOutside, useErrorHandler, useFocusTrap, useListing, useListings, useListingsFilter, useReducedMotion, useSearchHistory
 - **API (7)**: auth, client, client.test, index (barrel), listings, roommates, types
 - **Lib (7)**: AuthContext, ThemeContext, animations, mapPreloader, utils, utils.test, api/index
 - **Mocks (3)**: listings, roommates, supabase
@@ -1061,7 +1061,6 @@ The app respects the `prefers-reduced-motion` media query:
 - `listings.ts` - Listing CRUD operations (getListings, getListing, createListing, updateListing, deleteListing)
 - `roommates.ts` - Roommate operations (getRoommates, getRoommate, createRoommateRequest)
 - `types.ts` - API type definitions (ApiResponse, PaginatedResponse, PaginationParams, ApiError)
-- `index.ts` - Barrel export
 
 **Client Features**:
 - `apiRequest<T>(endpoint, options)` - Generic fetch wrapper with retry, timeout, and auth
@@ -1435,8 +1434,8 @@ npm run clean       # Remove dist/ directory
 
 ---
 
-*Last Updated: June 25, 2026*
-*Version: 2.3.0*
+*Last Updated: June 27, 2026*
+*Version: 2.4.0*
 
 ---
 

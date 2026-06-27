@@ -35,8 +35,9 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
           <FocusTrap
             onClose={onClose}
             ariaLabel="Roommate Profile"
-            className="bg-[#F9F9F9] w-full max-w-lg md:max-w-3xl pointer-events-auto rounded-[40px] overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.2)] flex flex-col md:flex-row max-h-[90vh] relative"
+            className="fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-auto"
           >
+            <div className="bg-[#F9F9F9] w-full max-w-lg md:max-w-3xl pointer-events-auto rounded-[40px] overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.2)] flex flex-col md:flex-row max-h-[90vh] relative">
               {/* Close Button */}
               <button
                 onClick={onClose}
@@ -150,7 +151,8 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
 
                 </div>
               </div>
-            </FocusTrap>
+            </div>
+          </FocusTrap>
         </>
       )}
     </>

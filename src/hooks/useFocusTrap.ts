@@ -1,52 +1,71 @@
-// @context: Focus trap hook — keyboard navigation confinement within modals
-// @purpose: Keeps Tab/Shift+Tab cycling inside a container; restores focus on unmount
-// @behavior: Wraps first/last focusable elements; locks body overflow; returns a ref to attach to container
-// @dependencies: react (useEffect, useRef)
+import { useRef, useEffect, useCallback } from 'react';
 
-import { useEffect, useRef } from 'react';
+export function useFocusReturn() {
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
-const FOCUSABLE_SELECTOR =
-  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  const saveFocus = useCallback(() => {
+    previousActiveElement.current = document.activeElement as HTMLElement;
+  }, []);
 
-export function useFocusTrap(isActive: boolean) {
-  const ref = useRef<HTMLDivElement>(null);
+  const restoreFocus = useCallback(() => {
+    if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
+      previousActiveElement.current.focus();
+    }
+    previousActiveElement.current = null;
+  }, []);
+
+  return { saveFocus, restoreFocus };
+}
+
+export function useFocusTrap(
+  isActive: boolean,
+  containerRef: React.RefObject<HTMLElement | null>,
+  onEscape?: () => void
+) {
+  const { saveFocus, restoreFocus } = useFocusReturn();
 
   useEffect(() => {
-    if (!isActive || !ref.current) return;
+    if (!isActive) return;
 
-    const container = ref.current;
-    const previouslyFocused = document.activeElement as HTMLElement | null;
+    saveFocus();
 
-    const focusableEls = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-    const firstEl = focusableEls[0];
-    const lastEl = focusableEls[focusableEls.length - 1];
+    const container = containerRef.current;
+    if (!container) return;
 
-    firstEl?.focus();
+    const focusableElements = container.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
 
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key !== 'Tab') return;
-      if (e.shiftKey) {
-        if (document.activeElement === firstEl) {
-          e.preventDefault();
-          lastEl?.focus();
-        }
-      } else {
-        if (document.activeElement === lastEl) {
-          e.preventDefault();
-          firstEl?.focus();
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    firstElement?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement?.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement?.focus();
+          }
         }
       }
-    }
-
-    container.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      container.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-      previouslyFocused?.focus();
+      if (e.key === 'Escape' && onEscape) {
+        onEscape();
+      }
     };
-  }, [isActive]);
 
-  return ref;
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      restoreFocus();
+    };
+  }, [isActive, containerRef, onEscape, saveFocus, restoreFocus]);
+
+  return { saveFocus, restoreFocus };
 }

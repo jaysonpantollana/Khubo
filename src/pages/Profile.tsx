@@ -245,7 +245,7 @@ export default function Profile() {
       ]
     : [
         { title: 'Saved', count: '12', sub: 'Houses' },
-        { title: 'Roommate', count: '6', sub: 'Applications' },
+        { title: 'Roommate', count: '6', sub: 'Person' },
         { title: 'Invitation', count: '0', sub: 'Received' },
       ];
 

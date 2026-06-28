@@ -136,7 +136,7 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
                     <th className="p-4 pl-6 whitespace-nowrap text-neutral-500 font-bold text-sm">Client</th>
                     <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Room No.</th>
                     <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Status</th>
-                    <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Tenancy</th>
+
                     <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Email</th>
                     <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Phone</th>
                     <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Social</th>
@@ -159,15 +159,7 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
                             {tenant.status}
                           </span>
                         </td>
-                        <td className="p-4 text-neutral-500 font-medium whitespace-nowrap">
-                          <span className={`px-2 py-1 rounded text-xs font-bold ${
-                            tenant.tenancyStatus === 'Staying' ? 'bg-green-100 text-green-700' :
-                            tenant.tenancyStatus === 'Leaving' ? 'bg-yellow-100 text-yellow-700' :
-                            'bg-red-100 text-red-700'
-                          }`}>
-                            {tenant.tenancyStatus}
-                          </span>
-                        </td>
+
                         <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">{tenant.email}</td>
                         <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">
                           <span className="flex items-center gap-1.5">
@@ -192,7 +184,7 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={7} className="p-8 text-center text-neutral-400 font-medium">
+                      <td colSpan={6} className="p-8 text-center text-neutral-400 font-medium">
                         No tenants found for this room
                       </td>
                     </tr>

@@ -1048,7 +1048,15 @@ export default function Profile() {
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />
       <AnalyticsModal isOpen={isAnalyticsModalOpen} onClose={() => setIsAnalyticsModalOpen(false)} />
       <TenantsModal isOpen={isTenantsModalOpen} onClose={() => setIsTenantsModalOpen(false)} />
-      <PropertiesModal isOpen={isPropertiesModalOpen} onClose={() => setIsPropertiesModalOpen(false)} listings={myListings} />
+      <PropertiesModal
+        isOpen={isPropertiesModalOpen}
+        onClose={() => setIsPropertiesModalOpen(false)}
+        listings={myListings}
+        onAddListing={() => {
+          setIsPropertiesModalOpen(false);
+          setIsCreateListingOpen(true);
+        }}
+      />
       <InquiriesModal isOpen={isInquiriesModalOpen} onClose={() => setIsInquiriesModalOpen(false)} />
       {selectedListingDetail && (
         <ListingDetailModal

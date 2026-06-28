@@ -1,7 +1,7 @@
 // @context: Properties modal — landlord's property overview
 // @purpose: Shows property statistics with seeded random status/occupancy data for each listing
 // @behavior: Uses seededRandom for deterministic pseudo-random values per listing ID
-// @behavior: Shows listing status badge (Active/Review/Maintenance) and occupancy info
+// @behavior: Shows listing status badge (active/unlisted) and occupancy info
 // @performance: useMemo ensures stats are computed only when listings change
 // @dependencies: Listing type, lucide-react
 // @known-issues: Uses Math.sin for seeded random (was previously Math.random during render)
@@ -16,6 +16,7 @@ interface PropertiesModalProps {
   isOpen: boolean;
   onClose: () => void;
   listings: Listing[];
+  onAddListing?: () => void;
 }
 
 const sampleListings: Listing[] = [
@@ -77,14 +78,14 @@ const sampleListings: Listing[] = [
   },
 ];
 
-const statuses = ['Active', 'Inactive'];
+const statuses = ['active', 'unlisted'];
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
   return x - Math.floor(x);
 }
 
-export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalProps) {
+export function PropertiesModal({ isOpen, onClose, listings, onAddListing }: PropertiesModalProps) {
   const displayListings = listings.length === 0 ? sampleListings : listings;
 
   const propertyStats = useMemo(() =>
@@ -110,12 +111,22 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
               <h2 className="text-xl font-bold text-neutral-900">Properties</h2>
-              <button 
-                onClick={onClose}
-                className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900"
-              >
-                <X size={20} />
-              </button>
+              <div className="flex items-center gap-3">
+                {onAddListing && (
+                  <button
+                    onClick={onAddListing}
+                    className="px-5 py-2 bg-[#17294F] text-white rounded-full font-bold hover:bg-[#1e3466] shadow-md transition text-sm whitespace-nowrap"
+                  >
+                    + Add Listing
+                  </button>
+                )}
+                <button 
+                  onClick={onClose}
+                  className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900"
+                >
+                  <X size={20} />
+                </button>
+              </div>
           </div>
 
           <div className="p-6 flex-1 overflow-y-auto">
@@ -160,8 +171,8 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
                           </div>
                         </td>
                         <td className="p-4 font-medium whitespace-nowrap">
-                          <span className={`px-2 py-1 rounded text-xs font-bold ${
-                            status === 'Active' ? 'bg-green-100 text-green-700' :
+                          <span className={`px-2 py-1 rounded text-xs font-bold capitalize ${
+                            status === 'active' ? 'bg-green-100 text-green-700' :
                             'bg-red-100 text-red-700'
                           }`}>
                             {status}

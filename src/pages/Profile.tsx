@@ -231,8 +231,8 @@ export default function Profile() {
         { title: 'Tenants', count: '12', sub: 'Active' },
       ]
     : [
-        { title: 'Saved', count: '12', sub: 'Houses' },
-        { title: 'Roommate', count: '6', sub: 'Person' },
+        { title: 'Houses', count: '12', sub: 'Saved' },
+        { title: 'Roommate', count: '6', sub: 'Saved' },
         { title: 'Invitation', count: '0', sub: 'Received' },
       ];
 

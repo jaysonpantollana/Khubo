@@ -9,7 +9,7 @@ interface ListingDetailModalProps {
   listing: Listing;
 }
 
-const statuses = ['Active', 'Review', 'Maintenance'];
+const statuses = ['Active', 'Inactive'];
 
 export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -28,7 +28,7 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
     images = [...images, ...fallbackImages.slice(0, 4 - images.length)];
   }
 
-  const status = statuses[Math.abs(listing.id.charCodeAt(0)) % 3];
+  const status = statuses[Math.abs(listing.id.charCodeAt(0)) % 2];
 
   const prevImage = () => setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   const nextImage = () => setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
@@ -95,8 +95,7 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
               <h3 className="text-2xl font-bold text-[#0A2B4E]">{listing.title}</h3>
               <span className={`self-start px-3 py-1 rounded-full text-xs font-bold ${
                 status === 'Active' ? 'bg-green-100 text-green-700' :
-                status === 'Review' ? 'bg-blue-100 text-blue-700' :
-                'bg-orange-100 text-orange-700'
+                'bg-red-100 text-red-700'
               }`}>
                 {status}
               </span>

@@ -77,7 +77,7 @@ const sampleListings: Listing[] = [
   },
 ];
 
-const statuses = ['Active', 'Review', 'Maintenance'];
+const statuses = ['Active', 'Inactive'];
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -91,7 +91,7 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
     displayListings.map((_, index) => {
       const occupied = Math.floor(seededRandom(index * 2) * 10);
       const total = occupied + Math.floor(seededRandom(index * 2 + 1) * 5) + 1;
-      return { status: statuses[index % 3], occupied, total };
+      return { status: statuses[index % 2], occupied, total };
     }),
     [displayListings]
   );
@@ -162,8 +162,7 @@ export function PropertiesModal({ isOpen, onClose, listings }: PropertiesModalPr
                         <td className="p-4 font-medium whitespace-nowrap">
                           <span className={`px-2 py-1 rounded text-xs font-bold ${
                             status === 'Active' ? 'bg-green-100 text-green-700' :
-                            status === 'Review' ? 'bg-blue-100 text-blue-700' :
-                            'bg-orange-100 text-orange-700'
+                            'bg-red-100 text-red-700'
                           }`}>
                             {status}
                           </span>

@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 
-import { X, Phone } from 'lucide-react';
+import { X, Phone, Plus } from 'lucide-react';
 import { FocusTrap } from './ui/FocusTrap';
 
 interface TenantsModalProps {
@@ -27,6 +27,11 @@ const roomTags = [...new Set(tenants.map(t => t.room))];
 
 export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
+  const [additionalRooms, setAdditionalRooms] = useState<string[]>([]);
+  const [isAddingRoom, setIsAddingRoom] = useState(false);
+  const [newRoomValue, setNewRoomValue] = useState('');
+
+  const allRoomTags = [...new Set([...roomTags, ...additionalRooms])];
 
   if (!isOpen) return null;
 
@@ -47,12 +52,21 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
               <h2 className="text-xl font-bold text-neutral-900">Tenants</h2>
-              <button 
-                onClick={onClose}
-                className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900"
-              >
-                <X size={20} />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {}}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#17294F] text-white text-xs font-bold rounded-full hover:bg-[#1a3058] transition-colors"
+                >
+                  <Plus size={16} />
+                  Add Tenant
+                </button>
+                <button 
+                  onClick={onClose}
+                  className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900"
+                >
+                  <X size={20} />
+                </button>
+              </div>
           </div>
 
           <div className="p-6 flex-1 overflow-y-auto flex flex-col">
@@ -67,7 +81,7 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
               >
                 All Rooms
               </button>
-              {roomTags.map(room => (
+              {allRoomTags.map(room => (
                 <button
                   key={room}
                   onClick={() => setSelectedRoom(room)}
@@ -80,6 +94,40 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
                   Room {room}
                 </button>
               ))}
+              {isAddingRoom ? (
+                <input
+                  autoFocus
+                  type="text"
+                  value={newRoomValue}
+                  onChange={(e) => setNewRoomValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && newRoomValue.trim()) {
+                      const val = newRoomValue.trim();
+                      if (!allRoomTags.includes(val)) {
+                        setAdditionalRooms(prev => [...prev, val]);
+                      }
+                      setNewRoomValue('');
+                      setIsAddingRoom(false);
+                    } else if (e.key === 'Escape') {
+                      setNewRoomValue('');
+                      setIsAddingRoom(false);
+                    }
+                  }}
+                  onBlur={() => {
+                    setNewRoomValue('');
+                    setIsAddingRoom(false);
+                  }}
+                  placeholder="Room #"
+                  className="px-3 py-1.5 rounded-full text-xs font-bold border-2 border-[#17294F] outline-none w-24 bg-white text-neutral-700"
+                />
+              ) : (
+                <button
+                  onClick={() => setIsAddingRoom(true)}
+                  className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 hover:border-[#17294F] hover:text-[#17294F]"
+                >
+                  + Add Room
+                </button>
+              )}
             </div>
             <div className="overflow-x-auto w-full p-1 flex-1">
               <table className="w-full text-left border-collapse border-spacing-y-2">

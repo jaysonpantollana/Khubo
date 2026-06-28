@@ -1,7 +1,7 @@
 // @context: Profile page — user account and settings
 // @purpose: Displays user avatar, name, details, stats (saved/reservations/roommate/invitations), and action modals
-// @behavior: Opens EditProfileModal, LandlordSignupModal, LogoutModal, AnalyticsModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal
-// @dependencies: useAuth, BottomNav, EditProfileModal, LandlordSignupModal, LogoutModal, AnalyticsModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal, motion, lucide-react
+// @behavior: Opens EditProfileModal, LandlordSignupModal, LogoutModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal
+// @dependencies: useAuth, BottomNav, EditProfileModal, LandlordSignupModal, LogoutModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal, motion, lucide-react
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ import { EditListingModal } from '../components/EditListingModal';
 import { CreateListingModal } from '../components/CreateListingModal';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
-import { AnalyticsModal } from '../components/AnalyticsModal';
+
 import { TenantsModal } from '../components/TenantsModal';
 import { PropertiesModal } from '../components/PropertiesModal';
 import { InquiriesModal } from '../components/InquiriesModal';
@@ -38,7 +38,7 @@ export default function Profile() {
   const { showToast } = useToast();
   const [isLandlord, setIsLandlord] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
-  const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false);
+
   const [isTenantsModalOpen, setIsTenantsModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
@@ -166,12 +166,12 @@ export default function Profile() {
   };
 
   const isAnyModalOpen = useMemo(() =>
-    isCreateListingOpen || showSignupModal || isAnalyticsModalOpen ||
+    isCreateListingOpen || showSignupModal ||
     isTenantsModalOpen || isPropertiesModalOpen || isInquiriesModalOpen ||
     isEditProfileOpen || selectedStatModal !== null || editingListing !== null ||
     isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
     selectedListingDetail !== null,
-    [isCreateListingOpen, showSignupModal, isAnalyticsModalOpen, isTenantsModalOpen,
+    [isCreateListingOpen, showSignupModal, isTenantsModalOpen,
      isPropertiesModalOpen, isInquiriesModalOpen, isEditProfileOpen, selectedStatModal,
      editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
      selectedListingDetail]
@@ -229,7 +229,6 @@ export default function Profile() {
     ? [
         { title: 'Properties', count: '4', sub: 'Listed' },
         { title: 'Tenants', count: '12', sub: 'Active' },
-        { title: 'Revenue', count: 'P42k', sub: 'This Month' },
       ]
     : [
         { title: 'Saved', count: '12', sub: 'Houses' },
@@ -240,8 +239,7 @@ export default function Profile() {
   const mockListed = listingVisibility['mock-listing'] ?? true;
 
   const handleStatClick = (title: string) => {
-    if (title === 'Revenue') setIsAnalyticsModalOpen(true);
-    else if (title === 'Tenants') setIsTenantsModalOpen(true);
+    if (title === 'Tenants') setIsTenantsModalOpen(true);
     else if (title === 'Properties') setIsPropertiesModalOpen(true);
     else setSelectedStatModal(title);
   };
@@ -1046,7 +1044,6 @@ export default function Profile() {
         onClose={() => setIsPhotoGalleryOpen(false)}
       />
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />
-      <AnalyticsModal isOpen={isAnalyticsModalOpen} onClose={() => setIsAnalyticsModalOpen(false)} />
       <TenantsModal isOpen={isTenantsModalOpen} onClose={() => setIsTenantsModalOpen(false)} />
       <PropertiesModal
         isOpen={isPropertiesModalOpen}

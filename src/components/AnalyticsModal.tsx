@@ -38,7 +38,7 @@ export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
   const topDay = Math.max(...data.map(d => d.value));
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} maxWidth="max-w-5xl" className="h-[80vh] flex flex-col">
+    <Modal isOpen={isOpen} onClose={onClose} maxWidth="max-w-5xl" showCloseButton={false} bodyClassName="!p-0 !max-h-none overflow-hidden flex flex-col" className="!h-[80vh]">
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
               <h2 className="text-xl font-bold text-neutral-900">Revenue</h2>
               <button 
@@ -49,7 +49,7 @@ export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
               </button>
           </div>
 
-          <div className="p-6 flex-1 flex flex-col overflow-hidden">
+          <div className="p-6 flex-1 flex flex-col overflow-hidden min-h-0">
             <div className="w-full flex-1 flex flex-col h-full">
               {/* Header */}
               <div className="flex justify-between items-center mb-4">

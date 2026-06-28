@@ -15,6 +15,7 @@ export interface ModalProps {
   className?: string;
   overlayClassName?: string;
   contentClassName?: string;
+  bodyClassName?: string;
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   showCloseButton?: boolean;
@@ -42,6 +43,7 @@ export function Modal({
   className = '',
   overlayClassName = '',
   contentClassName = '',
+  bodyClassName = '',
   closeOnOverlayClick = true,
   closeOnEscape = true,
   showCloseButton = true,
@@ -102,7 +104,7 @@ export function Modal({
           'transform transition-all duration-200',
           'animate-in fade-in-0 zoom-in-95',
           sizeStyles[size],
-          maxWidth && `max-w-[${maxWidth}]`,
+          maxWidth,
           contentClassName,
           className
         )}
@@ -139,7 +141,7 @@ export function Modal({
             )}
           </div>
         )}
-        <div className="p-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+        <div className={cn("p-6 max-h-[calc(100vh-200px)] overflow-y-auto", bodyClassName)}>
           {children}
         </div>
       </div>

@@ -364,7 +364,7 @@ export default function Profile() {
       {/* Main Content Body */}
       <div className="max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 relative z-20 mt-2 md:mt-8">
         {/* Stat Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 drop-shadow-sm">
+        <div className={`grid ${isLandlord ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'} gap-4 md:gap-6 drop-shadow-sm`}>
           {statCards.map((stat) => (
             <div
               key={stat.title}

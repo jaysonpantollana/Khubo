@@ -539,8 +539,8 @@ export default function ListingDetail() {
               </div>
 
               {/* Landlord Profile */}
-              <div className="bg-white rounded-[1.5rem] p-5 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100">
-                <div className="flex items-center gap-3 mb-4">
+              <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100">
+                <div className="flex items-center gap-3 mb-5">
                   <img
                     src={listing.host?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Layla88'}
                     alt={listing.host?.name || 'Landlord'}
@@ -555,31 +555,14 @@ export default function ListingDetail() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-1 mb-3 py-2 border-y border-neutral-100">
-                  <div className="text-center">
-                    <div className="font-bold text-xs text-[#17294F] flex items-center justify-center gap-0.5">
-                      {listing.host?.rating || 5.0} <Star size={8} className="fill-[#17294F] text-[#17294F]" />
-                    </div>
-                    <span className="text-[7px] font-semibold text-neutral-400 uppercase tracking-wider">Rating</span>
-                  </div>
-                  <div className="text-center border-x border-neutral-100">
-                    <div className="font-bold text-xs text-[#17294F]">{listing.host?.reviews || 35}</div>
-                    <span className="text-[7px] font-semibold text-neutral-400 uppercase tracking-wider">Reviews</span>
-                  </div>
-                  <div className="text-center">
-                    <div className="font-bold text-xs text-[#17294F]">{listing.host?.tenantCount || 12}</div>
-                    <span className="text-[7px] font-semibold text-neutral-400 uppercase tracking-wider">Tenants</span>
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Contact</p>
-                  <div className="flex gap-2">
-                    <a href="tel:+639123456789" className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+                <div className="mb-5">
+                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-3">Contact</p>
+                  <div className="flex gap-4">
+                    <a href="tel:+639123456789" className="flex items-center gap-2 hover:opacity-70 transition">
                       <Phone size={16} className="text-[#17294F]" />
                       <span className="text-sm font-bold text-[#17294F]">Phone</span>
                     </a>
-                    <a href="mailto:layla@khubo.com" className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+                    <a href="mailto:layla@khubo.com" className="flex items-center gap-2 hover:opacity-70 transition">
                       <Mail size={16} className="text-[#17294F]" />
                       <span className="text-sm font-bold text-[#17294F]">Email</span>
                     </a>
@@ -587,8 +570,8 @@ export default function ListingDetail() {
                 </div>
 
                 <div>
-                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-2">Social Media</p>
-                  <div className="flex gap-2">
+                  <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-3">Social Media</p>
+                  <div className="flex gap-3">
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:opacity-90 transition">
                       <Instagram size={18} />
                     </a>
@@ -602,18 +585,7 @@ export default function ListingDetail() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 mt-auto">
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="w-full py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest transition-all active:scale-95 shadow-lg bg-[#17294F] text-white hover:shadow-xl hover:bg-[#1e3466]"
-                >
-                  Contact Owner
-                </button>
 
-                <div className="text-center text-[9px] font-bold text-neutral-400 uppercase tracking-tight">
-                  No charges yet
-                </div>
-              </div>
             </div>
             </div>
           </div>
@@ -621,23 +593,7 @@ export default function ListingDetail() {
       </div>
     </main>
 
-      {/* Persistent Mobile Action Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 px-4 py-3 z-[150] shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-        <div className="flex gap-3 max-w-md mx-auto">
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex-1 py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest bg-neutral-100 text-[#17294F] transition-all active:scale-95 border border-neutral-200"
-          >
-            Set Date
-          </button>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex-1 py-3.5 rounded-xl font-black text-[12px] uppercase tracking-widest bg-[#17294F] text-white shadow-lg shadow-blue-900/10 transition-all active:scale-95"
-          >
-            Contact Owner
-          </button>
-        </div>
-      </div>
+
 
       <ListingModal
         isOpen={isModalOpen}

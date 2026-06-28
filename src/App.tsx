@@ -47,6 +47,8 @@ const Profile = lazy(() => import('./pages/Profile'));
 const ManageListings = lazy(() => import('./pages/ManageListings'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const LandlordProperties = lazy(() => import('./pages/LandlordProperties'));
+const LandlordTenants = lazy(() => import('./pages/LandlordTenants'));
 
 // --- Suspense fallback while lazy chunks load ---
 const PageLoader = () => (
@@ -84,6 +86,8 @@ export default function App() {
                       <Route path="/maps" element={<Maps />} />
                       <Route path="/roommate" element={<RoommateFinder />} />
                       <Route path="/profile" element={<Profile />} />
+                      <Route path="/landlord/properties" element={<LandlordProperties />} />
+                      <Route path="/landlord/tenants" element={<LandlordTenants />} />
                       <Route path="/manage-listings" element={<ManageListings />} />
                       <Route path="/terms" element={<TermsOfService />} />
                       <Route path="/privacy" element={<PrivacyPolicy />} />

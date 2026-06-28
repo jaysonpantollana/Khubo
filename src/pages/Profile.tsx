@@ -1,6 +1,6 @@
 // @context: Profile page — user account and settings
 // @purpose: Displays user avatar, name, details, stats (saved/reservations/roommate/invitations), and action modals
-// @behavior: Opens EditProfileModal, LandlordSignupModal, LogoutModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal
+// @behavior: Opens EditProfileModal, LandlordSignupModal, LogoutModal, InquiriesModal, StatCardModal
 // @dependencies: useAuth, BottomNav, EditProfileModal, LandlordSignupModal, LogoutModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal, motion, lucide-react
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
@@ -22,8 +22,6 @@ import { CreateListingModal } from '../components/CreateListingModal';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
 
-import { TenantsModal } from '../components/TenantsModal';
-import { PropertiesModal } from '../components/PropertiesModal';
 import { InquiriesModal } from '../components/InquiriesModal';
 import { ListingDetailModal } from '../components/ListingDetailModal';
 import EditProfileModal from '../components/profile/EditProfileModal';
@@ -39,8 +37,6 @@ export default function Profile() {
   const [isLandlord, setIsLandlord] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
-  const [isTenantsModalOpen, setIsTenantsModalOpen] = useState(false);
-  const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
   const [selectedListingDetail, setSelectedListingDetail] = useState<Listing | null>(null);
   const [selectedTenants, setSelectedTenants] = useState<TenantInfo[]>([]);
@@ -167,12 +163,12 @@ export default function Profile() {
 
   const isAnyModalOpen = useMemo(() =>
     isCreateListingOpen || showSignupModal ||
-    isTenantsModalOpen || isPropertiesModalOpen || isInquiriesModalOpen ||
+    isInquiriesModalOpen ||
     isEditProfileOpen || selectedStatModal !== null || editingListing !== null ||
     isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
     selectedListingDetail !== null,
-    [isCreateListingOpen, showSignupModal, isTenantsModalOpen,
-     isPropertiesModalOpen, isInquiriesModalOpen, isEditProfileOpen, selectedStatModal,
+    [isCreateListingOpen, showSignupModal,
+     isInquiriesModalOpen, isEditProfileOpen, selectedStatModal,
      editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
      selectedListingDetail]
   );
@@ -239,8 +235,8 @@ export default function Profile() {
   const mockListed = listingVisibility['mock-listing'] ?? true;
 
   const handleStatClick = (title: string) => {
-    if (title === 'Tenants') setIsTenantsModalOpen(true);
-    else if (title === 'Properties') setIsPropertiesModalOpen(true);
+    if (title === 'Tenants') navigate('/landlord/tenants');
+    else if (title === 'Properties') navigate('/landlord/properties');
     else setSelectedStatModal(title);
   };
 
@@ -1044,16 +1040,6 @@ export default function Profile() {
         onClose={() => setIsPhotoGalleryOpen(false)}
       />
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />
-      <TenantsModal isOpen={isTenantsModalOpen} onClose={() => setIsTenantsModalOpen(false)} />
-      <PropertiesModal
-        isOpen={isPropertiesModalOpen}
-        onClose={() => setIsPropertiesModalOpen(false)}
-        listings={myListings}
-        onAddListing={() => {
-          setIsPropertiesModalOpen(false);
-          setIsCreateListingOpen(true);
-        }}
-      />
       <InquiriesModal isOpen={isInquiriesModalOpen} onClose={() => setIsInquiriesModalOpen(false)} />
       {selectedListingDetail && (
         <ListingDetailModal

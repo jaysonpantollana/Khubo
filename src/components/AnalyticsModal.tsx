@@ -2,13 +2,13 @@
 // @purpose: Shows property revenue trends with recharts LineChart; cycle types (Week/Month/Year) and property filter
 // @behavior: Static mock data; tab switching between cycle types; property dropdown filter
 // @performance: Uses recharts lightweight chart; static data — no API calls
-// @dependencies: Modal (ui/Modal), recharts, lucide-react
+// @dependencies: FocusTrap (ui/FocusTrap), recharts, lucide-react
 // @known-issues: All data is static mock (no real API integration)
 
 import React from 'react';
 import { X, ArrowUpRight, TrendingUp, DollarSign } from 'lucide-react';
 import { LineChart, Line, XAxis, ResponsiveContainer } from 'recharts';
-import { Modal } from './ui/Modal';
+import { FocusTrap } from './ui/FocusTrap';
 
 const data = [
   { name: 'Apr 25', value: 4000 },
@@ -37,8 +37,18 @@ export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
   const avgDaily = Math.round(totalRevenue / data.length);
   const topDay = Math.max(...data.map(d => d.value));
 
+  if (!isOpen) return null;
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} maxWidth="max-w-5xl" showCloseButton={false} bodyClassName="!p-0 !max-h-none overflow-hidden flex flex-col" className="!h-[80vh]">
+    <div
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <FocusTrap
+        onClose={onClose}
+        ariaLabel="Revenue"
+        className="relative w-full max-w-5xl h-[80vh] bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col"
+      >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
               <h2 className="text-xl font-bold text-neutral-900">Revenue</h2>
               <button 
@@ -122,6 +132,7 @@ export function AnalyticsModal({ isOpen, onClose }: AnalyticsModalProps) {
               </div>
             </div>
           </div>
-    </Modal>
+        </FocusTrap>
+    </div>
   );
 }

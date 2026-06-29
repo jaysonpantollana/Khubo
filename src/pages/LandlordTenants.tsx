@@ -4,7 +4,7 @@
 // @behavior: Each row shows client name, room number, email, payment status, and tenancy status
 // @dependencies: lucide-react, useNavigate
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight, Phone, Plus } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
@@ -25,12 +25,21 @@ export default function LandlordTenants() {
   const [additionalRooms, setAdditionalRooms] = useState<string[]>([]);
   const [isAddingRoom, setIsAddingRoom] = useState(false);
   const [newRoomValue, setNewRoomValue] = useState('');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.title = "Tenants | Khubo";
   }, []);
 
   const allRoomTags = [...new Set([...roomTags, ...additionalRooms])];
+
+  const scrollLeft = () => {
+    scrollContainerRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
+  };
+
+  const scrollRight = () => {
+    scrollContainerRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
+  };
 
   const filteredTenants = selectedRoom
     ? tenants.filter(t => t.room === selectedRoom)
@@ -53,64 +62,81 @@ export default function LandlordTenants() {
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-[2520px] mx-auto px-4 md:px-12 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <div className="flex items-center gap-2 overflow-x-auto flex-nowrap pb-1 no-scrollbar">
+            <div className="relative flex items-center flex-1 min-w-0">
               <button
-                onClick={() => setSelectedRoom(null)}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${
-                  selectedRoom === null
-                    ? 'bg-[#17294F] text-white'
-                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-                }`}
+                onClick={scrollLeft}
+                className="absolute left-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm hover:bg-neutral-50 transition-colors text-neutral-600"
               >
-                All Rooms
+                <ChevronLeft size={16} />
               </button>
-              {allRoomTags.map(room => (
+              <div
+                ref={scrollContainerRef}
+                className="flex items-center gap-2 overflow-x-auto flex-nowrap no-scrollbar px-10"
+              >
                 <button
-                  key={room}
-                  onClick={() => setSelectedRoom(room)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${
-                    selectedRoom === room
+                  onClick={() => setSelectedRoom(null)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
+                    selectedRoom === null
                       ? 'bg-[#17294F] text-white'
                       : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                   }`}
                 >
-                  Room {room}
+                  All Rooms
                 </button>
-              ))}
-              {isAddingRoom ? (
-                <input
-                  autoFocus
-                  type="text"
-                  value={newRoomValue}
-                  onChange={(e) => setNewRoomValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && newRoomValue.trim()) {
-                      const val = newRoomValue.trim();
-                      if (!allRoomTags.includes(val)) {
-                        setAdditionalRooms(prev => [...prev, val]);
+                {allRoomTags.map(room => (
+                  <button
+                    key={room}
+                    onClick={() => setSelectedRoom(room)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
+                      selectedRoom === room
+                        ? 'bg-[#17294F] text-white'
+                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                    }`}
+                  >
+                    Room {room}
+                  </button>
+                ))}
+                {isAddingRoom ? (
+                  <input
+                    autoFocus
+                    type="text"
+                    value={newRoomValue}
+                    onChange={(e) => setNewRoomValue(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && newRoomValue.trim()) {
+                        const val = newRoomValue.trim();
+                        if (!allRoomTags.includes(val)) {
+                          setAdditionalRooms(prev => [...prev, val]);
+                        }
+                        setNewRoomValue('');
+                        setIsAddingRoom(false);
+                      } else if (e.key === 'Escape') {
+                        setNewRoomValue('');
+                        setIsAddingRoom(false);
                       }
+                    }}
+                    onBlur={() => {
                       setNewRoomValue('');
                       setIsAddingRoom(false);
-                    } else if (e.key === 'Escape') {
-                      setNewRoomValue('');
-                      setIsAddingRoom(false);
-                    }
-                  }}
-                  onBlur={() => {
-                    setNewRoomValue('');
-                    setIsAddingRoom(false);
-                  }}
-                  placeholder="Room #"
-                  className="px-3 py-1.5 rounded-full text-xs font-bold border-2 border-[#17294F] outline-none w-24 bg-white text-neutral-700"
-                />
-              ) : (
-                <button
-                  onClick={() => setIsAddingRoom(true)}
-                  className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 hover:border-[#17294F] hover:text-[#17294F]"
-                >
-                  + Add Room
-                </button>
-              )}
+                    }}
+                    placeholder="Room #"
+                    className="px-3 py-1.5 rounded-full text-xs font-bold border-2 border-[#17294F] outline-none w-24 bg-white text-neutral-700 shrink-0"
+                  />
+                ) : (
+                  <button
+                    onClick={() => setIsAddingRoom(true)}
+                    className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 hover:border-[#17294F] hover:text-[#17294F] shrink-0"
+                  >
+                    + Add Room
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={scrollRight}
+                className="absolute right-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm hover:bg-neutral-50 transition-colors text-neutral-600"
+              >
+                <ChevronRight size={16} />
+              </button>
             </div>
             <button
               onClick={() => {}}

@@ -10,7 +10,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Listing } from '../types';
 import ListingCard from './ListingCard';
 import ListingCardSkeleton from './ListingCardSkeleton';
-import { ListingsPopup } from './ListingsPopup';
+import { ItemsPopup } from './ItemsPopup';
 
 interface ListingCarouselProps {
   title: string;
@@ -107,12 +107,16 @@ export function ListingCarousel({
         )}
       </div>
 
-      <ListingsPopup
+      <ItemsPopup
         isOpen={showPopup}
         onClose={() => setShowPopup(false)}
         title={title}
-        listings={listings.slice(sliceStart, sliceEnd)}
-        onListingClick={onListingClick}
+        items={listings.slice(sliceStart, sliceEnd)}
+        onItemClick={(listing) => onListingClick(listing.id)}
+        renderItem={(listing, onSelect) => (
+          <ListingCard listing={listing} onClick={onSelect} />
+        )}
+        emptyText="No listings available."
       />
     </div>
   );

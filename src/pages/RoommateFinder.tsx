@@ -20,12 +20,14 @@ import {
   Wallet,
   X,
   UserPlus,
+  Users,
+  ShieldCheck,
 } from "lucide-react";
 import RoommateModal from "../components/RoommateModal";
 import { Roommate } from "../types";
-import RoommateSearchDropdown from "../components/RoommateSearchDropdown";
+import SearchDropdown from "../components/SearchDropdown";
 import CreatePostModal from "../components/CreatePostModal";
-import { RoommatesPopup } from "../components/RoommatesPopup";
+import { ItemsPopup } from "../components/ItemsPopup";
 
 const TAGS = [
   "ALL",
@@ -315,7 +317,7 @@ export default function RoommateFinder() {
                         </button>
                       </div>
                       {!hideStickyDropdown && (
-                        <RoommateSearchDropdown
+                        <SearchDropdown
                           searchQuery={searchQuery}
                           setSearchQuery={(val) => {
                             setSearchQuery(val);
@@ -325,9 +327,65 @@ export default function RoommateFinder() {
                             setHideStickyDropdown(true);
                             setIsStickySearchActive(false);
                           }}
-                          onSelectRoommate={(roommate) =>
-                            openProfile(roommate)
+                          onSelect={(roommate) => openProfile(roommate)}
+                          items={roommates}
+                          filterItems={(items, query) =>
+                            items.filter(roommate => {
+                              const nameMatch = roommate.name.toLowerCase().includes(query);
+                              const bioMatch = roommate.bio ? roommate.bio.toLowerCase().includes(query) : false;
+                              const placeMatch = roommate.preferredPlace.toLowerCase().includes(query);
+                              const tagsMatch = roommate.tags.some(tag => tag.toLowerCase().includes(query));
+                              const genderMatch = roommate.gender ? roommate.gender.toLowerCase().includes(query) : false;
+                              const universityMatch = roommate.university ? roommate.university.toLowerCase().includes(query) : false;
+                              return nameMatch || bioMatch || placeMatch || tagsMatch || genderMatch || universityMatch;
+                            })
                           }
+                          renderItem={(roommate, onSelect) => (
+                            <div
+                              onClick={onSelect}
+                              className="flex gap-3 bg-white p-2.5 rounded-xl border border-neutral-100 hover:border-[#17294F]/20 hover:shadow-sm transition-all duration-150 cursor-pointer group"
+                            >
+                              <div className="w-12 h-12 rounded-full overflow-hidden bg-neutral-100 border-2 border-white shadow-sm flex-shrink-0 relative">
+                                <img
+                                  src={roommate.image}
+                                  alt={roommate.name}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  referrerPolicy="no-referrer"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0 text-left flex flex-col justify-between py-0.5">
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-1">
+                                    <h5 className="text-xs sm:text-sm font-semibold text-neutral-900 leading-snug truncate group-hover:text-[#2252D6] transition-colors">
+                                      {roommate.name}
+                                    </h5>
+                                    <span className="text-[10px] text-neutral-500 font-medium flex-shrink-0">
+                                      • {roommate.gender}
+                                    </span>
+                                  </div>
+                                  <p className="text-[9px] sm:text-xs text-neutral-500 truncate flex items-center mt-0.5">
+                                    <MapPin size={10} className="mr-0.5 text-neutral-400" />
+                                    Prefers: {roommate.preferredPlace}
+                                  </p>
+                                </div>
+                                <div className="flex items-center justify-between mt-1">
+                                  <span className="text-xs font-semibold text-[#17294F] bg-[#17294F]/5 px-2 py-0.5 rounded">
+                                    {roommate.budgetRange}
+                                  </span>
+                                  <span className="text-[9px] text-[#2252D6] font-semibold flex items-center gap-0.5 bg-[#2252D6]/5 px-1.5 py-0.5 rounded">
+                                    <ShieldCheck size={10} />
+                                    {roommate.university}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          trendingTags={['Near MSU-IIT', 'All Female', 'Solo Room', 'Shared Room', 'All Male', 'Affordable', 'Bed Spacer', 'Boarding House', 'Quiet', 'Clean', 'Night owl', 'Introvert']}
+                          scrollAnchorId="roommate-results-anchor"
+                          emptyText="No roommates match your search"
+                          trendingTitle="Roommate Tags & Filters"
+                          resultsTitle="Matching Roommates"
+                          resultsIcon={<Users size={13} className="text-[#2252D6]" />}
                         />
                       )}
                     </>
@@ -825,21 +883,28 @@ export default function RoommateFinder() {
         onPostCreated={handlePostCreated}
       />
 
-      <RoommatesPopup
+      <ItemsPopup
         isOpen={findingPopupOpen}
         onClose={() => setFindingPopupOpen(false)}
         title="Finding a roommate"
-        roommates={filteredRoommates.slice(0, 10)}
-        onProfileClick={openProfile}
+        items={filteredRoommates.slice(0, 10)}
+        onItemClick={openProfile}
+        renderItem={(roommate, onSelect) => (
+          <RoommateCard roommate={roommate} onProfileClick={() => onSelect()} />
+        )}
+        emptyText="No roommates available."
       />
 
-      <RoommatesPopup
+      <ItemsPopup
         isOpen={applyingPopupOpen}
         onClose={() => setApplyingPopupOpen(false)}
         title="Applying as Roommate"
-        roommates={filteredRoommates.slice().reverse().slice(0, 10)}
-        onProfileClick={openProfile}
-        actionLabel="Accept as Roommate"
+        items={filteredRoommates.slice().reverse().slice(0, 10)}
+        onItemClick={openProfile}
+        renderItem={(roommate, onSelect) => (
+          <RoommateCard roommate={roommate} onProfileClick={() => onSelect()} actionLabel="Accept as Roommate" />
+        )}
+        emptyText="No roommates available."
       />
     </div>
   );

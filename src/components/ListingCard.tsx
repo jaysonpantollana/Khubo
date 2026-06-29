@@ -5,6 +5,7 @@
 // @dependencies: Listing type, motion, lucide-react
 // @code-template: Pattern for listing display items: forward onClick + keyboard handlers
 
+import React from 'react';
 import { Star, ShieldCheck } from 'lucide-react';
 import { Listing } from '../types';
 
@@ -14,7 +15,7 @@ interface ListingCardProps {
   compact?: boolean;
 }
 
-export default function ListingCard({ listing, onClick, compact }: ListingCardProps) {
+export default React.memo(function ListingCard({ listing, onClick, compact }: ListingCardProps) {
   if (compact) {
     return (
       <div 
@@ -136,4 +137,4 @@ export default function ListingCard({ listing, onClick, compact }: ListingCardPr
       </div>
     </div>
   );
-}
+});

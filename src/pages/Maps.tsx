@@ -17,11 +17,13 @@ import {
   X,
   Wallet,
   ChevronDown,
+  Building,
+  Star,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Listing } from "../types";
 import SearchDropdown from "../components/SearchDropdown";
-import { FilterState } from "../components/Filters";
+import { FilterState } from "../types";
 import * as maptilersdk from "@maptiler/sdk";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { takeMap, resetMapPreload } from "../lib/mapPreloader";
@@ -411,7 +413,54 @@ export default function Maps() {
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
                   onClose={() => setIsSearchActive(false)}
-                  onSelectListing={(id) => handleSelectListing(id)}
+                  onSelect={(listing) => handleSelectListing(listing.id)}
+                  items={LISTINGS || []}
+                  filterItems={(items, query) =>
+                    items.filter(listing =>
+                      listing.title.toLowerCase().includes(query) ||
+                      listing.location.toLowerCase().includes(query) ||
+                      listing.category.toLowerCase().includes(query) ||
+                      listing.description.toLowerCase().includes(query)
+                    )
+                  }
+                  renderItem={(listing, onSelect) => (
+                    <div
+                      onClick={onSelect}
+                      className="flex gap-3 bg-white p-2.5 rounded-xl border border-neutral-100 hover:border-[#17294F]/20 hover:shadow-sm transition-all duration-150 cursor-pointer group"
+                    >
+                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-neutral-200 flex-shrink-0 relative">
+                        <img
+                          src={listing.image}
+                          alt={listing.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute top-1 left-1 bg-[#17294F] text-white text-[8px] sm:text-[9px] font-extrabold px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                          <Star size={7} fill="currentColor" stroke="none" />
+                          {listing.rating.toFixed(1)}
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0 text-left flex flex-col justify-between py-0.5">
+                        <div className="min-w-0">
+                          <h5 className="text-xs sm:text-sm font-extrabold text-neutral-900 leading-snug truncate group-hover:text-[#2252D6] transition-colors">{listing.title}</h5>
+                          <p className="text-[10px] sm:text-xs text-neutral-500 truncate flex items-center mt-1">
+                            <MapPin size={10} className="mr-0.5" />
+                            {listing.location}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-xs sm:text-[13px] font-black text-[#17294F]">₱{listing.price.toLocaleString()}/mo</span>
+                          <span className="text-[9px] sm:text-[10px] bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded font-semibold font-mono">{listing.category}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  trendingTags={['Near MSU-IIT', 'Solo Room', 'All Female', 'Affordable', 'With Aircon', 'WiFi Included']}
+                  scrollAnchorId="search-results-anchor"
+                  emptyText="No rooms match your search"
+                  trendingTitle="Trending Searches"
+                  resultsTitle="Matching Dorms & Rooms"
+                  resultsIcon={<Building size={13} className="text-[#2252D6]" />}
                 />
               </>
             ) : (

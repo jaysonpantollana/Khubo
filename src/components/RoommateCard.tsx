@@ -14,7 +14,7 @@ interface RoommateCardProps {
   actionLabel?: string;
 }
 
-export default function RoommateCard({ roommate, onProfileClick, actionLabel = "Apply as Roommate" }: RoommateCardProps) {
+export default React.memo(function RoommateCard({ roommate, onProfileClick, actionLabel = "Apply as Roommate" }: RoommateCardProps) {
   return (
     <div 
       onClick={() => onProfileClick(roommate)}
@@ -82,4 +82,4 @@ export default function RoommateCard({ roommate, onProfileClick, actionLabel = "
       </button>
     </div>
   );
-}
+});

@@ -11,7 +11,7 @@ interface ListingCardSkeletonProps {
   compact?: boolean;
 }
 
-export default function ListingCardSkeleton({ compact }: ListingCardSkeletonProps) {
+export default React.memo(function ListingCardSkeleton({ compact }: ListingCardSkeletonProps) {
   if (compact) {
     return (
       <div className="col-span-1 bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 flex flex-row gap-3 h-[96px] sm:h-[104px] ">
@@ -54,4 +54,4 @@ export default function ListingCardSkeleton({ compact }: ListingCardSkeletonProp
       </div>
     </div>
   );
-}
+});

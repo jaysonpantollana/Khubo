@@ -4,14 +4,7 @@
 // @dependencies: Listing type, react (useMemo)
 
 import { useMemo } from 'react';
-import { Listing } from '../types';
-
-export interface FilterState {
-  minPrice: number;
-  maxPrice: number;
-  minRating: number;
-  sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating';
-}
+import { Listing, FilterState } from '../types';
 
 export function useListingsFilter(
   listings: Listing[],

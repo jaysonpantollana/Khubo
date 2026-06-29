@@ -98,3 +98,10 @@ export interface Roommate {
   budgetRange: string;
   preferredPlace: string;
 }
+
+export interface FilterState {
+  minPrice: number;
+  maxPrice: number;
+  minRating: number;
+  sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating';
+}

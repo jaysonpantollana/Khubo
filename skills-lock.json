@@ -1519,6 +1519,12 @@
       "skillPath": "skills/ponytail-help/SKILL.md",
       "computedHash": ""
     },
+    "ponytail": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": ".opencode/skills/ponytail/SKILL.md",
+      "computedHash": ""
+    },
     "ponytail-review": {
       "source": "DietrichGebert/ponytail",
       "sourceType": "github",

@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { X, Phone, Plus } from 'lucide-react';
 import { FocusTrap } from './ui/FocusTrap';
 import { AddTenantModal } from './AddTenantModal';
+import ConfirmDialog from './ConfirmDialog';
 
 interface TenantsModalProps {
   isOpen: boolean;
@@ -33,13 +34,23 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
   const [newRoomValue, setNewRoomValue] = useState('');
   const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
   const [tenants, setTenants] = useState(initialTenants);
+  const [confirmBalance, setConfirmBalance] = useState<{ id: number; newStatus: string } | null>(null);
 
   const toggleBalance = (id: number) => {
+    const tenant = tenants.find((t) => t.id === id);
+    if (!tenant) return;
+    const newStatus = tenant.balance === 'Paid' ? 'Unpaid' : 'Paid';
+    setConfirmBalance({ id, newStatus });
+  };
+
+  const confirmToggleBalance = () => {
+    if (!confirmBalance) return;
     setTenants((prev) =>
       prev.map((t) =>
-        t.id === id ? { ...t, balance: t.balance === 'Paid' ? 'Unpaid' : 'Paid' } : t
+        t.id === confirmBalance.id ? { ...t, balance: confirmBalance.newStatus } : t
       )
     );
+    setConfirmBalance(null);
   };
 
   const allRoomTags = [...new Set([...roomTags, ...additionalRooms])];
@@ -213,6 +224,13 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
       <AddTenantModal
         isOpen={isAddTenantOpen}
         onClose={() => setIsAddTenantOpen(false)}
+      />
+      <ConfirmDialog
+        isOpen={!!confirmBalance}
+        onClose={() => setConfirmBalance(null)}
+        onConfirm={confirmToggleBalance}
+        title="Update Balance"
+        message={`Are you sure you want to change this tenant's balance to ${confirmBalance?.newStatus}?`}
       />
     </>
   );

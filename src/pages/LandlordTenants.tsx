@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight, Phone, Plus } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { AddTenantModal } from '../components/AddTenantModal';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const initialTenants = [
   { id: 1, client: 'North Studio', room: '101', balance: 'Paid', tenancyStatus: 'Staying', email: 'billing@northstudio.co', phone: '+1 (555) 234-5678', social: { instagram: 'https://instagram.com/northstudio', x: 'https://x.com/northstudio', facebook: 'https://facebook.com/northstudio' } },
@@ -28,6 +29,7 @@ export default function LandlordTenants() {
   const [newRoomValue, setNewRoomValue] = useState('');
   const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
   const [tenants, setTenants] = useState(initialTenants);
+  const [confirmBalance, setConfirmBalance] = useState<{ id: number; newStatus: string } | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,11 +47,20 @@ export default function LandlordTenants() {
   };
 
   const toggleBalance = (id: number) => {
+    const tenant = tenants.find((t) => t.id === id);
+    if (!tenant) return;
+    const newStatus = tenant.balance === 'Paid' ? 'Unpaid' : 'Paid';
+    setConfirmBalance({ id, newStatus });
+  };
+
+  const confirmToggleBalance = () => {
+    if (!confirmBalance) return;
     setTenants((prev) =>
       prev.map((t) =>
-        t.id === id ? { ...t, balance: t.balance === 'Paid' ? 'Unpaid' : 'Paid' } : t
+        t.id === confirmBalance.id ? { ...t, balance: confirmBalance.newStatus } : t
       )
     );
+    setConfirmBalance(null);
   };
 
   const filteredTenants = selectedRoom
@@ -231,6 +242,13 @@ export default function LandlordTenants() {
       <AddTenantModal
         isOpen={isAddTenantOpen}
         onClose={() => setIsAddTenantOpen(false)}
+      />
+      <ConfirmDialog
+        isOpen={!!confirmBalance}
+        onClose={() => setConfirmBalance(null)}
+        onConfirm={confirmToggleBalance}
+        title="Update Balance"
+        message={`Are you sure you want to change this tenant's balance to ${confirmBalance?.newStatus}?`}
       />
       <BottomNav />
     </div>

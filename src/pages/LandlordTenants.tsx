@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight, Phone, Plus } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
+import { AddTenantModal } from '../components/AddTenantModal';
 
 const tenants = [
   { id: 1, client: 'North Studio', room: '101', balance: 'Paid', tenancyStatus: 'Staying', email: 'billing@northstudio.co', phone: '+1 (555) 234-5678', social: { instagram: 'https://instagram.com/northstudio', x: 'https://x.com/northstudio', facebook: 'https://facebook.com/northstudio' } },
@@ -25,6 +26,7 @@ export default function LandlordTenants() {
   const [additionalRooms, setAdditionalRooms] = useState<string[]>([]);
   const [isAddingRoom, setIsAddingRoom] = useState(false);
   const [newRoomValue, setNewRoomValue] = useState('');
+  const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -139,7 +141,7 @@ export default function LandlordTenants() {
               </button>
             </div>
             <button
-              onClick={() => {}}
+              onClick={() => setIsAddTenantOpen(true)}
               className="flex items-center gap-1.5 px-4 py-2 bg-[#17294F] text-white text-sm font-bold rounded-full hover:bg-[#1a3058] transition-colors shrink-0"
             >
               <Plus size={16} />
@@ -210,6 +212,10 @@ export default function LandlordTenants() {
         </div>
       </div>
 
+      <AddTenantModal
+        isOpen={isAddTenantOpen}
+        onClose={() => setIsAddTenantOpen(false)}
+      />
       <BottomNav />
     </div>
   );

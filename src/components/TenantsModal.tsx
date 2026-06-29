@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 
 import { X, Phone, Plus } from 'lucide-react';
 import { FocusTrap } from './ui/FocusTrap';
+import { AddTenantModal } from './AddTenantModal';
 
 interface TenantsModalProps {
   isOpen: boolean;
@@ -30,6 +31,7 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
   const [additionalRooms, setAdditionalRooms] = useState<string[]>([]);
   const [isAddingRoom, setIsAddingRoom] = useState(false);
   const [newRoomValue, setNewRoomValue] = useState('');
+  const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
 
   const allRoomTags = [...new Set([...roomTags, ...additionalRooms])];
 
@@ -40,6 +42,7 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
     : tenants;
 
   return (
+    <>
       <div
         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
@@ -54,7 +57,7 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
               <h2 className="text-xl font-bold text-neutral-900">Tenants</h2>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => {}}
+                  onClick={() => setIsAddTenantOpen(true)}
                   className="flex items-center gap-1.5 px-3 py-1.5 bg-[#17294F] text-white text-xs font-bold rounded-full hover:bg-[#1a3058] transition-colors"
                 >
                   <Plus size={16} />
@@ -196,5 +199,10 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
         </FocusTrap>
         </div>
       </div>
+      <AddTenantModal
+        isOpen={isAddTenantOpen}
+        onClose={() => setIsAddTenantOpen(false)}
+      />
+    </>
   );
 }

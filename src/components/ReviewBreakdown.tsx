@@ -30,42 +30,11 @@ const ReviewBreakdown: React.FC<ReviewBreakdownProps> = ({
     { label: 'Value', score: breakdown.value },
   ];
 
-  const ratingBars = [
-    { label: '5', percentage: 92 },
-    { label: '4', percentage: 5 },
-    { label: '3', percentage: 2 },
-    { label: '2', percentage: 1 },
-    { label: '1', percentage: 0 },
-  ];
-
   return (
     <div className="py-12 border-t border-neutral-100">
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-        {/* Left: Overall Rating & Bars */}
-        <div className="flex-shrink-0 w-full lg:w-48">
-          <div className="mb-6">
-            <h3 className="text-lg font-black text-[#17294F] tracking-tight uppercase whitespace-nowrap">
-              Overall rating
-            </h3>
-          </div>
-          
-          <div className="space-y-2">
-            {ratingBars.map((bar) => (
-              <div key={bar.label} className="flex items-center gap-3">
-                <span className="text-[10px] font-black text-neutral-400 w-2">{bar.label}</span>
-                <div className="flex-1 h-1 bg-neutral-100 rounded-full overflow-hidden">
-                  <div 
-                    style={{ width: `${bar.percentage}%` }}
-                    className="h-full bg-black rounded-full"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right: Metrics Grid */}
-        <div className="flex-1 border-l border-neutral-100 pl-0 lg:pl-10">
+        {/* Metrics Grid */}
+        <div className="flex-1">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-y-10 lg:gap-y-0">
             {categories.map((cat, idx) => (
               <div 

@@ -1,7 +1,7 @@
 // @context: Listing detail page — full property view with booking
 // @purpose: Displays gallery, details, amenities, reviews, host profile, map, and booking modal
 // @behavior: useListing fetches by ID; gallery grid with photo overlay; booking modal for date selection; inline calendar
-// @dependencies: useListing, useToast, ListingModal, PhotoCarouselOverlay, MapTilerView, ReviewBreakdown, HostProfile, lucide-react, motion
+// @dependencies: useListing, useToast, ListingModal, PhotoCarouselOverlay, MapTilerView, HostProfile, lucide-react, motion
 
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
@@ -15,7 +15,6 @@ import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import MapTilerView from '../components/MapTilerView';
 import Footer from '../components/Footer';
 import HostProfile from '../components/HostProfile';
-import ReviewBreakdown from '../components/ReviewBreakdown';
 import { AuthModal } from '../components/AuthModal';
 import ListingDetailSkeleton from '../components/ListingDetailSkeleton';
 
@@ -508,18 +507,7 @@ export default function ListingDetail() {
               hostingDuration={displayHost.hostingDuration}
               tenantCount={displayHost.tenantCount || defaultHost.tenantCount}
             />
-            <ReviewBreakdown 
-              rating={listing.rating}
-              totalReviews={listing.reviews.length}
-              breakdown={{
-                cleanliness: 5.0,
-                accuracy: 5.0,
-                checkIn: 5.0,
-                communication: 5.0,
-                location: 5.0,
-                value: 4.9
-              }}
-            />
+
           </div>
 
           {/* Booking Sidebar */}

@@ -63,13 +63,6 @@ const HostProfile: React.FC<HostProfileProps> = ({
           </div>
         </div>
 
-        <div className="flex w-full md:w-1/2 flex-col justify-start">
-          <div className="bg-neutral-50 rounded-2xl p-6 mb-6 mt-2 relative">
-             <p className="text-neutral-700 leading-relaxed text-[15px]">
-               "I take pride in providing a seamless luxury experience for my guests. From the moment you arrive until you check out, your comfort is my top priority."
-             </p>
-          </div>
-        </div>
       </div>
     </div>
   );

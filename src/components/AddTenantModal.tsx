@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
-import { User, Mail, Phone, Home, Calendar, Loader2, Link2, Plus, X } from 'lucide-react';
+import { User, Mail, Phone, Home, Loader2, Link2, Plus, X } from 'lucide-react';
 import { Modal } from './ui/Modal';
 
 const SOCIAL_PLATFORMS = ['Instagram', 'X', 'Facebook'] as const;
@@ -16,13 +16,12 @@ const tenantSchema = z.object({
   email: z.string().email('Invalid email address'),
   phone: z.string().min(10, 'Phone must be at least 10 digits'),
   room: z.string().min(1, 'Room number is required'),
-  moveInDate: z.string().min(1, 'Move-in date is required'),
 });
 
 interface AddTenantModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess?: (tenant: { name: string; email: string; phone: string; room: string; moveInDate: string; socialLinks: SocialLink[] }) => void;
+  onSuccess?: (tenant: { name: string; email: string; phone: string; room: string; socialLinks: SocialLink[] }) => void;
 }
 
 export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalProps) {
@@ -30,7 +29,6 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [room, setRoom] = useState('');
-  const [moveInDate, setMoveInDate] = useState('');
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -44,7 +42,6 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
     setEmail('');
     setPhone('');
     setRoom('');
-    setMoveInDate('');
     setSocialLinks([]);
     setErrors({});
   };
@@ -73,7 +70,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
     e.preventDefault();
     setErrors({});
 
-    const result = tenantSchema.safeParse({ name, email, phone, room, moveInDate });
+    const result = tenantSchema.safeParse({ name, email, phone, room });
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((issue) => {
@@ -88,7 +85,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
     await new Promise((r) => setTimeout(r, 800));
     setIsSubmitting(false);
 
-    onSuccess?.({ name, email, phone, room, moveInDate, socialLinks });
+    onSuccess?.({ name, email, phone, room, socialLinks });
     resetForm();
     onClose();
   };
@@ -160,18 +157,6 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
             className={inputClass('room')}
           />
           {errors.room && <p className="mt-1 text-xs text-red-500 font-medium">{errors.room}</p>}
-        </div>
-
-        <div className="relative">
-          <Calendar className={iconClass('moveInDate')} />
-          <input
-            type="date"
-            placeholder="Move-in date"
-            value={moveInDate}
-            onChange={(e) => setMoveInDate(e.target.value)}
-            className={`${inputClass('moveInDate')} ${!moveInDate ? 'text-neutral-400' : ''}`}
-          />
-          {errors.moveInDate && <p className="mt-1 text-xs text-red-500 font-medium">{errors.moveInDate}</p>}
         </div>
 
         <div className="space-y-3">

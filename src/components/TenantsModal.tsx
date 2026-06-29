@@ -16,7 +16,7 @@ interface TenantsModalProps {
   onClose: () => void;
 }
 
-const tenants = [
+const initialTenants = [
   { id: 1, client: 'North Studio', room: '101', balance: 'Paid', tenancyStatus: 'Staying', email: 'billing@northstudio.co', phone: '+1 (555) 234-5678', social: { instagram: 'https://instagram.com/northstudio', x: 'https://x.com/northstudio', facebook: 'https://facebook.com/northstudio' } },
   { id: 2, client: 'Atlas Works', room: '102', balance: 'Unpaid', tenancyStatus: 'Leaving', email: 'accounts@atlasworks.io', phone: '+1 (555) 345-6789', social: { instagram: 'https://instagram.com/atlasworks', x: 'https://x.com/atlasworks', facebook: 'https://facebook.com/atlasworks' } },
   { id: 3, client: 'Paper Trail', room: '201', balance: 'Unpaid', tenancyStatus: 'Moved out', email: 'hello@papertrail.design', phone: '+1 (555) 456-7890', social: { instagram: 'https://instagram.com/papertrail', x: 'https://x.com/papertrail', facebook: 'https://facebook.com/papertrail' } },
@@ -24,7 +24,7 @@ const tenants = [
   { id: 5, client: 'Mono Labs', room: '302', balance: 'Paid', tenancyStatus: 'Staying', email: 'ops@monolabs.dev', phone: '+1 (555) 678-9012', social: { instagram: 'https://instagram.com/monolabs', x: 'https://x.com/monolabs', facebook: 'https://facebook.com/monolabs' } },
 ];
 
-const roomTags = [...new Set(tenants.map(t => t.room))];
+const roomTags = [...new Set(initialTenants.map(t => t.room))];
 
 export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
@@ -32,6 +32,15 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
   const [isAddingRoom, setIsAddingRoom] = useState(false);
   const [newRoomValue, setNewRoomValue] = useState('');
   const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
+  const [tenants, setTenants] = useState(initialTenants);
+
+  const toggleBalance = (id: number) => {
+    setTenants((prev) =>
+      prev.map((t) =>
+        t.id === id ? { ...t, balance: t.balance === 'Paid' ? 'Unpaid' : 'Paid' } : t
+      )
+    );
+  };
 
   const allRoomTags = [...new Set([...roomTags, ...additionalRooms])];
 
@@ -155,12 +164,14 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
                         <td className="p-4 pl-6 whitespace-nowrap font-bold text-[#0A2B4E]">{tenant.client}</td>
                         <td className="p-4 whitespace-nowrap text-neutral-500 font-bold">{tenant.room}</td>
                         <td className="p-4 text-neutral-500 font-medium whitespace-nowrap">
-                          <span className={`px-2 py-1 rounded text-xs font-bold ${
-                            tenant.balance === 'Paid' ? 'bg-green-100 text-green-700' :
-                            'bg-red-100 text-red-700'
-                          }`}>
+                          <button
+                            onClick={() => toggleBalance(tenant.id)}
+                            className={`px-2 py-1 rounded text-xs font-bold cursor-pointer transition-colors ${
+                              tenant.balance === 'Paid' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-red-100 text-red-700 hover:bg-red-200'
+                            }`}
+                          >
                             {tenant.balance}
-                          </span>
+                          </button>
                         </td>
 
                         <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">{tenant.email}</td>

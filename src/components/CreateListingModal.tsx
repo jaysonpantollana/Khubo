@@ -17,7 +17,9 @@ const listingSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   price: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, 'Price must be a positive number'),
-  location: z.string().min(1, 'Location is required'),
+  city: z.string().min(1, 'City is required'),
+  barangay: z.string().min(1, 'Barangay is required'),
+  street: z.string().min(1, 'Street is required'),
   category: z.string().min(1, 'Category is required'),
 });
 
@@ -36,7 +38,9 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [location, setLocation] = useState('');
+  const [city, setCity] = useState('');
+  const [barangay, setBarangay] = useState('');
+  const [street, setStreet] = useState('');
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [availableAmenities, setAvailableAmenities] = useState<string[]>(AMENITIES);
@@ -94,7 +98,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       return;
     }
 
-    const result = listingSchema.safeParse({ title, description, price, location, category });
+    const result = listingSchema.safeParse({ title, description, price, city, barangay, street, category });
     if (!result.success) {
       setError(result.error.issues[0].message);
       return;
@@ -116,6 +120,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       }
 
       // 2. Save listing via API
+      const location = `${street}, ${barangay}, ${city}`;
       const newListing = {
         title,
         description,
@@ -145,7 +150,9 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setTitle('');
       setDescription('');
       setPrice('');
-      setLocation('');
+      setCity('');
+      setBarangay('');
+      setStreet('');
       setCategory(CATEGORIES[0]);
       setSelectedAmenities([]);
       setAdvancePaymentMonths(1);
@@ -230,7 +237,69 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Location</label>
-                  <input required value={location} onChange={e => setLocation(e.target.value)} type="text" placeholder="e.g. Tibanga, Iligan City" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs text-neutral-500 mb-1">City</label>
+                      <select required value={city} onChange={e => setCity(e.target.value)} className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] bg-white">
+                        <option value="">Select City</option>
+                        <option value="Iligan City">Iligan City</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs text-neutral-500 mb-1">Barangay</label>
+                      <select required value={barangay} onChange={e => setBarangay(e.target.value)} className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] bg-white">
+                        <option value="">Select Barangay</option>
+                        <option value="Abuno">Abuno</option>
+                        <option value="Acmac">Acmac</option>
+                        <option value="Bagong Silang">Bagong Silang</option>
+                        <option value="Bonbonon">Bonbonon</option>
+                        <option value="Bunawan">Bunawan</option>
+                        <option value="Buru-un">Buru-un</option>
+                        <option value="Dalipuga">Dalipuga</option>
+                        <option value="Del Carmen">Del Carmen</option>
+                        <option value="Digkilaan">Digkilaan</option>
+                        <option value="Ditucalan">Ditucalan</option>
+                        <option value="Dulag">Dulag</option>
+                        <option value="Hinaplanon">Hinaplanon</option>
+                        <option value="Hindang">Hindang</option>
+                        <option value="Kabacsanan">Kabacsanan</option>
+                        <option value="Kalilangan">Kalilangan</option>
+                        <option value="Kiwalan">Kiwalan</option>
+                        <option value="Lanipao">Lanipao</option>
+                        <option value="Luinab">Luinab</option>
+                        <option value="Mahayahay">Mahayahay</option>
+                        <option value="Mainit">Mainit</option>
+                        <option value="Mandulog">Mandulog</option>
+                        <option value="Maria Cristina">Maria Cristina</option>
+                        <option value="Palao">Palao</option>
+                        <option value="Panoroganan">Panoroganan</option>
+                        <option value="Poblacion">Poblacion</option>
+                        <option value="Puga-an">Puga-an</option>
+                        <option value="Rogongon">Rogongon</option>
+                        <option value="San Miguel">San Miguel</option>
+                        <option value="San Roque">San Roque</option>
+                        <option value="Santa Elena">Santa Elena</option>
+                        <option value="Santa Filomena">Santa Filomena</option>
+                        <option value="Santiago">Santiago</option>
+                        <option value="Santo Rosario">Santo Rosario</option>
+                        <option value="Saray">Saray</option>
+                        <option value="Suarez">Suarez</option>
+                        <option value="Tambacan">Tambacan</option>
+                        <option value="Tibanga">Tibanga</option>
+                        <option value="Tipanoy">Tipanoy</option>
+                        <option value="Tomas L. Cabili">Tomas L. Cabili</option>
+                        <option value="Tubod">Tubod</option>
+                        <option value="Ubaldo Laya">Ubaldo Laya</option>
+                        <option value="Upper Hinaplanon">Upper Hinaplanon</option>
+                        <option value="Upper Tominobo">Upper Tominobo</option>
+                        <option value="Villa Verde">Villa Verde</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs text-neutral-500 mb-1">Street</label>
+                      <input required value={street} onChange={e => setStreet(e.target.value)} type="text" placeholder="e.g. Tibanga Highway" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Map Pin Location */}

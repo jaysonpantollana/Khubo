@@ -53,7 +53,7 @@ export default function LandlordTenants() {
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-[2520px] mx-auto px-4 md:px-12 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 overflow-x-auto flex-nowrap pb-1 no-scrollbar">
               <button
                 onClick={() => setSelectedRoom(null)}
                 className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${

@@ -7,10 +7,11 @@
 
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star } from 'lucide-react';
+import { ArrowLeft, Star, Plus } from 'lucide-react';
 import { Listing } from '../types';
 import { useAuth } from '../lib/AuthContext';
 import BottomNav from '../components/BottomNav';
+import { CreateListingModal } from '../components/CreateListingModal';
 
 const sampleListings: Listing[] = [
   {
@@ -83,6 +84,7 @@ export default function LandlordProperties() {
   const { user } = useAuth();
   const [myListings, setMyListings] = useState<Listing[]>([]);
   const [loadingListings, setLoadingListings] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
     document.title = "Properties | Khubo";
@@ -130,6 +132,15 @@ export default function LandlordProperties() {
 
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-[2520px] mx-auto px-4 md:px-12 py-6">
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center gap-2 bg-[#17294F] text-white px-5 py-2.5 rounded-xl font-bold hover:bg-[#1e3466] transition-colors text-sm"
+            >
+              <Plus size={18} />
+              Add Listing
+            </button>
+          </div>
           {loadingListings ? (
           <div className="flex flex-col gap-4">
             {[1, 2, 3].map((i) => (
@@ -200,6 +211,11 @@ export default function LandlordProperties() {
       </div>
 
       <BottomNav />
+      <CreateListingModal 
+        isOpen={showCreateModal} 
+        onClose={() => setShowCreateModal(false)} 
+        onSuccess={fetchMyListings}
+      />
     </div>
   );
 }

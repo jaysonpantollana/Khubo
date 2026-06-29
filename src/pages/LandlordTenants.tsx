@@ -4,9 +4,9 @@
 // @behavior: Each row shows client name, room number, email, payment status, and tenancy status
 // @dependencies: lucide-react, useNavigate
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Phone, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Phone, Plus } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 
 const tenants = [

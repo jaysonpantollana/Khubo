@@ -4,10 +4,12 @@
 
 import { Home, Users, Map, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useIsAnyModalOpen } from '../hooks/useIsAnyModalOpen';
 
 export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
+  const isModalOpen = useIsAnyModalOpen();
 
   const items = [
     { icon: Home, label: 'Home', path: '/' },
@@ -25,7 +27,9 @@ export default function BottomNav() {
       >
         {items.map((item, idx) => {
           const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '') || (item.path !== '/' && location.pathname.startsWith(item.path));
-          return (
+  if (isModalOpen) return null;
+
+  return (
             <button 
               key={idx}
               onClick={() => navigate(item.path)}

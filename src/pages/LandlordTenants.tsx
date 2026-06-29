@@ -65,12 +65,22 @@ export default function LandlordTenants() {
         <div className="max-w-[2520px] mx-auto px-4 md:px-12 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="relative flex items-center flex-1 min-w-0">
-              <button
-                onClick={scrollLeft}
-                className="absolute left-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm hover:bg-neutral-50 transition-colors text-neutral-600"
-              >
-                <ChevronLeft size={16} />
-              </button>
+              {!isAddTenantOpen && (
+                <>
+                  <button
+                    onClick={scrollLeft}
+                    className="absolute left-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm hover:bg-neutral-50 transition-colors text-neutral-600"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    onClick={scrollRight}
+                    className="absolute right-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm hover:bg-neutral-50 transition-colors text-neutral-600"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </>
+              )}
               <div
                 ref={scrollContainerRef}
                 className="flex items-center gap-2 overflow-x-auto flex-nowrap no-scrollbar px-10"
@@ -133,12 +143,6 @@ export default function LandlordTenants() {
                   </button>
                 )}
               </div>
-              <button
-                onClick={scrollRight}
-                className="absolute right-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm hover:bg-neutral-50 transition-colors text-neutral-600"
-              >
-                <ChevronRight size={16} />
-              </button>
             </div>
             <button
               onClick={() => setIsAddTenantOpen(true)}

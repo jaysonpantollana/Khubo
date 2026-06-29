@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+
 import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
@@ -173,7 +173,12 @@ export default function Profile() {
      selectedListingDetail]
   );
 
-  useBodyScrollLock(isAnyModalOpen);
+  useEffect(() => {
+    if (isAnyModalOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isAnyModalOpen]);
 
   useEffect(() => {
     if (myListings.length > 0) {

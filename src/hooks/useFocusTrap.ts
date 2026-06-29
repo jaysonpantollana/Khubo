@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react';
 
-export function useFocusReturn() {
+function useFocusReturn() {
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
   const saveFocus = useCallback(() => {

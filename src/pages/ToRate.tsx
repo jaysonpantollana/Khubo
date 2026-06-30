@@ -1,62 +1,19 @@
 // @context: To Rate page — rate properties from "My Living Space"
 // @purpose: Allows tenants to add star ratings and comments for properties they are registered in
 // @behavior: Shows reservation list with rating form (stars + comment); submitted ratings shown as review cards
-// @dependencies: lucide-react, useNavigate, BottomNav, ToastProvider
+// @dependencies: lucide-react, useNavigate, BottomNav, ToastProvider, shared reservations
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Send } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useToast } from '../components/ToastProvider';
+import { reservations, Reservation } from '../mocks/reservations';
 
 interface RatingData {
   rating: number;
   comment: string;
 }
-
-interface Reservation {
-  id: string;
-  title: string;
-  location: string;
-  image: string;
-  price: number;
-  rating: number;
-  reviewCount: number;
-  amenities: string[];
-}
-
-const reservations: Reservation[] = [
-  {
-    id: 'res-1',
-    title: "Layla's Residences & Dorminitory",
-    location: 'Iligan City, Lanao del norte 9200',
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800',
-    price: 6000,
-    rating: 5.0,
-    reviewCount: 35,
-    amenities: ['Free Wifi', 'Water'],
-  },
-  {
-    id: 'res-2',
-    title: 'Sunset Boarding House',
-    location: 'Pala-o, Iligan City 9200',
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800',
-    price: 3500,
-    rating: 4.75,
-    reviewCount: 22,
-    amenities: ['Wifi', 'Water'],
-  },
-  {
-    id: 'res-3',
-    title: 'Greenview Apartments',
-    location: 'Santiago, Iligan City 9200',
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800',
-    price: 4500,
-    rating: 4.8,
-    reviewCount: 18,
-    amenities: ['AC', 'Free Wifi'],
-  },
-];
 
 export default function ToRate() {
   const navigate = useNavigate();
@@ -95,7 +52,7 @@ export default function ToRate() {
     <div className="min-h-screen bg-[#f0f2f5] pb-24">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-neutral-100">
-        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
+        <div className="w-full px-4 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
             className="p-2 -ml-2 hover:bg-neutral-100 rounded-full transition-colors"
@@ -107,99 +64,118 @@ export default function ToRate() {
       </div>
 
       {/* Property list */}
-      <div className="max-w-2xl mx-auto px-4 py-6 space-y-5">
-        {reservations.map((res) => {
+      <div className="w-full px-4 py-6 space-y-5">
+        {reservations.slice(0, 1).map((res) => {
           const submitted = ratings[res.id]?.rating > 0 && ratings[res.id]?.comment;
           return (
-            <div key={res.id} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-neutral-100">
-              {/* Property image & info */}
-              <div className="relative h-48 overflow-hidden">
+            <div key={res.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
+              {/* Image gallery */}
+              <div className="w-full lg:w-[380px] h-auto lg:h-[260px] grid grid-cols-2 gap-1.5 rounded-2xl md:rounded-[1.5rem] overflow-hidden shrink-0">
                 <img
                   src={res.image}
                   alt={res.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <h2 className="text-lg font-bold leading-tight">{res.title}</h2>
-                  <p className="text-sm text-white/80 flex items-center gap-1 mt-1">
-                    <MapPin size={14} className="shrink-0" /> {res.location}
-                  </p>
+                <div className="flex flex-col gap-1.5">
+                  {res.gallery.slice(0, 2).map((img, i) => (
+                    <img
+                      key={i}
+                      src={img}
+                      alt={`${res.title} ${i + 2}`}
+                      className="w-full h-[127px] object-cover"
+                    />
+                  ))}
                 </div>
               </div>
 
-              <div className="p-5">
-                {/* Price & existing rating */}
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xl font-black text-neutral-900">₱{res.price.toLocaleString()}<span className="text-sm font-medium text-neutral-500">/month</span></span>
-                  <div className="flex items-center gap-1 bg-amber-50 px-3 py-1 rounded-full">
-                    <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                    <span className="text-sm font-bold text-amber-700">{res.rating.toFixed(2)}</span>
-                    <span className="text-xs text-amber-600">({res.reviewCount})</span>
+              {/* Content */}
+              <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
+                <div>
+                  {/* Title + available badge */}
+                  <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
+                    <h2 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight">{res.title}</h2>
+                    <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto">
+                      {res.available}
+                    </span>
+                  </div>
+
+                  {/* Location */}
+                  <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
+                    <MapPin size={16} className="shrink-0" /> {res.location}
+                  </p>
+
+                  {/* Rating + Amenities */}
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
+                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                      <span className="text-sm font-bold text-neutral-800">{res.rating.toFixed(2)}</span>
+                      <span className="text-sm text-neutral-400">({res.reviewCount})</span>
+                    </div>
+                    <div className="flex gap-2">
+                      {res.amenities.map((amenity) => (
+                        <span key={amenity} className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">{amenity}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                {/* Amenities */}
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {res.amenities.map((a) => (
-                    <span key={a} className="px-3 py-1 bg-neutral-100 rounded-full text-xs font-semibold text-neutral-600">{a}</span>
-                  ))}
+                {/* Price */}
+                <div className="flex items-baseline gap-1 mt-4 pt-4 border-t border-neutral-50 lg:border-t-0 lg:mt-0 lg:pt-0">
+                  <span className="text-2xl md:text-[28px] font-black text-black">₱{res.price.toLocaleString()}</span>
+                  <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                 </div>
 
                 {/* Rating form */}
-                {!submitted && (
-                  <div className="border-t border-neutral-100 pt-5">
-                    <p className="text-sm font-bold text-neutral-800 mb-3">Rate this property</p>
+                <div className="mt-4 pt-4 border-t border-neutral-100">
+                  {!submitted ? (
+                    <>
+                      <p className="text-sm font-bold text-neutral-800 mb-3">Rate this property</p>
 
-                    {/* Stars */}
-                    <div className="flex items-center gap-1 mb-4">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onMouseEnter={() => setHoveredStar((prev) => ({ ...prev, [res.id]: star }))}
-                          onMouseLeave={() => setHoveredStar((prev) => ({ ...prev, [res.id]: 0 }))}
-                          onClick={() => handleRatingChange(res.id, star)}
-                          className="p-0.5 transition-transform hover:scale-110 cursor-pointer"
-                        >
-                          <Star
-                            size={28}
-                            className={`transition-colors ${
-                              star <= (hoveredStar[res.id] || ratings[res.id]?.rating || 0)
-                                ? 'text-amber-400 fill-amber-400'
-                                : 'text-neutral-300'
-                            }`}
-                          />
-                        </button>
-                      ))}
-                      {ratings[res.id]?.rating > 0 && (
-                        <span className="ml-2 text-sm font-semibold text-neutral-600">{ratings[res.id].rating}/5</span>
-                      )}
-                    </div>
+                      {/* Stars */}
+                      <div className="flex items-center gap-1 mb-4">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onMouseEnter={() => setHoveredStar((prev) => ({ ...prev, [res.id]: star }))}
+                            onMouseLeave={() => setHoveredStar((prev) => ({ ...prev, [res.id]: 0 }))}
+                            onClick={() => handleRatingChange(res.id, star)}
+                            className="p-0.5 transition-transform hover:scale-110 cursor-pointer"
+                          >
+                            <Star
+                              size={28}
+                              className={`transition-colors ${
+                                star <= (hoveredStar[res.id] || ratings[res.id]?.rating || 0)
+                                  ? 'text-amber-400 fill-amber-400'
+                                  : 'text-neutral-300'
+                              }`}
+                            />
+                          </button>
+                        ))}
+                        {ratings[res.id]?.rating > 0 && (
+                          <span className="ml-2 text-sm font-semibold text-neutral-600">{ratings[res.id].rating}/5</span>
+                        )}
+                      </div>
 
-                    {/* Comment */}
-                    <textarea
-                      value={ratings[res.id]?.comment || ''}
-                      onChange={(e) => handleCommentChange(res.id, e.target.value)}
-                      placeholder="Write a comment about your experience..."
-                      rows={3}
-                      className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/30 focus:border-[#2252D6] resize-none transition-all"
-                    />
+                      {/* Comment */}
+                      <textarea
+                        value={ratings[res.id]?.comment || ''}
+                        onChange={(e) => handleCommentChange(res.id, e.target.value)}
+                        placeholder="Write a comment about your experience..."
+                        rows={3}
+                        className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/30 focus:border-[#2252D6] resize-none transition-all"
+                      />
 
-                    {/* Submit */}
-                    <button
-                      onClick={() => handleSubmit(res.id, res.title)}
-                      className="mt-3 w-full flex items-center justify-center gap-2 px-5 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl hover:bg-[#1a3fa8] active:scale-[0.98] transition-all cursor-pointer"
-                    >
-                      <Send size={16} />
-                      Submit Rating
-                    </button>
-                  </div>
-                )}
-
-                {/* Submitted review card */}
-                {submitted && (
-                  <div className="border-t border-neutral-100 pt-5">
+                      {/* Submit */}
+                      <button
+                        onClick={() => handleSubmit(res.id, res.title)}
+                        className="mt-3 w-full flex items-center justify-center gap-2 px-5 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl hover:bg-[#1a3fa8] active:scale-[0.98] transition-all cursor-pointer"
+                      >
+                        <Send size={16} />
+                        Submit Rating
+                      </button>
+                    </>
+                  ) : (
                     <div className="bg-green-50 border border-green-200 rounded-2xl p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="flex items-center gap-0.5">
@@ -223,8 +199,8 @@ export default function ToRate() {
                         Edit review
                       </button>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           );

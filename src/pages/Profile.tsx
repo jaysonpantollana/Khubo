@@ -29,6 +29,7 @@ import LogoutModal from '../components/profile/LogoutModal';
 import LandlordSignupModal from '../components/profile/LandlordSignupModal';
 import StatCardModal from '../components/profile/StatCardModal';
 import TenantProfileModal from '../components/TenantProfileModal';
+import { reservations } from '../mocks/reservations';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -818,48 +819,15 @@ export default function Profile() {
             </div>
           )
         ) : (() => {
-          const reservations = [
-            {
-              id: 'res-1',
-              title: "Layla's Residences & Dorminitory",
-              location: 'Iligan City, Lanao del norte 9200',
-              image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800',
-              price: 6000,
-              rating: 5.0,
-              reviews: 35,
-              amenities: ['Free Wifi', 'Water'],
-              available: '6 available',
-              tenants: MOCK_TENANTS.slice(0, 5),
-            },
-            {
-              id: 'res-2',
-              title: 'Sunset Boarding House',
-              location: 'Pala-o, Iligan City 9200',
-              image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800',
-              price: 3500,
-              rating: 4.75,
-              reviews: 22,
-              amenities: ['Wifi', 'Water'],
-              available: '3 available',
-              tenants: MOCK_TENANTS.slice(1, 5),
-            },
-            {
-              id: 'res-3',
-              title: 'Greenview Apartments',
-              location: 'Santiago, Iligan City 9200',
-              image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800',
-              price: 4500,
-              rating: 4.8,
-              reviews: 18,
-              amenities: ['AC', 'Free Wifi'],
-              available: '2 available',
-              tenants: MOCK_TENANTS.slice(0, 4),
-            },
-          ];
+          const reservationsWithTenants = reservations.map((res) => ({
+            ...res,
+            reviews: res.reviewCount,
+            tenants: MOCK_TENANTS.slice(0, (res.id.charCodeAt(4) % 4) + 2),
+          }));
 
           return (
             <div className="flex flex-col gap-6 mb-6">
-              {reservations.slice(0, 1).map((res) => (
+              {reservationsWithTenants.slice(0, 1).map((res) => (
                 <div key={res.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full">
                   <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in shrink-0" onClick={() => handleOpenGallery(null, res.image)}>
                     <img

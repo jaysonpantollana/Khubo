@@ -1,3 +1,8 @@
+export interface Tenant {
+  name: string;
+  image: string;
+}
+
 export interface Reservation {
   id: string;
   title: string;
@@ -9,6 +14,7 @@ export interface Reservation {
   reviewCount: number;
   amenities: string[];
   available: string;
+  tenants: Tenant[];
 }
 
 export const reservations: Reservation[] = [
@@ -26,6 +32,11 @@ export const reservations: Reservation[] = [
     reviewCount: 35,
     amenities: ['Free Wifi', 'Water'],
     available: '6 available',
+    tenants: [
+      { name: 'Alice', image: 'https://i.pravatar.cc/150?u=alice' },
+      { name: 'Bob', image: 'https://i.pravatar.cc/150?u=bob' },
+      { name: 'Charlie', image: 'https://i.pravatar.cc/150?u=charlie' },
+    ],
   },
   {
     id: 'res-2',
@@ -41,6 +52,10 @@ export const reservations: Reservation[] = [
     reviewCount: 22,
     amenities: ['Wifi', 'Water'],
     available: '3 available',
+    tenants: [
+      { name: 'Diana', image: 'https://i.pravatar.cc/150?u=diana' },
+      { name: 'Eve', image: 'https://i.pravatar.cc/150?u=eve' },
+    ],
   },
   {
     id: 'res-3',
@@ -56,5 +71,8 @@ export const reservations: Reservation[] = [
     reviewCount: 18,
     amenities: ['AC', 'Free Wifi'],
     available: '2 available',
+    tenants: [
+      { name: 'Frank', image: 'https://i.pravatar.cc/150?u=frank' },
+    ],
   },
 ];

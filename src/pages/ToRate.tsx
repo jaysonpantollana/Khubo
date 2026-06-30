@@ -14,6 +14,7 @@ import { reservations, Reservation } from '../mocks/reservations';
 interface RatingData {
   rating: number;
   comment: string;
+  isAnonymous: boolean;
 }
 
 export default function ToRate() {
@@ -21,6 +22,7 @@ export default function ToRate() {
   const { showToast } = useToast();
   const [ratings, setRatings] = useState<Record<string, RatingData>>({});
   const [hoveredStar, setHoveredStar] = useState<Record<string, number>>({});
+  const [isAnonymous, setIsAnonymous] = useState<Record<string, boolean>>({});
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -32,15 +34,41 @@ export default function ToRate() {
   const handleRatingChange = (propertyId: string, value: number) => {
     setRatings((prev) => ({
       ...prev,
-      [propertyId]: { ...prev[propertyId], rating: value, comment: prev[propertyId]?.comment || '' },
+      [propertyId]: { 
+        ...prev[propertyId], 
+        rating: value, 
+        comment: prev[propertyId]?.comment || '',
+        isAnonymous: prev[propertyId]?.isAnonymous || false
+      },
     }));
   };
 
   const handleCommentChange = (propertyId: string, comment: string) => {
     setRatings((prev) => ({
       ...prev,
-      [propertyId]: { ...prev[propertyId], comment, rating: prev[propertyId]?.rating || 0 },
+      [propertyId]: { 
+        ...prev[propertyId], 
+        comment, 
+        rating: prev[propertyId]?.rating || 0,
+        isAnonymous: prev[propertyId]?.isAnonymous || false
+      },
     }));
+  };
+
+  const handleAnonymousToggle = (propertyId: string) => {
+    setIsAnonymous((prev) => {
+      const newValue = !prev[propertyId];
+      setRatings((prevRatings) => ({
+        ...prevRatings,
+        [propertyId]: {
+          ...prevRatings[propertyId],
+          isAnonymous: newValue,
+          rating: prevRatings[propertyId]?.rating || 0,
+          comment: prevRatings[propertyId]?.comment || ''
+        }
+      }));
+      return { ...prev, [propertyId]: newValue };
+    });
   };
 
   const handleSubmit = (propertyId: string, propertyTitle: string) => {
@@ -49,7 +77,8 @@ export default function ToRate() {
       showToast('Please select a star rating', 'error');
       return;
     }
-    showToast(`Rated "${propertyTitle}" — ${data.rating} star${data.rating > 1 ? 's' : ''}`, 'success');
+    const anonymityText = data.isAnonymous ? ' (Anonymous)' : '';
+    showToast(`Rated "${propertyTitle}" — ${data.rating} star${data.rating > 1 ? 's' : ''}${anonymityText}`, 'success');
   };
 
   const handleOpenGallery = (images: string[], index: number) => {
@@ -178,6 +207,20 @@ export default function ToRate() {
                         className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/30 focus:border-[#2252D6] resize-none transition-all"
                       />
 
+                      {/* Anonymous toggle */}
+                      <div className="flex items-center justify-between mt-3 mb-1">
+                        <span className="text-sm text-neutral-600">Post anonymously</span>
+                        <button
+                          role="switch"
+                          aria-checked={isAnonymous[res.id] || false}
+                          aria-label="Toggle anonymous posting"
+                          onClick={() => handleAnonymousToggle(res.id)}
+                          className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${isAnonymous[res.id] ? 'bg-[#4E4F50]' : 'bg-neutral-300'}`}
+                        >
+                          <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${isAnonymous[res.id] ? 'left-6' : 'left-1'}`} />
+                        </button>
+                      </div>
+
                       {/* Submit */}
                       <button
                         onClick={() => handleSubmit(res.id, res.title)}
@@ -195,12 +238,19 @@ export default function ToRate() {
                             <Star key={s} size={16} className={s <= (ratings[res.id]?.rating || 0) ? 'text-amber-400 fill-amber-400' : 'text-neutral-300'} />
                           ))}
                         </div>
-                        <span className="text-sm font-bold text-green-800">Your review</span>
+                        <span className="text-sm font-bold text-green-800">
+                          {ratings[res.id]?.isAnonymous ? 'Anonymous review' : 'Your review'}
+                        </span>
                       </div>
                       <p className="text-sm text-green-900">{ratings[res.id]?.comment}</p>
                       <button
                         onClick={() => {
                           setRatings((prev) => {
+                            const next = { ...prev };
+                            delete next[res.id];
+                            return next;
+                          });
+                          setIsAnonymous((prev) => {
                             const next = { ...prev };
                             delete next[res.id];
                             return next;

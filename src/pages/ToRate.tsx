@@ -168,7 +168,6 @@ export default function ToRate() {
             <div key={res.id} className="space-y-5">
               {/* Listing card */}
               <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
-                {/* Image */}
                 <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in shrink-0" onClick={() => handleOpenGallery([res.image, ...res.gallery], 0)}>
                   <img
                     src={res.image}
@@ -177,24 +176,17 @@ export default function ToRate() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
                 </div>
-
-                {/* Content */}
                 <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
                   <div>
-                    {/* Title + available badge */}
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-2 md:gap-4 mb-2">
-                      <h2 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight">{res.title}</h2>
+                      <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight">{res.title}</h3>
                       <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap self-start sm:self-auto">
                         {res.available}
                       </span>
                     </div>
-
-                    {/* Location */}
                     <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
                       <MapPin size={16} className="shrink-0" /> {res.location}
                     </p>
-
-                    {/* Rating + Amenities */}
                     <div className="flex flex-wrap items-center gap-4">
                       <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
                         <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
@@ -207,52 +199,48 @@ export default function ToRate() {
                         ))}
                       </div>
                     </div>
-
-                    {/* Tenants */}
-                    {res.tenants && res.tenants.length > 0 && (
-                      <div className="mt-4 pt-3 border-t border-neutral-100">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Users size={16} className="text-neutral-600" />
-                          <span className="text-xs font-bold text-neutral-800 uppercase tracking-wider">Tenants</span>
-                        </div>
-                        <div className="flex items-center">
-                          {res.tenants.slice(0, 4).map((tenant, i) => (
-                            <div
-                              key={i}
-                              className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer overflow-hidden"
-                              style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: res.tenants.length - i }}
-                              title={tenant.name}
-                            >
-                              <img
-                                src={tenant.image}
-                                alt={tenant.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          ))}
-                          {res.tenants.length > 4 && (
-                            <span
-                              className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
-                              style={{ marginLeft: '-8px', zIndex: 0 }}
-                            >
-                              +{res.tenants.length - 4}
-                            </span>
-                          )}
-                        </div>
+                    <div className="mt-4 pt-3 border-t border-neutral-100">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Users size={16} className="text-neutral-600" />
+                        <span className="text-xs font-bold text-neutral-800 uppercase tracking-wider">Tenants</span>
                       </div>
-                    )}
+                      <div className="flex items-center">
+                        {res.tenants.slice(0, 4).map((t, i) => (
+                          <div
+                            key={i}
+                            className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                            style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: res.tenants.length - i }}
+                            title={t.name}
+                          >
+                            <img
+                              src={t.image}
+                              alt={t.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ))}
+                        {res.tenants.length > 4 && (
+                          <span
+                            className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                            style={{ marginLeft: '-8px', zIndex: 0 }}
+                          >
+                            +{res.tenants.length - 4}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-
-                  {/* Price */}
-                  <div className="flex items-baseline gap-1 mt-4 pt-4 border-t border-neutral-50 lg:border-t-0 lg:mt-0 lg:pt-0">
-                    <span className="text-2xl md:text-[28px] font-black text-black">₱{res.price.toLocaleString()}</span>
-                    <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-8 md:mt-0 pt-4 border-t border-neutral-50 lg:border-none lg:pt-0">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl md:text-[28px] font-black text-black">₱{res.price.toLocaleString()}</span>
+                      <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Rating card */}
-              <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 max-w-[380px] mx-auto">
+              <div className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 ${!submitted && !isRatingExpanded[res.id] ? 'max-w-[380px] mx-auto' : ''}`}>
                 {submitted ? (
                   <div className="bg-green-50 border border-green-200 rounded-2xl p-4">
                     <div className="flex items-center gap-2 mb-2">
@@ -286,12 +274,27 @@ export default function ToRate() {
                   </div>
                 ) : isRatingExpanded[res.id] ? (
                   <>
-                    <div
-                      className="flex items-center justify-between cursor-pointer mb-3"
-                      onClick={() => setIsRatingExpanded((prev) => ({ ...prev, [res.id]: false }))}
-                    >
+                    {/* Header with title + identity + collapse */}
+                    <div className="flex items-center justify-between cursor-pointer mb-3">
                       <p className="text-sm font-bold text-neutral-800">Rate this property</p>
-                      <ChevronDown size={18} className="text-neutral-400 rotate-180 transition-transform" />
+                      <div className="flex items-center gap-2.5">
+                        {anon ? (
+                          <img src={getAnonymousAvatar(res.id)} alt={displayName} className="w-8 h-8 rounded-full object-cover shrink-0" />
+                        ) : (
+                          <img src={realAvatarUrl} alt={realUserName} className="w-8 h-8 rounded-full object-cover shrink-0" />
+                        )}
+                        <span className="text-sm font-semibold text-neutral-800">{displayName}</span>
+                        <button
+                          role="switch"
+                          aria-checked={anon}
+                          aria-label="Toggle anonymous posting"
+                          onClick={(e) => { e.stopPropagation(); handleAnonymousToggle(res.id); }}
+                          className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer shrink-0 ${anon ? 'bg-[#4E4F50]' : 'bg-neutral-300'}`}
+                        >
+                          <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
+                        </button>
+                        <ChevronDown size={18} className="text-neutral-400 rotate-180 transition-transform" />
+                      </div>
                     </div>
 
                     {/* Stars */}
@@ -318,35 +321,6 @@ export default function ToRate() {
                       {ratings[res.id]?.rating > 0 && (
                         <span className="ml-2 text-sm font-semibold text-neutral-600">{ratings[res.id].rating}/5</span>
                       )}
-                    </div>
-
-                    {/* Identity row: avatar + name + toggle */}
-                    <div className="flex items-center justify-end gap-4 mb-3">
-                      <div className="flex items-center gap-2.5">
-                        {anon ? (
-                          <img
-                            src={getAnonymousAvatar(res.id)}
-                            alt={displayName}
-                            className="w-8 h-8 rounded-full object-cover shrink-0"
-                          />
-                        ) : (
-                          <img
-                            src={realAvatarUrl}
-                            alt={realUserName}
-                            className="w-8 h-8 rounded-full object-cover shrink-0"
-                          />
-                        )}
-                        <span className="text-sm font-semibold text-neutral-800">{displayName}</span>
-                      </div>
-                      <button
-                        role="switch"
-                        aria-checked={anon}
-                        aria-label="Toggle anonymous posting"
-                        onClick={() => handleAnonymousToggle(res.id)}
-                        className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer shrink-0 ${anon ? 'bg-[#4E4F50]' : 'bg-neutral-300'}`}
-                      >
-                        <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
-                      </button>
                     </div>
 
                     {/* Comment */}

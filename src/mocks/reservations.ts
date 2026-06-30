@@ -33,9 +33,9 @@ export const reservations: Reservation[] = [
     amenities: ['Free Wifi', 'Water'],
     available: '6 available',
     tenants: [
-      { name: 'Alice', image: 'https://i.pravatar.cc/150?u=alice' },
-      { name: 'Bob', image: 'https://i.pravatar.cc/150?u=bob' },
-      { name: 'Charlie', image: 'https://i.pravatar.cc/150?u=charlie' },
+      { name: 'Alice', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice&backgroundColor=b6e3f4' },
+      { name: 'Bob', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob&backgroundColor=b6e3f4' },
+      { name: 'Charlie', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie&backgroundColor=b6e3f4' },
     ],
   },
   {
@@ -53,8 +53,8 @@ export const reservations: Reservation[] = [
     amenities: ['Wifi', 'Water'],
     available: '3 available',
     tenants: [
-      { name: 'Diana', image: 'https://i.pravatar.cc/150?u=diana' },
-      { name: 'Eve', image: 'https://i.pravatar.cc/150?u=eve' },
+      { name: 'Diana', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Diana&backgroundColor=b6e3f4' },
+      { name: 'Eve', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Eve&backgroundColor=b6e3f4' },
     ],
   },
   {
@@ -72,7 +72,7 @@ export const reservations: Reservation[] = [
     amenities: ['AC', 'Free Wifi'],
     available: '2 available',
     tenants: [
-      { name: 'Frank', image: 'https://i.pravatar.cc/150?u=frank' },
+      { name: 'Frank', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Frank&backgroundColor=b6e3f4' },
     ],
   },
 ];

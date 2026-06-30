@@ -33,7 +33,6 @@ const Footer: React.FC = () => {
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'support' ? 'flex' : 'hidden md:flex'}`}>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Help Center</a>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Contact Us</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Safety Resources</a>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Report an Issue</a>
             </div>
           </div>
@@ -47,10 +46,9 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'community' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'community' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Blog</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Roommate Finder</a>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Reviews</a>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Stories</a>
+              <a href="#" className="hover:text-[#17294F] transition hover:underline">Suggest a Feature</a>
             </div>
           </div>
 
@@ -59,7 +57,7 @@ const Footer: React.FC = () => {
               onClick={() => toggleSection('hosting')}
               className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
             >
-              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Hosting</h4>
+              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Tutorials</h4>
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'hosting' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'hosting' ? 'flex' : 'hidden md:flex'}`}>
@@ -82,13 +80,4 @@ const Footer: React.FC = () => {
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Fair Use</a>
               <Link to="/terms" className="hover:text-[#17294F] transition hover:underline">Terms of Service</Link>
               <Link to="/privacy" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</Link>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
+   

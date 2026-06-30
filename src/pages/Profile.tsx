@@ -513,7 +513,7 @@ export default function Profile() {
                       {MOCK_TENANTS.slice(0, 4).map((t, i) => (
                         <div
                           key={t.id}
-                          className="w-10 h-10 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                          className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
                           style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
                           onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                         >
@@ -526,7 +526,7 @@ export default function Profile() {
                       ))}
                       {MOCK_TENANTS.length > 4 && (
                         <span
-                          className="w-10 h-10 rounded-full bg-[#4E4F50] text-white text-[11px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                          className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                           style={{ marginLeft: '-8px', zIndex: 0 }}
                           onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                         >
@@ -755,23 +755,23 @@ export default function Profile() {
                               {visible.map((tenant, i) => (
                                 <div
                                   key={tenant.id}
-                                  className="w-10 h-10 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
-                                  style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
-                                  title={tenant.name}
-                                  onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
-                                >
-                                  <img
-                                    src={tenant.image}
-                                    alt={tenant.name}
-                                    className="w-full h-full object-cover"
-                                  />
-                                </div>
-                              ))}
-                              {remaining > 0 && (
-                                <span
-                                  className="w-10 h-10 rounded-full bg-[#4E4F50] text-white text-[11px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
-                                  style={{ marginLeft: '-8px', zIndex: 0 }}
-                                  onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
+                                    className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                                    style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
+                                   title={tenant.name}
+                                   onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
+                                 >
+                                   <img
+                                     src={tenant.image}
+                                     alt={tenant.name}
+                                     className="w-full h-full object-cover"
+                                   />
+                                 </div>
+                               ))}
+                               {remaining > 0 && (
+                                 <span
+                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                                    style={{ marginLeft: '-8px', zIndex: 0 }}
+                                   onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
                                 >
                                   +{remaining}
                                 </span>
@@ -901,7 +901,7 @@ export default function Profile() {
                           {res.tenants.slice(0, 4).map((t, i) => (
                             <div
                               key={t.id}
-                              className="w-10 h-10 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                              className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
                               style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: res.tenants.length - i }}
                               title={t.name}
                               onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
@@ -915,7 +915,7 @@ export default function Profile() {
                           ))}
                           {res.tenants.length > 4 && (
                             <span
-                              className="w-10 h-10 rounded-full bg-[#4E4F50] text-white text-[11px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                              className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                               style={{ marginLeft: '-8px', zIndex: 0 }}
                               onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
                             >

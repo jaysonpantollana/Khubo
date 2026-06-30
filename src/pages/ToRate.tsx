@@ -82,7 +82,7 @@ export default function ToRate() {
                       key={i}
                       src={img}
                       alt={`${res.title} ${i + 2}`}
-                      className="w-full h-[127px] object-cover"
+                      className="w-full flex-1 object-cover"
                     />
                   ))}
                 </div>

@@ -3,14 +3,13 @@
 // @behavior: Shows reservation list with rating form (stars + comment); submitted ratings shown as review cards
 // @dependencies: lucide-react, useNavigate, BottomNav, ToastProvider, shared reservations
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, MapPin, Send, EyeOff } from 'lucide-react';
+import { ArrowLeft, Star, MapPin, Send } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useToast } from '../components/ToastProvider';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { reservations } from '../mocks/reservations';
-import { useAuth } from '../lib/AuthContext';
 
 interface RatingData {
   rating: number;
@@ -44,10 +43,33 @@ function getAnonymousName(propertyId: string): string {
   return ANONYMOUS_NAMES[Math.abs(hash) % ANONYMOUS_NAMES.length];
 }
 
+const ANONYMOUS_AVATARS = [
+  'Aneka',
+  'Felix',
+  'Jasmine',
+  'Leo',
+  'Mia',
+  'Oscar',
+  'Zoe',
+  'Hugo',
+  'Luna',
+  'Max',
+  'Nora',
+  'Sam',
+];
+
+function getAnonymousAvatar(propertyId: string): string {
+  let hash = 0;
+  for (let i = 0; i < propertyId.length; i++) {
+    hash = ((hash << 5) - hash + propertyId.charCodeAt(i)) | 0;
+  }
+  const seed = ANONYMOUS_AVATARS[Math.abs(hash) % ANONYMOUS_AVATARS.length];
+  return `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc&radius=50`;
+}
+
 export default function ToRate() {
   const navigate = useNavigate();
   const { showToast } = useToast();
-  const { user } = useAuth();
   const [ratings, setRatings] = useState<Record<string, RatingData>>({});
   const [hoveredStar, setHoveredStar] = useState<Record<string, number>>({});
   const [isAnonymous, setIsAnonymous] = useState<Record<string, boolean>>({});
@@ -55,14 +77,7 @@ export default function ToRate() {
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [galleryIndex, setGalleryIndex] = useState(0);
 
-  const email = user?.email;
-  const realUserName = useMemo(() => {
-    if (email) {
-      const local = email.split('@')[0];
-      return local.charAt(0).toUpperCase() + local.slice(1);
-    }
-    return 'You';
-  }, [email]);
+  const realUserName = localStorage.getItem('user_profile_name') || 'Micheal B. Jordan';
 
   const realAvatarUrl = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200';
 
@@ -239,31 +254,31 @@ export default function ToRate() {
                         )}
                       </div>
 
-                      {/* Identity row: name + avatar beside toggle */}
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-semibold text-neutral-800 truncate max-w-[220px]">{displayName}</span>
-                        <div className="flex items-center gap-2">
-                          {anon ? (
-                            <div className="w-8 h-8 rounded-full bg-neutral-200 flex items-center justify-center shrink-0">
-                              <EyeOff size={14} className="text-neutral-500" />
-                            </div>
-                          ) : (
-                            <img
-                              src={realAvatarUrl}
-                              alt={realUserName}
-                              className="w-8 h-8 rounded-full object-cover shrink-0"
-                            />
-                          )}
-                          <button
-                            role="switch"
-                            aria-checked={anon}
-                            aria-label="Toggle anonymous posting"
-                            onClick={() => handleAnonymousToggle(res.id)}
-                            className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer shrink-0 ${anon ? 'bg-[#4E4F50]' : 'bg-neutral-300'}`}
-                          >
-                            <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
-                          </button>
-                        </div>
+                      {/* Identity row: avatar + name + toggle */}
+                      <div className="flex items-center justify-end gap-2.5 mb-3">
+                        {anon ? (
+                          <img
+                            src={getAnonymousAvatar(res.id)}
+                            alt={displayName}
+                            className="w-8 h-8 rounded-full object-cover shrink-0"
+                          />
+                        ) : (
+                          <img
+                            src={realAvatarUrl}
+                            alt={realUserName}
+                            className="w-8 h-8 rounded-full object-cover shrink-0"
+                          />
+                        )}
+                        <span className="text-sm font-semibold text-neutral-800">{displayName}</span>
+                        <button
+                          role="switch"
+                          aria-checked={anon}
+                          aria-label="Toggle anonymous posting"
+                          onClick={() => handleAnonymousToggle(res.id)}
+                          className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer shrink-0 ${anon ? 'bg-[#4E4F50]' : 'bg-neutral-300'}`}
+                        >
+                          <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
+                        </button>
                       </div>
 
                       {/* Comment */}

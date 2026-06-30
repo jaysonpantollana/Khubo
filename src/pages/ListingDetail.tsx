@@ -418,7 +418,7 @@ export default function ListingDetail() {
                        onClick={() => setShowAllReviewsMobile(!showAllReviewsMobile)}
                        className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 flex items-center justify-center"
                     >
-                       {showAllReviewsMobile ? 'Show less' : `Show all ${listing.reviews.length} reviews`}
+                       {showAllReviewsMobile ? 'Show less' : 'Show all'}
                     </button>
                  </div>
                )}

@@ -97,6 +97,9 @@ export interface Roommate {
   tags: string[];
   budgetRange: string;
   preferredPlace: string;
+  hidePhone?: boolean;
+  hideEmail?: boolean;
+  hideSocialLinks?: boolean;
 }
 
 export interface FilterState {

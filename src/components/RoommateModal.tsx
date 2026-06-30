@@ -125,16 +125,18 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                   </section>
 
                   {/* Social & Connect */}
-                  <section className="flex flex-col md:flex-row items-center justify-between gap-6 pt-2">
-                    <div className="space-y-4 w-full md:w-auto">
-                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 text-center md:text-left">Social Identity</h3>
-                      <div className="flex items-center justify-center md:justify-start gap-6">
-                        <Instagram size={20} className="text-pink-500 cursor-pointer" />
-                        <Twitter size={20} className="text-blue-400 cursor-pointer" />
-                        <Facebook size={20} className="text-blue-600 cursor-pointer" />
+                  {!roommate.hideSocialLinks && (
+                    <section className="flex flex-col md:flex-row items-center justify-between gap-6 pt-2">
+                      <div className="space-y-4 w-full md:w-auto">
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 text-center md:text-left">Social Identity</h3>
+                        <div className="flex items-center justify-center md:justify-start gap-6">
+                          <Instagram size={20} className="text-pink-500 cursor-pointer" />
+                          <Twitter size={20} className="text-blue-400 cursor-pointer" />
+                          <Facebook size={20} className="text-blue-600 cursor-pointer" />
+                        </div>
                       </div>
-                    </div>
-                  </section>
+                    </section>
+                  )}
 
                   {/* Save Button */}
                   <section className="pt-2">

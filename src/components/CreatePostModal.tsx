@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 
-import { X } from 'lucide-react';
+import { X, Phone, Mail, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Roommate } from '../types';
 import { FocusTrap } from './ui/FocusTrap';
 
@@ -24,27 +24,71 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
   const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
   const [isAddingTag, setIsAddingTag] = useState(false);
   const [newTagInput, setNewTagInput] = useState('');
+  const [hidePhone, setHidePhone] = useState(false);
+  const [hideEmail, setHideEmail] = useState(false);
+  const [hideSocialLinks, setHideSocialLinks] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [emailAddress, setEmailAddress] = useState('');
+  const [socialLinks, setSocialLinks] = useState<{ platform: string; url: string }[]>([]);
 
-  const loadProfilePersonality = () => {
-    const saved = localStorage.getItem('user_profile_tags');
-    if (saved) {
+  const loadProfileData = () => {
+    // Load personality tags
+    const savedTags = localStorage.getItem('user_profile_tags');
+    if (savedTags) {
       try {
-        const parsed = JSON.parse(saved);
+        const parsed = JSON.parse(savedTags);
         if (Array.isArray(parsed) && parsed.length > 0) {
           setSelectedTraits(parsed.slice(0, 5));
-          return;
+        } else {
+          setSelectedTraits(['Introvert', 'Pet-friendly', 'Night owl', 'Studious', 'Non-smoker'].slice(0, 5));
         }
       } catch (e) {
         console.warn('Error reading profile tags:', e);
+        setSelectedTraits(['Introvert', 'Pet-friendly', 'Night owl', 'Studious', 'Non-smoker'].slice(0, 5));
       }
+    } else {
+      setSelectedTraits(['Introvert', 'Pet-friendly', 'Night owl', 'Studious', 'Non-smoker'].slice(0, 5));
     }
-    // Default fallback profile tags if they were not edited yet
-    setSelectedTraits(['Introvert', 'Pet-friendly', 'Night owl', 'Studious', 'Non-smoker'].slice(0, 5));
+
+    // Load contact info from profile
+    const savedPhone = localStorage.getItem('user_profile_phone');
+    const savedEmail = localStorage.getItem('user_profile_email');
+    const savedSocial = localStorage.getItem('user_profile_social_links');
+    
+    setPhoneNumber(savedPhone || '+63 912 345 6789');
+    setEmailAddress(savedEmail || 'micheal.doe@email.com');
+    
+    if (savedSocial) {
+      try {
+        const parsed = JSON.parse(savedSocial);
+        if (Array.isArray(parsed)) {
+          setSocialLinks(parsed);
+        } else {
+          setSocialLinks([
+            { platform: 'Instagram', url: 'https://instagram.com/micheal' },
+            { platform: 'X', url: 'https://x.com/micheal' },
+            { platform: 'Facebook', url: 'https://facebook.com/micheal' }
+          ]);
+        }
+      } catch (e) {
+        setSocialLinks([
+          { platform: 'Instagram', url: 'https://instagram.com/micheal' },
+          { platform: 'X', url: 'https://x.com/micheal' },
+          { platform: 'Facebook', url: 'https://facebook.com/micheal' }
+        ]);
+      }
+    } else {
+      setSocialLinks([
+        { platform: 'Instagram', url: 'https://instagram.com/micheal' },
+        { platform: 'X', url: 'https://x.com/micheal' },
+        { platform: 'Facebook', url: 'https://facebook.com/micheal' }
+      ]);
+    }
   };
 
   React.useEffect(() => {
     if (isOpen) {
-      loadProfilePersonality();
+      loadProfileData();
     }
   }, [isOpen]);
 
@@ -63,7 +107,10 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
         image: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200',
         tags: selectedTraits.length > 0 ? selectedTraits : ['Clean', 'Quiet'],
         budgetRange: 'P2500-P3000',
-        preferredPlace: postMode === 'finding' ? "Nathan's Female Boarders" : "Tibanga Boardhouse"
+        preferredPlace: postMode === 'finding' ? "Nathan's Female Boarders" : "Tibanga Boardhouse",
+        hidePhone,
+        hideEmail,
+        hideSocialLinks
       };
       onPostCreated(newPost);
     }
@@ -71,6 +118,12 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
     // Reset local state
     setContent('');
     setSelectedTraits([]);
+    setHidePhone(false);
+    setHideEmail(false);
+    setHideSocialLinks(false);
+    setPhoneNumber('');
+    setEmailAddress('');
+    setSocialLinks([]);
     onClose();
   };
 
@@ -203,6 +256,75 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                     {postMode === 'finding' ? 'No preference tags set.' : 'No traits set on profile.'}
                   </span>
                 )}
+              </div>
+            </div>
+
+            {/* Privacy Settings */}
+            <div className="flex flex-col gap-3 border-t border-neutral-100 pt-3 mt-1 shrink-0">
+              <span className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+                Privacy Settings
+              </span>
+              <div className="flex flex-col gap-2">
+                {/* Phone Number */}
+                <label className="flex items-center justify-between cursor-pointer group py-1">
+                  <div className="flex items-center gap-2.5">
+                    <Phone size={16} className="text-neutral-400" />
+                    <span className="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">{phoneNumber}</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      checked={hidePhone}
+                      onChange={(e) => setHidePhone(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-neutral-200 rounded-full peer peer-checked:bg-neutral-900 transition-colors"></div>
+                    <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm peer-checked:translate-x-4 transition-transform"></div>
+                  </div>
+                </label>
+                
+                {/* Email */}
+                <label className="flex items-center justify-between cursor-pointer group py-1">
+                  <div className="flex items-center gap-2.5">
+                    <Mail size={16} className="text-neutral-400" />
+                    <span className="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">{emailAddress}</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      checked={hideEmail}
+                      onChange={(e) => setHideEmail(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-neutral-200 rounded-full peer peer-checked:bg-neutral-900 transition-colors"></div>
+                    <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm peer-checked:translate-x-4 transition-transform"></div>
+                  </div>
+                </label>
+                
+                {/* Social Links */}
+                <label className="flex items-center justify-between cursor-pointer group py-1">
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2">
+                      {socialLinks.map((link, idx) => {
+                        if (link.platform === 'Instagram') return <Instagram key={idx} size={16} className="text-pink-500" />;
+                        if (link.platform === 'X') return <Twitter key={idx} size={16} className="text-neutral-800" />;
+                        if (link.platform === 'Facebook') return <Facebook key={idx} size={16} className="text-blue-600" />;
+                        return null;
+                      })}
+                    </div>
+                    <span className="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">Social links</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      checked={hideSocialLinks}
+                      onChange={(e) => setHideSocialLinks(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-neutral-200 rounded-full peer peer-checked:bg-neutral-900 transition-colors"></div>
+                    <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm peer-checked:translate-x-4 transition-transform"></div>
+                  </div>
+                </label>
               </div>
             </div>
 

@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
-  Settings, HelpCircle, LogOut, Bell, Building, Check, X,
-  MoreVertical, Copy, Users, FileText, Shield,
+  Settings, LogOut, Bell, Building, Check, X,
+  MoreVertical, Copy, Users,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import Footer from '../components/Footer';
@@ -46,11 +46,9 @@ export default function Profile() {
   }, []);
 
   const menuItems = [
+    ...(!isLandlord ? [{ title: 'To Rate', icon: Star, action: () => navigate('/to-rate') }] : []),
     { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
     { title: 'Account settings', icon: Settings, action: () => showToast('Account settings clicked', 'info') },
-    { title: 'Help Center', icon: HelpCircle, action: () => showToast('Help Center clicked', 'info') },
-    { title: 'Terms of Service', icon: FileText, action: () => navigate('/terms') },
-    { title: 'Privacy Policy', icon: Shield, action: () => navigate('/privacy') },
   ];
 
   const [myListings, setMyListings] = useState<Listing[]>([]);
@@ -300,55 +298,57 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2">
-              {profileTags.map(tag => (
-                <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-transparent text-white hover:bg-white/10 transition cursor-default group relative">
-                  {tag}
-                  <button
-                    onClick={() => setProfileTags(profileTags.filter(t => t !== tag))}
-                    className="absolute -top-1 -right-1 bg-neutral-800 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X size={10} />
-                  </button>
-                </span>
-              ))}
-              {isEditingTags ? (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (newTagInput.trim() && !profileTags.includes(newTagInput.trim())) {
-                      setProfileTags([...profileTags, newTagInput.trim()]);
-                    }
-                    setNewTagInput('');
-                    setIsEditingTags(false);
-                  }}
-                  className="inline-flex"
-                >
-                  <input
-                    autoFocus
-                    type="text"
-                    value={newTagInput}
-                    onChange={(e) => setNewTagInput(e.target.value)}
-                    onBlur={() => {
+            {!isLandlord && (
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2">
+                {profileTags.map(tag => (
+                  <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-transparent text-white hover:bg-white/10 transition cursor-default group relative">
+                    {tag}
+                    <button
+                      onClick={() => setProfileTags(profileTags.filter(t => t !== tag))}
+                      className="absolute -top-1 -right-1 bg-neutral-800 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X size={10} />
+                    </button>
+                  </span>
+                ))}
+                {isEditingTags ? (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
                       if (newTagInput.trim() && !profileTags.includes(newTagInput.trim())) {
                         setProfileTags([...profileTags, newTagInput.trim()]);
                       }
                       setNewTagInput('');
                       setIsEditingTags(false);
                     }}
-                    placeholder="Add tag..."
-                    className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-white/20 text-white outline-none w-24 placeholder:text-neutral-400"
-                  />
-                </form>
-              ) : (
-                <button
-                  onClick={() => setIsEditingTags(true)}
-                  className="px-4 py-1.5 rounded-full border border-white/50 border-dashed text-[11px] md:text-xs font-semibold bg-black/40 text-white hover:bg-black/60 transition cursor-pointer"
-                >
-                  + Add tag
-                </button>
-              )}
-            </div>
+                    className="inline-flex"
+                  >
+                    <input
+                      autoFocus
+                      type="text"
+                      value={newTagInput}
+                      onChange={(e) => setNewTagInput(e.target.value)}
+                      onBlur={() => {
+                        if (newTagInput.trim() && !profileTags.includes(newTagInput.trim())) {
+                          setProfileTags([...profileTags, newTagInput.trim()]);
+                        }
+                        setNewTagInput('');
+                        setIsEditingTags(false);
+                      }}
+                      placeholder="Add tag..."
+                      className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-white/20 text-white outline-none w-24 placeholder:text-neutral-400"
+                    />
+                  </form>
+                ) : (
+                  <button
+                    onClick={() => setIsEditingTags(true)}
+                    className="px-4 py-1.5 rounded-full border border-white/50 border-dashed text-[11px] md:text-xs font-semibold bg-black/40 text-white hover:bg-black/60 transition cursor-pointer"
+                  >
+                    + Add tag
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="w-full md:w-[45%] lg:w-[40%] text-white/80 md:text-white text-sm md:text-xl lg:text-2xl font-normal md:font-semibold leading-relaxed drop-shadow-sm px-2 pb-0 pt-0 md:p-6 group text-center md:text-left mt-0">

@@ -350,10 +350,10 @@ export default function ToRate() {
                 ) : (
                   <button
                     onClick={() => setIsRatingExpanded((prev) => ({ ...prev, [res.id]: true }))}
-                    className="w-full flex items-center justify-between cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span className="text-sm font-bold text-neutral-800">Add review</span>
-                    <ChevronDown size={24} className="text-neutral-400 transition-transform mr-4" />
+                    <ChevronDown size={18} className="text-neutral-400 transition-transform" />
                   </button>
                 )}
               </div>

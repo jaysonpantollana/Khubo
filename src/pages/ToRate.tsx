@@ -70,19 +70,19 @@ export default function ToRate() {
           return (
             <div key={res.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
               {/* Image gallery */}
-              <div className="w-full lg:w-[380px] h-auto lg:h-[260px] grid grid-cols-2 gap-1.5 rounded-2xl md:rounded-[1.5rem] overflow-hidden shrink-0">
+              <div className="w-full lg:w-[380px] h-auto lg:h-[260px] relative bg-white p-[3px] rounded-2xl md:rounded-[1.5rem] overflow-hidden shrink-0">
                 <img
                   src={res.image}
                   alt={res.title}
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-[calc(50%-1.5px)] h-full object-cover rounded-l-2xl md:rounded-l-[1.5rem]"
                 />
-                <div className="flex flex-col gap-1.5">
+                <div className="absolute top-[3px] right-[3px] bottom-[3px] w-[calc(50%-1.5px)] flex flex-col">
                   {res.gallery.slice(0, 2).map((img, i) => (
                     <img
                       key={i}
                       src={img}
                       alt={`${res.title} ${i + 2}`}
-                      className="w-full flex-1 object-cover"
+                      className="w-full h-1/2 object-cover"
                     />
                   ))}
                 </div>

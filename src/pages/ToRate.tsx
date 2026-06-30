@@ -240,7 +240,7 @@ export default function ToRate() {
               </div>
 
               {/* Rating card */}
-              <div className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 ${!submitted && !isRatingExpanded[res.id] ? 'max-w-[380px] mx-auto' : ''}`}>
+              <div className={submitted || isRatingExpanded[res.id] ? 'bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100' : ''}>
                 {submitted ? (
                   <div className="bg-green-50 border border-green-200 rounded-2xl p-4">
                     <div className="flex items-center gap-2 mb-2">

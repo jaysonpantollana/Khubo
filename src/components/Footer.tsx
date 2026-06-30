@@ -80,4 +80,13 @@ const Footer: React.FC = () => {
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Fair Use</a>
               <Link to="/terms" className="hover:text-[#17294F] transition hover:underline">Terms of Service</Link>
               <Link to="/privacy" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</Link>
-   
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

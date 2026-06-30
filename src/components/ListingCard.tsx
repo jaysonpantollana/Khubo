@@ -126,14 +126,14 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
           
           <div aria-hidden="true" className="flex items-center justify-end mt-2 pt-2 border-t border-gray-50">
             <div className="flex gap-1.5 overflow-hidden">
-              {listing.amenities.slice(0, 3).map((amenity, i) => (
+              {listing.amenities.slice(0, 5).map((amenity, i) => (
                 <span key={i} className="px-2 py-0.5 bg-gray-50 rounded text-[8px] sm:text-[9px] text-gray-500 border border-gray-100 whitespace-nowrap font-medium">
                   {amenity}
                 </span>
               ))}
-              {listing.amenities.length > 3 && (
+              {listing.amenities.length > 5 && (
                 <span className="px-2 py-0.5 bg-gray-50 rounded text-[8px] sm:text-[9px] text-gray-500 border border-gray-100 whitespace-nowrap font-medium">
-                  +{listing.amenities.length - 3}
+                  +{listing.amenities.length - 5}
                 </span>
               )}
             </div>

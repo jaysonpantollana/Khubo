@@ -255,21 +255,23 @@ export default function ToRate() {
                       </div>
 
                       {/* Identity row: avatar + name + toggle */}
-                      <div className="flex items-center justify-end gap-2.5 mb-3">
-                        {anon ? (
-                          <img
-                            src={getAnonymousAvatar(res.id)}
-                            alt={displayName}
-                            className="w-8 h-8 rounded-full object-cover shrink-0"
-                          />
-                        ) : (
-                          <img
-                            src={realAvatarUrl}
-                            alt={realUserName}
-                            className="w-8 h-8 rounded-full object-cover shrink-0"
-                          />
-                        )}
-                        <span className="text-sm font-semibold text-neutral-800">{displayName}</span>
+                      <div className="flex items-center justify-end gap-4 mb-3">
+                        <div className="flex items-center gap-2.5">
+                          {anon ? (
+                            <img
+                              src={getAnonymousAvatar(res.id)}
+                              alt={displayName}
+                              className="w-8 h-8 rounded-full object-cover shrink-0"
+                            />
+                          ) : (
+                            <img
+                              src={realAvatarUrl}
+                              alt={realUserName}
+                              className="w-8 h-8 rounded-full object-cover shrink-0"
+                            />
+                          )}
+                          <span className="text-sm font-semibold text-neutral-800">{displayName}</span>
+                        </div>
                         <button
                           role="switch"
                           aria-checked={anon}

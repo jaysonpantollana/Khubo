@@ -81,6 +81,12 @@ export default function Profile() {
   useEffect(() => {
     localStorage.setItem('user_profile_tags', JSON.stringify(profileTags));
   }, [profileTags]);
+
+  useEffect(() => {
+    localStorage.setItem('user_profile_name', profileName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [isEditingTags, setIsEditingTags] = useState(false);
   const [newTagInput, setNewTagInput] = useState('');
   const [selectedStatModal, setSelectedStatModal] = useState<string | null>(null);

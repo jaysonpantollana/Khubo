@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 
-import { X, Phone, Plus } from 'lucide-react';
+import { X, Phone, Plus, Copy, Check } from 'lucide-react';
 import { FocusTrap } from './ui/FocusTrap';
 import { AddTenantModal } from './AddTenantModal';
 import ConfirmDialog from './ConfirmDialog';
@@ -35,6 +35,13 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
   const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
   const [tenants, setTenants] = useState(initialTenants);
   const [confirmBalance, setConfirmBalance] = useState<{ id: number; newStatus: string } | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1500);
+  };
 
   const toggleBalance = (id: number) => {
     const tenant = tenants.find((t) => t.id === id);
@@ -185,11 +192,27 @@ export function TenantsModal({ isOpen, onClose }: TenantsModalProps) {
                           </button>
                         </td>
 
-                        <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">{tenant.email}</td>
+                        <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">
+                          <span className="flex items-center gap-1.5">
+                            {tenant.email}
+                            <button
+                              onClick={() => copyToClipboard(tenant.email, `email-${tenant.id}`)}
+                              className="p-1 hover:bg-neutral-100 rounded transition-colors text-neutral-400 hover:text-neutral-600"
+                            >
+                              {copiedId === `email-${tenant.id}` ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+                            </button>
+                          </span>
+                        </td>
                         <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">
                           <span className="flex items-center gap-1.5">
                             <Phone size={14} className="text-neutral-400" />
                             {tenant.phone}
+                            <button
+                              onClick={() => copyToClipboard(tenant.phone, `phone-${tenant.id}`)}
+                              className="p-1 hover:bg-neutral-100 rounded transition-colors text-neutral-400 hover:text-neutral-600"
+                            >
+                              {copiedId === `phone-${tenant.id}` ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+                            </button>
                           </span>
                         </td>
                         <td className="p-4 whitespace-nowrap font-medium">

@@ -119,7 +119,7 @@ export default function LandlordProperties() {
   return (
     <div className="h-screen flex flex-col bg-[#F9F9F9]">
       <div className="bg-white border-b border-neutral-100 shrink-0">
-        <div className="max-w-[2520px] mx-auto px-4 md:px-12 py-4 flex items-center gap-4">
+        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate('/profile')}
             className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-600 hover:text-neutral-900"
@@ -131,7 +131,7 @@ export default function LandlordProperties() {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-[2520px] mx-auto px-4 md:px-12 py-6">
+        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6">
           <div className="flex justify-end mb-4">
             <button
               onClick={() => setShowCreateModal(true)}

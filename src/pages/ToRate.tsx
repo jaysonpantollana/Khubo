@@ -147,7 +147,7 @@ export default function ToRate() {
     <div className="min-h-screen bg-[#f0f2f5] pb-24">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-neutral-100">
-        <div className="w-full px-4 py-4 flex items-center gap-4">
+        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
             className="p-2 -ml-2 hover:bg-neutral-100 rounded-full transition-colors"
@@ -159,7 +159,7 @@ export default function ToRate() {
       </div>
 
       {/* Property list */}
-      <div className="w-full px-4 py-6 space-y-5">
+      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6 space-y-5">
         {reservations.slice(0, 1).map((res) => {
           const submitted = ratings[res.id]?.rating > 0 && ratings[res.id]?.comment;
           const anon = isAnonymous[res.id] || false;
@@ -167,7 +167,7 @@ export default function ToRate() {
           return (
             <div key={res.id} className="space-y-5">
               {/* Listing card */}
-              <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
+              <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full">
                 <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group cursor-zoom-in shrink-0" onClick={() => handleOpenGallery([res.image, ...res.gallery], 0)}>
                   <img
                     src={res.image}
@@ -274,9 +274,8 @@ export default function ToRate() {
                   </div>
                 ) : isRatingExpanded[res.id] ? (
                   <>
-                    {/* Header with title + identity + collapse */}
-                    <div className="flex items-center justify-between cursor-pointer mb-3">
-                      <p className="text-sm font-bold text-neutral-800">Rate this property</p>
+                    {/* Header with identity + title + collapse */}
+                    <div className="flex items-center justify-between cursor-pointer pb-3 mb-4 border-b border-neutral-100">
                       <div className="flex items-center gap-2.5">
                         {anon ? (
                           <img src={getAnonymousAvatar(res.id)} alt={displayName} className="w-8 h-8 rounded-full object-cover shrink-0" />
@@ -293,12 +292,14 @@ export default function ToRate() {
                         >
                           <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
                         </button>
-                        <ChevronDown size={18} className="text-neutral-400 rotate-180 transition-transform" />
                       </div>
+                      <ChevronDown size={18} className="text-neutral-400 rotate-180 transition-transform" />
                     </div>
 
+                    <p className="text-sm font-bold text-neutral-800 mb-4">Rate your living experience</p>
+
                     {/* Stars */}
-                    <div className="flex items-center gap-1 mb-4">
+                    <div className="flex items-center gap-1.5 mb-5">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           key={star}
@@ -329,17 +330,19 @@ export default function ToRate() {
                       onChange={(e) => handleCommentChange(res.id, e.target.value)}
                       placeholder="Write a comment about your experience..."
                       rows={3}
-                      className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/30 focus:border-[#2252D6] resize-none transition-all"
+                      className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/30 focus:border-[#2252D6] resize-none transition-all mb-4"
                     />
 
                     {/* Submit */}
-                    <button
-                      onClick={() => handleSubmit(res.id, res.title)}
-                      className="mt-3 w-full flex items-center justify-center gap-2 px-5 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl hover:bg-[#1a3fa8] active:scale-[0.98] transition-all cursor-pointer"
-                    >
-                      <Send size={16} />
-                      Submit Rating
-                    </button>
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => handleSubmit(res.id, res.title)}
+                        className="flex items-center justify-center gap-2 px-8 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl hover:bg-[#1a3fa8] active:scale-[0.98] transition-all cursor-pointer"
+                      >
+                        <Send size={16} />
+                        Submit Rating
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <button

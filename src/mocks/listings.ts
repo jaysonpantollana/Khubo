@@ -41,7 +41,7 @@ export const LISTINGS: Listing[] = [
     ],
     category: 'Near MSU-IIT',
     date: '6 available',
-    amenities: ['Free Wifi', 'Electricity', 'Water'],
+    amenities: ['Free Wifi', 'Electricity', 'Water', 'CCTV', 'Study Area', 'Kitchen Access'],
     lat: 8.2415,
     lng: 124.2442,
     reviews: [
@@ -75,7 +75,7 @@ export const LISTINGS: Listing[] = [
     ],
     category: 'Solo Room',
     date: '6 available',
-    amenities: ['Free Wifi', 'CCTV', 'Water'],
+    amenities: ['Free Wifi', 'CCTV', 'Water', 'Aircon', 'Electricity', 'Security'],
     lat: 8.2385,
     lng: 124.2382,
     reviews: [
@@ -99,7 +99,7 @@ export const LISTINGS: Listing[] = [
     ],
     category: 'All Female',
     date: '3 available',
-    amenities: ['Free Wifi', 'Water', 'Electricity'],
+    amenities: ['Free Wifi', 'Water', 'Electricity', 'CCTV', 'Study Area', 'Heated Shower'],
     lat: 8.2445,
     lng: 124.2452,
     reviews: [
@@ -121,7 +121,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800'],
     category: 'Boarding House',
     date: '4 available',
-    amenities: ['Free Wifi', 'Drinking Water'],
+    amenities: ['Free Wifi', 'Drinking Water', 'Electricity', 'Kitchen Access', 'CCTV', 'Study Area'],
     lat: 8.2325,
     lng: 124.2482,
     reviews: [
@@ -143,7 +143,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800'],
     category: 'Solo Room',
     date: '2 available',
-    amenities: ['Aircon', 'Free Wifi', 'Heated Shower'],
+    amenities: ['Aircon', 'Free Wifi', 'Heated Shower', 'Kitchen Access', 'CCTV', 'Electricity'],
     lat: 8.2255,
     lng: 124.2412,
     reviews: [
@@ -165,7 +165,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800'],
     category: 'Near MSU-IIT',
     date: '10 available',
-    amenities: ['Free Wifi', 'Study Area'],
+    amenities: ['Free Wifi', 'Study Area', 'Electricity', 'Water', 'CCTV', 'Kitchen Access'],
     lat: 8.2410,
     lng: 124.2435,
     reviews: []
@@ -181,7 +181,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1631673876640-3b20317048c1?auto=format&fit=crop&q=80&w=800'],
     category: 'All Female',
     date: '5 available',
-    amenities: ['Free Wifi', 'Elevator', 'Gym'],
+    amenities: ['Free Wifi', 'Elevator', 'Gym', 'Aircon', 'CCTV', 'Heated Shower'],
     lat: 8.2430,
     lng: 124.2465,
     reviews: []
@@ -197,7 +197,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1536376074432-aee2107456b3?auto=format&fit=crop&q=80&w=800'],
     category: 'Shared Room',
     date: '8 available',
-    amenities: ['Electricity', 'Kitchen Access'],
+    amenities: ['Electricity', 'Kitchen Access', 'Free Wifi', 'Water', 'CCTV', 'Study Area'],
     lat: 8.2350,
     lng: 124.2320,
     reviews: []
@@ -213,7 +213,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1549497538-30129587cb76?auto=format&fit=crop&q=80&w=800'],
     category: 'Solo Room',
     date: '1 available',
-    amenities: ['Free Wifi', 'Water'],
+    amenities: ['Free Wifi', 'Water', 'Electricity', 'Aircon', 'CCTV', 'Study Area'],
     lat: 8.2360,
     lng: 124.2395,
     reviews: []
@@ -229,7 +229,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&q=80&w=800'],
     category: 'Affordable',
     date: '12 available',
-    amenities: ['Water'],
+    amenities: ['Water', 'Electricity', 'Free Wifi', 'Kitchen Access', 'CCTV', 'Study Area'],
     reviews: []
   },
   {
@@ -243,7 +243,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1623341214825-9f4f963727da?auto=format&fit=crop&q=80&w=800'],
     category: 'All Male',
     date: '4 available',
-    amenities: ['Free Wifi', 'Aircon', 'Security'],
+    amenities: ['Free Wifi', 'Aircon', 'Security', 'CCTV', 'Electricity', 'Water'],
     lat: 8.2280,
     lng: 124.2450,
     reviews: []
@@ -259,7 +259,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=800'],
     category: 'Boarding House',
     date: '2 available',
-    amenities: ['Garden', 'Free Wifi'],
+    amenities: ['Garden', 'Free Wifi', 'Electricity', 'Water', 'CCTV', 'Kitchen Access'],
     reviews: []
   },
   {
@@ -273,7 +273,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800'],
     category: 'Near MSU-IIT',
     date: '4 available',
-    amenities: ['Free Wifi', 'AC', 'Kitchen'],
+    amenities: ['Free Wifi', 'AC', 'Kitchen', 'Electricity', 'Water', 'CCTV'],
     reviews: []
   },
   {
@@ -287,7 +287,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1594488651083-aa8241474932?auto=format&fit=crop&q=80&w=800'],
     category: 'Solo Room',
     date: '3 available',
-    amenities: ['Security', 'Free Wifi'],
+    amenities: ['Security', 'Free Wifi', 'Electricity', 'Water', 'CCTV', 'Aircon'],
     reviews: []
   },
   {
@@ -304,7 +304,7 @@ export const LISTINGS: Listing[] = [
     ],
     category: 'Near MSU-IIT',
     date: '6 available',
-    amenities: ['Free Wifi', 'Electricity', 'Water'],
+    amenities: ['Free Wifi', 'Electricity', 'Water', 'CCTV', 'Study Area', 'Kitchen Access'],
     reviews: []
   },
   {
@@ -320,7 +320,7 @@ export const LISTINGS: Listing[] = [
     ],
     category: 'Solo Room',
     date: '6 available',
-    amenities: ['Free Wifi', 'CCTV', 'Water'],
+    amenities: ['Free Wifi', 'CCTV', 'Water', 'Aircon', 'Electricity', 'Security'],
     reviews: []
   },
   {
@@ -336,7 +336,7 @@ export const LISTINGS: Listing[] = [
     ],
     category: 'All Female',
     date: '3 available',
-    amenities: ['Free Wifi', 'Water', 'Electricity'],
+    amenities: ['Free Wifi', 'Water', 'Electricity', 'CCTV', 'Study Area', 'Heated Shower'],
     reviews: []
   },
   {
@@ -350,7 +350,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800'],
     category: 'Boarding House',
     date: '4 available',
-    amenities: ['Free Wifi', 'Drinking Water'],
+    amenities: ['Free Wifi', 'Drinking Water', 'Electricity', 'Kitchen Access', 'CCTV', 'Study Area'],
     reviews: []
   },
   {
@@ -364,7 +364,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1555854817-5b2260d71ba8?auto=format&fit=crop&q=80&w=800'],
     category: 'Solo Room',
     date: '2 available',
-    amenities: ['Aircon', 'Free Wifi', 'Heated Shower'],
+    amenities: ['Aircon', 'Free Wifi', 'Heated Shower', 'Kitchen Access', 'CCTV', 'Electricity'],
     reviews: []
   },
   {
@@ -378,7 +378,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&q=80&w=800'],
     category: 'Near MSU-IIT',
     date: '10 available',
-    amenities: ['Free Wifi', 'Study Area'],
+    amenities: ['Free Wifi', 'Study Area', 'Electricity', 'Water', 'CCTV', 'Kitchen Access'],
     reviews: []
   },
   {
@@ -392,7 +392,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800'],
     category: 'All Female',
     date: '5 available',
-    amenities: ['Free Wifi', 'Elevator', 'Gym'],
+    amenities: ['Free Wifi', 'Elevator', 'Gym', 'Aircon', 'CCTV', 'Heated Shower'],
     reviews: []
   },
   {
@@ -406,7 +406,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=800'],
     category: 'Shared Room',
     date: '8 available',
-    amenities: ['Electricity', 'Kitchen Access'],
+    amenities: ['Electricity', 'Kitchen Access', 'Free Wifi', 'Water', 'CCTV', 'Study Area'],
     reviews: []
   },
   {
@@ -420,7 +420,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800'],
     category: 'Solo Room',
     date: '1 available',
-    amenities: ['Free Wifi', 'Water'],
+    amenities: ['Free Wifi', 'Water', 'Electricity', 'Aircon', 'CCTV', 'Study Area'],
     reviews: []
   },
   {
@@ -434,7 +434,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=800'],
     category: 'Affordable',
     date: '12 available',
-    amenities: ['Water'],
+    amenities: ['Water', 'Electricity', 'Free Wifi', 'Kitchen Access', 'CCTV', 'Study Area'],
     reviews: []
   },
   {
@@ -448,7 +448,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1512918728675-ed7a9c72051c?auto=format&fit=crop&q=80&w=800'],
     category: 'All Male',
     date: '4 available',
-    amenities: ['Free Wifi', 'Aircon', 'Security'],
+    amenities: ['Free Wifi', 'Aircon', 'Security', 'CCTV', 'Electricity', 'Water'],
     reviews: []
   },
   {
@@ -462,7 +462,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=800'],
     category: 'Boarding House',
     date: '2 available',
-    amenities: ['Garden', 'Free Wifi'],
+    amenities: ['Garden', 'Free Wifi', 'Electricity', 'Water', 'CCTV', 'Kitchen Access'],
     reviews: []
   },
   {
@@ -476,7 +476,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800'],
     category: 'Near MSU-IIT',
     date: '4 available',
-    amenities: ['Free Wifi', 'AC', 'Kitchen'],
+    amenities: ['Free Wifi', 'AC', 'Kitchen', 'Electricity', 'Water', 'CCTV'],
     reviews: []
   },
   {
@@ -490,7 +490,7 @@ export const LISTINGS: Listing[] = [
     gallery: ['https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=800'],
     category: 'Solo Room',
     date: '3 available',
-    amenities: ['Security', 'Free Wifi'],
+    amenities: ['Security', 'Free Wifi', 'Electricity', 'Water', 'CCTV', 'Aircon'],
     reviews: []
   }
 ];

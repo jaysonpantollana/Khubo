@@ -274,29 +274,31 @@ export default function ListingDetail() {
             <div className="py-12 border-b border-gray-100">
               <h3 className="text-2xl font-semibold text-neutral-900 mb-8">What this place offers</h3>
               {listing.amenities && listing.amenities.length > 0 && (
-                <div className="flex flex-wrap gap-4 mb-10">
-                  {listing.amenities.slice(0, showAllAmenities ? listing.amenities.length : 5).map((amenity, idx) => (
-                    <div key={idx} className="px-5 py-3.5 border border-neutral-200 rounded-xl">
-                      <span className="text-[15px] text-neutral-800 font-medium">{amenity}</span>
-                    </div>
-                  ))}
-                  {!showAllAmenities && listing.amenities.length > 5 && (
+                <>
+                  <div className="flex flex-wrap gap-4 mb-8">
+                    {listing.amenities.slice(0, showAllAmenities ? listing.amenities.length : 3).map((amenity, idx) => (
+                      <div key={idx} className="px-5 py-3.5 border border-neutral-200 rounded-xl">
+                        <span className="text-[15px] text-neutral-800 font-medium">{amenity}</span>
+                      </div>
+                    ))}
+                    {showAllAmenities && listing.amenities.length > 3 && (
+                      <button
+                        onClick={() => setShowAllAmenities(false)}
+                        className="px-5 py-3.5 border border-dashed border-neutral-300 rounded-xl cursor-pointer hover:bg-neutral-50 transition"
+                      >
+                        <span className="text-[15px] text-neutral-800 font-medium">Show less</span>
+                      </button>
+                    )}
+                  </div>
+                  {!showAllAmenities && listing.amenities.length > 3 && (
                     <button
                       onClick={() => setShowAllAmenities(true)}
-                      className="px-5 py-3.5 border border-dashed border-neutral-300 rounded-xl cursor-pointer hover:bg-neutral-50 transition"
+                      className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
                     >
-                      <span className="text-[15px] text-neutral-800 font-medium">+{listing.amenities.length - 5}</span>
+                      Show more
                     </button>
                   )}
-                  {showAllAmenities && listing.amenities.length > 5 && (
-                    <button
-                      onClick={() => setShowAllAmenities(false)}
-                      className="px-5 py-3.5 border border-dashed border-neutral-300 rounded-xl cursor-pointer hover:bg-neutral-50 transition"
-                    >
-                      <span className="text-[15px] text-neutral-800 font-medium">Show less</span>
-                    </button>
-                  )}
-                </div>
+                </>
               )}
             </div>
 
@@ -341,7 +343,7 @@ export default function ListingDetail() {
                 onClick={() => setShowAllRules(!showAllRules)}
                 className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
               >
-                {showAllRules ? 'Show less' : 'Show more rules'}
+                {showAllRules ? 'Show less' : 'Show more'}
               </button>
             </div>
 

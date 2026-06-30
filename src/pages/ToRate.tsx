@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Send } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useToast } from '../components/ToastProvider';
+import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { reservations, Reservation } from '../mocks/reservations';
 
 interface RatingData {
@@ -20,6 +21,9 @@ export default function ToRate() {
   const { showToast } = useToast();
   const [ratings, setRatings] = useState<Record<string, RatingData>>({});
   const [hoveredStar, setHoveredStar] = useState<Record<string, number>>({});
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
   useEffect(() => {
     document.title = 'To Rate | Khubo';
@@ -48,6 +52,12 @@ export default function ToRate() {
     showToast(`Rated "${propertyTitle}" — ${data.rating} star${data.rating > 1 ? 's' : ''}`, 'success');
   };
 
+  const handleOpenGallery = (images: string[], index: number) => {
+    setGalleryImages(images);
+    setGalleryIndex(index);
+    setIsGalleryOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#f0f2f5] pb-24">
       {/* Header */}
@@ -70,11 +80,12 @@ export default function ToRate() {
           return (
             <div key={res.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
               {/* Image gallery */}
-              <div className="w-full lg:w-[380px] h-auto lg:h-[260px] relative bg-white p-[3px] rounded-2xl md:rounded-[1.5rem] overflow-hidden shrink-0">
+              <div className="w-full lg:w-[380px] h-auto lg:h-[260px] relative bg-white p-[3px] rounded-2xl md:rounded-[1.5rem] overflow-hidden shrink-0 cursor-zoom-in">
                 <img
                   src={res.image}
                   alt={res.title}
                   className="absolute inset-0 w-[calc(50%-1.5px)] h-full object-cover rounded-l-2xl md:rounded-l-[1.5rem]"
+                  onClick={() => handleOpenGallery([res.image, ...res.gallery], 0)}
                 />
                 <div className="absolute top-[3px] right-[3px] bottom-[3px] w-[calc(50%-1.5px)] flex flex-col">
                   {res.gallery.slice(0, 2).map((img, i) => (
@@ -83,6 +94,7 @@ export default function ToRate() {
                       src={img}
                       alt={`${res.title} ${i + 2}`}
                       className="w-full h-1/2 object-cover"
+                      onClick={() => handleOpenGallery([res.image, ...res.gallery], i + 1)}
                     />
                   ))}
                 </div>
@@ -208,6 +220,13 @@ export default function ToRate() {
       </div>
 
       <BottomNav />
+
+      <PhotoCarouselOverlay
+        isOpen={isGalleryOpen}
+        images={galleryImages}
+        initialIndex={galleryIndex}
+        onClose={() => setIsGalleryOpen(false)}
+      />
     </div>
   );
 }

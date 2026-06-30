@@ -275,7 +275,10 @@ export default function ToRate() {
                 ) : isRatingExpanded[res.id] ? (
                   <>
                     {/* Header with identity + title + collapse */}
-                    <div className="flex items-center justify-between cursor-pointer pb-3 mb-4 border-b border-neutral-100">
+                    <div
+                      className="flex items-center justify-between cursor-pointer pb-3 mb-4 border-b border-neutral-100"
+                      onClick={() => setIsRatingExpanded((prev) => ({ ...prev, [res.id]: false }))}
+                    >
                       <div className="flex items-center gap-2.5">
                         {anon ? (
                           <img src={getAnonymousAvatar(res.id)} alt={displayName} className="w-8 h-8 rounded-full object-cover shrink-0" />
@@ -293,10 +296,10 @@ export default function ToRate() {
                           <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
                         </button>
                       </div>
-                      <ChevronDown size={24} className="text-neutral-400 rotate-180 transition-transform -mr-1" />
+                      <ChevronDown size={24} className="text-neutral-400 rotate-180 transition-transform mr-4" />
                     </div>
 
-                    <p className="text-sm font-bold text-neutral-800 mb-4">Rate your living experience</p>
+                    <p className="text-sm font-bold text-neutral-800 mt-6 mb-2">Rate your living experience</p>
 
                     {/* Stars */}
                     <div className="flex items-center gap-1.5 mb-5">
@@ -350,7 +353,7 @@ export default function ToRate() {
                     className="w-full flex items-center justify-between cursor-pointer"
                   >
                     <span className="text-sm font-bold text-neutral-800">Add review</span>
-                    <ChevronDown size={24} className="text-neutral-400 transition-transform -mr-1" />
+                    <ChevronDown size={24} className="text-neutral-400 transition-transform mr-4" />
                   </button>
                 )}
               </div>

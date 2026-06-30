@@ -293,7 +293,7 @@ export default function ToRate() {
                           <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
                         </button>
                       </div>
-                      <ChevronDown size={18} className="text-neutral-400 rotate-180 transition-transform" />
+                      <ChevronDown size={24} className="text-neutral-400 rotate-180 transition-transform -mr-1" />
                     </div>
 
                     <p className="text-sm font-bold text-neutral-800 mb-4">Rate your living experience</p>
@@ -350,7 +350,7 @@ export default function ToRate() {
                     className="w-full flex items-center justify-between cursor-pointer"
                   >
                     <span className="text-sm font-bold text-neutral-800">Add review</span>
-                    <ChevronDown size={18} className="text-neutral-400 transition-transform" />
+                    <ChevronDown size={24} className="text-neutral-400 transition-transform -mr-1" />
                   </button>
                 )}
               </div>

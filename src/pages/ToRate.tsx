@@ -3,13 +3,14 @@
 // @behavior: Shows reservation list with rating form (stars + comment); submitted ratings shown as review cards
 // @dependencies: lucide-react, useNavigate, BottomNav, ToastProvider, shared reservations
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, MapPin, Send } from 'lucide-react';
+import { ArrowLeft, Star, MapPin, Send, EyeOff } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import { useToast } from '../components/ToastProvider';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
-import { reservations, Reservation } from '../mocks/reservations';
+import { reservations } from '../mocks/reservations';
+import { useAuth } from '../lib/AuthContext';
 
 interface RatingData {
   rating: number;
@@ -17,15 +18,53 @@ interface RatingData {
   isAnonymous: boolean;
 }
 
+const ANONYMOUS_NAMES = [
+  'Anonymous member',
+  'Anonymous participant',
+  'Group member',
+  'Anonymous member 2',
+  'Anonymous participant 2',
+  'Group member 2',
+  'Anonymous member 3',
+  'Anonymous participant 3',
+  'Group member 3',
+  'Anonymous member 4',
+  'Anonymous participant 4',
+  'Group member 4',
+  'Anonymous member 5',
+  'Anonymous participant 5',
+  'Group member 5',
+];
+
+function getAnonymousName(propertyId: string): string {
+  let hash = 0;
+  for (let i = 0; i < propertyId.length; i++) {
+    hash = ((hash << 5) - hash + propertyId.charCodeAt(i)) | 0;
+  }
+  return ANONYMOUS_NAMES[Math.abs(hash) % ANONYMOUS_NAMES.length];
+}
+
 export default function ToRate() {
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { user } = useAuth();
   const [ratings, setRatings] = useState<Record<string, RatingData>>({});
   const [hoveredStar, setHoveredStar] = useState<Record<string, number>>({});
   const [isAnonymous, setIsAnonymous] = useState<Record<string, boolean>>({});
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [galleryIndex, setGalleryIndex] = useState(0);
+
+  const email = user?.email;
+  const realUserName = useMemo(() => {
+    if (email) {
+      const local = email.split('@')[0];
+      return local.charAt(0).toUpperCase() + local.slice(1);
+    }
+    return 'You';
+  }, [email]);
+
+  const realAvatarUrl = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200';
 
   useEffect(() => {
     document.title = 'To Rate | Khubo';
@@ -34,9 +73,9 @@ export default function ToRate() {
   const handleRatingChange = (propertyId: string, value: number) => {
     setRatings((prev) => ({
       ...prev,
-      [propertyId]: { 
-        ...prev[propertyId], 
-        rating: value, 
+      [propertyId]: {
+        ...prev[propertyId],
+        rating: value,
         comment: prev[propertyId]?.comment || '',
         isAnonymous: prev[propertyId]?.isAnonymous || false
       },
@@ -46,9 +85,9 @@ export default function ToRate() {
   const handleCommentChange = (propertyId: string, comment: string) => {
     setRatings((prev) => ({
       ...prev,
-      [propertyId]: { 
-        ...prev[propertyId], 
-        comment, 
+      [propertyId]: {
+        ...prev[propertyId],
+        comment,
         rating: prev[propertyId]?.rating || 0,
         isAnonymous: prev[propertyId]?.isAnonymous || false
       },
@@ -106,6 +145,8 @@ export default function ToRate() {
       <div className="w-full px-4 py-6 space-y-5">
         {reservations.slice(0, 1).map((res) => {
           const submitted = ratings[res.id]?.rating > 0 && ratings[res.id]?.comment;
+          const anon = isAnonymous[res.id] || false;
+          const displayName = anon ? getAnonymousName(res.id) : realUserName;
           return (
             <div key={res.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
               {/* Image gallery */}
@@ -198,6 +239,33 @@ export default function ToRate() {
                         )}
                       </div>
 
+                      {/* Identity row: name + avatar beside toggle */}
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm font-semibold text-neutral-800 truncate max-w-[220px]">{displayName}</span>
+                        <div className="flex items-center gap-2">
+                          {anon ? (
+                            <div className="w-8 h-8 rounded-full bg-neutral-200 flex items-center justify-center shrink-0">
+                              <EyeOff size={14} className="text-neutral-500" />
+                            </div>
+                          ) : (
+                            <img
+                              src={realAvatarUrl}
+                              alt={realUserName}
+                              className="w-8 h-8 rounded-full object-cover shrink-0"
+                            />
+                          )}
+                          <button
+                            role="switch"
+                            aria-checked={anon}
+                            aria-label="Toggle anonymous posting"
+                            onClick={() => handleAnonymousToggle(res.id)}
+                            className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer shrink-0 ${anon ? 'bg-[#4E4F50]' : 'bg-neutral-300'}`}
+                          >
+                            <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${anon ? 'left-6' : 'left-1'}`} />
+                          </button>
+                        </div>
+                      </div>
+
                       {/* Comment */}
                       <textarea
                         value={ratings[res.id]?.comment || ''}
@@ -206,20 +274,6 @@ export default function ToRate() {
                         rows={3}
                         className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-2xl text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/30 focus:border-[#2252D6] resize-none transition-all"
                       />
-
-                      {/* Anonymous toggle */}
-                      <div className="flex items-center justify-between mt-3 mb-1">
-                        <span className="text-sm text-neutral-600">Post anonymously</span>
-                        <button
-                          role="switch"
-                          aria-checked={isAnonymous[res.id] || false}
-                          aria-label="Toggle anonymous posting"
-                          onClick={() => handleAnonymousToggle(res.id)}
-                          className={`relative w-11 h-6 rounded-full transition-colors duration-300 cursor-pointer ${isAnonymous[res.id] ? 'bg-[#4E4F50]' : 'bg-neutral-300'}`}
-                        >
-                          <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300 ${isAnonymous[res.id] ? 'left-6' : 'left-1'}`} />
-                        </button>
-                      </div>
 
                       {/* Submit */}
                       <button

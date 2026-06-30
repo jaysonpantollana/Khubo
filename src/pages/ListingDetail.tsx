@@ -281,21 +281,18 @@ export default function ListingDetail() {
                         <span className="text-[15px] text-neutral-800 font-medium">{amenity}</span>
                       </div>
                     ))}
-                    {showAllAmenities && listing.amenities.length > 3 && (
-                      <button
-                        onClick={() => setShowAllAmenities(false)}
-                        className="px-5 py-3.5 border border-dashed border-neutral-300 rounded-xl cursor-pointer hover:bg-neutral-50 transition"
-                      >
-                        <span className="text-[15px] text-neutral-800 font-medium">Show less</span>
-                      </button>
+                    {!showAllAmenities && listing.amenities.length > 3 && (
+                      <div className="px-5 py-3.5 border border-dashed border-neutral-300 rounded-xl">
+                        <span className="text-[15px] text-neutral-800 font-medium">+{listing.amenities.length - 3}</span>
+                      </div>
                     )}
                   </div>
-                  {!showAllAmenities && listing.amenities.length > 3 && (
+                  {listing.amenities.length > 3 && (
                     <button
-                      onClick={() => setShowAllAmenities(true)}
+                      onClick={() => setShowAllAmenities(!showAllAmenities)}
                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
                     >
-                      Show more
+                      {showAllAmenities ? 'Show less' : 'Show more'}
                     </button>
                   )}
                 </>

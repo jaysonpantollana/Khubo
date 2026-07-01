@@ -33,6 +33,7 @@ import React, { Suspense, lazy } from 'react';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ThemeProvider } from './lib/ThemeContext';
 import { AuthProvider } from './lib/AuthContext';
+import { LandlordProvider } from './lib/LandlordContext';
 import { ToastProvider } from './components/ToastProvider';
 import ErrorBoundary from './components/errors/ErrorBoundary';
 import PageError from './components/ui/ErrorScreen';
@@ -73,8 +74,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <ToastProvider>
-          <Router>
+        <LandlordProvider>
+          <ToastProvider>
+            <Router>
               <SkipLink />
               <ScrollToTop />
               <ErrorBoundary fallback={<PageError />}>
@@ -98,7 +100,8 @@ export default function App() {
                 </Suspense>
               </ErrorBoundary>
             </Router>
-        </ToastProvider>
+          </ToastProvider>
+        </LandlordProvider>
       </AuthProvider>
     </ThemeProvider>
   );

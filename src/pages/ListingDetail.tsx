@@ -6,11 +6,13 @@
 import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
 import { useAuth } from '../lib/AuthContext';
+import { useLandlord } from '../lib/LandlordContext';
 import { X, Star, MapPin, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { ListingModal } from '../components/ListingModal';
+import { LandlordListingsModal } from '../components/LandlordListingsModal';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import MapTilerView from '../components/MapTilerView';
 import Footer from '../components/Footer';
@@ -21,8 +23,14 @@ import ListingDetailSkeleton from '../components/ListingDetailSkeleton';
 export default function ListingDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { listing, loading } = useListing(id);
+  const { listing: initialListing, loading } = useListing(id);
   const { showToast } = useToast();
+  const { isLandlord } = useLandlord();
+  const [listing, setListing] = useState(initialListing);
+
+  useEffect(() => {
+    setListing(initialListing);
+  }, [initialListing]);
 
   useEffect(() => {
     if (listing) {
@@ -41,8 +49,23 @@ export default function ListingDetail() {
   const [isSaved, setIsSaved] = useState(false);
   const { user } = useAuth();
   const isAuthenticated = !!user;
-  const [selectedReview, setSelectedReview] = useState<{userName: string; userImage: string; comment: string; date: string} | null>(null);
+  const [selectedReview, setSelectedReview] = useState<{id: string; userName: string; userImage: string; comment: string; date: string} | null>(null);
   const [showAllReviewsMobile, setShowAllReviewsMobile] = useState(false);
+  const [isLandlordListingsOpen, setIsLandlordListingsOpen] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState<string | null>(null);
+
+  const handleDeleteReview = (reviewId: string) => {
+    if (!listing) return;
+    const updatedReviews = listing.reviews.filter((r) => r.id !== reviewId);
+    const totalRating = updatedReviews.reduce((sum, r) => sum + r.rating, 0);
+    const newRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
+    setListing({ ...listing, reviews: updatedReviews, rating: newRating });
+    showToast('Review deleted');
+    setReviewToDelete(null);
+    if (selectedReview?.id === reviewId) {
+      setSelectedReview(null);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -373,7 +396,7 @@ export default function ListingDetail() {
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {listing.reviews.slice(0, showAllReviewsMobile ? undefined : 4).map((rev, idx) => (
-                    <div key={idx} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer" onClick={() => setSelectedReview(rev)}>
+                    <div key={rev.id} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer" onClick={() => setSelectedReview(rev)}>
                        <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
                               <img src={rev.userImage} loading="lazy" className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
@@ -385,8 +408,15 @@ export default function ListingDetail() {
                                 <span className="text-neutral-500 text-[13px] font-medium leading-tight mt-0.5">@{rev.userName.toLowerCase().replace(/\s+/g, '_')}</span>
                              </div>
                           </div>
-                          <div className="flex items-center gap-1 text-neutral-400">
-                          </div>
+                          {isLandlord && (
+                            <button
+                              aria-label="Delete review"
+                              onClick={(e) => { e.stopPropagation(); setReviewToDelete(rev.id); }}
+                              className="p-1.5 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer pointer-events-auto"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          )}
                        </div>
                        
                        <p className="text-neutral-800 leading-relaxed text-[15px] pt-1">
@@ -462,6 +492,7 @@ export default function ListingDetail() {
               rating={displayHost.rating}
               hostingDuration={displayHost.hostingDuration}
               tenantCount={displayHost.tenantCount || defaultHost.tenantCount}
+              onClick={() => setIsLandlordListingsOpen(true)}
             />
 
           </div>
@@ -547,6 +578,13 @@ export default function ListingDetail() {
         onContactOwner={() => showToast('Message sent to owner!')}
       />
 
+      <LandlordListingsModal
+        isOpen={isLandlordListingsOpen}
+        onClose={() => setIsLandlordListingsOpen(false)}
+        host={displayHost}
+        currentListingId={listing.id}
+      />
+
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
@@ -618,15 +656,26 @@ export default function ListingDetail() {
                     <span className="text-neutral-500 text-[14px] font-medium leading-tight mt-0.5">@{selectedReview.userName.toLowerCase().replace(/\s+/g, '_')}</span>
                  </div>
               </div>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedReview(null);
-                }}
-                className="p-2 bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors focus:outline-none"
-              >
-                <X size={20} className="text-neutral-600" />
-              </button>
+              <div className="flex items-center gap-2">
+                {isLandlord && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setReviewToDelete(selectedReview.id); }}
+                    className="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors focus:outline-none cursor-pointer"
+                    aria-label="Delete review"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                )}
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedReview(null);
+                  }}
+                  className="p-2 bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors focus:outline-none"
+                >
+                  <X size={20} className="text-neutral-600" />
+                </button>
+              </div>
             </div>
             
             <p className="text-neutral-800 leading-relaxed text-[16px] md:text-[18px]">
@@ -635,6 +684,29 @@ export default function ListingDetail() {
 
             <div className="mt-8 text-neutral-500 text-[14px] font-medium">
                {selectedReview.date}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {reviewToDelete && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-4" onClick={() => setReviewToDelete(null)}>
+          <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-neutral-900 mb-2">Delete review?</h3>
+            <p className="text-neutral-500 text-sm mb-6">This action cannot be undone.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setReviewToDelete(null)}
+                className="flex-1 px-4 py-2.5 border border-neutral-200 rounded-xl font-semibold text-neutral-700 hover:bg-neutral-50 transition cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDeleteReview(reviewToDelete)}
+                className="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition cursor-pointer"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>

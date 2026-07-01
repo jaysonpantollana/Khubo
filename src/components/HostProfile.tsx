@@ -13,6 +13,7 @@ interface HostProfileProps {
   rating: number;
   hostingDuration: string;
   tenantCount: number;
+  onClick?: () => void;
 }
 
 const HostProfile: React.FC<HostProfileProps> = ({
@@ -22,6 +23,7 @@ const HostProfile: React.FC<HostProfileProps> = ({
   rating,
   hostingDuration,
   tenantCount,
+  onClick,
 }) => {
   return (
     <div className="py-10 border-t border-neutral-100 mt-6">
@@ -31,7 +33,10 @@ const HostProfile: React.FC<HostProfileProps> = ({
 
       <div className="flex flex-col md:flex-row gap-8 md:gap-12">
         <div className="flex w-full md:w-1/2 flex-col">
-          <div className="flex items-center gap-5 mb-8">
+          <div
+            onClick={onClick}
+            className={`flex items-center gap-5 mb-8 ${onClick ? 'cursor-pointer hover:bg-neutral-50 -mx-3 px-3 py-2 rounded-xl transition-colors' : ''}`}
+          >
               <img src={image} loading="lazy" alt={name} className="w-16 h-16 rounded-full object-cover bg-neutral-100 ring-4 ring-neutral-50 shadow-sm" />
              <div>
                 <h3 className="text-xl font-bold text-[#17294F] flex items-center gap-1.5 font-display">

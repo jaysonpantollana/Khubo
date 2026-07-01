@@ -15,6 +15,7 @@ import {
 import BottomNav from '../components/BottomNav';
 import Footer from '../components/Footer';
 import { useAuth } from '../lib/AuthContext';
+import { useLandlord } from '../lib/LandlordContext';
 import { useToast } from '../components/ToastProvider';
 import { updateListing } from '../lib/api/listings';
 import { EditListingModal } from '../components/EditListingModal';
@@ -34,8 +35,8 @@ import { reservations } from '../mocks/reservations';
 export default function Profile() {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const { isLandlord, setIsLandlord } = useLandlord();
   const { showToast } = useToast();
-  const [isLandlord, setIsLandlord] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);

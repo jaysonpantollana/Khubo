@@ -66,6 +66,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
         onClose={onClose}
         ariaLabel="Landlord Profile"
         className="relative bg-white w-full max-w-[380px] md:max-w-[460px] rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden p-5 md:p-7 max-h-[85vh] overflow-y-auto"
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-5">

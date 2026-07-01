@@ -74,6 +74,10 @@ export function Modal({
     }
   }, [closeOnOverlayClick, onClose]);
 
+  const handleContentClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
+
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Escape' && closeOnEscape) {
       onClose();
@@ -99,6 +103,7 @@ export function Modal({
         aria-modal="true"
         aria-labelledby={title && !hideTitle ? `${title.replace(/\s+/g, '-').toLowerCase()}-title` : undefined}
         aria-describedby={description && title ? `${title.replace(/\s+/g, '-').toLowerCase()}-description` : undefined}
+        onClick={handleContentClick}
         className={cn(
           'relative w-full bg-white rounded-modal shadow-modal',
           'transform transition-all duration-200',

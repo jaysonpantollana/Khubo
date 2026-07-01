@@ -27,7 +27,7 @@ export const LandlordListingsModal: React.FC<LandlordListingsModalProps> = ({
     setLoading(true);
     getListings().then(({ data }) => {
       const filtered = (data || []).filter(
-        (l) => l.host?.name === host.name && l.id !== currentListingId
+        (l) => l.host?.name === host.name
       );
       setListings(filtered);
       setLoading(false);

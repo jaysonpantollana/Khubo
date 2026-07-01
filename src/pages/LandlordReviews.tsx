@@ -89,7 +89,7 @@ export default function LandlordReviews() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { showToast } = useToast();
-  const [myListings, setMyListings] = useState<Listing[]>([]);
+  const [displayListings, setDisplayListings] = useState<Listing[]>(sampleListingsWithReviews);
   const [loadingListings, setLoadingListings] = useState(false);
   const [expandedListings, setExpandedListings] = useState<Record<string, boolean>>({});
   const [deletingReview, setDeletingReview] = useState<string | null>(null);
@@ -105,7 +105,9 @@ export default function LandlordReviews() {
     const { getListings } = await import('../lib/api/listings');
     const { data } = await getListings();
     const filtered = (data || []).filter((l) => l.host?.name === user?.email?.split('@')[0]) as Listing[];
-    setMyListings(filtered);
+    if (filtered.length > 0) {
+      setDisplayListings(filtered);
+    }
     setLoadingListings(false);
   }, [user]);
 
@@ -114,8 +116,6 @@ export default function LandlordReviews() {
       fetchMyListings();
     }
   }, [user, fetchMyListings]);
-
-  const displayListings = myListings.length > 0 ? myListings : sampleListingsWithReviews;
 
   useEffect(() => {
     if (displayListings.length > 0) {
@@ -128,7 +128,7 @@ export default function LandlordReviews() {
   const handleDeleteReview = useCallback((listingId: string, reviewId: string) => {
     setDeletingReview(reviewId);
     setTimeout(() => {
-      setMyListings(prev =>
+      setDisplayListings(prev =>
         prev.map(l =>
           l.id === listingId
             ? { ...l, reviews: l.reviews.filter(r => r.id !== reviewId) }

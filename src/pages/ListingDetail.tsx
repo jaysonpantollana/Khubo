@@ -58,7 +58,6 @@ export default function ListingDetail() {
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
     setCopiedContact(type);
-    showToast(`${type} copied to clipboard!`, 'success');
     setTimeout(() => setCopiedContact(null), 1500);
   };
 

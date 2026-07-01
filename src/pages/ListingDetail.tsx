@@ -227,12 +227,7 @@ export default function ListingDetail() {
             ))}
           </div>
 
-          <button 
-             onClick={() => openGallery(0)}
-             className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm border border-neutral-300 px-4 py-1.5 rounded-lg text-sm font-medium shadow-sm transition hover:bg-white hover:border-neutral-400 active:scale-95"
-          >
-            Show all photos
-          </button>
+
         </div>
 
         {/* Desktop Title Bar - Now below images */}

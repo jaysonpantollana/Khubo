@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, MouseEvent } from 'react';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 interface FocusTrapProps {
@@ -6,9 +6,10 @@ interface FocusTrapProps {
   onClose?: () => void;
   className?: string;
   ariaLabel?: string;
+  onClick?: (e: MouseEvent) => void;
 }
 
-export function FocusTrap({ children, onClose, className = '', ariaLabel = 'Dialog' }: FocusTrapProps) {
+export function FocusTrap({ children, onClose, className = '', ariaLabel = 'Dialog', onClick }: FocusTrapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   useFocusTrap(true, containerRef, onClose);
 
@@ -19,6 +20,7 @@ export function FocusTrap({ children, onClose, className = '', ariaLabel = 'Dial
       aria-modal="true"
       aria-label={ariaLabel}
       className={className}
+      onClick={onClick}
     >
       {children}
     </div>

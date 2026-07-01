@@ -10,7 +10,7 @@ import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
   Settings, LogOut, Bell, Building, Check, X,
-  MoreVertical, Copy, Users,
+  MoreVertical, Copy, Users, MessageSquare,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import Footer from '../components/Footer';
@@ -49,6 +49,7 @@ export default function Profile() {
 
   const menuItems = [
     ...(!isLandlord ? [{ title: 'To Rate', icon: Star, action: () => navigate('/to-rate') }] : []),
+    ...(isLandlord ? [{ title: 'Reviews', icon: MessageSquare, action: () => navigate('/landlord/reviews') }] : []),
     { title: 'Notifications', icon: Bell, action: () => setIsAnnouncementsOpen(true) },
     { title: 'Account settings', icon: Settings, action: () => showToast('Account settings clicked', 'info') },
   ];

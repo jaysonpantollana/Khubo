@@ -17,9 +17,10 @@ interface MapTilerViewProps {
   lng: number;
   title: string;
   loadImmediately?: boolean;
+  hideControls?: boolean;
 }
 
-const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmediately = false }) => {
+const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmediately = false, hideControls = false }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maptilersdk.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -109,6 +110,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
   return (
     <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-md border border-neutral-200 bg-neutral-50 flex items-center justify-center">
       {/* Custom Map Controls - Bottom Right Container style */}
+      {!hideControls && (
       <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2">
         {/* Zoom Stack */}
         <div className="flex flex-col bg-white rounded-xl md:rounded-2xl shadow-xl border border-neutral-100 overflow-hidden divide-y divide-neutral-100">
@@ -126,6 +128,7 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
           </button>
         </div>
       </div>
+      )}
       {(!apiKey || !shouldLoadMap) && (
         <>
           {/* Fallback Map Background (Visible if live map fails to load or no key or not loaded yet) */}

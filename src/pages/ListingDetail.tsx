@@ -481,6 +481,7 @@ export default function ListingDetail() {
                   lat={listing.lat || 8.2280}
                   lng={listing.lng || 124.2452}
                   title={listing.title}
+                  hideControls={isLandlordListingsOpen}
                 />
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-all scale-95 group-hover:scale-100">
                   <div className="bg-[#17294F] text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-2xl border border-white/20 backdrop-blur-md">
@@ -635,6 +636,7 @@ export default function ListingDetail() {
                 lng={listing.lng || 124.2452}
                 title={listing.title}
                 loadImmediately={true}
+                hideControls={isLandlordListingsOpen}
               />
             </div>
 

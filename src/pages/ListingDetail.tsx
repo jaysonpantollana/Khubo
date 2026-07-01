@@ -7,7 +7,7 @@ import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
 import { useAuth } from '../lib/AuthContext';
 import { useLandlord } from '../lib/LandlordContext';
-import { X, Star, MapPin, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail, Copy, Check } from 'lucide-react';
+import { X, Star, MapPin, ArrowLeft, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Users, Trash2, Instagram, Facebook, Twitter, Phone, Mail, Copy, Check } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -325,47 +325,44 @@ export default function ListingDetail() {
 
             <div className="py-12 border-b border-gray-100">
               <h3 className="text-2xl font-semibold text-neutral-900 mb-6">House Rules</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-6">
-                <div className="flex items-center gap-4">
-                  <Clock size={24} className="text-[#17294F] shrink-0" />
-                  <span className="text-[16px] text-neutral-800">Curfew at 10:00 PM</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Users size={24} className="text-[#17294F] shrink-0" />
-                  <span className="text-[16px] text-neutral-800">No visitors allowed after 9:00 PM</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Ban size={24} className="text-[#17294F] shrink-0" />
-                  <span className="text-[16px] text-neutral-800">No smoking indoors</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Moon size={24} className="text-[#17294F] shrink-0" />
-                  <span className="text-[16px] text-neutral-800">Quiet hours from 10:00 PM - 7:00 AM</span>
-                </div>
-                
-                {showAllRules && (
-                  <>
-                    <div className="flex items-center gap-4">
-                      <Coffee size={24} className="text-[#17294F] shrink-0" />
-                      <span className="text-[16px] text-neutral-800">Clean up after cooking in shared kitchen</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <VolumeX size={24} className="text-[#17294F] shrink-0" />
-                      <span className="text-[16px] text-neutral-800">No loud music</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <Trash2 size={24} className="text-[#17294F] shrink-0" />
-                      <span className="text-[16px] text-neutral-800">Dispose garbage properly in designated bins</span>
-                    </div>
-                  </>
-                )}
-              </div>
-              <button 
-                onClick={() => setShowAllRules(!showAllRules)}
-                className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
-              >
-                {showAllRules ? 'Show less' : 'Show more'}
-              </button>
+              {(() => {
+                const allRules = [
+                  'Curfew at 10:00 PM',
+                  'No visitors allowed after 9:00 PM',
+                  'No smoking indoors',
+                  'Quiet hours from 10:00 PM - 7:00 AM',
+                  'Clean up after cooking in shared kitchen',
+                  'No loud music',
+                  'Dispose garbage properly in designated bins',
+                ];
+                const visibleRules = showAllRules ? allRules : allRules.slice(0, 3);
+                const remaining = allRules.length - 3;
+                return (
+                  <div className="flex flex-wrap gap-3">
+                    {visibleRules.map((rule, i) => (
+                      <span key={i} className="px-4 py-2.5 border border-neutral-200 rounded-xl text-sm text-neutral-700 bg-white">
+                        {rule}
+                      </span>
+                    ))}
+                    {!showAllRules && remaining > 0 && (
+                      <button
+                        onClick={() => setShowAllRules(true)}
+                        className="px-4 py-2.5 border border-dashed border-neutral-300 rounded-xl text-sm font-bold text-neutral-500 hover:border-neutral-400 hover:text-neutral-700 transition"
+                      >
+                        +{remaining}
+                      </button>
+                    )}
+                    {showAllRules && (
+                      <button
+                        onClick={() => setShowAllRules(false)}
+                        className="px-4 py-2.5 border border-dashed border-neutral-300 rounded-xl text-sm font-bold text-neutral-500 hover:border-neutral-400 hover:text-neutral-700 transition"
+                      >
+                        Show less
+                      </button>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
 
             <div className="py-12 border-b border-gray-100">

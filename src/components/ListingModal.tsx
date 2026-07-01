@@ -3,8 +3,8 @@
 // @behavior: Replaces calendar with landlord profile section
 // @dependencies: lucide-react, HostInfo type
 
-import React from 'react';
-import { X, Star, BadgeCheck, Instagram, Facebook, Twitter, Phone, Mail, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Star, BadgeCheck, Instagram, Facebook, Twitter, Phone, Mail, MessageCircle, Copy, Check } from 'lucide-react';
 import { HostInfo } from '../types';
 import { FocusTrap } from './ui/FocusTrap';
 
@@ -24,6 +24,14 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   onContactOwner,
 }) => {
   if (!isOpen) return null;
+
+  const [copiedContact, setCopiedContact] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedContact(type);
+    setTimeout(() => setCopiedContact(null), 1500);
+  };
 
   const handleContact = () => {
     if (onAuthRequired) {
@@ -107,24 +115,30 @@ export const ListingModal: React.FC<ListingModalProps> = ({
         <div className="mb-5">
           <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-3">Contact</h4>
           <div className="flex flex-col gap-2.5">
-            <a href="tel:+639123456789" className="flex items-center gap-3 p-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+            <div className="flex items-center gap-3 p-2.5 bg-neutral-50 rounded-xl">
               <div className="w-8 h-8 rounded-full bg-[#17294F]/10 flex items-center justify-center">
                 <Phone size={14} className="text-[#17294F]" />
               </div>
-              <div>
-                <p className="text-xs font-bold text-[#17294F]">Phone</p>
-                <p className="text-xs text-neutral-500">+63 912 345 6789</p>
-              </div>
-            </a>
-            <a href="mailto:layla@khubo.com" className="flex items-center gap-3 p-2.5 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition">
+              <span className="text-sm font-bold text-[#17294F] flex-1">+63 912 345 6789</span>
+              <button
+                onClick={() => copyToClipboard('+639123456789', 'Phone')}
+                className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+              >
+                {copiedContact === 'Phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+              </button>
+            </div>
+            <div className="flex items-center gap-3 p-2.5 bg-neutral-50 rounded-xl">
               <div className="w-8 h-8 rounded-full bg-[#17294F]/10 flex items-center justify-center">
                 <Mail size={14} className="text-[#17294F]" />
               </div>
-              <div>
-                <p className="text-xs font-bold text-[#17294F]">Email</p>
-                <p className="text-xs text-neutral-500">layla@khubo.com</p>
-              </div>
-            </a>
+              <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
+              <button
+                onClick={() => copyToClipboard('layla@khubo.com', 'Email')}
+                className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+              >
+                {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+              </button>
+            </div>
           </div>
         </div>
 

@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Send, Users, ChevronDown } from 'lucide-react';
-import BottomNav from '../components/BottomNav';
+
 import { useToast } from '../components/ToastProvider';
 import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
 import { reservations } from '../mocks/reservations';
@@ -361,8 +361,6 @@ export default function ToRate() {
           );
         })}
       </div>
-
-      <BottomNav />
 
       <PhotoCarouselOverlay
         isOpen={isGalleryOpen}

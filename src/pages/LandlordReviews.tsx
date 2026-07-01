@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, Trash2, MessageSquare, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Star, Trash2, MessageSquare, MapPin, AlertTriangle, ChevronDown, ChevronUp } from 'lucide-react';
 import { Listing, Review } from '../types';
 import { useAuth } from '../lib/AuthContext';
 import { Modal } from '../components/ui/Modal';
@@ -136,7 +136,6 @@ export default function LandlordReviews() {
         )
       );
       setDeletingReview(null);
-      showToast('Review deleted successfully', 'success');
     }, 300);
   }, []);
 
@@ -193,81 +192,106 @@ export default function LandlordReviews() {
                   : 0;
 
                 return (
-                  <div key={listing.id} className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 overflow-hidden">
+                  <div key={listing.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
                     {/* Listing Header */}
-                    <button
-                      onClick={() => toggleListing(listing.id)}
-                      className="w-full flex items-center gap-4 p-5 text-left hover:bg-neutral-50/50 transition-colors cursor-pointer"
-                    >
+                    <div className="w-full flex flex-col lg:flex-row gap-4 md:gap-6 text-left">
                       <img
                         src={listing.image}
                         alt={listing.title}
-                        className="w-16 h-16 rounded-xl object-cover shrink-0"
+                        className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] object-cover rounded-2xl md:rounded-[1.5rem] shrink-0"
                       />
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-base font-bold text-neutral-900 truncate">{listing.title}</h3>
-                        <p className="text-xs text-neutral-500 mt-0.5">{listing.location}</p>
-                        <div className="flex items-center gap-3 mt-1.5">
-                          <div className="flex items-center gap-1">
-                            <Star size={12} className="text-yellow-500 fill-yellow-500" />
-                            <span className="text-xs font-bold text-neutral-700">{avgRating.toFixed(1)}</span>
+                      <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4 min-w-0">
+                        <div>
+                          <h3 className="text-lg md:text-2xl font-bold text-neutral-900 tracking-tight leading-tight line-clamp-1">{listing.title}</h3>
+                          <p className="text-neutral-500 text-xs md:text-base mt-1 mb-3 md:mb-4 flex items-center gap-1">
+                            <MapPin size={16} className="shrink-0" /> {listing.location}
+                          </p>
+                          <div className="flex flex-wrap items-center gap-3">
+                            <div className="flex items-center gap-1 bg-white border border-neutral-100 px-3 py-1 rounded-full shadow-sm">
+                              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                              <span className="text-sm font-bold text-neutral-800">{avgRating.toFixed(2)}</span>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {listing.amenities.slice(0, 3).map((amenity) => (
+                                <span key={amenity} className="px-4 py-1.5 border border-neutral-200 rounded-full text-xs font-bold text-neutral-700">{amenity}</span>
+                              ))}
+                            </div>
                           </div>
-                          <span className="text-xs text-neutral-400">·</span>
-                          <span className="text-xs text-neutral-500">{reviewCount} review{reviewCount !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div className="flex items-baseline gap-1 mt-8 lg:mt-0 pt-4 border-t border-neutral-50 lg:border-none lg:pt-0">
+                          <span className="text-2xl md:text-[28px] font-black text-black">₱{listing.price.toLocaleString()}</span>
+                          <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                         </div>
                       </div>
-                      <div className="shrink-0 text-neutral-400">
-                        {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                      </div>
-                    </button>
+                    </div>
 
-                    {/* Reviews List */}
-                    {isExpanded && reviewCount > 0 && (
-                      <div className="border-t border-neutral-100">
-                        {listing.reviews.map((review) => (
-                          <div
-                            key={review.id}
-                            className={`flex gap-3 p-5 border-b border-neutral-50 last:border-b-0 transition-opacity ${deletingReview === review.id ? 'opacity-40' : ''}`}
-                          >
-                            <img
-                              src={review.userImage}
-                              alt={review.userName}
-                              className="w-10 h-10 rounded-full object-cover shrink-0"
-                            />
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between gap-2">
-                                <div className="flex items-center gap-2 min-w-0">
-                                  <span className="text-sm font-bold text-neutral-900 truncate">{review.userName}</span>
-                                  <div className="flex items-center gap-0.5 shrink-0">
-                                    {Array.from({ length: 5 }).map((_, i) => (
-                                      <Star
-                                        key={i}
-                                        size={10}
-                                        className={i < review.rating ? 'text-yellow-500 fill-yellow-500' : 'text-neutral-200'}
-                                      />
-                                    ))}
-                                  </div>
-                                </div>
-                                <span className="text-xs text-neutral-400 shrink-0">{review.date}</span>
-                              </div>
-                              <p className="text-sm text-neutral-600 mt-1 leading-relaxed">{review.comment}</p>
-                            </div>
-                            <button
-                              onClick={() => setConfirmDelete({ listingId: listing.id, reviewId: review.id, reviewName: review.userName })}
-                              disabled={deletingReview === review.id}
-                              className="shrink-0 p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors self-start cursor-pointer disabled:cursor-not-allowed"
-                              title="Delete review"
-                            >
-                              <Trash2 size={16} />
-                            </button>
+                    {/* Reviews Toggle */}
+                    {reviewCount > 0 && (
+                      <div className="w-full border-t border-neutral-100">
+                        <button
+                          onClick={() => toggleListing(listing.id)}
+                          className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-neutral-50/50 transition-colors cursor-pointer"
+                        >
+                          <div className="flex items-center gap-2">
+                            <MessageSquare size={16} className="text-neutral-600" />
+                            <span className="text-sm font-bold text-neutral-800">
+                              {reviewCount} Review{reviewCount !== 1 ? 's' : ''}
+                            </span>
                           </div>
-                        ))}
+                          <div className="text-neutral-400">
+                            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                          </div>
+                        </button>
+
+                        {/* Reviews List */}
+                        {isExpanded && (
+                          <div className="border-t border-neutral-50">
+                            {listing.reviews.map((review) => (
+                              <div
+                                key={review.id}
+                                className={`flex gap-3 p-5 border-b border-neutral-50 last:border-b-0 transition-opacity ${deletingReview === review.id ? 'opacity-40' : ''}`}
+                              >
+                                <img
+                                  src={review.userImage}
+                                  alt={review.userName}
+                                  className="w-10 h-10 rounded-full object-cover shrink-0"
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <span className="text-sm font-bold text-neutral-900 truncate">{review.userName}</span>
+                                      <div className="flex items-center gap-0.5 shrink-0">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                          <Star
+                                            key={i}
+                                            size={10}
+                                            className={i < review.rating ? 'text-yellow-500 fill-yellow-500' : 'text-neutral-200'}
+                                          />
+                                        ))}
+                                      </div>
+                                    </div>
+                                    <span className="text-xs text-neutral-400 shrink-0">{review.date}</span>
+                                  </div>
+                                  <p className="text-sm text-neutral-600 mt-1 leading-relaxed">{review.comment}</p>
+                                </div>
+                                <button
+                                  onClick={() => setConfirmDelete({ listingId: listing.id, reviewId: review.id, reviewName: review.userName })}
+                                  disabled={deletingReview === review.id}
+                                  className="shrink-0 p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors self-start cursor-pointer disabled:cursor-not-allowed"
+                                  title="Delete review"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
 
                     {/* Empty State for Listing */}
-                    {isExpanded && reviewCount === 0 && (
-                      <div className="border-t border-neutral-100 p-8 text-center">
+                    {reviewCount === 0 && (
+                      <div className="w-full border-t border-neutral-100 p-8 text-center">
                         <MessageSquare size={24} className="text-neutral-300 mx-auto mb-2" />
                         <p className="text-sm text-neutral-400">No reviews for this property yet.</p>
                       </div>

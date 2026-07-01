@@ -7,7 +7,7 @@ import { useListing } from '../hooks/useListing';
 import { useToast } from '../components/ToastProvider';
 import { useAuth } from '../lib/AuthContext';
 import { useLandlord } from '../lib/LandlordContext';
-import { X, Star, MapPin, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail } from 'lucide-react';
+import { X, Star, MapPin, ArrowLeft, Coffee, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Clock, Users, Ban, Moon, VolumeX, Trash2, Instagram, Facebook, Twitter, Phone, Mail, Copy, Check } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -53,6 +53,14 @@ export default function ListingDetail() {
   const [showAllReviewsMobile, setShowAllReviewsMobile] = useState(false);
   const [isLandlordListingsOpen, setIsLandlordListingsOpen] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState<string | null>(null);
+  const [copiedContact, setCopiedContact] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedContact(type);
+    showToast(`${type} copied to clipboard!`, 'success');
+    setTimeout(() => setCopiedContact(null), 1500);
+  };
 
   const handleDeleteReview = (reviewId: string) => {
     if (!listing) return;
@@ -531,15 +539,27 @@ export default function ListingDetail() {
 
                 <div className="mb-5">
                   <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-3">Contact</p>
-                  <div className="flex gap-4">
-                    <a href="tel:+639123456789" className="flex items-center gap-2 hover:opacity-70 transition">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2 p-2 bg-neutral-50 rounded-lg">
                       <Phone size={16} className="text-[#17294F]" />
-                      <span className="text-sm font-bold text-[#17294F]">Phone</span>
-                    </a>
-                    <a href="mailto:layla@khubo.com" className="flex items-center gap-2 hover:opacity-70 transition">
+                      <span className="text-sm font-bold text-[#17294F] flex-1">+63 912 345 6789</span>
+                      <button
+                        onClick={() => copyToClipboard('+639123456789', 'Phone')}
+                        className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+                      >
+                        {copiedContact === 'Phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2 p-2 bg-neutral-50 rounded-lg">
                       <Mail size={16} className="text-[#17294F]" />
-                      <span className="text-sm font-bold text-[#17294F]">Email</span>
-                    </a>
+                      <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
+                      <button
+                        onClick={() => copyToClipboard('layla@khubo.com', 'Email')}
+                        className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+                      >
+                        {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                      </button>
+                    </div>
                   </div>
                 </div>
 

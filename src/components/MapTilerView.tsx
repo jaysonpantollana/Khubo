@@ -107,6 +107,16 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
   const handleZoomIn = () => map.current?.zoomIn();
   const handleZoomOut = () => map.current?.zoomOut();
 
+  useEffect(() => {
+    if (!mapContainer.current) return;
+    const ctrlContainers = mapContainer.current.querySelectorAll(
+      '.maplibregl-ctrl-top-right, .maplibregl-ctrl-bottom-right, .maplibregl-ctrl-top-left, .maplibregl-ctrl-bottom-left'
+    );
+    ctrlContainers.forEach((el) => {
+      (el as HTMLElement).style.display = hideControls ? 'none' : '';
+    });
+  }, [hideControls]);
+
   return (
     <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-md border border-neutral-200 bg-neutral-50 flex items-center justify-center">
       {/* Custom Map Controls - Bottom Right Container style */}

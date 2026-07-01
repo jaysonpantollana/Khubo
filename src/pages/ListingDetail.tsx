@@ -473,7 +473,7 @@ export default function ListingDetail() {
 
               {/* Map View */}
               <div 
-                className="w-full h-[540px] relative group cursor-pointer"
+                className="w-full h-[540px] relative z-0 group cursor-pointer"
                 onClick={() => setIsMapModalOpen(true)}
               >
                 <div className="absolute inset-0 z-20 group-hover:bg-black/5 transition-colors rounded-3xl" />

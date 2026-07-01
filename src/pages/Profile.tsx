@@ -1,7 +1,7 @@
 // @context: Profile page — user account and settings
 // @purpose: Displays user avatar, name, details, stats (saved/reservations/roommate/invitations), and action modals
 // @behavior: Opens EditProfileModal, LandlordSignupModal, LogoutModal, InquiriesModal, StatCardModal
-// @dependencies: useAuth, BottomNav, EditProfileModal, LandlordSignupModal, LogoutModal, PropertiesModal, InquiriesModal, TenantsModal, StatCardModal, motion, lucide-react
+// @dependencies: useAuth, BottomNav, EditProfileModal, LandlordSignupModal, LogoutModal, InquiriesModal, StatCardModal, motion, lucide-react
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';

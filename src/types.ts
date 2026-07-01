@@ -15,7 +15,7 @@
 // @error-codes: ERR_MAP_MISSING_KEY — MAPTILER_API_KEY not set (MapTilerView console.warn)
 // @error-codes: ERR_MEMORY_LEAK — URL.createObjectURL not revoked (messages.ts known issue)
 // @error-codes: ERR_UPDATE_NOT_FOUND — listing to update not found (listings.ts returns 'Listing not found')
-// @error-codes: ERR_RENDER_PURITY — Math.random() called during render (PropertiesModal known issue)
+// @error-codes: ERR_RENDER_PURITY — Math.random() called during render (known issue)
 //
 // @migration-history: v0.0.0 — Initial scaffold (Staybnb → Khubo rename, mock data, React 19, Vite 6)
 

@@ -10,11 +10,9 @@ package-lock.json
 # Playwright test artifacts
 .playwright-mcp/
 
-# AI/IDE skills and config
-.opencodeskills/
+# AI/IDE config
 .gemini/
 .claude/
-.opencode/
 
 # Logs
 *.log

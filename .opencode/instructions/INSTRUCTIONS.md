@@ -301,17 +301,31 @@ interface Repository<T> {
 
 ## OpenCode-Specific Notes
 
-Since OpenCode does not support hooks, the following actions that were automated in Claude Code must be done manually:
+### Skill Loading (IMPORTANT)
 
-### After Writing/Editing Code
-- Run `prettier --write <file>` to format JS/TS files
-- Run `npx tsc --noEmit` to check for TypeScript errors
-- Check for console.log statements and remove them
+OpenCode uses skills that must be loaded via the `skill` tool. At the start of EVERY task:
 
-### Before Committing
-- Run security checks manually
-- Verify no secrets in code
-- Run full test suite
+1. **Always load first**: `ponytail` - Sets coding philosophy (YAGNI, reuse, stdlib-first)
+2. **Then load based on task type**:
+   - Coding: `coding-standards`, `security-review`
+   - Features: `tdd-workflow`, `api-design`
+   - Review: `ponytail-review`
+   - Refactoring: `ponytail-audit`
+
+Example skill loading:
+```
+skill({ name: "ponytail" })
+skill({ name: "coding-standards" })
+skill({ name: "security-review" })
+```
+
+### Hook-Based Automation (via ECC Plugin)
+
+The ECC plugin provides hooks that run automatically:
+- **Auto-format**: Prettier runs on JS/TS files after editing
+- **TypeScript check**: `tsc --noEmit` runs after edits
+- **Console.log warning**: Alerts on console.log statements
+- **Security reminders**: Git push review reminders
 
 ### Commands Available
 
@@ -323,7 +337,9 @@ Use these commands in OpenCode:
 - `/build-fix` - Fix build errors
 - `/e2e` - Generate E2E tests
 - `/refactor-clean` - Remove dead code
-- `/orchestrate` - Multi-agent workflow
+- `/ponytail` - Set ponytail intensity (lite/full/ultra/off)
+- `/ponytail-review` - Review diff for over-engineering
+- `/ponytail-audit` - Audit repo for over-engineering
 
 ---
 

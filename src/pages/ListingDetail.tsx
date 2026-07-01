@@ -60,7 +60,6 @@ export default function ListingDetail() {
     const totalRating = updatedReviews.reduce((sum, r) => sum + r.rating, 0);
     const newRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
     setListing({ ...listing, reviews: updatedReviews, rating: newRating });
-    showToast('Review deleted');
     setReviewToDelete(null);
     if (selectedReview?.id === reviewId) {
       setSelectedReview(null);

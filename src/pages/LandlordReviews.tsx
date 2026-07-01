@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Trash2, MessageSquare, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
 import { Listing, Review } from '../types';
 import { useAuth } from '../lib/AuthContext';
-import { useToast } from '../components/ToastProvider';
 import { Modal } from '../components/ui/Modal';
 import BottomNav from '../components/BottomNav';
 
@@ -88,7 +87,8 @@ const sampleListingsWithReviews: Listing[] = [
 export default function LandlordReviews() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { showToast } = useToast();
+
+
   const [displayListings, setDisplayListings] = useState<Listing[]>(sampleListingsWithReviews);
   const [loadingListings, setLoadingListings] = useState(false);
   const [expandedListings, setExpandedListings] = useState<Record<string, boolean>>({});
@@ -138,7 +138,7 @@ export default function LandlordReviews() {
       setDeletingReview(null);
       showToast('Review deleted successfully', 'success');
     }, 300);
-  }, [showToast]);
+  }, []);
 
   const toggleListing = useCallback((listingId: string) => {
     setExpandedListings(prev => ({ ...prev, [listingId]: !prev[listingId] }));

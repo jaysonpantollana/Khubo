@@ -1,177 +1,139 @@
-# Documentations
+# Khubo — Comprehensive Project Documentation
+
+**Accommodation & Roommate Finder Platform for Iligan City, Philippines**
+
+> Last Updated: July 2, 2026
+> Version: 2.5.0
 
 ---
 
-## Contents
+## Table of Contents
 
-1. [AI Context & Documentation Map](#ai-context--documentation-map)
-2. [README_TECHNICALS.md — Technical Documentation](#readme_technicals-md--technical-documentation)
-3. [Docker Setup](#docker-setup)
-4. [CODE_ANALYSIS_AND_PLAN.md — Codebase Analysis & Implementation Plan](#code_analysis_and_plan-md--codebase-analysis--implementation-plan)
-
----
-
-## AI Context & Documentation Map — 50 Techniques Embedded in Code
-
-Every technique below is annotated directly in the source code as context-aware comments (`// @context`, `// @purpose`, `// @behavior`, etc.) at the file header level.
-
-| # | Technique | Location in Source Code |
-|---|-----------|----------------------|
-| 1 | Semantic Code Chunking | `src/App.tsx:1` (section markers), `src/lib/api/*.ts` (file headers), all annotated files |
-| 2 | Behavioral Contract Mapping | `src/lib/api/client.ts:1`, `src/lib/api/auth.ts:1`, `src/lib/api/listings.ts:1`, `src/lib/api/roommates.ts:1` |
-| 3 | State Transition Documentation | `src/lib/AuthContext.tsx:1` (ANONYMOUS↔AUTHENTICATED), `src/lib/ThemeContext.tsx:1` (LIGHT↔DARK) |
-| 4 | Data Flow Visualization | `src/App.tsx:1` (main flow diagrams), `src/hooks/useListings.ts:1`, `src/hooks/useListing.ts:1`, `src/lib/AuthContext.tsx:1` |
-| 5 | Error Propagation Matrix | `src/components/errors/ErrorBoundary.tsx:1`, `src/hooks/useErrorHandler.ts:1`, `src/components/ui/ErrorScreen.tsx:1` |
-| 6 | Dependency Injection Mapping | All files have `@dependencies` tags: `src/App.tsx`, `src/lib/AuthContext.tsx`, `src/lib/ThemeContext.tsx`, `src/components/errors/ErrorBoundary.tsx`, etc. |
-| 7 | Type Flow Analysis | `src/types.ts:1` (domain→UI mapping), `src/lib/api/types.ts:1` (API contracts) |
-| 8 | Side Effect Manifest | `src/lib/api/auth.ts:1`, `src/hooks/useSearchHistory.ts:1`, `src/hooks/useReducedMotion.ts:1`, `src/lib/ThemeContext.tsx:1` |
-| 9 | Configuration Context Mapping | `src/main.tsx:1`, `src/App.tsx:1`, `src/lib/ThemeContext.tsx:1`, `src/index.css:1`, `vite.config.ts:1` |
-| 10 | Test Coverage Mapping | `src/hooks/*.ts` (`@tests` annotations), `src/lib/utils.test.ts`, `src/hooks/useListingsFilter.test.ts`, `src/lib/api/client.test.ts` |
-| 11 | Performance Baseline | `src/hooks/useListings.ts:1`, `src/hooks/useListing.ts:1`, `src/lib/api/listings.ts:1`, `src/lib/api/roommates.ts:1`, `vite.config.ts:1` |
-| 12 | Migration History Tracker | `package.json:2` (version 0.0.0), `Documentations.md:CODE_ANALYSIS` |
-| 13 | Integration Point Documentation | `src/lib/api/*.ts` (all modules), `vite.config.ts:1`, `.env.example` |
-| 14 | Security Boundary Mapping | `src/lib/AuthContext.tsx:1`, `src/lib/api/auth.ts:1`, `src/lib/api/client.ts:1`, `src/mocks/supabase.ts:1` |
-| 15 | Debugging Context Generation | `src/components/errors/ErrorBoundary.tsx:1`, `src/hooks/useErrorHandler.ts:1`, files with `@known-issues` tags |
-| 16 | Type-Safe API Contracts | `src/lib/api/types.ts:1` (ApiResponse, PaginatedResponse, ApiError) |
-| 17 | Component Interaction Matrix | `src/App.tsx:1` (full tree with Provider→Router→Pages hierarchy) |
-| 18 | Configuration Schema Documentation | `vite.config.ts:1`, `src/main.tsx:1`, `src/index.css:1` |
-| 19 | Error Code Registry | `src/types.ts:` (see ERR_* entries in annotations) |
-| 20 | Context-Aware Code Annotations | ALL annotated files use `// @context`, `@purpose`, `@behavior`, `@security`, `@performance`, `@dependencies`, `@tests`, `@owner`, `@known-issues` |
-| 21 | File Structure Documentation | `src/App.tsx:41-49` (lazy imports list), `Documentations.md:README_TECHNICALS.md §3` |
-| 22 | Domain Model Documentation | `src/types.ts:1` (Listing, Review, HostInfo, Category, Roommate with relationships) |
-| 23 | Event Flow Documentation | `src/App.tsx:1` (User action → Route → Page → Hook → API → Mock flow) |
-| 24 | Cache Strategy Documentation | `src/hooks/useSearchHistory.ts:1`, `src/lib/ThemeContext.tsx:1` |
-| 25 | Database Schema Documentation | `src/mocks/listings.ts:1`, `src/mocks/roommates.ts:1`, `src/mocks/supabase.ts:1` |
-| 26 | Logging Strategy Documentation | `src/components/errors/ErrorBoundary.tsx:1` (console.error) |
-| 27 | CI/CD Pipeline Documentation | `package.json:7-18` (scripts), `vite.config.ts:1` (build config) |
-| 28 | Monitoring and Alerting Documentation | `src/components/errors/ErrorBoundary.tsx:1` (console.error for now) |
-| 29 | Code Review Checklist | `eslint.config.js`, `tsconfig.json`, `Documentations.md:README_TECHNICALS.md §11` |
-| 30 | Architectural Decision Records | `src/App.tsx:6-8` (HashRouter ADR, Context API ADR, Mock-first ADR), `vite.config.ts:18` (@ alias ADR) |
-| 31 | Onboarding Documentation | `README.md` (quick start), `Documentations.md:README_TECHNICALS.md` |
-| 32 | Technical Debt Register | Files with `@known-issues`: `src/types.ts`, `src/lib/AuthContext.tsx`, `src/mocks/supabase.ts`, `src/index.css`, `vite.config.ts`, all hooks |
-| 33 | Feature Flag Register | `src/App.tsx:27-29` (feature flags: DARK_MODE, MOCK_AUTH, MOCK_DATA), `src/lib/ThemeContext.tsx:1` (dark mode flag) |
-| 34 | Environment Configuration Matrix | `vite.config.ts:1`, `src/main.tsx:1`, `.env.example` |
-| 35 | Migration and Seed Data Documentation | `src/mocks/listings.ts:1`, `src/mocks/roommates.ts:1` |
-| 36 | Performance Testing Documentation | `src/hooks/*.ts` (perf annotations), `vite.config.ts:1` (chunk sizes) |
-| 37 | Security Testing Documentation | All `@security` tags across files |
-| 38 | Backup and Recovery Documentation | *(N/A for SPA with mock data)* |
-| 39 | Compliance Documentation | *(N/A — no PII collected)* |
-| 40 | Dependency Management Documentation | `package.json` (all deps with versions), `src/lib/animations.ts:1` (motion dep), `src/lib/utils.ts:1` (clsx, tailwind-merge) |
-| 41 | Code Generation Templates | `src/components/ui/Modal.tsx:1` (reusable modal template pattern), `src/components/ListingCarousel.tsx:1` (carousel pattern) |
-| 42 | Refactoring Guide | `Documentations.md:CODE_ANALYSIS_AND_PLAN.md` §5 |
-| 43 | Troubleshooting Guide | `src/components/errors/ErrorBoundary.tsx:1`, `src/components/ui/ErrorScreen.tsx:1`, files with `@known-issues` |
-| 44 | Runbook Documentation | `package.json:7-18` (dev, build, preview, clean, lint, test, typecheck, format scripts) |
-| 45 | System Context Diagram | `src/App.tsx:1` (full system diagram) |
-| 46 | Container and Service Architecture | `vite.config.ts:1` (build + chunk splitting config) |
-| 47 | Observability Strategy | `src/components/errors/ErrorBoundary.tsx:1` (error logging), `src/lib/api/client.ts:1` (API error handling) |
-| 48 | Disaster Recovery Plan | *(N/A for SPA)* |
-| 49 | Capacity Planning Documentation | `vite.config.ts:42` (chunkSizeWarningLimit: 2000KB) |
-| 50 | Communication Patterns Documentation | `src/lib/api/*.ts` (all modules document sync/async patterns) |
-
-### Coverage
-
-All source files are annotated with `@context`, `@purpose`, and domain-specific tags:
-
-- **Pages (9)**: Home, CategoryListings, ListingDetail, Maps, Profile, RoommateFinder, ManageListings, TermsOfService, PrivacyPolicy
-- **Components (60+)**: AnalyticsModal, AnnouncementsOverlay, BottomNav, CameraOverlay, Categories, CreateListingModal, CreatePostModal, DateScrollPicker, EditListingModal, errors/ErrorBoundary, example/ErrorExample, Filters, Footer, Hero, HostProfile, InquiriesModal, ListingCard, ListingCardSkeleton, ListingCarousel, ListingDetailModal, ListingDetailSkeleton, ListingsPopup, MapPicker, MapTilerView, Navbar, NotificationDialog, OccupationStep, OnboardingFlow, OnboardingModal, PhotoCarouselOverlay, profile/EditProfileModal, profile/LandlordSignupModal, profile/LogoutModal, profile/StatCardModal, PropertiesModal, ReviewBreakdown, ReviewProfile, RoommateCard, RoommateCardSkeleton, RoommateHero, RoommateModal, RoommatePreferences, RoommateSearchDropdown, RoommatesPopup, ScrollToTop, SearchDropdown, SearchHistory, TenantsModal, TenantProfileModal, ThemeToggle, Toast, ToastProvider, ui/ErrorScreen, ui/Modal, UploadModal, VerificationStep
-- **Hooks (9)**: useBodyScrollLock, useClickOutside, useErrorHandler, useFocusTrap, useListing, useListings, useListingsFilter, useReducedMotion, useSearchHistory
-- **API (7)**: auth, client, client.test, index (barrel), listings, roommates, types
-- **Lib (7)**: AuthContext, ThemeContext, animations, mapPreloader, utils, utils.test, api/index
-- **Mocks (3)**: listings, roommates, supabase
-- **Config (5)**: App, main, index.css, vite.config, eslint.config
-- **Root (3)**: types, package.json, .env.example
-- **Test (1)**: setup.ts
-
-### Quick Navigation
-
-- **All annotated source files**: See `@context` comments in `src/*.ts`, `vite.config.ts`
-- **Routes**: `/` Home, `/listing/:id`, `/category/:categoryId`, `/maps`, `/roommate`, `/profile`, `/manage-listings`, `/terms`, `/privacy`
-- **State management**: React Context API — `src/lib/AuthContext.tsx`, `src/lib/ThemeContext.tsx`, `src/components/ToastProvider.tsx`
-- **Data layer**: All mock — `src/mocks/*.ts` with 500ms simulated delay
-- **Auth**: Email-only mock, auto-signs in demo user, localStorage-backed — `src/lib/AuthContext.tsx`, `src/lib/api/auth.ts`
-- **Animations**: Motion library with centralized presets in `src/lib/animations.ts`
-- **Maps**: MapTiler SDK v4 with preloader singleton in `src/lib/mapPreloader.ts`; requires `VITE_MAPTILER_API_KEY`
-- **Onboarding**: 5-step wizard (identity → occupation → ID verification → review → finish) in `src/components/OnboardingFlow.tsx`
-- **Body scroll lock**: Nested-modal-safe lock via `src/hooks/useBodyScrollLock.ts`
-- **Focus trap**: Keyboard focus trap for modals via `src/hooks/useFocusTrap.ts`
-- **Reduced motion**: Accessibility support via `src/hooks/useReducedMotion.ts`
-- **Search history**: localStorage-backed recent searches via `src/hooks/useSearchHistory.ts`
-- **API client**: Retry (2x), timeout (15s), abort signals, auth headers — `src/lib/api/client.ts`
-- **Camera**: getUserMedia with front/rear toggle and native fallback — `src/components/CameraOverlay.tsx`
-- **File upload**: Drag-and-drop with type filtering and size validation — `src/components/UploadModal.tsx`
-- **Photo gallery**: Full-screen overlay with keyboard nav and thumbnails — `src/components/PhotoCarouselOverlay.tsx`
-- **Review breakdown**: 6-dimension rating with star distribution chart — `src/components/ReviewBreakdown.tsx`
-- **Testing**: Vitest + React Testing Library + jsdom; setup in `src/test/setup.ts`
-- **AI**: `@google/genai` package NOT installed (mentioned in earlier docs but not in dependencies)
+1. [Project Overview](#1-project-overview)
+2. [Tech Stack](#2-tech-stack)
+3. [Architecture](#3-architecture)
+4. [Project Structure](#4-project-structure)
+5. [Routing](#5-routing)
+6. [Pages](#6-pages)
+7. [Components](#7-components)
+8. [Custom Hooks](#8-custom-hooks)
+9. [Context Providers](#9-context-providers)
+10. [API Layer](#10-api-layer)
+11. [Mock Data](#11-mock-data)
+12. [TypeScript Types](#12-typescript-types)
+13. [Styling & Design System](#13-styling--design-system)
+14. [Animation System](#14-animation-system)
+15. [Map Integration](#15-map-integration)
+16. [State Management](#16-state-management)
+17. [Testing](#17-testing)
+18. [Configuration Files](#18-configuration-files)
+19. [Docker Setup](#19-docker-setup)
+20. [Environment Variables](#20-environment-variables)
+21. [Build & Scripts](#21-build--scripts)
+22. [Known Issues & Technical Debt](#22-known-issues--technical-debt)
+23. [Development Guidelines](#23-development-guidelines)
+24. [Troubleshooting](#24-troubleshooting)
 
 ---
 
-# README_TECHNICALS.md — Technical Documentation
+## 1. Project Overview
 
-# Staybnb - Technical Documentation
+**Khubo** is a full-featured web application designed to help users in Iligan City, Philippines find short-term accommodations, long-term rentals, and compatible roommates. The platform serves three user roles:
 
-Comprehensive technical documentation for the Khubo accommodation and roommate finder platform.
+- **Travelers/Renters**: Browse and filter property listings, view detailed property information, interact with maps, and contact landlords.
+- **Roommate Seekers**: Find compatible roommates based on university, budget, location, and lifestyle preferences. Create and manage roommate posts.
+- **Hosts/Landlords**: Manage property listings, view analytics, manage tenants, respond to inquiries, and track reviews.
+
+### Key Features
+
+- 28 property listings across 17 categories specific to Iligan City
+- Interactive MapTiler-powered maps with preloading for instant readiness
+- 5-step onboarding wizard for new users
+- Dark/light mode toggle with system preference detection
+- Camera integration for profile photos and ID verification
+- Drag-and-drop file upload with type filtering
+- Full-screen photo galleries with keyboard navigation
+- Review system with 6-dimension rating breakdowns
+- Landlord dashboard with analytics, tenant management, and inquiry tracking
+- Toast notification system with 4 severity levels
+- Focus trap for accessible modal navigation
+- Responsive design from mobile to ultra-wide desktop
+- Docker deployment with multi-stage build
+
+### Data Strategy
+
+The application uses a **mock-first architecture** (ADR-002). All API calls fall through to mock data when real requests fail. There is no real backend — Supabase client code exists but only mocks are used. This allows full frontend development and testing without external dependencies.
 
 ---
 
-## 📋 Table of Contents
+## 2. Tech Stack
 
-1. [Tech Stack](#tech-stack)
-2. [Architecture Overview](#architecture-overview)
-3. [Project Structure](#project-structure)
-4. [Core Features & Implementation](#core-features--implementation)
-5. [Component Library](#component-library)
-6. [State Management](#state-management)
-7. [Styling & Design System](#styling--design-system)
-8. [Animation System](#animation-system)
-9. [API Integration](#api-integration)
-10. [Testing](#testing)
-11. [TypeScript Types](#typescript-types)
-12. [Development Guidelines](#development-guidelines)
+### Core
 
----
+| Technology | Version | Purpose |
+|---|---|---|
+| React | 19.0 | UI framework with concurrent features and improved hooks |
+| TypeScript | 5.8 | Static typing and developer experience |
+| React Router DOM | 7.14 | Client-side routing with HashRouter |
+| Vite | 6.2 | Build tool, dev server, and HMR |
 
-## 🛠 Tech Stack
+### Styling
 
-### Frontend Framework
-- **React 19** - Latest version with concurrent features and improved hooks
-- **React Router DOM 7** - Client-side routing with hash-based navigation
-- **TypeScript 5.8** - Static typing for enhanced developer experience and type safety
+| Technology | Version | Purpose |
+|---|---|---|
+| Tailwind CSS | 4.1 | Utility-first CSS framework (Vite plugin mode) |
+| clsx | 2.1 | Conditional className construction |
+| tailwind-merge | 3.5 | Intelligent Tailwind class deduplication |
 
-### Build & Development Tools
-- **Vite 6.2** - Next-generation frontend build tool with HMR and fast builds
-- **@vitejs/plugin-react** - Official React plugin for Vite
-- **Tailwind CSS 4.1** - Utility-first CSS framework with Vite plugin integration
+### UI & Animation
 
-### UI & Animation Libraries
-- **Motion (Framer Motion)** - Production-ready animation library for React
-- **Lucide React** - Beautiful, consistent icon set
-- **clsx & tailwind-merge** - Conditional className utilities for Tailwind
-- **Recharts** - Charting library for analytics dashboards
-- **Zod 4.4** - TypeScript-first schema validation
+| Technology | Version | Purpose |
+|---|---|---|
+| Motion (Framer Motion) | 12.23 | Production-ready animation library |
+| Lucide React | 0.546 | Consistent icon set |
+| Recharts | 3.8 | Charting library for analytics dashboards |
+| Zod | 4.4 | TypeScript-first schema validation |
 
-### Backend & Services
-- **MapTiler SDK 4.0** - Interactive maps and geolocation services
+### Maps
+
+| Technology | Version | Purpose |
+|---|---|---|
+| MapTiler SDK | 4.0 | Interactive maps, markers, and geolocation |
 
 ### Code Quality
-- **ESLint 9** - JavaScript/TypeScript linting
-- **Prettier 3.8** - Code formatting
-- **typescript-eslint** - TypeScript-specific linting rules
+
+| Technology | Version | Purpose |
+|---|---|---|
+| ESLint | 9.39 | JavaScript/TypeScript linting |
+| Prettier | 3.8 | Code formatting |
+| typescript-eslint | 8.60 | TypeScript-specific linting rules |
+| eslint-plugin-react | 7.37 | React-specific linting rules |
+| eslint-plugin-react-hooks | 7.1 | React hooks dependency linting |
 
 ### Testing
-- **Vitest 4.1** - Blazing fast unit test runner
-- **@testing-library/react** - React component testing utilities
-- **@testing-library/jest-dom** - Custom DOM matchers
-- **@testing-library/user-event** - User interaction simulation
-- **jsdom** - DOM environment for tests
+
+| Technology | Version | Purpose |
+|---|---|---|
+| Vitest | 4.1 | Blazing fast unit test runner |
+| @testing-library/react | 16.3 | React component testing utilities |
+| @testing-library/jest-dom | 6.9 | Custom DOM matchers |
+| @testing-library/user-event | 14.6 | User interaction simulation |
+| jsdom | 29.1 | Browser environment simulation for tests |
+
+### Deployment
+
+| Technology | Version | Purpose |
+|---|---|---|
+| Docker | - | Multi-stage container build |
+| nginx | 1.27 | Production web server with SPA fallback |
 
 ---
 
-## 🏗 Architecture Overview
+## 3. Architecture
 
 ### Application Architecture Pattern
 
-The application follows a **Feature-Based Architecture** with the following layers:
+The application follows a **Feature-Based Architecture** with clear layer separation:
 
 ```
 ┌─────────────────────────────────────────┐
@@ -179,359 +141,287 @@ The application follows a **Feature-Based Architecture** with the following laye
 │  (Pages, Components, Modals, Layouts)   │
 ├─────────────────────────────────────────┤
 │            Context Layer                │
-│    (Auth, Theme, Toast Providers)       │
+│    (Auth, Theme, Landlord, Toast)       │
 ├─────────────────────────────────────────┤
 │             Hook Layer                  │
 │   (Custom Hooks for Data & Logic)       │
 ├─────────────────────────────────────────┤
 │           Service Layer                 │
-│  (API Client → Mock Data Fallback)      │
+│  (API Functions → Mock Data Fallback)   │
 ├─────────────────────────────────────────┤
 │            Data Layer                   │
 │      (Types, Mock Data, Utils)          │
 └─────────────────────────────────────────┘
 ```
 
-### Routing Strategy
+### Architectural Decision Records (ADRs)
 
-- **HashRouter**: Used for static hosting compatibility (ADR-001)
-- **Lazy Loading**: All pages are code-split using `React.lazy()` and wrapped in `Suspense`
-- **Route Protection**: Authenticated routes managed via `AuthContext`
+| ADR | Decision | Rationale |
+|---|---|---|
+| ADR-001 | HashRouter over BrowserRouter | Static hosting compatibility — no server URL rewriting needed |
+| ADR-002 | Mock-first data layer | All API calls fall through to mocks; no real backend needed for development |
+| ADR-003 | Context API over Redux | Only 3 global concerns (auth, theme, landlord); no complex state interactions |
+| ADR-005 | Vite `@` alias → project root | Intentional but mismatches tsconfig `@/*` → `src/*` — known inconsistency |
 
-### State Management Strategy
+### Data Flow
 
-- **Context API**: Global state for authentication, theme, and toast notifications (ADR-003)
-- **Local State**: Component-level state using `useState` and `useReducer`
-- **Custom Hooks**: Encapsulated business logic and data fetching
+```
+User Action → Route Match → Lazy Load Page → Hook Fetch → API Layer → Mock Data → Render
+```
 
-### Data Strategy
+Specific flows:
+- **Listing Search**: `Home.tsx` → `useListings({search, category})` → `getListings()` → `MOCK_LISTINGS.filter()` → `ListingCard[]`
+- **Auth Flow**: `AuthModal` → `AuthContext.signIn(email)` → `{user, session}` → Conditional UI render
+- **Roommate Search**: `RoommateFinder` → client-side filter → `RoommateCard[]`
+- **Map View**: `Maps.tsx` → `MapTilerView` with markers from mock listing coordinates
+- **Booking**: `ListingCard` → `ListingModal` → `DateScrollPicker` → Toast notification (no real booking)
 
-- **Mock-First**: All API calls fall through to mocks when real request fails (ADR-002)
-- **No Real Backend**: Supabase client exists but only mocks are used
+### Provider Hierarchy
+
+```
+<ThemeProvider>
+  <AuthProvider>
+    <LandlordProvider>
+      <ToastProvider>
+        <Router>
+          <ErrorBoundary>
+            <Suspense>
+              <Routes>...</Routes>
+            </Suspense>
+          </ErrorBoundary>
+        </Router>
+      </ToastProvider>
+    </LandlordProvider>
+  </AuthProvider>
+</ThemeProvider>
+```
 
 ---
 
-## 📁 Project Structure
+## 4. Project Structure
 
 ```
-/workspace
-├── public/                    # Static assets
-├── src/
-│   ├── components/           # Reusable UI components
-│   │   ├── errors/           # Error handling components
-│   │   │   └── ErrorBoundary.tsx
-│   │   ├── example/          # Development examples
-│   │   │   └── ErrorExample.tsx
-│   │   ├── profile/          # Profile-related modals
-│   │   │   ├── EditProfileModal.tsx
-│   │   │   ├── LandlordSignupModal.tsx
-│   │   │   ├── LogoutModal.tsx
-│   │   │   └── StatCardModal.tsx
-│   │   ├── ui/               # Shared UI primitives
-│   │   │   ├── ErrorScreen.tsx
-│   │   │   └── Modal.tsx
-│   │   ├── AnalyticsModal.tsx
-│   │   ├── AnnouncementsOverlay.tsx
-│   │   ├── AuthModal.tsx
-│   │   ├── BottomNav.tsx
-│   │   ├── CameraOverlay.tsx
-│   │   ├── Categories.tsx
-│   │   ├── CreateListingModal.tsx
-│   │   ├── CreatePostModal.tsx
-│   │   ├── DateScrollPicker.tsx
-│   │   ├── EditListingModal.tsx
-│   │   ├── Filters.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Hero.tsx
-│   │   ├── HostProfile.tsx
-│   │   ├── InquiriesModal.tsx
-│   │   ├── ListingCard.tsx
-│   │   ├── ListingCardSkeleton.tsx
-│   │   ├── ListingCarousel.tsx
-│   │   ├── ListingDetailModal.tsx
-│   │   ├── ListingDetailSkeleton.tsx
-│   │   ├── ListingModal.tsx
-│   │   ├── ListingsPopup.tsx
-│   │   ├── MapPicker.tsx
-│   │   ├── MapTilerView.tsx
-│   │   ├── Navbar.tsx
-│   │   ├── NotificationDialog.tsx
-│   │   ├── OccupationStep.tsx
-│   │   ├── OnboardingFlow.tsx
-│   │   ├── OnboardingModal.tsx
-│   │   ├── PhotoCarouselOverlay.tsx
-│   │   ├── PropertiesModal.tsx
-│   │   ├── ReviewBreakdown.tsx
-│   │   ├── ReviewProfile.tsx
-│   │   ├── RoommateCard.tsx
-│   │   ├── RoommateCardSkeleton.tsx
-│   │   ├── RoommateHero.tsx
-│   │   ├── RoommateModal.tsx
-│   │   ├── RoommatePreferences.tsx
-│   │   ├── RoommateSearchDropdown.tsx
-│   │   ├── RoommatesPopup.tsx
-│   │   ├── ScrollToTop.tsx
-│   │   ├── SearchDropdown.tsx
-│   │   ├── SearchHistory.tsx
-│   │   ├── TenantsModal.tsx
-│   │   ├── TenantProfileModal.tsx
-│   │   ├── ThemeToggle.tsx
-│   │   ├── Toast.tsx
-│   │   ├── ToastProvider.tsx
-│   │   ├── UploadModal.tsx
-│   │   └── VerificationStep.tsx
-│   │
-│   ├── hooks/                # Custom React hooks
-│   │   ├── useBodyScrollLock.ts
-│   │   ├── useClickOutside.ts
-│   │   ├── useErrorHandler.ts
-│   │   ├── useFocusTrap.ts
-│   │   ├── useListing.ts
-│   │   ├── useListings.ts
-│   │   ├── useListingsFilter.ts
-│   │   ├── useListingsFilter.test.ts
-│   │   ├── useReducedMotion.ts
-│   │   └── useSearchHistory.ts
-│   │
-│   ├── lib/                  # Core libraries and contexts
-│   │   ├── api/              # API layer (mock-backed)
-│   │   │   ├── auth.ts
-│   │   │   ├── client.ts
-│   │   │   ├── client.test.ts
-│   │   │   ├── listings.ts
-│   │   │   ├── roommates.ts
-│   │   │   └── types.ts
-│   │   ├── AuthContext.tsx
-│   │   ├── ThemeContext.tsx
-│   │   ├── animations.ts
-│   │   ├── mapPreloader.ts
-│   │   ├── utils.ts
-│   │   └── utils.test.ts
-│   │
-│   ├── mocks/                # Mock data for development
-│   │   ├── listings.ts
-│   │   ├── roommates.ts
-│   │   └── supabase.ts
-│   │
-│   ├── pages/                # Route-level components
-│   │   ├── CategoryListings.tsx
-│   │   ├── Home.tsx
-│   │   ├── ListingDetail.tsx
-│   │   ├── ManageListings.tsx
-│   │   ├── Maps.tsx
-│   │   ├── PrivacyPolicy.tsx
-│   │   ├── Profile.tsx
-│   │   ├── RoommateFinder.tsx
-│   │   └── TermsOfService.tsx
-│   │
-│   ├── test/                 # Test infrastructure
-│   │   └── setup.ts
-│   │
-│   ├── App.tsx               # Root component with routing
-│   ├── main.tsx              # Application entry point
-│   ├── index.css             # Global styles
-│   ├── types.ts              # TypeScript type definitions
-│   └── vite-env.d.ts         # Vite environment types
+khubo/
+├── public/                          # Static assets
+│   ├── khubo Logo.png              # App favicon/logo
+│   ├── homepage-screenshot.png     # OG image
+│   ├── bg_1.png, bg_2.png, bg_3.png # Background images
 │
-├── index.html                # HTML template
-├── package.json              # Dependencies and scripts
-├── tsconfig.json             # TypeScript configuration
-├── vite.config.ts            # Vite + Vitest configuration
-├── eslint.config.js          # ESLint configuration
-└── .env.example              # Environment variable template
+├── src/
+│   ├── components/                  # Reusable UI components (~45 files)
+│   │   ├── errors/                  # Error handling
+│   │   │   ├── ErrorBoundary.tsx    # Class component for catching render errors
+│   │   │   └── ErrorExample.tsx     # Development example for error testing
+│   │   │
+│   │   ├── profile/                 # Profile-related modals
+│   │   │   ├── EditProfileModal.tsx # Profile edit form
+│   │   │   ├── LandlordSignupModal.tsx # Landlord registration/login
+│   │   │   ├── LogoutModal.tsx      # Logout confirmation
+│   │   │   └── StatCardModal.tsx    # Stat card detail views
+│   │   │
+│   │   ├── ui/                      # Shared UI primitives
+│   │   │   ├── Modal.tsx            # Reusable animated modal with focus trap
+│   │   │   └── ErrorScreen.tsx      # Full-page error display with actions
+│   │   │
+│   │   ├── AnalyticsModal.tsx       # Recharts line chart for revenue trends
+│   │   ├── AnnouncementsOverlay.tsx # App news and updates overlay
+│   │   ├── AuthModal.tsx            # Login/signup modal dialog
+│   │   ├── BottomNav.tsx            # Mobile-friendly bottom navigation bar
+│   │   ├── CameraOverlay.tsx        # Full-screen camera with capture and native fallback
+│   │   ├── Categories.tsx           # Horizontal scrollable category selector
+│   │   ├── CreateListingModal.tsx   # Form for creating new listings
+│   │   ├── CreatePostModal.tsx      # Form for creating roommate posts
+│   │   ├── DateScrollPicker.tsx     # Custom date selection (Month/Day/Year)
+│   │   ├── EditListingModal.tsx     # Form for editing existing listings
+│   │   ├── Filters.tsx              # Multi-option filter panel
+│   │   ├── Footer.tsx               # Site footer with links
+│   │   ├── Hero.tsx                 # Landing page hero section with CTA
+│   │   ├── HostProfile.tsx          # Landlord info display card
+│   │   ├── InquiriesModal.tsx       # Guest inquiries display
+│   │   ├── ItemsPopup.tsx           # Reusable popup with item grid
+│   │   ├── LandlordListingsModal.tsx # Landlord's other listings modal
+│   │   ├── ListingCard.tsx          # Card displaying listing preview
+│   │   ├── ListingCardSkeleton.tsx  # Loading skeleton for listing cards
+│   │   ├── ListingCarousel.tsx      # Horizontal scrollable listing row
+│   │   ├── ListingDetailModal.tsx   # Listing detail for manage dashboard
+│   │   ├── ListingDetailSkeleton.tsx # Loading skeleton for detail view
+│   │   ├── ListingModal.tsx         # Detailed view with booking options
+│   │   ├── ListingsPopup.tsx        # Modal popup with grid of listing cards
+│   │   ├── MapPicker.tsx            # Interactive location picker for listing creation
+│   │   ├── MapTilerView.tsx         # Interactive MapTiler SDK map
+│   │   ├── Navbar.tsx               # Top navigation with logo, search, user menu
+│   │   ├── NotificationDialog.tsx   # Persistent notification history
+│   │   ├── OccupationStep.tsx       # Onboarding step 2 — occupation selection
+│   │   ├── OnboardingFlow.tsx       # 5-step wizard orchestrator
+│   │   ├── OnboardingModal.tsx      # Onboarding step 1 — identity collection
+│   │   ├── PhotoCarouselOverlay.tsx # Full-screen image gallery with keyboard nav
+│   │   ├── PropertiesModal.tsx      # Properties overview modal
+│   │   ├── ReviewBreakdown.tsx      # 6-dimension rating visualization
+│   │   ├── ReviewProfile.tsx        # Profile review display
+│   │   ├── RoommateCard.tsx         # Profile card for roommate candidates
+│   │   ├── RoommateCardSkeleton.tsx # Loading skeleton for roommate cards
+│   │   ├── RoommateHero.tsx         # Header section for roommate finder
+│   │   ├── RoommateModal.tsx        # Detailed roommate profile modal
+│   │   ├── RoommatePreferences.tsx  # Lifestyle preference selection
+│   │   ├── RoommateSearchDropdown.tsx # Filter dropdown for roommate search
+│   │   ├── RoommatesPopup.tsx       # Modal popup with grid of roommate cards
+│   │   ├── ScrollToTop.tsx          # Scrolls to top on route change
+│   │   ├── SearchDropdown.tsx       # Search input with autocomplete
+│   │   ├── SearchHistory.tsx        # Recent searches display
+│   │   ├── TenantsModal.tsx         # Tenants list modal
+│   │   ├── TenantProfileModal.tsx   # Tenant detail with status/payment tracking
+│   │   ├── ThemeToggle.tsx          # Dark/light mode switch
+│   │   ├── Toast.tsx                # Notification popup with auto-dismiss
+│   │   ├── ToastProvider.tsx        # Toast context provider
+│   │   ├── UploadModal.tsx          # Drag-and-drop file upload modal
+│   │   └── VerificationStep.tsx     # Onboarding step 3 — ID upload
+│   │
+│   ├── hooks/                       # Custom React hooks (8 hooks)
+│   │   ├── useFocusTrap.ts          # Keyboard focus trap for modals
+│   │   ├── useIsAnyModalOpen.ts     # MutationObserver-based modal detection
+│   │   ├── useListing.ts            # Single listing fetcher by ID
+│   │   ├── useListings.ts           # Listings collection fetcher with params
+│   │   ├── useListingsFilter.ts     # Client-side filter/sort pipeline
+│   │   ├── useListingsFilter.test.ts # Tests for filter hook
+│   │   ├── useMediaQuery.ts         # Responsive media query hook
+│   │   └── useSearchHistory.ts      # localStorage-backed search history
+│   │
+│   ├── lib/                         # Core libraries and contexts
+│   │   ├── api/                     # API integration layer (mock-backed)
+│   │   │   ├── auth.ts              # Authentication operations
+│   │   │   ├── listings.ts          # Listing CRUD operations
+│   │   │   ├── roommates.ts         # Roommate operations
+│   │   │   └── index.ts             # Barrel export
+│   │   │
+│   │   ├── AuthContext.tsx           # Authentication state provider
+│   │   ├── LandlordContext.tsx       # Landlord mode state provider
+│   │   ├── ThemeContext.tsx          # Dark/light theme provider
+│   │   ├── constants.ts             # App-wide constants
+│   │   ├── mapPreloader.ts          # Map SDK singleton preloader
+│   │   ├── toastConfig.ts           # Toast notification configuration
+│   │   └── utils.ts                 # Utility functions (cn)
+│   │
+│   ├── mocks/                       # Mock data for development
+│   │   ├── listings.ts              # 28 seed listings for Iligan City
+│   │   ├── reservations.ts          # 3 mock reservation records
+│   │   └── roommates.ts             # 10 mock roommate profiles
+│   │
+│   ├── pages/                       # Route-level components (13 pages)
+│   │   ├── Home.tsx                 # Landing page with search, categories, carousels
+│   │   ├── ListingDetail.tsx        # Full property view with booking sidebar
+│   │   ├── CategoryListings.tsx     # Filtered listing grid by category
+│   │   ├── Maps.tsx                 # Map-based listing discovery
+│   │   ├── RoommateFinder.tsx       # Roommate browse and filter
+│   │   ├── Profile.tsx              # User account dashboard
+│   │   ├── ManageListings.tsx       # Landlord listing dashboard
+│   │   ├── LandlordProperties.tsx   # Property statistics table
+│   │   ├── LandlordTenants.tsx      # Tenant management table
+│   │   ├── LandlordReviews.tsx      # Review management across properties
+│   │   ├── ToRate.tsx               # Tenant rating submission
+│   │   ├── TermsOfService.tsx       # Static legal terms (10 sections)
+│   │   └── PrivacyPolicy.tsx        # Static privacy policy (9 sections)
+│   │
+│   ├── test/                        # Test infrastructure
+│   │   └── setup.ts                 # Vitest setup with @testing-library/jest-dom
+│   │
+│   ├── App.tsx                      # Root component with routing and providers
+│   ├── main.tsx                     # Application entry point
+│   ├── index.css                    # Global styles and Tailwind imports
+│   ├── types.ts                     # Shared TypeScript type definitions
+│   └── vite-env.d.ts               # Vite environment type declarations
+│
+├── index.html                       # HTML template with meta tags and preconnects
+├── package.json                     # Dependencies and scripts
+├── tsconfig.json                    # TypeScript configuration
+├── vite.config.ts                   # Vite + Vitest configuration
+├── tailwind.config.ts               # Tailwind CSS theme configuration
+├── eslint.config.js                 # ESLint configuration
+├── Dockerfile                       # Multi-stage Docker build
+├── docker-compose.yml               # Docker Compose configuration
+├── .gitignore                       # Git ignore rules
+├── .dockerignore                    # Docker ignore rules
+├── .env                             # Environment variables (gitignored)
+├── README.md                        # User-facing documentation
+├── AGENTS.md                        # AI agent instructions
+├── Documentations.md                # This file — comprehensive technical docs
+└── dist/                            # Production build output
 ```
 
 ---
 
-## ⚙️ Core Features & Implementation
+## 5. Routing
 
-### 1. Authentication System
+The application uses **HashRouter** (ADR-001) with all page components **lazy-loaded** via `React.lazy()` for code splitting.
 
-**Location**: `src/lib/AuthContext.tsx`
+| Route | Component | Description |
+|---|---|---|
+| `/` | `Home` | Landing page with search, categories, and listing carousels |
+| `/listing/:id` | `ListingDetail` | Full property view with photo gallery, reviews, map, and booking sidebar |
+| `/category/:categoryId` | `CategoryListings` | Listings filtered by category (e.g., "boarding-house", "apartment") |
+| `/maps` | `Maps` | Split-panel map view with sidebar listing cards |
+| `/roommate` | `RoommateFinder` | Roommate browse with hero search, tag filters, and post creation |
+| `/profile` | `Profile` | User dashboard with stats, settings, and landlord/tenant mode toggle |
+| `/manage-listings` | `ManageListings` | Landlord dashboard for managing properties |
+| `/landlord/properties` | `LandlordProperties` | Property statistics table with occupancy data |
+| `/landlord/tenants` | `LandlordTenants` | Tenant management with room filters and contact info |
+| `/landlord/reviews` | `LandlordReviews` | Review management across all properties |
+| `/to-rate` | `ToRate` | Tenant rating submission with anonymous mode |
+| `/terms` | `TermsOfService` | Static Terms of Service page (10 sections) |
+| `/privacy` | `PrivacyPolicy` | Static Privacy Policy page (9 sections) |
 
-- **Provider**: Wraps the app to provide auth state globally
-- **Methods**: `signIn()`, `signUp()`, `signOut()`, `user` state
-- **Integration**: Mock auth with localStorage persistence
-- **Protected Routes**: Conditional rendering based on auth state
+### Route Protection
 
-### 2. Theme System (Dark/Light Mode)
+There is no formal route guard system. Authentication state is managed via `AuthContext` and components conditionally render based on `user` state. The `ManageListings` page redirects to home if no user is logged in.
 
-**Location**: `src/lib/ThemeContext.tsx`
+---
 
-- **Persistence**: Theme preference stored in localStorage
-- **System Detection**: Respects OS-level dark mode preference
-- **Toggle Component**: `ThemeToggle` component for user control
-- **CSS Variables**: Tailwind's dark mode class strategy
+## 6. Pages
 
-### 3. Listing Management
+### 6.1 Home Page (`src/pages/Home.tsx` — 258 lines)
 
-**Components**:
-- `ListingCard` - Display individual listing preview
-- `ListingCarousel` - Horizontal scrollable row of listings
-- `ListingModal` - Detailed view with booking options
-- `CreateListingModal` - Form for adding new listings
-- `EditListingModal` - Modify existing listings
-- `ManageListings` - Host dashboard page
+The landing page with search, category browsing, and listing carousels.
 
-**Data Flow**:
-```
-Page Component → useListings Hook → API Layer → Mock Data → Component State
-```
+**Key Sections:**
+- **Hero Section**: Full-width banner with integrated search (location, date, budget fields)
+- **Search History**: localStorage-backed recent searches (max 5) with add/remove/select
+- **Sticky Search Bar**: `IntersectionObserver`-based header that transitions between category tabs and full search bar when scrolled past 70px
+- **Category Filter Tabs**: 17 categories + ALL tab — Boarding House, Apartment, Bed Spacer, Dormitory, Room 4 Rent, Condominium, All Males, Shared, All Females, No Pets, Quiet Hours, Free Water, Free Electricity, No Curfew, Gated, Study Area, Near MSU-IIT
+- **Listing Carousels**: Three horizontal carousels — "Recommended" (listings 0-21), "Top Listing" (7-28), "Near MSU-IIT" (14-35)
+- **Map Preloader**: Hidden off-screen MapTiler container initialized on Home for instant map readiness when user navigates to `/maps`
 
-### 4. Roommate Finder
+**Notable Implementation:**
+- Uses two `IntersectionObserver` instances for sticky header detection
+- Map preloading uses a callback ref pattern for lazy initialization
+- Click-outside handler closes sticky dropdowns
+- Responsive card widths defined via CSS `calc()` expressions
 
-**Key Components**:
-- `RoommateHero` - Search interface and filters
-- `RoommateCard` - Individual profile display
-- `RoommateModal` - Detailed profile view
-- `RoommateSearchDropdown` - Advanced filtering
+### 6.2 Listing Detail Page (`src/pages/ListingDetail.tsx` — 728 lines)
 
-**Matching Algorithm**:
-- University affiliation
-- Budget range compatibility
-- Location preferences
-- Lifestyle tags (smoking, pets, schedule, etc.)
+Full-featured property detail page with all property information.
 
-### 5. Interactive Maps
-
-**Implementation**: `src/components/MapTilerView.tsx`
-
-- **SDK**: MapTiler SDK v4.0
-- **Features**:
-  - Property markers with popups
-  - Cluster visualization
-  - Geolocation support
-  - Custom map styles
-
-### 6. Search & Filtering
-
-**Components**:
-- `SearchDropdown` - Real-time search suggestions
-- `Filters` - Multi-criteria filtering panel
-- `SearchHistory` - Persistent search tracking
-- `Categories` - Category-based browsing
-
-**Hooks**:
-- `useSearchHistory.ts` - localStorage persistence
-- `useListingsFilter.ts` - Client-side filter/sort pipeline
-
-### 7. Notification System
-
-**Components**:
-- `ToastProvider` - Context provider for toast management
-- `Toast` - Individual notification component
-- `NotificationDialog` - Persistent notification history
-
-**Usage**:
-```tsx
-const { addToast } = useToast();
-addToast({ message: 'Success!', type: 'success' });
-```
-
-### 8. Onboarding Flow
-
-**Location**: `src/components/OnboardingFlow.tsx`
-
-A 5-step post-auth wizard for new users:
-- **Step 1** (`OnboardingModal`): Collects identity info (username, email, phone, bio, gender, address with cascading city/barangay dropdowns, profile photo)
-- **Step 2** (`OccupationStep`): Selects occupation — Student, Professional, or Working Student
-- **Step 3** (`VerificationStep`): Uploads a government/school ID for identity verification (supports images and PDFs, max 50MB)
-- **Step 4** (`ReviewProfile`): Reviews all data with inline editing for identity, occupation, and lifestyle preferences
-- **Step 5**: "Almost Done" thank-you screen
-
-**Data Flow**:
-```
-Navbar Auth → OnboardingFlow → OnboardingData → localStorage → Profile
-```
-
-### 9. Map Preloader
-
-**Location**: `src/lib/mapPreloader.ts`
-
-A singleton service that initializes MapTiler in a hidden off-screen div on the Home page, so the interactive map is fully rendered when the user navigates to `/maps`. Provides `isMapReady()` and `takeMap()` for seamless handoff.
-
-### 10. Tenant Management
-
-**Components**:
-- `TenantProfileModal` - Displays tenant list with status (active, leaving, moved out) and payment status
-- `TenantsModal` - Tenants overview modal
-
-**Location**: `src/components/TenantProfileModal.tsx`, `src/components/TenantsModal.tsx`
-
-**Data Model**:
-```ts
-interface TenantInfo {
-  id: string;
-  name: string;
-  image: string;
-  email: string;
-  phone?: string;
-  moveInDate: string;
-  status: 'active' | 'leaving' | 'moved_out';
-  paymentStatus: 'paid' | 'pending' | 'overdue';
-}
-```
-
-### 11. Map Picker
-
-**Location**: `src/components/MapPicker.tsx`
-
-An interactive MapTiler-based location picker for listing creation and editing. Users can click on the map to set a property's latitude/longitude coordinates.
-
-### 12. Profile Management
-
-**Components**:
-- `EditProfileModal` - Edit profile form
-- `LandlordSignupModal` - Landlord registration/login
-- `LogoutModal` - Logout confirmation
-- `StatCardModal` - Stat card detail views
-
-**Location**: `src/components/profile/`
-
-### 13. Listing Detail Page
-
-**Location**: `src/pages/ListingDetail.tsx`
-
-A full-featured property detail page with the following sections:
-
-**Photo Gallery**:
+**Photo Gallery:**
 - **Mobile**: Full-width hero carousel (55vh) with CSS snap scrolling, image indicator badge (`currentIndex / total`), tap to open full gallery
 - **Desktop**: 5-image grid (`grid-cols-4 grid-rows-2`) with first image spanning 2x2, hover zoom effect, "Show all photos" button
-- Fallback images from Unsplash if gallery has fewer than 5 images
+- Fallback images from Unsplash when gallery has fewer than 5 images
 
 **PhotoCarouselOverlay** (`src/components/PhotoCarouselOverlay.tsx`):
 - Full-screen image viewer with backdrop blur
 - Left/right arrow navigation buttons
 - Keyboard support: ArrowRight, ArrowLeft, Escape
-- Image counter badge (`currentIndex / total`)
+- Image counter badge
 - Thumbnail strip at bottom for direct image selection
 - Click outside to close
 
-**About This Place**: Description section with `whitespace-pre-wrap` formatting
-
-**Amenities** (`What this place offers`):
-- 2-column grid with circular icon + label per amenity
-- 10 amenities: Kitchen, Wifi, TV, Elevator, Patio/Balcony, Luggage Dropoff, Refrigerator, Microwave, Paid Parking, Security Cameras
-- Expandable "Show all" / "Show less" toggle (first 4 visible by default)
-
-**House Rules**:
-- 2-column grid with icon + rule text
-- 7 rules: Curfew (10 PM), No Visitors after 9 PM, No Smoking, Quiet Hours (10 PM - 7 AM), Kitchen Cleanup, No Loud Music, Garbage Disposal
-- Expandable "Show more rules" / "Show less" toggle (first 4 visible by default)
-
-**Pre-contractual Document**:
-- Clickable card with file icon, "Standard Lease Agreement" title, "PDF - 2.4 MB" subtitle
-- Download button opens document in new tab (placeholder URL)
-
-**Reviews Section**:
-- Header: Star icon + rating score + review count
-- Review cards (2-column grid): User avatar, name with verified badge, handle (`@username`), comment, date, like/share buttons
-- Click-to-expand modal with full review detail
-- "Show all N reviews" toggle (first 4 shown by default)
+**Content Sections:**
+- About This Place — description with `whitespace-pre-wrap`
+- Amenities — 2-column grid with circular icon + label (10 amenities); expandable "Show all" / "Show less"
+- House Rules — 2-column grid with icon + rule text (7 rules); expandable "Show more" / "Show less"
+- Pre-contractual Document — PDF download card for lease agreement
+- Reviews — 2-column grid of review cards with user avatar, name, verified badge, comment, date, like/share buttons; "Show all N reviews" toggle (first 4 shown)
 
 **ReviewBreakdown** (`src/components/ReviewBreakdown.tsx`):
 - Left column: Overall rating with star distribution bar chart (5-star to 1-star percentages)
-- Right column: 6-dimension rating grid (Cleanliness, Accuracy, Move-in, Communication, Location, Value) with scores and visual separators
+- Right column: 6-dimension rating grid (Cleanliness, Accuracy, Move-in, Communication, Location, Value) with scores
 - Responsive: 2 cols mobile → 3 cols sm → 6 cols lg
 
 **Host Profile Card** (`src/components/HostProfile.tsx`):
@@ -540,611 +430,499 @@ A full-featured property detail page with the following sections:
 - Info rows: Work, Location with icons
 - "Message Landlord" button (triggers auth check if not authenticated)
 
-**Interactive Map**:
+**Interactive Map:**
 - Inline MapTiler map with location marker (540px tall)
 - Hover overlay with "Click to Expand" pill
 - Full-screen map modal with backdrop blur, location pill with coordinates, close button
 
 **Booking Sidebar** (Desktop, `lg+` breakpoint):
 - Sticky positioning at `top-[100px]`
-- Price display (₱4,700 /month) with rating badge
-- Landlord Profile card with avatar, name, and verified badge
-- Contact section with card-style rows (circular icon + label + detail):
-  - Phone row with tel link
-  - Email row with mailto link
-- Social Media icons (Instagram, Facebook, Twitter)
-- "Contact Owner" button inside the card
-- Unregistered users: Clicking "Contact Owner" opens the auth modal directly
+- Price display with rating badge
+- Landlord Profile card with avatar, name, verified badge
+- Contact section with phone (tel link), email (mailto link), social media icons (Instagram, Facebook, Twitter)
+- "Contact Owner" button (opens auth modal for unregistered users)
 - Price breakdown: Monthly Rent + Cleaning Fee + Service Fee + Grand Total
 
-**Mobile Action Bar**:
+**Mobile Action Bar:**
 - Fixed bottom bar with "Contact Owner" button
-- Unregistered users: Clicking opens auth modal directly
-- Registered users: Shows toast "Message sent to owner!"
-- Tap feedback with `active:scale-95`
+- Unregistered users: opens auth modal
+- Registered users: shows toast "Message sent to owner!"
 
-**State Management**: State variables for gallery, booking, map, auth, reviews, and amenity/rule toggles
+### 6.3 Category Listings Page (`src/pages/CategoryListings.tsx` — 91 lines)
 
-### 14. Map View Page
+Displays listings filtered by the URL parameter `categoryId`.
 
-**Location**: `src/pages/Maps.tsx` (725 lines)
+**Filtering Logic:**
+- `recommended` — first 21 listings
+- `top-listing` — listings 7-28
+- `near-msu-iit` — listings with category "Near MSU-IIT"
+- Default — exact kebab-case match against `listing.category`
 
-A split-panel map-based listing discovery page:
+**Features:**
+- Sticky header with back button and dynamic page title
+- Responsive listing grid (1-5 columns)
+- 12 skeleton cards during loading
+- Empty state with "No listings found" message
 
-**Layout**:
+### 6.4 Maps Page (`src/pages/Maps.tsx` — 767 lines)
+
+Split-panel map-based listing discovery page.
+
+**Layout:**
 - Collapsible sidebar (left) + full-width MapTiler map (right)
 - Sidebar auto-collapses on mobile (`window.innerWidth < 768`)
 - Map auto-resizes after sidebar transition (305ms delay)
 
-**Map Markers**:
+**Map Features:**
 - Custom SVG pin markers (red pin with white circle) for each listing with lat/lng
 - Marker popups: Thumbnail image, title, price on hover/click
 - Fly-to animation on marker click (zoom 16, 1500ms duration)
-- Deselect on map click (if not clicking a marker)
-- Deselect on zoom out (zoom < 15)
+- Deselect on map click, deselect on zoom out (zoom < 15)
 
-**Map Preloader Integration**:
+**Map Preloader Integration:**
 - Takes pre-initialized map from Home page's hidden preloader via `takeMap()`
 - Re-parents preloaded container into layout for instant map readiness
 - Falls back to creating new map if preloader unavailable
 - Resets preloader on unmount via `resetMapPreload()`
 
-**Sidebar**:
+**Sidebar:**
 - Desktop: Scrollable listing cards with active-state ring highlight synced to selected marker
 - Mobile: Bottom overlay with horizontally scrollable listing cards, snap-to-center
 - Collapse/expand toggle button with chevron
 
-**Search Bar**:
+**Search Bar:**
 - Location dropdown (quick-select popular locations)
-- Date scroll picker (Month/Day/Year with year validation)
-- Budget dropdown (preset ranges)
+- Budget dropdown (preset ranges: P1k-P3k, P3k-P5k, P5k+)
 - Text search with SearchDropdown autocomplete
 - Clear-all-filters button when selections active
 
-**Custom Zoom Controls**: +/- buttons on bottom-right of map
+### 6.5 Roommate Finder Page (`src/pages/RoommateFinder.tsx` — 911 lines)
 
-**Missing API Key**: Friendly "Map unavailable" screen with link to get MapTiler API key
+Roommate browse and filter with dual posting modes.
 
-### 15. Home Page Enhancements
+**Key Sections:**
+- **Roommate Hero**: Full-page hero with search interface
+- **Sticky Header**: Toggles between tag pills (15 filter tags) and full search bar
+- **Post Creation**: Profile avatar + input that opens `CreatePostModal`; toggle between "Applying as Roommate" and "Finding a roommate"
+- **"Finding a roommate" Carousel**: Horizontal scrollable cards of filtered roommates (first 10)
+- **"Applying as Roommate" Carousel**: Reversed list of roommates with "Accept as Roommate" action
+- **Empty State**: "No roommates found" with clear-filters button
 
-**Location**: `src/pages/Home.tsx` (694 lines)
+**Filtering:**
+- `useMemo`-based pipeline filtering by tag match, name, bio, preferred place, tags, gender, and university
+- Tags: ALL, Shared, Bed Spacer, No Curfew, Gated, Condominium, Boarding House, No Pets, Quiet Hours, Free Water, Apartment, Free Electricity, Near MSU-IIT, All Males, All Females
 
-**Hero Search Bar**:
-- Prominent search with location, date, and budget fields
-- Real-time autocomplete via `SearchDropdown` with trending tags and matching listings
+**localStorage Persistence:**
+- Custom roommate posts saved to `localStorage` key `custom_roommates`
+- Survives page reloads
 
-**Scroll-Driven Sticky Header**:
-- `IntersectionObserver`-based sticky header that transitions between category tabs and search bar
-- Two observers: one for sticky state, one for search activation (70px threshold)
-- Sticky search bar with Location, Dates, Budget dropdowns + text search
-- Mobile: search activates only when sticky + scrolled past 70px
+### 6.6 Profile Page (`src/pages/Profile.tsx` — 1042 lines)
 
-**Category Filter Tabs**:
-- 17 categories + ALL tab: Boarding House, Apartment, Bed Spacer, Dormitory, Room 4 Rent, Condominium, All Males, Shared, All Females, No Pets, Quiet Hours, Free Water, Free Electricity, No Curfew, Gated, Study Area, Near MSU-IIT
+User account dashboard with dual landlord/tenant identity.
 
-**Search History** (`SearchHistory` component):
-- localStorage-backed recent searches (max 5)
-- Displayed under Hero with add/remove/select functionality
-
-**Budget Filter**: Preset ranges: P1k-P3k, P3k-P5k, P5k+
-
-**Date Scroll Picker** (`DateScrollPicker`):
-- Three-column scrollable Month/Day/Year picker with snap-to-center
-- Year validation: current year + next year only
-
-**Listing Carousels**:
-- Three carousels: "Recommended", "Top Listing", "Near MSU-IIT"
-- Horizontal scroll with snap and navigation arrows
-- Responsive item widths (2 cols mobile → 3 cols md → 5 cols lg)
-
-**Map Preloader**: Hidden off-screen MapTiler container initialized on Home for instant map readiness on Maps page
-
-### 16. Profile Page
-
-**Location**: `src/pages/Profile.tsx` (882 lines)
-
-**Hero Banner**: Full-width background image with gradient overlay, announcements button
-
-**Profile Card**:
-- Avatar with online/offline status dot (green/gray)
-- Name, school/age/gender details, location
+**Hero Banner:**
+- Full-width background image with gradient overlay
+- Profile card overlay with avatar (online/offline status dot), name, school/age/gender details, location
 - Editable bio/quote
-- "Edit Profile" button opens `EditProfileModal`
+- Editable personality tags (add/remove with inline input, persisted in localStorage)
 
-**Personality Tags**:
-- Editable tag chips with add/remove functionality
-- Persisted in `localStorage` key `user_profile_tags`
-- Default tags: Introvert, Pet-friendly, Night owl, Studious, Non-smoker
-
-**Landlord/Tenant Mode Toggle**:
-- Switch between tenant and landlord views
-- Different stat cards and features per mode
-
-**Stat Cards**:
+**Stat Cards (dual mode):**
+- **Landlord Mode**: Properties (4 Listed), Tenants (12 Active) — navigate to dedicated pages
 - **Tenant Mode**: Saved (12 Houses), Reservation (2 Houses), Roommate Applications (6), Invitations (0 Received)
-- **Landlord Mode**: Properties (4 Listed), Tenants (12 Active), Inquiries (8 Pending), Revenue (P42k This Month)
-- Clickable cards open dedicated modals (Analytics, Tenants, Properties, Inquiries, or generic StatCardModal)
 
-**My Properties** (Landlord):
-- List of host's listings with image, title, location, rating, amenities, availability badge, price
-- Edit button opens `EditListingModal`
-- Context menu with Edit and Copy Link
-- Listing visibility toggle (green/gray) to show/h�藏 from search
-- Tenant avatars with count badge
-- Add Listing button opens `CreateListingModal`
+**Properties Section:**
+- **Landlord**: List of host's listings with image, title, location, rating, amenities, availability badge, price; edit/toggle visibility; context menu (edit/copy link); tenant avatars; "Add Listing" button
+- **Tenant**: Reservation cards from mock data
 
-**My Reservation** (Tenant):
-- Display of reserved property with apply/cancel buttons
+**Settings & Preferences:**
+- Landlord mode toggle switch
+- Menu items: Notifications, Account Settings, Help Center, Terms of Service, Privacy Policy
+- Logout button with confirmation modal
 
-**Settings Menu**:
-- Notifications (opens AnnouncementsOverlay)
-- Account Settings (toast placeholder)
-- Help Center (toast placeholder)
-- Terms of Service (navigates to `/terms`)
-- Privacy Policy (navigates to `/privacy`)
+**Modals (10+):**
+- EditProfileModal, AnnouncementsOverlay, InquiriesModal, ListingDetailModal, CreateListingModal, EditListingModal, StatCardModal, TenantProfileModal, LogoutModal, LandlordSignupModal, PhotoCarouselOverlay
 
-**Logout**: Confirmation modal with cancel/continue flow
+### 6.7 Manage Listings Page (`src/pages/ManageListings.tsx` — 177 lines)
 
-### 17. Landlord Dashboard Modals
+Landlord dashboard for managing properties.
 
-**Analytics Modal** (`src/components/AnalyticsModal.tsx`):
-- Recharts `LineChart` showing daily revenue trends (14 data points)
-- Total revenue display (₱42,000) with percentage trend (+14.2%)
-- Monthly timeframe toggle (currently Monthly only)
-- Stats breakdown: Avg. daily revenue (₱3,000), Top earning day (₱5,000)
+**Features:**
+- Loading skeleton (3 cards)
+- Empty state
+- Listing cards with: thumbnail, title, location, rating badge, amenities, price, "Edit Listing" and "Manage Tenants" buttons
+- EditListingModal integration
+- Auth guard: redirects to home if not logged in
 
-**Inquiries Modal** (`src/components/InquiriesModal.tsx`):
-- Tab-based filtering: All, Unread, Responded
-- Unread count badge on filter button
-- Inquiry cards with: Name, message preview, property reference badge, unread dot indicator
-- 4 mock inquiries with different statuses (Unread, Responded, Read)
-- Empty state for filtered results
+### 6.8 Landlord Properties Page (`src/pages/LandlordProperties.tsx` — 221 lines)
 
-**Properties Modal** (`src/components/PropertiesModal.tsx`):
-- Property cards with status badges (Active/Review/Maintenance)
-- Occupancy info, star ratings
-- Click to view listing detail
+Property statistics table for landlords.
 
-**Tenants Modal** (`src/components/TenantsModal.tsx`):
-- Tabular view of tenants with room number, payment status (Paid/Review/Pending/Draft), tenancy status (Staying/Leaving/Moved out), email
+**Features:**
+- "Add Listing" button opening CreateListingModal
+- Data table with columns: No., Property, Location, Category, Price, Rating, Status (active/unlisted badge), Vacancy (occupied/total)
+- Seeded random occupancy data (deterministic via `Math.sin`)
+- Falls back to sample listings when no real listings exist
 
-**Tenant Profile Modal** (`src/components/TenantProfileModal.tsx`):
-- Individual tenant detail view
+### 6.9 Landlord Tenants Page (`src/pages/LandlordTenants.tsx` — 279 lines)
 
-### 18. Camera & File Upload
+Tenant management with room filters and contact info.
 
-**Camera Overlay** (`src/components/CameraOverlay.tsx`):
-- Full-screen camera view using `getUserMedia` API
-- Live video preview with front/rear camera toggle (`user`/`environment` facing modes)
-- Capture button (large circular shutter)
-- Preview captured image with Retake/Use Photo options
-- Front camera mirroring (CSS `-scale-x-100`)
-- Native camera fallback (`<input capture="environment">`) for permission-denied or unsupported browsers
-- Error state with "Take Photo with Device" fallback button
-- Stream cleanup on unmount (stops all tracks)
+**Features:**
+- Room filter bar: Horizontally scrollable room tags with "All Rooms" button and dynamic "+ Add Room" inline input
+- Tenant table columns: Client, Room No., Balance (Paid/Unpaid toggle), Email (with copy), Phone (with copy), Social (Instagram, X, Facebook icons)
+- Add Tenant button opening AddTenantModal
+- ConfirmDialog for balance status changes
+- 5 mock tenants with full contact info
 
-**Upload Modal** (`src/components/UploadModal.tsx`):
-- Drag-and-drop zone with click-to-browse fallback
-- File type filtering via `acceptedTypes` prop
-- Max file size validation (default 25MB configurable via `maxSizeMB`)
-- Selected files preview with name, size (MB), remove button
-- Multi-file support
-- "Securely encrypted" indicator
-- Discard/Add Attachments buttons
+### 6.10 Landlord Reviews Page (`src/pages/LandlordReviews.tsx` — 347 lines)
 
-### 19. API Client Details
+Review management across all properties.
 
-**Location**: `src/lib/api/client.ts` (125 lines)
+**Features:**
+- Header with total review count badge
+- Property cards with collapsible review sections
+- Individual reviews with: user avatar, star rating, date, comment, delete button
+- Delete confirmation modal with warning icon
+- Delete animation (opacity fade before removal)
+- 4 sample listings with 10 total reviews
 
-**HTTP Client** (`apiRequest`):
-- Base URL from `VITE_API_URL` env var (defaults to `/api`)
-- Default timeout: 15,000ms (configurable per request)
-- Max retries: 2 (exponential backoff: 200ms, 400ms)
-- Retry conditions: HTTP 429 (rate limit) or 5xx (server error)
-- Abort signal combination: Merges caller's signal with timeout signal
+### 6.11 To Rate Page (`src/pages/ToRate.tsx` — 373 lines)
 
-**Auth Headers**:
-- Automatic Bearer token injection from `sessionStorage.getItem('auth_token')`
-- Token included in all requests via `getAuthHeaders()`
+Tenant rating submission with anonymous mode.
 
-**CRUD Helpers**:
-- `apiGet<T>(endpoint, params?)` - GET with optional query params
-- `apiPost<T>(endpoint, body)` - POST with JSON body
-- `apiPut<T>(endpoint, body)` - PUT with JSON body
-- `apiDelete<T>(endpoint)` - DELETE
+**Features:**
+- Property cards from reservation data
+- Rating form with three states: collapsed, expanded, submitted
+- Identity selector: Real name (from localStorage) or anonymous toggle
+- Anonymous name generation using hash-based deterministic algorithm
+- Anonymous avatar generation using dicebear API
+- 5-star interactive rating with hover states
+- Comment textarea
+- Submit validation and toast feedback
 
-**Error Handling**:
-- Non-OK responses: Parses error body for message/code, returns `ApiError`
-- AbortError: Returns "Request was cancelled"
-- Network errors: Returns error message string
-- Max retries exceeded: Returns "Max retries exceeded"
+### 6.12 Terms of Service Page (`src/pages/TermsOfService.tsx` — 98 lines)
 
-### 20. Notification System
+Static legal page with 10 numbered sections:
+1. Acceptance of Terms
+2. Description of Service
+3. User Accounts
+4. User Responsibilities
+5. Listings and Transactions
+6. Intellectual Property
+7. Limitation of Liability
+8. Termination
+9. Changes to Terms
+10. Contact Us (support@khubo.com)
 
-**Components**:
-- `ToastProvider` - Context provider for toast management
-- `Toast` - Individual notification component with 3s auto-dismiss
-- `NotificationDialog` - Persistent notification history with timestamps
+### 6.13 Privacy Policy Page (`src/pages/PrivacyPolicy.tsx` — 91 lines)
 
-**Toast Types**: success, error, info
+Static legal page with 9 numbered sections:
+1. Information We Collect
+2. How We Use Your Information
+3. Information Sharing
+4. Data Security
+5. Your Rights
+6. Cookies and Tracking
+7. Children's Privacy
+8. Changes to This Policy
+9. Contact Us (privacy@khubo.com)
 
-**Usage**:
-```tsx
-const { addToast } = useToast();
-addToast({ message: 'Success!', type: 'success' });
+---
+
+## 7. Components
+
+### Layout Components
+
+| Component | File | Description |
+|---|---|---|
+| `Navbar` | `Navbar.tsx` | Top navigation with logo, search, and user menu |
+| `BottomNav` | `BottomNav.tsx` | Mobile-friendly bottom navigation bar with 5 tabs (Home, Maps, Plus, Roommate, Profile) |
+| `Footer` | `Footer.tsx` | Site footer with links and copyright |
+| `Hero` | `Hero.tsx` | Landing page hero section with integrated search bar |
+| `ScrollToTop` | `ScrollToTop.tsx` | Scrolls to top on route change |
+
+### Listing Components
+
+| Component | File | Description |
+|---|---|---|
+| `ListingCard` | `ListingCard.tsx` | Card displaying listing preview with image, title, location, price, rating |
+| `ListingCardSkeleton` | `ListingCardSkeleton.tsx` | Loading skeleton with pulsing placeholders |
+| `ListingCarousel` | `ListingCarousel.tsx` | Horizontal scrollable row of listings with navigation arrows |
+| `ListingDetailSkeleton` | `ListingDetailSkeleton.tsx` | Loading skeleton for full detail view |
+| `ListingsPopup` | `ListingsPopup.tsx` | Reusable modal popup with grid of listing cards |
+| `ListingModal` | `ListingModal.tsx` | Detailed listing view with booking options |
+| `ListingDetailModal` | `ListingDetailModal.tsx` | Listing detail for manage dashboard |
+| `PhotoCarouselOverlay` | `PhotoCarouselOverlay.tsx` | Full-screen image gallery with keyboard navigation and thumbnails |
+
+### Roommate Components
+
+| Component | File | Description |
+|---|---|---|
+| `RoommateCard` | `RoommateCard.tsx` | Profile card for roommate candidates |
+| `RoommateCardSkeleton` | `RoommateCardSkeleton.tsx` | Loading skeleton for roommate cards |
+| `RoommateHero` | `RoommateHero.tsx` | Header section for roommate finder with search |
+| `RoommateModal` | `RoommateModal.tsx` | Detailed roommate profile modal |
+| `RoommatePreferences` | `RoommatePreferences.tsx` | Wizard step for lifestyle preference selection |
+| `RoommateSearchDropdown` | `RoommateSearchDropdown.tsx` | Filter dropdown for roommate search |
+| `RoommatesPopup` | `RoommatesPopup.tsx` | Reusable modal popup with grid of roommate cards |
+
+### Profile Components
+
+| Component | File | Description |
+|---|---|---|
+| `EditProfileModal` | `profile/EditProfileModal.tsx` | Profile edit form with avatar, name, bio, tags |
+| `LandlordSignupModal` | `profile/LandlordSignupModal.tsx` | Landlord registration/login modal |
+| `LogoutModal` | `profile/LogoutModal.tsx` | Logout confirmation dialog |
+| `StatCardModal` | `profile/StatCardModal.tsx` | Stat detail overlay for dashboard cards |
+
+### Onboarding Components
+
+| Component | File | Description |
+|---|---|---|
+| `OnboardingFlow` | `OnboardingFlow.tsx` | 5-step wizard orchestrator |
+| `OnboardingModal` | `OnboardingModal.tsx` | Step 1 — identity, address, profile photo |
+| `OccupationStep` | `OccupationStep.tsx` | Step 2 — Student / Professional / Working Student |
+| `VerificationStep` | `VerificationStep.tsx` | Step 3 — Government/school ID upload (max 50MB) |
+| `ReviewProfile` | `ReviewProfile.tsx` | Step 4 — Review all data with inline editing |
+
+### Map Components
+
+| Component | File | Description |
+|---|---|---|
+| `MapTilerView` | `MapTilerView.tsx` | Interactive MapTiler SDK map with markers, popups, fly-to animation |
+| `MapPicker` | `MapPicker.tsx` | Interactive location picker for listing creation/editing |
+
+### UI Primitives
+
+| Component | File | Description |
+|---|---|---|
+| `Modal` | `ui/Modal.tsx` | Reusable animated modal with focus trap, configurable max width |
+| `ErrorScreen` | `ui/ErrorScreen.tsx` | Full-page error display with retry/redirect actions |
+
+### Error Handling
+
+| Component | File | Description |
+|---|---|---|
+| `ErrorBoundary` | `errors/ErrorBoundary.tsx` | Class component for catching render errors with fallback UI |
+| `ErrorExample` | `example/ErrorExample.tsx` | Development example for testing error boundaries |
+
+### Utility Components
+
+| Component | File | Description |
+|---|---|---|
+| `AnnouncementsOverlay` | `AnnouncementsOverlay.tsx` | Modal overlay displaying app news with "New" badges |
+| `AuthModal` | `AuthModal.tsx` | Login/signup modal dialog |
+| `CameraOverlay` | `CameraOverlay.tsx` | Full-screen camera view with capture, front/rear toggle, native fallback |
+| `Categories` | `Categories.tsx` | Horizontal scrollable category selector |
+| `CreateListingModal` | `CreateListingModal.tsx` | Form for creating new listings |
+| `CreatePostModal` | `CreatePostModal.tsx` | Form for creating roommate posts |
+| `DateScrollPicker` | `DateScrollPicker.tsx` | Custom date selection (Month/Day/Year with snap-to-center) |
+| `EditListingModal` | `EditListingModal.tsx` | Form for editing existing listings |
+| `Filters` | `Filters.tsx` | Multi-option filter panel |
+| `HostProfile` | `HostProfile.tsx` | Host information display card |
+| `InquiriesModal` | `InquiriesModal.tsx` | Guest inquiries display with tab filtering |
+| `ItemsPopup` | `ItemsPopup.tsx` | Reusable popup with item grid |
+| `LandlordListingsModal` | `LandlordListingsModal.tsx` | Landlord's other listings modal |
+| `NotificationDialog` | `NotificationDialog.tsx` | Persistent notification history with timestamps |
+| `PropertiesModal` | `PropertiesModal.tsx` | Properties overview modal |
+| `ReviewBreakdown` | `ReviewBreakdown.tsx` | 6-dimension rating distribution visualization |
+| `ReviewProfile` | `ReviewProfile.tsx` | Profile review display |
+| `SearchDropdown` | `SearchDropdown.tsx` | Search input with real-time autocomplete |
+| `SearchHistory` | `SearchHistory.tsx` | Recent searches display with add/remove |
+| `TenantsModal` | `TenantsModal.tsx` | Tenants list modal |
+| `TenantProfileModal` | `TenantProfileModal.tsx` | Tenant management with status and payment tracking |
+| `ThemeToggle` | `ThemeToggle.tsx` | Dark/light mode switch |
+| `Toast` | `Toast.tsx` | Notification popup with 3s auto-dismiss |
+| `ToastProvider` | `ToastProvider.tsx` | Toast context provider |
+| `UploadModal` | `UploadModal.tsx` | Drag-and-drop file upload with type filtering and size validation |
+
+---
+
+## 8. Custom Hooks
+
+### useFocusTrap (`src/hooks/useFocusTrap.ts`)
+
+Confines keyboard Tab/Shift+Tab within a modal container. Restores focus to the previously focused element on unmount. Accepts an optional `onEscape` callback for close-on-escape behavior.
+
+```ts
+useFocusTrap(isActive: boolean, containerRef: RefObject, onEscape?: () => void)
+```
+
+### useIsAnyModalOpen (`src/hooks/useIsAnyModalOpen.ts`)
+
+Uses `MutationObserver` to detect if any modal dialog is currently open in the DOM. Checks for `[role="dialog"]`, `.fixed.inset-0.z-50`, and `.fixed.inset-0.z-modal-backdrop` selectors.
+
+```ts
+useIsAnyModalOpen(): boolean
+```
+
+### useListing (`src/hooks/useListing.ts`)
+
+Fetches a single listing by ID. Returns `{ listing, loading }`. Uses cancellation flag to prevent stale updates.
+
+```ts
+useListing(id: string | undefined): { listing: Listing | null, loading: boolean }
+```
+
+### useListings (`src/hooks/useListings.ts`)
+
+Fetches all listings with optional filter params (category, search, minPrice, maxPrice). Uses `JSON.stringify(params)` as a stable dependency key for re-fetching.
+
+```ts
+useListings(params?: { category?, search?, minPrice?, maxPrice? }): { listings: Listing[], loading: boolean, error: string | null }
+```
+
+### useListingsFilter (`src/hooks/useListingsFilter.ts`)
+
+Client-side filter/sort pipeline using `useMemo`. Filter chain: category → price range → min rating → search query → sort. Returns a filtered/sorted copy (never mutates original).
+
+```ts
+useListingsFilter(listings: Listing[], filters: FilterState, searchQuery?: string, selectedCategory?: string): Listing[]
+```
+
+### useMediaQuery (`src/hooks/useMediaQuery.ts`)
+
+Responsive media query hook. Listens for media query changes and returns current match state.
+
+```ts
+useMediaQuery(query: string): boolean
+```
+
+### useSearchHistory (`src/hooks/useSearchHistory.ts`)
+
+Manages a list of recent search queries (max 5) persisted in localStorage. Methods: `addSearch` (prepends deduplicated entry), `removeSearch` (filters it out).
+
+```ts
+useSearchHistory(): { history: string[], addSearch: (q: string) => void, removeSearch: (q: string) => void }
 ```
 
 ---
 
-## 🧩 Component Library
+## 9. Context Providers
 
-### Layout Components
-| Component | Description |
-|-----------|-------------|
-| `Navbar` | Top navigation with logo, search, and user menu |
-| `BottomNav` | Mobile-friendly bottom navigation bar |
-| `Footer` | Site footer with links and copyright |
-| `Hero` | Landing page hero section with CTA |
-| `ScrollToTop` | Scrolls to top on route change (extracted to separate file) |
+### AuthContext (`src/lib/AuthContext.tsx`)
 
-### Listing Components
-| Component | Description |
-|-----------|-------------|
-| `ListingCard` | Card displaying listing preview |
-| `ListingCardSkeleton` | Loading skeleton for listing cards |
-| `ListingCarousel` | Horizontal scrollable row of listings with arrows |
-| `ListingDetailSkeleton` | Loading skeleton for detail view |
-| `ListingsPopup` | Reusable modal popup with grid of listing cards |
-| `PhotoCarouselOverlay` | Image gallery with fullscreen mode |
+Provides authentication state globally. Currently uses mock auth — auto-signs in a demo user on mount.
 
-### Roommate Components
-| Component | Description |
-|-----------|-------------|
-| `RoommateCard` | Profile card for roommate candidates |
-| `RoommateCardSkeleton` | Loading skeleton for roommate cards |
-| `RoommateHero` | Header section for roommate finder |
-| `RoommateModal` | Detailed roommate profile modal |
-| `RoommatePreferences` | Wizard step for selecting roommate lifestyle preference |
-| `RoommateSearchDropdown` | Filter dropdown for roommate search |
-| `RoommatesPopup` | Reusable modal popup with grid of roommate cards |
-
-### UI Primitives
-| Component | Description |
-|-----------|-------------|
-| `Modal` | Reusable animated modal with focus trap (`src/components/ui/Modal.tsx`) |
-| `ErrorScreen` | Full-page error display with actions (`src/components/ui/ErrorScreen.tsx`) |
-
-### Chat Components
-| Component | Description |
-|-----------|-------------|
-| *(Removed)* | Chat system removed — messaging feature no longer available |
-
-### Profile Components
-| Component | Description |
-|-----------|-------------|
-| `EditProfileModal` | Profile edit form (`src/components/profile/`) |
-| `LandlordSignupModal` | Landlord auth modal (`src/components/profile/`) |
-| `LogoutModal` | Logout confirmation (`src/components/profile/`) |
-| `StatCardModal` | Stat detail overlay (`src/components/profile/`) |
-
-### Onboarding Components
-| Component | Description |
-|-----------|-------------|
-| `OnboardingFlow` | 5-step wizard orchestrator (identity → occupation → verification → review → finish) |
-| `OnboardingModal` | Step 1 — collects identity, address, and profile photo |
-| `OccupationStep` | Step 2 — selects occupation (Student / Professional / Working Student) |
-| `RoommatePreferences` | Step 3 (variant) — selects roommate lifestyle preference |
-| `VerificationStep` | Step 3 — uploads government/school ID for verification |
-| `ReviewProfile` | Step 4 — reviews all data with inline editing |
-
-### Utility Components
-| Component | Description |
-|-----------|-------------|
-| `AnnouncementsOverlay` | Modal overlay displaying app news and updates with "New" badges |
-| `AuthModal` | Login/signup modal dialog |
-| `CameraOverlay` | Full-screen camera view with capture, retake, and native camera fallback |
-| `Categories` | Horizontal scrollable category selector |
-| `CreateListingModal` | Form for creating new listings |
-| `CreatePostModal` | Form for creating posts |
-| `DateScrollPicker` | Custom date selection component |
-| `EditListingModal` | Form for editing existing listings |
-| `Filters` | Multi-option filter panel |
-| `HostProfile` | Host information display |
-| `InquiriesModal` | Inquiries display modal |
-| `MapPicker` | Interactive MapTiler-based location picker for listing creation/editing |
-| `MapTilerView` | Interactive map component |
-| `NotificationDialog` | Notification history with timestamps |
-| `PropertiesModal` | Properties overview modal |
-| `ReviewBreakdown` | Rating distribution visualization |
-| `SearchDropdown` | Search input with autocomplete |
-| `SearchHistory` | Recent searches display |
-| `TenantsModal` | Tenants list modal |
-| `TenantProfileModal` | Tenant management modal with status and payment tracking |
-| `ThemeToggle` | Dark/light mode switch |
-| `Toast` | Notification popup |
-| `ToastProvider` | Toast context provider |
-| `UploadModal` | File upload modal |
-
-### Error Handling
-| Component | Description |
-|-----------|-------------|
-| `ErrorBoundary` | Class component for catching render errors (`src/components/errors/`) |
-| `ErrorExample` | Development example for error handling (`src/components/example/`) |
-
-### Map Components
-| Component | Description |
-|-----------|-------------|
-| `MapTilerView` | Interactive MapTiler SDK map with markers, popups, and fly-to animation |
-| `MapPicker` | Interactive location picker for listing creation/editing with draggable marker |
-
-### Legal & Info Pages
-| Component | Description |
-|-----------|-------------|
-| `TermsOfService` | 10-section legal page (`/terms`) |
-| `PrivacyPolicy` | 9-section legal page (`/privacy`) |
-
----
-
-## 🔮 State Management
-
-### Context Providers
-
-#### AuthContext
-```tsx
+```ts
 interface AuthContextType {
-  user: MockUser | null;
   session: MockSession | null;
+  user: MockUser | null;
   isLoading: boolean;
   signIn: (email: string) => void;
   signOut: () => Promise<void>;
 }
+
+// Mock types
+interface MockUser { id?: string; email?: string; }
+interface MockSession { user: MockUser; }
 ```
 
-#### ThemeContext
-```tsx
+**Behavior:**
+- `signIn(email)`: Sets mock user with provided email
+- `signOut()`: Clears session and user to null
+- Auto-signs in `demo@khubo.ph` on mount
+
+### ThemeContext (`src/lib/ThemeContext.tsx`)
+
+Provides dark/light theme toggle. Persists preference to localStorage. Respects OS-level `prefers-color-scheme: dark` as default.
+
+```ts
 interface ThemeContextType {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
 }
 ```
 
-#### ToastContext
-```tsx
+**Behavior:**
+- Toggles `dark` class on `document.documentElement`
+- Stores preference in localStorage key `khubo-theme`
+- Default: system preference, fallback to light
+
+### LandlordContext (`src/lib/LandlordContext.tsx`)
+
+Tracks landlord mode toggle state across the application.
+
+```ts
+interface LandlordContextType {
+  isLandlord: boolean;
+  setIsLandlord: (value: boolean) => void;
+}
+```
+
+### ToastProvider (`src/components/ToastProvider.tsx`)
+
+Manages toast notification state. Portals toasts to document body.
+
+```ts
 interface ToastContextType {
   addToast: (toast: ToastProps) => void;
   removeToast: (id: string) => void;
 }
 ```
 
-### Custom Hooks
-
-#### useListings
-- Fetches all listings with optional filters
-- Handles loading and error states
-- Returns: `{ listings, loading, error }`
-
-#### useListing
-- Fetches single listing by ID
-- Returns: `{ listing, loading, error }`
-
-#### useListingsFilter
-- Client-side filter pipeline: category → price → rating → search → sort
-- Returns filtered/sorted copy (never mutates original)
-- Returns: `Listing[]`
-
-#### useSearchHistory
-- Manages search history in localStorage
-- Methods: `addSearch`, `clearHistory`, `getHistory`
-
-#### useReducedMotion
-- Detects user's motion preference
-- Returns boolean for animation adjustments
-
-#### useFocusTrap
-- Confines Tab/Shift+Tab within a container
-- Restores focus on unmount
-- Returns ref to attach to container
-
-#### useErrorHandler
-- Wraps async/sync error handling
-- Integrates with ErrorBoundary
-
-#### useBodyScrollLock
-- Singleton-pattern scroll lock using a module-level counter
-- Prevents background scrolling when modals/overlays are open
-- Handles nested modal scenarios (count-based toggling)
+**Toast Types:** success, error, info, warning — each with distinct icon, background, and text colors (configured in `src/lib/toastConfig.ts`).
 
 ---
 
-## 🎨 Styling & Design System
+## 10. API Layer
 
-### Tailwind CSS Configuration
+All API functions use mock data with simulated delays (300-500ms). The API layer is designed to be easily swapped for real HTTP calls.
 
-**Version**: Tailwind CSS v4.x with Vite plugin (`@tailwindcss/vite`)
+### API Functions
 
-**Note**: Tailwind v4 uses CSS-based configuration via `src/index.css` instead of `tailwind.config.js`.
+**`src/lib/api/listings.ts`:**
 
-### Color Scheme
+| Function | Signature | Description |
+|---|---|---|
+| `getListings` | `(params?) => Promise<{data: Listing[], error: null}>` | Fetch listings with optional category/search/price filters |
+| `getListing` | `(id: string) => Promise<{data: Listing \| null, error: null}>` | Fetch single listing by ID |
+| `createListing` | `(listing) => Promise<{data: Listing, error: null}>` | Create new listing (mock) |
+| `updateListing` | `(id, updates) => Promise<{data: Listing \| null, error: string \| null}>` | Update existing listing |
+| `deleteListing` | `(id) => Promise<{data: null, error: null}>` | Delete listing (mock) |
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|------------|-----------|-------|
-| Primary | `#17294F` | `#17294F` | Brand color, CTAs |
-| Background | `#FFFFFF` | `#0F172A` | Page backgrounds |
-| Surface | `#F8FAFC` | `#1E293B` | Cards, modals |
-| Text Primary | `#0F172A` | `#F8FAFC` | Headings, body text |
-| Text Secondary | `#64748B` | `#94A3B8` | Subtitles, captions |
+**`src/lib/api/roommates.ts`:**
 
-### Responsive Breakpoints
+| Function | Signature | Description |
+|---|---|---|
+| `getRoommates` | `(params?) => Promise<{data: Roommate[], error: null}>` | Fetch roommates with optional search/gender/university filters |
+| `getRoommate` | `(id: string) => Promise<{data: Roommate \| null, error: null}>` | Fetch single roommate by ID |
+| `createRoommateRequest` | `(id, message) => Promise<{data: {success: true}, error: null}>` | Create roommate request (mock) |
 
-```ts
-sm: 640px   // Small devices (landscape phones)
-md: 768px   // Medium devices (tablets)
-lg: 1024px  // Large devices (desktops)
-xl: 1280px  // Extra large devices (large desktops)
-2xl: 1536px // XXL devices (extra-large screens)
-```
+### Simulated Delays
 
-### Utility Functions
-
-**`src/lib/utils.ts`**:
-- `cn(...classes)` - Combines clsx and tailwind-merge for conditional classes
-- Format currency, dates, and numbers
-- Helper functions for common operations
+- `getListings`, `getRoommates`: 500ms delay
+- `getListing`, `getRoommate`, `createListing`, `updateListing`, `deleteListing`: 300ms delay
 
 ---
 
-## ✨ Animation System
+## 11. Mock Data
 
-### Library: Motion (Framer Motion)
+### Listings (`src/mocks/listings.ts`)
 
-**Configuration**: `src/lib/animations.ts`
+- **28 seed listings** for Iligan City with real Unsplash images
+- **18 categories** (ALL + 17 specific types)
+- Listings k1-k5 have full reviews (3-5 reviews each); k6-k28 have empty reviews
+- Each listing includes: id, title, location, description, price, rating, image, gallery, category, date, amenities, lat/lng, reviews, host info, tenant info
 
-### Easing Curves
+### Roommates (`src/mocks/roommates.ts`)
 
-```ts
-export const EASE_OUT = [0.23, 1, 0.32, 1]; // Custom cubic-bezier
-```
+- **10 seed roommate profiles** with DiceBear avatar images
+- Each profile includes: name, age, gender, university, location, bio, tags, budget range, preferred place
+- Universities: MSU-IIT
+- Genders: Male, Female
 
-### Transition Presets
+### Reservations (`src/mocks/reservations.ts`)
 
-| Name | Duration | Ease | Use Case |
-|------|----------|------|----------|
-| `SPRING` | 0.3s | EASE_OUT | Default interactions |
-| `EASE_OUT` | 0.3s | EASE_OUT | Fade ins, slides |
-| `EASE_IN_OUT` | 0.3s | easeInOut | Balanced transitions |
-| `FAST` | 0.15s | - | Quick feedback |
-| `NORMAL` | 0.2s | - | Standard UI updates |
-| `SLOW` | 0.4s | EASE_OUT | Major state changes |
-
-### Animation Variants
-
-#### FADE_IN
-```ts
-{ initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
-```
-
-#### FADE_UP
-```ts
-{ initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -10 } }
-```
-
-#### SCALE_IN
-```ts
-{ initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.95 } }
-```
-
-#### Modal Presets (Reusable)
-```ts
-export const modalBackdrop = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
-export const modalContent = { initial: { opacity: 0, scale: 0.95, y: 20 }, animate: { opacity: 1, scale: 1, y: 0 }, exit: { opacity: 0, scale: 0.95, y: 20 } };
-export const dropdownReveal = { initial: { opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }, animate: { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }, exit: { opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' } };
-```
-
-### Reduced Motion Support
-
-The app respects the `prefers-reduced-motion` media query:
-- `REDUCED_TRANSITIONS` and `REDUCED_VARIANTS` variants for accessibility
-- `useReducedMotion` hook provides programmatic access
-- `MotionConfig` wrapper handles global settings via `reducedMotion="user"`
+- **3 mock reservation records** for tenant view
+- Each includes: title, location, image, gallery, price, rating, review count, amenities, availability, tenant avatars
 
 ---
 
-## 🔌 API Integration
+## 12. TypeScript Types
 
-### API Layer
+### Core Types (`src/types.ts`)
 
-**Location**: `src/lib/api/`
-
-**Structure**:
-- `client.ts` - Base HTTP client with retry (2 retries on 429/5xx), timeout (15s default), abort signal combination, and automatic Bearer token injection from sessionStorage
-- `auth.ts` - Authentication operations (signIn, signUp, signOut, getSession)
-- `listings.ts` - Listing CRUD operations (getListings, getListing, createListing, updateListing, deleteListing)
-- `roommates.ts` - Roommate operations (getRoommates, getRoommate, createRoommateRequest)
-- `types.ts` - API type definitions (ApiResponse, PaginatedResponse, PaginationParams, ApiError)
-
-**Client Features**:
-- `apiRequest<T>(endpoint, options)` - Generic fetch wrapper with retry, timeout, and auth
-- `apiGet<T>(endpoint, params?)` - GET with optional query params
-- `apiPost<T>(endpoint, body)` - POST with JSON body
-- `apiPut<T>(endpoint, body)` - PUT with JSON body
-- `apiDelete<T>(endpoint)` - DELETE
-- Exponential backoff: 200ms × 2^attempt
-- AbortError handling: Returns "Request was cancelled"
-- Max retries exceeded: Returns "Max retries exceeded"
-
-### Mock Data
-
-**Location**: `src/mocks/`
-
-**Tables** (Mock Schema):
-- `listings` - Property listings with reviews, tenants, and status
-- `roommates` - Roommate seeker profiles
-- `supabase.ts` - Mock Supabase client
-
-### MapTiler
-
-**Usage**: Interactive maps in `Maps.tsx`, `MapTilerView.tsx`, `MapPicker.tsx`, and `ListingDetail.tsx`
-
-```ts
-import { maptilersdk } from '@maptiler/sdk';
-maptilersdk.config.apiKey = import.meta.env.VITE_MAPTILER_API_KEY;
-```
-
-**Features**:
-- Custom SVG pin markers with drop shadows
-- Marker popups with thumbnail, title, and price
-- Fly-to animation (zoom 16, 1500ms duration)
-- Map preloader singleton for instant map readiness
-- Full-screen map modal with location pill
-- Interactive location picker for listing creation
-- Missing API key fallback screen
-
----
-
-## 🧪 Testing
-
-### Test Runner
-
-**Framework**: Vitest 4.1 with jsdom environment
-
-**Configuration**: `vite.config.ts` (test section)
-```ts
-test: {
-  globals: true,
-  environment: 'jsdom',
-  setupFiles: ['./src/test/setup.ts'],
-}
-```
-
-**Setup**: `src/test/setup.ts` imports `@testing-library/jest-dom` matchers
-
-### Available Test Files
-
-- `src/hooks/useListingsFilter.test.ts` - Filter hook tests
-- `src/lib/utils.test.ts` - Utility function tests
-- `src/lib/api/client.test.ts` - API client tests
-
-### Scripts
-
-```bash
-npm test          # Run all tests (vitest run)
-npm run test:watch  # Run tests in watch mode (vitest)
-```
-
-### Testing Libraries
-
-- `@testing-library/react` - Component rendering and queries
-- `@testing-library/jest-dom` - Custom matchers (toBeInTheDocument, etc.)
-- `@testing-library/user-event` - User interaction simulation
-- `jsdom` - Browser environment simulation
-
----
-
-## 📝 TypeScript Types
-
-### Core Interfaces (`src/types.ts`)
-
-#### Listing
 ```ts
 interface Listing {
   id: string;
@@ -1166,24 +944,16 @@ interface Listing {
   tenants?: TenantInfo[];
   isActive?: boolean;
 }
-```
 
-#### TenantInfo
-```ts
-interface TenantInfo {
+interface Review {
   id: string;
-  name: string;
-  image: string;
-  email: string;
-  phone?: string;
-  moveInDate: string;
-  status: 'active' | 'leaving' | 'moved_out';
-  paymentStatus: 'paid' | 'pending' | 'overdue';
+  userName: string;
+  userImage: string;
+  date: string;
+  comment: string;
+  rating: number;
 }
-```
 
-#### HostInfo
-```ts
 interface HostInfo {
   name: string;
   image: string;
@@ -1194,10 +964,24 @@ interface HostInfo {
   location: string;
   tenantCount?: number;
 }
-```
 
-#### Roommate
-```ts
+interface TenantInfo {
+  id: string;
+  name: string;
+  image: string;
+  email: string;
+  phone?: string;
+  moveInDate: string;
+  status: 'active' | 'leaving' | 'moved_out';
+  paymentStatus: 'paid' | 'pending' | 'overdue';
+}
+
+interface Category {
+  label: string;
+  icon: string;
+  emoji: string;
+}
+
 interface Roommate {
   id: string;
   name: string;
@@ -1210,70 +994,503 @@ interface Roommate {
   tags: string[];
   budgetRange: string;
   preferredPlace: string;
+  hidePhone?: boolean;
+  hideEmail?: boolean;
+  hideSocialLinks?: boolean;
+}
+
+interface FilterState {
+  minPrice: number;
+  maxPrice: number;
+  minRating: number;
+  sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating';
 }
 ```
 
-#### Category
-```ts
-interface Category {
-  label: string;
-  icon: string;
-  emoji: string;
-}
-```
-
-### API Types (`src/lib/api/types.ts`)
+### Reservation Types (`src/mocks/reservations.ts`)
 
 ```ts
-interface ApiResponse<T> {
-  data: T;
-  error: string | null;
+interface Tenant {
+  name: string;
+  image: string;
 }
 
-interface PaginatedResponse<T> {
-  data: T[];
-  count: number;
-  page: number;
-  pageSize: number;
-  totalPages: number;
-}
-
-interface PaginationParams {
-  page?: number;
-  pageSize?: number;
-}
-
-interface ApiError {
-  message: string;
-  status: number;
-  code?: string;
-}
-```
-
-### Auth Types (`src/lib/AuthContext.tsx`)
-
-```ts
-interface MockUser {
-  id?: string;
-  email?: string;
-}
-
-interface MockSession {
-  user: MockUser;
-}
-
-interface AuthContextType {
-  session: MockSession | null;
-  user: MockUser | null;
-  isLoading: boolean;
-  signOut: () => Promise<void>;
-  signIn: (email: string) => void;
+interface Reservation {
+  id: string;
+  title: string;
+  location: string;
+  image: string;
+  gallery: string[];
+  price: number;
+  rating: number;
+  reviewCount: number;
+  amenities: string[];
+  available: string;
+  tenants: Tenant[];
 }
 ```
 
 ---
 
-## 📖 Development Guidelines
+## 13. Styling & Design System
+
+### Tailwind CSS v4
+
+The project uses **Tailwind CSS v4** with the Vite plugin (`@tailwindcss/vite`). Configuration is split between:
+- `tailwind.config.ts` — theme extensions (colors, spacing, shadows, etc.)
+- `src/index.css` — CSS-based `@theme` variables and custom utilities
+
+### Color Scheme
+
+| Token | Light Mode | Dark Mode | Usage |
+|---|---|---|---|
+| Primary | `#17294F` | `#17294F` | Brand color, CTAs, headers |
+| Accent | `#2252D6` | `#2252D6` | Secondary actions, focus rings |
+| Background | `#FFFFFF` | `#0F172A` | Page backgrounds |
+| Surface | `#F8FAFC` | `#1E293B` | Cards, modals |
+| Text Primary | `#0F172A` | `#F8FAFC` | Headings, body text |
+| Text Secondary | `#64748B` | `#94A3B8` | Subtitles, captions |
+| Semantic Success | `#10B981` | - | Success states |
+| Semantic Warning | `#F59E0B` | - | Warning states |
+| Semantic Error | `#EF4444` | - | Error states |
+| Semantic Info | `#3B82F6` | - | Info states |
+
+### Typography
+
+- **Primary Font**: Roboto (sans-serif, 300-900 weights)
+- **Secondary Font**: Noto Serif (serif, italic)
+- **Loaded via**: Google Fonts in `src/index.css`
+
+### Responsive Breakpoints
+
+| Name | Width | Usage |
+|---|---|---|
+| `xs` | 375px | Small phones |
+| `sm` | 640px | Landscape phones |
+| `md` | 768px | Tablets |
+| `lg` | 1024px | Desktops |
+| `xl` | 1280px | Large desktops |
+| `2xl` | 1536px | Ultra-wide screens |
+
+### Shadow System
+
+| Token | Usage |
+|---|---|
+| `shadow-card` | Listing cards, property cards |
+| `shadow-card-hover` | Card hover states |
+| `shadow-dropdown` | Dropdown menus |
+| `shadow-modal` | Modal overlays |
+| `shadow-toast` | Toast notifications |
+| `shadow-focus` | Focus rings |
+
+### Z-Index Scale
+
+| Token | Value | Usage |
+|---|---|---|
+| `z-dropdown` | 100 | Dropdown menus |
+| `z-sticky` | 200 | Sticky headers |
+| `z-modal-backdrop` | 300 | Modal backdrops |
+| `z-modal` | 400 | Modal content |
+| `z-popover` | 500 | Popovers |
+| `z-tooltip` | 600 | Tooltips |
+| `z-toast` | 700 | Toast notifications |
+
+### Utility Function
+
+```ts
+// src/lib/utils.ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+### Custom CSS Utilities
+
+```css
+/* src/index.css */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.listing-thumbnail-popup .maplibregl-popup-content {
+  padding: 0; border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); border: none;
+}
+```
+
+---
+
+## 14. Animation System
+
+### Library: Motion (Framer Motion)
+
+**Configuration**: `src/lib/animations.ts`
+
+### Easing Curves
+
+```ts
+export const EASE_OUT = [0.23, 1, 0.32, 1]; // Custom cubic-bezier
+```
+
+### Transition Presets
+
+| Name | Duration | Ease | Use Case |
+|---|---|---|---|
+| `SPRING` | 0.3s | EASE_OUT | Default interactions |
+| `EASE_OUT` | 0.3s | EASE_OUT | Fade ins, slides |
+| `EASE_IN_OUT` | 0.3s | easeInOut | Balanced transitions |
+| `FAST` | 0.15s | - | Quick feedback |
+| `NORMAL` | 0.2s | - | Standard UI updates |
+| `SLOW` | 0.4s | EASE_OUT | Major state changes |
+
+### Animation Variants
+
+| Variant | Initial | Animate | Exit |
+|---|---|---|---|
+| `FADE_IN` | opacity: 0 | opacity: 1 | opacity: 0 |
+| `FADE_UP` | opacity: 0, y: 10 | opacity: 1, y: 0 | opacity: 0, y: -10 |
+| `SCALE_IN` | opacity: 0, scale: 0.95 | opacity: 1, scale: 1 | opacity: 0, scale: 0.95 |
+
+### Modal Presets (Reusable)
+
+```ts
+export const modalBackdrop = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 }
+};
+
+export const modalContent = {
+  initial: { opacity: 0, scale: 0.95, y: 20 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  exit: { opacity: 0, scale: 0.95, y: 20 }
+};
+
+export const dropdownReveal = {
+  initial: { opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' },
+  animate: { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' },
+  exit: { opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }
+};
+```
+
+### Reduced Motion Support
+
+- `REDUCED_TRANSITIONS` and `REDUCED_VARIANTS` variants for accessibility
+- `useReducedMotion` hook for programmatic access
+- `MotionConfig` wrapper handles global settings via `reducedMotion="user"`
+
+---
+
+## 15. Map Integration
+
+### MapTiler SDK v4
+
+**Configuration**: `src/lib/mapPreloader.ts`
+
+### API Key
+
+Set via environment variable `VITE_MAPTILER_API_KEY`. Without it, the Maps page shows a "Map unavailable" screen with a link to get an API key.
+
+### Map Preloader Singleton
+
+A singleton service that initializes MapTiler in a hidden off-screen div on the Home page, so the interactive map is fully rendered when the user navigates to `/maps`.
+
+```ts
+initMapPreload(container: HTMLDivElement, apiKey: string) // Initialize
+isMapReady(): boolean                                     // Check readiness
+takeMap(): { container, map } | null                      // Take and clear
+resetMapPreload(): void                                   // Reset for next cycle
+```
+
+**Flow:**
+1. Home page mounts hidden container, calls `initMapPreload()`
+2. MapTiler initializes and loads tiles in background
+3. User navigates to `/maps`
+4. `Maps.tsx` calls `takeMap()` to get pre-initialized map
+5. Re-parents container into the page layout
+6. On unmount, calls `resetMapPreload()` so Home can re-init on next visit
+
+### Map Features
+
+- Custom SVG pin markers (red pin with white circle)
+- Marker popups with thumbnail, title, price
+- Fly-to animation (zoom 16, 1500ms duration)
+- Full-screen map modal with location pill and coordinates
+- Interactive location picker for listing creation (`MapPicker.tsx`)
+
+---
+
+## 16. State Management
+
+### Global State (React Context)
+
+| Context | State | Persistence |
+|---|---|---|
+| `AuthContext` | user, session, isLoading | None (in-memory) |
+| `ThemeContext` | theme | localStorage (`khubo-theme`) |
+| `LandlordContext` | isLandlord | None (in-memory) |
+| `ToastContext` | toasts[] | None (in-memory) |
+
+### Local State (Component-level)
+
+Most components use `useState` and `useReducer` for local state. Key patterns:
+
+- **Modal state**: Individual `boolean` states per modal (e.g., `isEditProfileOpen`, `isLogoutModalOpen`)
+- **Form state**: Controlled inputs with `useState`
+- **Filter state**: `FilterState` object with `useState`
+- **Loading state**: `boolean` flags with `useState`
+
+### localStorage Keys
+
+| Key | Type | Purpose |
+|---|---|---|
+| `khubo-theme` | `'light' \| 'dark'` | Theme preference |
+| `home_search_history` | `string[]` | Recent search queries (max 5) |
+| `user_profile_name` | `string` | User's display name |
+| `user_profile_tags` | `string[]` | User's personality tags |
+| `custom_roommates` | `Roommate[]` | User-created roommate posts |
+
+---
+
+## 17. Testing
+
+### Framework
+
+**Vitest 4.1** with jsdom environment.
+
+**Configuration** (in `vite.config.ts`):
+```ts
+test: {
+  globals: true,
+  environment: 'jsdom',
+  setupFiles: ['./src/test/setup.ts'],
+}
+```
+
+**Setup**: `src/test/setup.ts` imports `@testing-library/jest-dom` matchers.
+
+### Test Files
+
+| File | Description |
+|---|---|
+| `src/hooks/useListingsFilter.test.ts` | Filter hook pipeline tests |
+| `src/lib/utils.test.ts` | Utility function tests |
+| `src/lib/api/client.test.ts` | API client tests |
+
+### Testing Libraries
+
+- `@testing-library/react` — Component rendering and queries
+- `@testing-library/jest-dom` — Custom matchers (toBeInTheDocument, etc.)
+- `@testing-library/user-event` — User interaction simulation
+- `jsdom` — Browser environment simulation
+
+### Running Tests
+
+```bash
+npm test            # Run all tests (vitest run)
+npm run test:watch  # Run tests in watch mode (vitest)
+```
+
+---
+
+## 18. Configuration Files
+
+### `package.json`
+
+- **Name**: khubo
+- **Version**: 0.0.0
+- **Type**: ES modules
+- **Scripts**: dev, build, preview, test, test:watch, clean, lint, lint:eslint, typecheck, format
+
+### `tsconfig.json`
+
+- **Target**: ES2022
+- **Strict mode**: Enabled
+- **Module**: ESNext with bundler resolution
+- **Path alias**: `@/*` → `./src/*`
+- **JSX**: react-jsx
+
+### `vite.config.ts`
+
+- **Plugins**: React, Tailwind CSS
+- **Dev server**: Port 3002, strict port, HMR toggle via `DISABLE_HMR`
+- **Path alias**: `@` → `src`
+- **Build chunks**: Manual splitting (maptiler, recharts, lucide, motion, vendor)
+- **chunkSizeWarningLimit**: 2000KB
+- **Test**: Vitest with jsdom
+
+### `tailwind.config.ts`
+
+- **Dark mode**: Class-based (`'class'`)
+- **Custom colors**: primary, accent, khubo, semantic, neutral
+- **Custom shadows**: card, card-hover, dropdown, modal, toast, focus
+- **Custom z-index scale**: dropdown (100) through toast (700)
+- **Safelist**: Primary/accent/semantic color utilities
+
+### `eslint.config.js`
+
+- **Extends**: recommended + typescript-eslint
+- **Plugins**: react-hooks, react
+- **Rules**: no-unused-vars (warn), no-explicit-any (warn), exhaustive-deps (warn)
+
+---
+
+## 19. Docker Setup
+
+### Multi-Stage Build
+
+**Build Stage** (`node:20-alpine`):
+1. Copies `package.json` and `package-lock.json`
+2. Runs `npm ci --ignore-scripts --no-audit --no-fund`
+3. Copies source code
+4. Runs `npm run build` to produce `dist/`
+
+**Production Stage** (`nginx:1.27-alpine`):
+1. Copies built `dist/` into Nginx container
+2. Configures SPA fallback (`try_files $uri $uri/ /index.html`)
+3. Static asset caching (6 months)
+4. Security headers (X-Frame-Options, X-Content-Type-Options)
+5. Health check (wget every 30s)
+
+### Docker Compose
+
+```yaml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_MAPTILER_API_KEY=${VITE_MAPTILER_API_KEY:-}
+    container_name: khubo
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+```
+
+### Quick Start
+
+```bash
+# Create .env with MapTiler API key
+echo "VITE_MAPTILER_API_KEY=your_key_here" > .env
+
+# Build and start
+docker compose up -d
+
+# Access at http://localhost:8080
+```
+
+### Common Commands
+
+| Action | Command |
+|---|---|
+| Build & start | `docker compose up -d` |
+| Stop (keep data) | `docker compose stop` |
+| Stop & remove | `docker compose down` |
+| View logs | `docker compose logs -f` |
+| Rebuild after changes | `docker compose up -d --build` |
+| Shell into container | `docker compose exec app sh` |
+| Verify health | `docker compose ps` |
+
+---
+
+## 20. Environment Variables
+
+| Variable | Required | Description |
+|---|---|---|
+| `VITE_MAPTILER_API_KEY` | Yes | MapTiler API key for interactive maps |
+| `VITE_API_URL` | No | API base URL (defaults to `/api`) |
+| `DISABLE_HMR` | No | Set to `true` to disable Hot Module Replacement |
+
+All `VITE_*` variables are exposed client-side. Do not put secrets in these variables.
+
+---
+
+## 21. Build & Scripts
+
+### Development
+
+```bash
+npm run dev    # Starts on http://localhost:3002 with HMR
+```
+
+### Production
+
+```bash
+npm run build  # Outputs optimized bundle to dist/
+npm run preview  # Serves production build locally
+```
+
+### Code Quality
+
+```bash
+npm run lint        # ESLint + TypeScript checks
+npm run lint:eslint # ESLint only
+npm run typecheck   # TypeScript type checking only
+npm run format      # Prettier formatting
+```
+
+### Testing
+
+```bash
+npm test            # Run all tests
+npm run test:watch  # Watch mode
+```
+
+### Cleanup
+
+```bash
+npm run clean  # Remove dist/ directory
+```
+
+---
+
+## 22. Known Issues & Technical Debt
+
+### Critical Bugs
+
+1. **`Math.random()` During Render** (`src/components/PropertiesModal.tsx:75-76`): React 19 strict mode flags this as impure. Fix: wrap in `useMemo`.
+
+2. **Missing `useEffect` Dependencies**:
+   - `PhotoCarouselOverlay.tsx:36-46`: Missing `nextImage`, `prevImage`, `onClose` in deps
+   - `MapTilerView.tsx:77`: Missing `apiKey` in deps
+   - `Profile.tsx:168`: Missing `checkLandlordAccount` in deps
+
+### Type Safety
+
+- 15+ `any` type usages across the codebase (mocks/supabase.ts, AuthContext, Filters, CreateListingModal, EditListingModal, ListingModal, MapTilerView, Profile, ManageListings, Maps)
+
+### Unused Imports
+
+- ~50 unused import warnings across 20+ files
+
+### Pending Optimizations
+
+- Lazy-load heavy dependencies (MapTiler SDK ~500KB+, Recharts)
+- Inline SVG → React components in MapTilerView
+
+### ADR Inconsistency
+
+- ADR-005: Vite `@` alias points to project root (`.`) but tsconfig maps `@/*` → `./src/*` — potential import mismatch
+
+---
+
+## 23. Development Guidelines
 
 ### Code Style
 
@@ -1340,78 +1557,23 @@ git commit -m "feat(roommate): add budget filter to roommate search"
 
 ---
 
-## 🚀 Build & Deployment
-
-### Development
-
-```bash
-npm run dev
-```
-
-Runs on `http://localhost:3002` with HMR enabled.
-
-### Production Build
-
-```bash
-npm run build
-```
-
-Outputs optimized bundle to `dist/` directory.
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-Serves the production build locally for testing.
-
-### Linting
-
-```bash
-npm run lint        # Run ESLint and TypeScript checks
-npm run lint:eslint # Run only ESLint
-npm run typecheck   # Run TypeScript type checking only
-```
-
-### Testing
-
-```bash
-npm test            # Run all tests
-npm run test:watch  # Run tests in watch mode
-```
-
-### Formatting
-
-```bash
-npm run format      # Format code with Prettier
-```
-
-### Clean
-
-```bash
-npm run clean       # Remove dist/ directory
-```
-
----
-
-## 🔧 Troubleshooting
+## 24. Troubleshooting
 
 ### Common Issues
 
 1. **Environment Variables Not Loading**
-   - Ensure `.env.local` is in the root directory
+   - Ensure `.env.local` or `.env` is in the project root
    - Restart dev server after adding variables
    - Prefix client-side variables with `VITE_`
 
 2. **Map Not Rendering**
-   - Verify MapTiler API key is valid
+   - Verify MapTiler API key is valid and set in `.env`
    - Check browser console for CORS errors
    - Ensure container has defined height
 
 3. **Authentication Failures**
-   - Confirm Supabase URL and anon key are correct
-   - Check Supabase project settings for allowed origins
+   - Auth is currently mock-only — no real Supabase integration
+   - `AuthContext` auto-signs in a demo user
 
 4. **Build Errors**
    - Clear `node_modules` and reinstall: `rm -rf node_modules && npm install`
@@ -1421,396 +1583,11 @@ npm run clean       # Remove dist/ directory
    - Run `npm run typecheck` to verify types
    - Check `src/test/setup.ts` for missing imports
 
----
-
-## 📚 Additional Resources
-
-- [React Documentation](https://react.dev)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- [Framer Motion Docs](https://www.framer.com/motion/)
-- [Vitest Docs](https://vitest.dev/)
-- [MapTiler SDK](https://docs.maptiler.com/sdk-js/)
+6. **Docker Issues**
+   - Ensure `.env` file exists with `VITE_MAPTILER_API_KEY`
+   - Check port 8080 is not in use
+   - Run `docker compose up -d --build` for fresh rebuild
 
 ---
 
-*Last Updated: June 27, 2026*
-*Version: 2.4.0*
-
----
-
-# Docker Setup
-
-## Prerequisites
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows / Mac / Linux)
-- Git
-
-## Quick Start
-
-```bash
-# 1. Clone the repo and enter the directory
-cd Khubo
-
-# 2. Create your .env with your MapTiler API key
-#    Edit .env and set:
-#    VITE_MAPTILER_API_KEY=your_key_here
-
-# 3. Build and start the container
-docker compose up -d
-
-# 4. Open the app
-#    → http://localhost:8080
-```
-
-## Useful Commands
-
-| Action | Command |
-|---|---|
-| **Build & start** | `docker compose up -d` |
-| **Stop (keep data)** | `docker compose stop` |
-| **Stop & remove** | `docker compose down` |
-| **View logs** | `docker compose logs -f` |
-| **Rebuild after code changes** | `docker compose up -d --build` |
-| **Shell into container** | `docker compose exec app sh` |
-| **Verify health** | `docker compose ps` |
-
-## How It Works
-
-The Docker setup uses a **multi-stage build**:
-
-1. **Build Stage** (`node:20-alpine`): Installs dependencies with `npm ci`, copies source code, and runs `npm run build` to produce the `dist/` folder.
-2. **Production Stage** (`nginx:1.27-alpine`): Copies the built `dist/` into an Nginx container with SPA fallback (`try_files $uri $uri/ /index.html`), static asset caching (6 months), and security headers.
-
-### Key Configuration
-
-- **Port**: Container maps `8080:80` — change the left side to any free port
-- **Environment**: `.env` file is loaded via `env_file` and build args pass `VITE_MAPTILER_API_KEY` into the Vite build
-- **Health Check**: wget-based check every 30s on `http://localhost:80/`
-- **Restart Policy**: `unless-stopped` — auto-recovers after host restart
-- **Logging**: JSON file driver, max 3 files × 10MB each
-
-## Common Mistakes & How This Setup Prevents Crashes
-
-| Mistake | Prevention |
-|---|---|
-| **Missing `.env` file** | `docker compose up` fails fast with a clear error |
-| **Node modules mismatch** | `npm ci` inside the builder runs against a locked `package-lock.json` — exact versions guaranteed |
-| **Port conflict (e.g. port 80 in use)** | Container maps to `8080:80` — change the left side to any free port |
-| **SPA 404 on page refresh** | Nginx `try_files $uri $uri/ /index.html` rewrites all routes to `index.html` |
-| **OS path issues** | Docker normalises paths — works identically on Windows, Mac, Linux |
-| **Memory / disk fill-up** | Log driver limits to 3×10 MB files; no anonymous volumes leak data |
-| **Crash on VPS boot** | `restart: unless-stopped` auto-recovers after host restart |
-| **Stale cache after deploy** | `docker compose up -d --build` always rebuilds from fresh `npm ci` |
-| **MapTiler API key leaked to git** | `.gitignore` ignores `.env`; `.dockerignore` keeps it out of the image |
-
----
-
-# CODE_ANALYSIS_AND_PLAN.md — Codebase Analysis & Implementation Plan
-
-> **Generated:** 2026-06-18
-> **Tools run:** `tsc --noEmit` (0 errors), `eslint .` (2 errors, 95 warnings)
-> **Files analyzed:** 50+ TypeScript/React files
-
----
-
-## Tool Results Summary
-
-| Check | Result |
-|-------|--------|
-| `tsc --noEmit` | **0 errors** ✅ |
-| `eslint .` (errors) | **2 errors** ❌ |
-| `eslint .` (warnings) | **95 warnings** ⚠️ |
-
----
-
-## 🔴 Critical Bugs
-
-### Bug 1: `Math.random()` During Render (React Purity Violation)
-
-**File:** `src/components/PropertiesModal.tsx:75-76`
-
-```tsx
-const occupied = Math.floor(Math.random() * 10);
-const total = occupied + Math.floor(Math.random() * 5) + 1;
-```
-
-**Problem:** `Math.random()` called directly inside render function. React 19 strict mode flags this as impure. Each re-render produces different values, making the UI unpredictable.
-
-**Fix:** Move random data generation to `useMemo` with stable seed:
-
-```tsx
-const propertyStats = useMemo(() =>
-  listings.map((_, index) => {
-    const statuses = ['Active', 'Review', 'Maintenance'];
-    const occupied = Math.floor(Math.random() * 10);
-    const total = occupied + Math.floor(Math.random() * 5) + 1;
-    return { status: statuses[index % 3], occupied, total };
-  }),
-  [listings]
-);
-```
-
----
-
-### Bug 2: Missing `useEffect` Dependencies (Stale Closures)
-
-#### 2a. `PhotoCarouselOverlay.tsx:36-46`
-
-```tsx
-React.useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
-    if (e.key === 'Escape') onClose();
-  };
-  if (isOpen) {
-    window.addEventListener('keydown', handleKeyDown);
-  }
-  return () => window.removeEventListener('keydown', handleKeyDown);
-}, [isOpen, currentIndex]); // Missing: nextImage, prevImage, onClose
-```
-
-**Risk:** Event listeners capture stale `nextImage`, `prevImage`, and `onClose` references. If these change, keyboard navigation breaks.
-
-**Fix:** Wrap functions in `useCallback` and include in dependency array, or use functional refs.
-
-```tsx
-const nextImage = useCallback(() => {
-  setCurrentIndex((prev) => (prev + 1) % images.length);
-}, [images.length]);
-
-const prevImage = useCallback(() => {
-  setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-}, [images.length]);
-
-React.useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'ArrowLeft') prevImage();
-    if (e.key === 'Escape') onClose();
-  };
-  if (isOpen) {
-    window.addEventListener('keydown', handleKeyDown);
-  }
-  return () => window.removeEventListener('keydown', handleKeyDown);
-}, [isOpen, nextImage, prevImage, onClose]);
-```
-
-#### 2b. `MapTilerView.tsx:77`
-
-```tsx
-useEffect(() => {
-  // ... uses apiKey ...
-}, [lat, lng, title]); // Missing: apiKey
-```
-
-**Fix:** Add `apiKey` to dependency array.
-
-#### 2c. `Profile.tsx:168`
-
-```tsx
-useEffect(() => {
-  checkLandlordAccount();
-}, [user]); // Missing: checkLandlordAccount
-```
-
-**Fix:** Wrap `checkLandlordAccount` in `useCallback` and add to deps.
-
----
-
-### Bug 3: ~~`URL.createObjectURL` Memory Leak~~ *(Resolved — Messages.tsx removed)*
-
-The messaging feature (`src/pages/Messages.tsx`) has been removed from the application. This bug is no longer applicable.
-
----
-
-## 🧹 Code Cleanup
-
-### Cleanup 1: Remove Unused Imports (~50 warnings)
-
-**Files affected** (20+ files):
-
-| File | Unused Import(s) |
-|------|-----------------|
-| `AnalyticsModal.tsx` | `Calendar` from lucide-react, `listingTitle` variable |
-| `AnnouncementsOverlay.tsx` | `Bell` from lucide-react |
-| `CameraOverlay.tsx` | `stream` variable (assigned but unused) |
-| `Filters.tsx` | `ChevronDown`, `Check` from lucide-react |
-| `Hero.tsx` | `Clock`, `Navigation`, `Sparkles`, `onOpenMobileSearch`, `navigate` |
-| `HostProfile.tsx` | `ShieldCheck`, `motion` |
-| `ListingCardSkeleton.tsx` | `motion` |
-| `ListingModal.tsx` | `ChevronLeft`, `ChevronRight`, `startOfToday`, `startOfDay`, `isSameDay`, `isBefore` |
-| `ListingDetail.tsx` | `ShieldCheck`, `CalendarIcon`, `Search`, `Layers`, `Home`, `Loader2`, `MessageCircle`, `handleDateSelect`, `nextImage`, `prevImage` |
-| `Maps.tsx` | `Navbar`, `SlidersHorizontal`, `MoreHorizontal`, `MapIcon`, `err` |
-| `Profile.tsx` | `ChevronLeft`, `Shield`, `Loader2`, `TrendingUp`, `hasLandlordAccount` |
-| `RoommateHero.tsx` | `CalendarIcon`, `onOpenMobileSearch` |
-| `RoommateModal.tsx` | `Star`, `User` |
-| `RoommateSearchDropdown.tsx` | `Award` |
-| `SearchDropdown.tsx` | `CornerDownLeft`, `Listing`, `hasResults` |
-| `Toast.tsx` | `AnimatePresence` |
-| `Home.tsx` | `ArrowRight` |
-| `CategoryListings.tsx` | `ChevronLeft` |
-| `ManageListings.tsx` | `supabase`, `Loader2` |
-| `main.tsx` | `e` variable |
-| `vite.config.ts` | `env` variable |
-
-**Action:** Remove all unused imports and variables across these files.
-
----
-
-### Cleanup 2: Remove Dead ESLint Directive
-
-**File:** `src/components/CreatePostModal.tsx:42`
-
-```tsx
-// eslint-disable-next-line react-hooks/exhaustive-deps
-```
-
-**Problem:** The directive is unused — no actual ESLint warning was being suppressed.
-
-**Action:** Remove the dead comment.
-
----
-
-### Cleanup 3: Fix Import Ordering in `App.tsx`
-
-**File:** `src/App.tsx`
-
-**Problem:** The `ScrollToTop` component was defined inline between imports and the main `App` component, breaking convention.
-
-**Status:** ✅ **COMPLETED** — `ScrollToTop` has been extracted to `src/components/ScrollToTop.tsx`
-
----
-
-## ⚡ Optimization
-
-### Optimization 1: Create Reusable `Modal` Wrapper Component
-
-**Problem:** 10+ components duplicate identical modal backdrop patterns.
-
-**Status:** ✅ **COMPLETED** — `src/components/ui/Modal.tsx` created and implemented.
-
-**Implementation**:
-```tsx
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-  maxWidth?: string;
-  className?: string;
-}
-```
-
-Features:
-- Uses shared `modalBackdrop` and `modalContent` animation variants
-- Includes `useFocusTrap` for keyboard accessibility
-- Configurable max width
-
----
-
-### Optimization 2: Lazy-Load Heavy Dependencies
-
-**Files affected:**
-- `src/components/MapTilerView.tsx` — MapTiler SDK (~500KB+)
-- `src/components/AnalyticsModal.tsx` — Recharts library
-
-**Status:** ⏳ **PENDING** — Not yet implemented
-
----
-
-### Optimization 3: Extract Shared Motion Animation Variants
-
-**Status:** ✅ **COMPLETED** — Shared variants in `src/lib/animations.ts`:
-
-```tsx
-export const modalBackdrop = { ... };
-export const modalContent = { ... };
-export const dropdownReveal = { ... };
-```
-
-Used by `Modal.tsx` and can be used by other components.
-
----
-
-### Optimization 4: ~~Reduce Messages.tsx Re-render Propagation~~ *(Resolved — Messages.tsx removed)*
-
-The messaging feature has been removed from the application. This optimization is no longer applicable.
-
----
-
-### Optimization 5: Inline SVG → React Components
-
-**File:** `src/components/MapTilerView.tsx:54-68`
-
-**Status:** ⏳ **PENDING** — Not yet implemented
-
----
-
-## 🔧 Type Safety Improvements
-
-### Issue: 15+ `any` Type Usages
-
-**Files and specific issues:**
-
-| File | Line(s) | Issue | Recommended Type |
-|------|---------|-------|-----------------|
-| `src/mocks/supabase.ts` | 2 | `export const supabase: any` | Create `MockSupabaseClient` interface |
-| `src/lib/AuthContext.tsx` | 7, 12 | `[key: string]: any` | Replace with explicit optional fields |
-| `src/components/Filters.tsx` | 89 | `option.id as any` | Proper union type for sortBy |
-| `src/components/CreateListingModal.tsx` | 126 | `err: any` | `unknown` + type guard |
-| `src/components/EditListingModal.tsx` | 151 | `e: any` | Proper event type |
-| `src/components/ListingModal.tsx` | 36, 52 | `e: any` | Proper event types |
-| `src/components/MapTilerView.tsx` | 38 | `e: any` | `styleimagemissing` event type |
-| `src/pages/Profile.tsx` | 61, 63, 267 | `any[]`, `err: any` | `Listing[]`, `unknown` |
-| `src/pages/ManageListings.tsx` | 12, 14 | `any[]`, `err: any` | `Listing[]`, `unknown` |
-| `src/pages/Maps.tsx` | 219 | `e: any` | Proper event type |
-
----
-
-## 📋 Priority Execution Plan
-
-| Priority | Category | Task | Est. Effort | Status |
-|----------|----------|------|-------------|--------|
-| 🔴 Critical | Bug Fix | Fix `Math.random()` in `PropertiesModal.tsx` | 15min | ⏳ Pending |
-| 🔴 Critical | Bug Fix | Fix missing `useEffect` deps in 3 files | 30min | ⏳ Pending |
-| 🟡 High | Type Safety | Create mock interfaces, remove `any` types | 1hr | ⏳ Pending |
-| 🟡 High | Optimization | ~~Create reusable `Modal` wrapper component~~ | 2hr | ✅ Done |
-| 🟡 High | Cleanup | Remove all unused imports and variables (~50 warnings) | 1hr | ⏳ Pending |
-| 🟢 Medium | Optimization | ~~Extract shared motion animation variants~~ | 30min | ✅ Done |
-| 🟢 Medium | Optimization | Lazy-load heavy deps (`MapTilerView`, `AnalyticsModal`) | 20min | ⏳ Pending |
-| 🟢 Medium | Cleanup | ~~Remove dead eslint directive, fix import ordering~~ | 5min | ✅ Done |
-
-**Total estimated effort: ~6 hours** (2.5 hours completed)
-
----
-
-## Quick Wins (Can Be Done in Parallel)
-
-1. **Remove unused imports** — purely mechanical, can batch-fix all 20+ files
-2. **Remove eslint directive** — single line deletion
-3. ~~**Move `ScrollToTop`**~~ — ✅ extracted to separate file
-4. ~~**Export animation variants**~~ — ✅ no behavior change, pure refactor
-5. **Fix `Math.random()`** — local `useMemo` change
-
----
-
-## Completed Refactors
-
-| Task | Status | Details |
-|------|--------|---------|
-| Extract `ScrollToTop` to separate file | ✅ Done | `src/components/ScrollToTop.tsx` |
-| Create reusable `Modal` component | ✅ Done | `src/components/ui/Modal.tsx` with focus trap |
-| Extract shared animation variants | ✅ Done | `src/lib/animations.ts` exports modalBackdrop, modalContent, dropdownReveal |
-| Extract profile modals | ✅ Done | `src/components/profile/` (EditProfileModal, LandlordSignupModal, LogoutModal, StatCardModal) |
-| ~~Add chat components~~ | ❌ Removed | Chat system removed from application |
-| ~~Messaging feature~~ | ❌ Removed | Messages page, API, and mocks removed |
-| ~~ListingModal on listing page~~ | ❌ Removed | ListingModal removed from listing page; landlord info displayed directly in sticky sidebar |
-| Add tenant management | ✅ Done | `TenantProfileModal`, `TenantsModal`, `TenantInfo` type |
-| Add map picker | ✅ Done | `MapPicker.tsx` for interactive location selection |
-| Add listing detail modal | ✅ Done | `ListingDetailModal.tsx` for manage dashboard |
-| Add legal pages | ✅ Done | `TermsOfService.tsx`, `PrivacyPolicy.tsx` |
-| Add focus trap hook | ✅ Done | `src/hooks/useFocusTrap.ts` |
-| Add listings filter hook | ✅ Done | `src/hooks/useListingsFilter.ts` with tests |
-| Add test infrastructure | ✅ Done | `src/test/setup.ts`, vitest config |
-| Add error example | ✅ Done | `src/components/example/ErrorExample.tsx` |
+*Document generated from comprehensive codebase analysis. All file paths are relative to the project root.*

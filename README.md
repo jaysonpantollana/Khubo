@@ -8,13 +8,14 @@
 
 A modern, full-featured web application designed to help users in Iligan City find short-term accommodations, long-term rentals, and compatible roommates.
 
-Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
+Built with React 19, TypeScript 5.8, Tailwind CSS 4.1, and Vite 6.2.
 
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-6.2-646CFF?style=flat-square&logo=vite)](https://vitejs.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
 [![Vitest](https://img.shields.io/badge/Vitest-4.1-6E9F18?style=flat-square&logo=vitest)](https://vitest.dev)
+[![Zod](https://img.shields.io/badge/Zod-4.4-3E6BCE?style=flat-square&logo=zod)](https://zod.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 </div>
@@ -30,11 +31,15 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Detailed Property Views** - Access comprehensive property information including photo galleries, amenities, host details, and reviews
 - **Secure Booking Flow** - Streamlined modal-based booking interface
 - **Search History** - Track your recent searches for quick access
+- **Photo Galleries** - Full-screen photo carousel overlays for property images
+- **Review Breakdowns** - Detailed review statistics and ratings at a glance
 
 ### For Roommate Seekers
 - **Smart Matching** - Find compatible roommates based on university, budget, location preferences, and lifestyle tags
 - **Create Posts** - Post roommate listings in "applying" or "finding" mode with personality traits
 - **Detailed Profiles** - View potential roommates' bios, preferences, and compatibility factors
+- **Hero Search** - Dedicated search interface for filtering roommate posts
+- **Loading States** - Skeleton placeholders for smooth content loading
 
 ### For Hosts
 - **Listing Management** - Create, edit, and manage your property listings through an intuitive dashboard
@@ -44,6 +49,8 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Tenant Management** - View and manage tenants with status tracking (active, leaving, moved out) and payment status
 - **Location Picker** - Interactive MapTiler-based map picker for precise property location selection
 - **Landlord Signup** - Dedicated flow for hosts to upgrade their account
+- **Inquiries Modal** - Manage guest inquiries from a centralized modal
+- **Tenant Profiles** - View detailed tenant information and history
 
 ### User Experience
 - **5-Step Onboarding Wizard** - Post-auth profile setup: identity → occupation → ID verification → review → finish
@@ -54,7 +61,6 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 - **Smooth Animations** - Polished UI transitions using Motion library with accessibility-conscious reduced motion support
 - **Toast Notifications** - Real-time feedback for user actions
 - **Error Boundaries** - Graceful error handling with fallback UI components
-- **Camera Capture** - Take photos directly from your device camera for uploads via CameraOverlay
 - **Announcements** - View app news and updates via AnnouncementsOverlay
 - **File Upload** - Drag-and-drop and file picker for image and document uploads
 - **Legal Pages** - Terms of Service and Privacy Policy pages
@@ -100,7 +106,7 @@ Built with React 19, TypeScript 5.8, and Tailwind CSS 4.1.
 
 5. **Open your browser**
 
-   Navigate to `http://localhost:3000`
+   Navigate to `http://localhost:3002`
 
 ### Docker
 
@@ -126,6 +132,10 @@ docker compose up --build
 | `/roommate` | Roommate finder with hero search, filter tags, and create post |
 | `/profile` | User profile with stats, settings, landlord signup, and modals |
 | `/manage-listings` | Host dashboard for managing properties with edit functionality |
+| `/landlord/properties` | Landlord properties management page |
+| `/landlord/tenants` | Landlord tenant management page |
+| `/landlord/reviews` | Landlord reviews page |
+| `/to-rate` | Pending reviews/ratings page |
 | `/terms` | Terms of Service page |
 | `/privacy` | Privacy Policy page |
 
@@ -135,7 +145,7 @@ docker compose up --build
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start development server on port 3000 |
+| `npm run dev` | Start development server on port 3002 |
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build locally |
 | `npm run test` | Run Vitest test suite |
@@ -154,6 +164,7 @@ docker compose up --build
 - **React 19** - Latest version with concurrent features and improved hooks
 - **React Router DOM 7** - Client-side routing with hash-based navigation
 - **TypeScript 5.8** - Static typing for enhanced developer experience
+- **Zod 4.4** - Type-safe schema validation for forms and data
 
 ### Build & Development
 - **Vite 6.2** - Next-generation frontend build tool with HMR
@@ -188,37 +199,34 @@ khubo/
 ├── public/                        # Static assets
 ├── src/
 │   ├── components/               # Reusable UI components
-│   │   ├── ui/                   # Base UI components (Modal, ErrorScreen)
+│   │   ├── ui/                   # Base UI components (Modal, ErrorScreen, FocusTrap)
 │   │   ├── errors/               # Error boundary components
-│   │   ├── profile/              # Profile modals (Edit, Landlord Signup, Logout, StatCard)
-│   │   ├── example/              # Example components for reference
-│   │   └── *.tsx                 # Feature components (60+ files)
-│   ├── pages/                    # Route-level components (9 pages)
-│   ├── hooks/                    # Custom React hooks (9 hooks)
-│   │   ├── useBodyScrollLock.ts  # Nested-modal-safe body scroll lock
-│   │   ├── useErrorHandler.ts    # Error handling hook
+│   │   ├── profile/              # Profile modals (EditProfile, LandlordSignup, Logout, StatCard)
+│   │   └── *.tsx                 # Feature components (45+ files)
+│   ├── pages/                    # Route-level components (13 pages)
+│   ├── hooks/                    # Custom React hooks (8 hooks)
 │   │   ├── useFocusTrap.ts       # Focus trap for modals
+│   │   ├── useIsAnyModalOpen.ts  # Detect if any modal is open
 │   │   ├── useListing.ts         # Single listing fetcher
 │   │   ├── useListings.ts        # Listings collection fetcher
 │   │   ├── useListingsFilter.ts  # Client-side listings filtering
-│   │   ├── useReducedMotion.ts   # Motion preference detector
+│   │   ├── useMediaQuery.ts      # Responsive media query hook
 │   │   └── useSearchHistory.ts   # Search history manager
 │   ├── lib/                      # Core libraries and contexts
 │   │   ├── api/                  # API integration layer (mock-backed)
-│   │   │   ├── auth.ts           # Authentication API
-│   │   │   ├── client.ts         # API client setup
 │   │   │   ├── listings.ts       # Listings API
-│   │   │   ├── roommates.ts      # Roommates API
-│   │   │   └── types.ts          # API type definitions
+│   │   │   └── roommates.ts      # Roommates API
 │   │   ├── AuthContext.tsx        # Authentication provider
+│   │   ├── LandlordContext.tsx    # Landlord state provider
 │   │   ├── ThemeContext.tsx       # Theme provider
-│   │   ├── animations.ts         # Animation presets and variants
+│   │   ├── constants.ts          # App constants
 │   │   ├── mapPreloader.ts       # Map SDK singleton preloader (hidden off-screen init)
+│   │   ├── toastConfig.ts        # Toast notification configuration
 │   │   └── utils.ts              # Utility functions
 │   ├── mocks/                    # Mock data for development
 │   │   ├── listings.ts           # Mock listing data
-│   │   ├── roommates.ts          # Mock roommate data
-│   │   └── supabase.ts           # Mock Supabase client
+│   │   ├── reservations.ts       # Mock reservation data
+│   │   └── roommates.ts          # Mock roommate data
 │   ├── test/                     # Test setup and configuration
 │   │   └── setup.ts              # Vitest setup with jsdom
 │   ├── types.ts                  # TypeScript type definitions
@@ -266,4 +274,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-*Last Updated: June 23, 2026*
+*Last Updated: July 2, 2026*

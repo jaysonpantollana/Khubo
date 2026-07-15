@@ -6,8 +6,8 @@
     "compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git",
     "opencode-skills-collection@latest"
   ],
-  "model": "opencode/mimo-v2-free",
-  "small_model": "opencode/mimo-v2-free",
+  "model": "opencode/mimo-v2.5-free",
+  "small_model": "opencode/mimo-v2.5-free",
   "default_agent": "build",
   "mcp": {
     "playwright": {
@@ -36,7 +36,7 @@
     "build": {
       "description": "Primary coding agent for development work",
       "mode": "primary",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "tools": {
         "write": true,
         "edit": true,
@@ -48,70 +48,70 @@
     "planner": {
       "description": "Expert planning specialist for complex features and refactoring",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/planner.txt}",
       "tools": { "read": true, "bash": true, "write": false, "edit": false }
     },
     "architect": {
       "description": "Software architecture specialist for system design",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/architect.txt}",
       "tools": { "read": true, "bash": true, "write": false, "edit": false }
     },
     "code-reviewer": {
       "description": "Expert code review specialist",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/code-reviewer.txt}",
       "tools": { "read": true, "bash": true, "write": false, "edit": false }
     },
     "security-reviewer": {
       "description": "Security vulnerability detection specialist",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/security-reviewer.txt}",
       "tools": { "read": true, "bash": true, "write": true, "edit": true }
     },
     "tdd-guide": {
       "description": "Test-Driven Development specialist",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/tdd-guide.txt}",
       "tools": { "read": true, "write": true, "edit": true, "bash": true }
     },
     "build-error-resolver": {
       "description": "Build and TypeScript error resolution specialist",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/build-error-resolver.txt}",
       "tools": { "read": true, "write": true, "edit": true, "bash": true }
     },
     "e2e-runner": {
       "description": "End-to-end testing specialist using Playwright",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/e2e-runner.txt}",
       "tools": { "read": true, "write": true, "edit": true, "bash": true }
     },
     "doc-updater": {
       "description": "Documentation and codemap specialist",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/doc-updater.txt}",
       "tools": { "read": true, "write": true, "edit": true, "bash": true }
     },
     "refactor-cleaner": {
       "description": "Dead code cleanup and consolidation specialist",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/refactor-cleaner.txt}",
       "tools": { "read": true, "write": true, "edit": true, "bash": true }
     },
     "python-reviewer": {
       "description": "Expert Python code reviewer",
       "mode": "subagent",
-      "model": "opencode/mimo-v2-free",
+      "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/python-reviewer.txt}",
       "tools": { "read": true, "bash": true, "write": false, "edit": false }
     }

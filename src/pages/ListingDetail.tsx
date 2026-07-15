@@ -296,7 +296,7 @@ export default function ListingDetail() {
             </div>
 
             <div className="py-12 border-b border-gray-100">
-              <h3 className="text-2xl font-semibold text-neutral-900 mb-8">What this place offers</h3>
+              <h3 className="text-2xl font-semibold text-neutral-900 mb-8">Amenities</h3>
               {listing.amenities && listing.amenities.length > 0 && (
                 <>
                   <div className="flex flex-wrap gap-4 mb-8">

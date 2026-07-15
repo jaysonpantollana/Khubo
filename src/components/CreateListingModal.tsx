@@ -204,9 +204,9 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
               {/* Photo Upload */}
               <div>
                 <label className="block text-sm font-semibold text-neutral-800 mb-2">Photos (Max 5)</label>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-4 justify-center">
                   {images.map((img, idx) => (
-                    <div key={idx} className="relative w-24 h-24 rounded-lg overflow-hidden border border-neutral-200">
+                    <div key={idx} className="relative w-32 h-32 rounded-lg overflow-hidden border border-neutral-200">
                       <img src={URL.createObjectURL(img)} alt={`Upload ${idx}`} className="w-full h-full object-cover" />
                       <button 
                         type="button" 
@@ -219,7 +219,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                   ))}
                   
                   {images.length < 5 && (
-                    <label className="w-24 h-24 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer hover:bg-neutral-50 transition">
+                    <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer hover:bg-neutral-50 transition">
                       <Upload size={24} className="mb-1" />
                       <span className="text-xs font-medium">Add Photo</span>
                       <input type="file" multiple accept="image/*" onChange={handleImageChange} className="hidden" />
@@ -453,9 +453,9 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     </button>
                   </div>
                 ) : (
-                  <label className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-dashed border-neutral-300 cursor-pointer hover:bg-neutral-50 transition">
-                    <Upload size={18} className="text-neutral-500" />
-                    <span className="text-sm text-neutral-600">Choose file (PDF, DOC, DOCX)</span>
+                  <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer hover:bg-neutral-50 transition">
+                    <Upload size={24} className="mb-1" />
+                    <span className="text-xs font-medium text-center px-1">Add Document</span>
                     <input type="file" accept=".pdf,.doc,.docx" onChange={handleDocChange} className="hidden" />
                   </label>
                 )}

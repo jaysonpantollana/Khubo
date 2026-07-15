@@ -384,45 +384,41 @@ export default function Hero({
 
                       {activeDropdown === "budget" && (
                         <div
-                          className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-50 text-left"
+                          className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-50 text-left relative"
                         >
-                          <div className="flex gap-2">
-                            <div
-                              ref={budgetScrollRef}
-                              className="flex-1 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200"
-                            >
-                              <div className="grid grid-cols-1 gap-1">
-                                {budgetRanges.map((range) => (
-                                  <button
-                                    key={range.label}
-                                    onClick={() => {
-                                      setSelectedBudget(range.label);
-                                      setActiveDropdown(null);
-                                    }}
-                                    className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
-                                  >
-                                    <span className="font-medium text-neutral-900 text-xs md:text-sm">
-                                      {range.label}
-                                    </span>
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                            <div className="flex flex-col gap-1 flex-shrink-0">
-                              <button
-                                onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                                className="p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors"
-                                aria-label="Scroll up"
-                              >
-                                <ChevronUp className="w-4 h-4 text-neutral-600" />
-                              </button>
-                              <button
-                                onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                                className="p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors"
-                                aria-label="Scroll down"
-                              >
-                                <ChevronDown className="w-4 h-4 text-neutral-600" />
-                              </button>
+                          <button
+                            onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
+                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                            aria-label="Scroll up"
+                          >
+                            <ChevronUp className="w-4 h-4 text-neutral-600" />
+                          </button>
+                          <button
+                            onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
+                            className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                            aria-label="Scroll down"
+                          >
+                            <ChevronDown className="w-4 h-4 text-neutral-600" />
+                          </button>
+                          <div
+                            ref={budgetScrollRef}
+                            className="max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200 pr-8"
+                          >
+                            <div className="grid grid-cols-1 gap-1">
+                              {budgetRanges.map((range) => (
+                                <button
+                                  key={range.label}
+                                  onClick={() => {
+                                    setSelectedBudget(range.label);
+                                    setActiveDropdown(null);
+                                  }}
+                                  className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                                >
+                                  <span className="font-medium text-neutral-900 text-xs md:text-sm">
+                                    {range.label}
+                                  </span>
+                                </button>
+                              ))}
                             </div>
                           </div>
                         </div>

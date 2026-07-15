@@ -267,7 +267,7 @@ export default function Hero({
               ) : (
                 <>
                   {/* Location Section */}
-                  <div className="flex-[1.2] min-w-0">
+                  <div className="flex-[1.2] min-w-0 relative">
                     <div
                       role="button"
                       tabIndex={0}
@@ -353,7 +353,7 @@ export default function Hero({
                   <div className="w-[1px] h-5 md:h-8 bg-white/20" />
 
                   {/* Budget Section */}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 relative">
                     <div
                       role="button"
                       tabIndex={0}

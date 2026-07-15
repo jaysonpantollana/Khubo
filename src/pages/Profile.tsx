@@ -126,14 +126,7 @@ export default function Profile() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [showAllProperties, setShowAllProperties] = useState(false);
 
-  const checkLandlordAccount = useCallback(async () => {
-    if (!user) return;
-    setIsLandlord(true);
-  }, [user]);
 
-  useEffect(() => {
-    checkLandlordAccount();
-  }, [checkLandlordAccount]);
 
   const MOCK_TENANTS: TenantInfo[] = [
     { id: 't1', name: 'Maria Santos', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MariaSantos&backgroundColor=b6e3f4', email: 'maria@email.com', phone: '09171234567', moveInDate: '2025-01-15', status: 'active', paymentStatus: 'paid' },

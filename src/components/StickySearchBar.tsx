@@ -176,7 +176,7 @@ export function StickySearchBar({
               ) : (
                 <>
                   {/* Sticky Location Section */}
-                  <div className="flex-[1.2] min-w-0">
+                  <div className="flex-[1.2] min-w-0 relative">
                     <div
                       role="button"
                       tabIndex={0}
@@ -256,7 +256,7 @@ export function StickySearchBar({
                   <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
 
                   {/* Sticky Budget Section */}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 relative">
                     <div
                       role="button"
                       tabIndex={0}

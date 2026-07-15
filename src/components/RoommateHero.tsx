@@ -14,6 +14,13 @@ import SearchDropdown from './SearchDropdown';
 import { Roommate } from '../types';
 import { AnnouncementsOverlay } from './AnnouncementsOverlay';
 import { ROOMMATES } from '../mocks/roommates';
+import { BUDGET_RANGES } from '../lib/constants';
+
+interface BudgetRange {
+  min: number;
+  max: number;
+  label: string;
+}
 
 interface RoommateHeroProps {
   searchQuery?: string;
@@ -22,6 +29,7 @@ interface RoommateHeroProps {
   setIsSearchActive?: (active: boolean) => void;
   onSelectRoommate?: (roommate: Roommate) => void;
   suppressDropdown?: boolean;
+  onBudgetSelect?: (range: BudgetRange | null) => void;
 }
 
 export default function RoommateHero({
@@ -30,7 +38,8 @@ export default function RoommateHero({
   isSearchActive = false,
   setIsSearchActive = () => {},
   onSelectRoommate,
-  suppressDropdown = false
+  suppressDropdown = false,
+  onBudgetSelect
 }: RoommateHeroProps) {
   const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<'location' | 'budget' | 'general' | null>(null);
@@ -43,19 +52,7 @@ export default function RoommateHero({
 
   const hasSelections = selectedLocation || selectedBudget;
 
-  const budgetRanges = [
-    { label: 'less 1k' },
-    { label: '₱1k - ₱2k' },
-    { label: '₱2k - ₱3k' },
-    { label: '₱3k - ₱4k' },
-    { label: '₱4k - ₱5k' },
-    { label: '₱5k - ₱6k' },
-    { label: '₱6k - ₱7k' },
-    { label: '₱7k - ₱8k' },
-    { label: '₱8k - ₱9k' },
-    { label: '₱9k - ₱10k' },
-    { label: '10k+' },
-  ];
+  const budgetRanges = BUDGET_RANGES;
 
   useEffect(() => {
     if (suppressDropdown) {
@@ -358,7 +355,7 @@ export default function RoommateHero({
                             {budgetRanges.map((range) => (
                               <button 
                                 key={range.label}
-                                onClick={() => { setSelectedBudget(range.label); setActiveDropdown(null); }}
+                                onClick={() => { setSelectedBudget(range.label); setActiveDropdown(null); onBudgetSelect?.(range); }}
                                 className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
                               >
                                 <span className="font-medium text-neutral-900 text-sm">{range.label}</span>
@@ -378,7 +375,6 @@ export default function RoommateHero({
                     if (hasSelections) {
                       const terms = [];
                       if (selectedLocation) terms.push(selectedLocation);
-                      if (selectedBudget) terms.push(selectedBudget);
                       setSearchQuery(terms.join(' '));
                       setActiveDropdown(null);
                       const searchAnchor = document.getElementById('roommate-results-anchor');

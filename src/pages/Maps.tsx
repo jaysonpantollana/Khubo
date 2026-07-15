@@ -38,10 +38,13 @@ export default function Maps() {
   const [activeDropdown, setActiveDropdown] = useState<
     "location" | "budget" | "general" | null
   >(null);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null);
 
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
   const budgetScrollRef = useRef<HTMLDivElement>(null);
+  const locationTriggerRef = useRef<HTMLDivElement>(null);
+  const budgetTriggerRef = useRef<HTMLDivElement>(null);
 
   const budgetRanges = [
     { label: "less 1k" },
@@ -83,6 +86,7 @@ export default function Maps() {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setActiveDropdown(null);
+        setDropdownPosition(null);
         setIsSearchActive(false);
       }
     }
@@ -93,7 +97,21 @@ export default function Maps() {
   const toggleDropdown = (
     dropdown: "location" | "budget" | "general",
   ) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+    if (activeDropdown === dropdown) {
+      setActiveDropdown(null);
+      setDropdownPosition(null);
+    } else {
+      const triggerRef = dropdown === "location" ? locationTriggerRef : budgetTriggerRef;
+      if (triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        setDropdownPosition({
+          top: rect.bottom + 8,
+          left: rect.left,
+          width: rect.width,
+        });
+      }
+      setActiveDropdown(dropdown);
+    }
   };
 
   const handleSelectListing = (id: string) => {
@@ -102,6 +120,7 @@ export default function Maps() {
       handleListingClick(listing);
     }
     setActiveDropdown(null);
+    setDropdownPosition(null);
     setIsSearchActive(false);
   };
 
@@ -484,6 +503,7 @@ export default function Maps() {
                 {/* Location Section */}
                 <div className="flex-[1.2] min-w-0">
                   <div
+                    ref={locationTriggerRef}
                     role="button"
                     onClick={() => toggleDropdown("location")}
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group text-black focus-visible:outline-none ${
@@ -503,8 +523,15 @@ export default function Maps() {
                     />
                   </div>
 
-                  {activeDropdown === "location" && (
-                    <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-50 text-left">
+                  {activeDropdown === "location" && dropdownPosition && (
+                    <div
+                      className="fixed bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] border border-neutral-100 p-4 z-50 text-left"
+                      style={{
+                        top: dropdownPosition.top,
+                        left: dropdownPosition.left,
+                        width: dropdownPosition.width,
+                      }}
+                    >
                       <div className="space-y-4">
                         <div>
                           <div
@@ -532,6 +559,7 @@ export default function Maps() {
                                 onClick={() => {
                                   setSelectedLocation(loc);
                                   setActiveDropdown(null);
+                                  setDropdownPosition(null);
                                 }}
                                 className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 group/item"
                               >
@@ -555,6 +583,7 @@ export default function Maps() {
                 {/* Budget Section */}
                 <div className="flex-1 min-w-0">
                   <div
+                    ref={budgetTriggerRef}
                     role="button"
                     onClick={() => toggleDropdown("budget")}
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group text-black focus-visible:outline-none ${
@@ -574,8 +603,15 @@ export default function Maps() {
                     />
                   </div>
 
-                  {activeDropdown === "budget" && (
-                    <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-50 text-left relative">
+                  {activeDropdown === "budget" && dropdownPosition && (
+                    <div
+                      className="fixed bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] border border-neutral-100 p-4 z-50 text-left"
+                      style={{
+                        top: dropdownPosition.top,
+                        left: dropdownPosition.left,
+                        width: dropdownPosition.width,
+                      }}
+                    >
                       <button
                         onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
                         className="absolute top-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
@@ -601,6 +637,7 @@ export default function Maps() {
                               onClick={() => {
                                 setSelectedBudget(range.label);
                                 setActiveDropdown(null);
+                                setDropdownPosition(null);
                               }}
                               className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
                             >
@@ -624,10 +661,12 @@ export default function Maps() {
                       if (selectedBudget) terms.push(selectedBudget);
                       setSearchQuery(terms.join(" "));
                       setActiveDropdown(null);
+                      setDropdownPosition(null);
                     } else {
                       setSearchQuery("");
                       setIsSearchActive(true);
                       setActiveDropdown(null);
+                      setDropdownPosition(null);
                     }
                   }}
                   className="bg-[#17294F] p-2 sm:p-3 md:p-3 rounded-full shadow-md ml-1 sm:ml-2 md:ml-2 group flex-shrink-0 flex items-center justify-center cursor-pointer relative z-[70]"

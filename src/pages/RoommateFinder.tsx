@@ -11,6 +11,7 @@ import BottomNav from "../components/BottomNav";
 
 import Footer from "../components/Footer";
 import { ROOMMATES } from "../mocks/roommates";
+import { BUDGET_RANGES, parseBudgetRange } from "../lib/constants";
 import {
   Search,
   ChevronLeft,
@@ -66,6 +67,7 @@ export default function RoommateFinder() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isStickySearchActive, setIsStickySearchActive] = useState(false);
+  const [selectedBudgetRange, setSelectedBudgetRange] = useState<{ min: number; max: number } | null>(null);
   const [hideStickyDropdown, setHideStickyDropdown] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
@@ -230,8 +232,16 @@ export default function RoommateFinder() {
       });
     }
 
+    if (selectedBudgetRange) {
+      result = result.filter((roommate) => {
+        const parsed = parseBudgetRange(roommate.budgetRange);
+        if (!parsed) return false;
+        return parsed.max > selectedBudgetRange.min && parsed.min < selectedBudgetRange.max;
+      });
+    }
+
     return result;
-  }, [selectedTag, searchQuery, roommates]);
+  }, [selectedTag, searchQuery, roommates, selectedBudgetRange]);
 
   const scroll = (
     ref: React.RefObject<HTMLDivElement | null>,
@@ -255,6 +265,7 @@ export default function RoommateFinder() {
         setIsSearchActive={setIsSearchActive}
         onSelectRoommate={openProfile}
         suppressDropdown={displaySearch}
+        onBudgetSelect={(range) => setSelectedBudgetRange(range ? { min: range.min, max: range.max } : null)}
       />
       <div id="roommate-results-anchor" />
       <div
@@ -532,15 +543,11 @@ export default function RoommateFinder() {
                           <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left">
                             <div className="space-y-2">
                               <div className="grid grid-cols-1 gap-1">
-                                {[
-                                  { label: "₱1k - ₱3k", val: "1500" },
-                                  { label: "₱3k - ₱5k", val: "4000" },
-                                  { label: "₱5k+", val: "6000" },
-                                ].map((range) => (
+                                {BUDGET_RANGES.map((range) => (
                                   <button
                                     key={range.label}
                                     onClick={() => {
-                                      setSearchQuery(range.val);
+                                      setSelectedBudgetRange({ min: range.min, max: range.max });
                                       setActiveStickyDropdown(null);
                                     }}
                                     className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"

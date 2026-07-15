@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'community' ? 'flex' : 'hidden md:flex'}`}>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Reviews</a>
               <a href="#" className="hover:text-[#17294F] transition hover:underline">Stories</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Suggest a Feature</a>
+              <a href="https://forms.gle/khaEHq6xsEfWnKeq8" target="_blank" rel="noopener noreferrer" className="hover:text-[#17294F] transition hover:underline">Suggest a Feature</a>
             </div>
           </div>
 

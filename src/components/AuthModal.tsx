@@ -141,7 +141,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
                    setIsLogin(!isLogin);
                    setError(null);
                  }}
-                 className="font-bold text-[#2252D6] hover:underline"
+                 className="font-bold text-[#2252D6]"
               >
                 {isLogin ? 'Sign up' : 'Sign in'}
               </button>

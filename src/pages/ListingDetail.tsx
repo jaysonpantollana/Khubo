@@ -147,7 +147,7 @@ export default function ListingDetail() {
       <div className="md:hidden fixed top-6 left-6 right-6 z-50 flex justify-between pointer-events-none">
         <button 
           onClick={() => navigate('/')}
-          className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg pointer-events-auto active:scale-90 transition-transform cursor-pointer"
+          className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg pointer-events-auto cursor-pointer"
         >
           <ArrowLeft size={24} className="text-neutral-900" />
         </button>
@@ -204,7 +204,7 @@ export default function ListingDetail() {
             >
               <img
                 src={images[0]}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover"
                 alt={`${listing.title} - main`}
                 referrerPolicy="no-referrer"
               />
@@ -219,7 +219,7 @@ export default function ListingDetail() {
               >
                 <img
                   src={img}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover"
                   alt={`${listing.title} - gallery ${idx + 1}`}
                   referrerPolicy="no-referrer"
                 />
@@ -314,7 +314,7 @@ export default function ListingDetail() {
                   {listing.amenities.length > 3 && (
                     <button
                       onClick={() => setShowAllAmenities(!showAllAmenities)}
-                      className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 inline-block"
+                      className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition inline-block"
                     >
                       {showAllAmenities ? 'Show less' : 'Show more'}
                     </button>
@@ -394,7 +394,7 @@ export default function ListingDetail() {
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {listing.reviews.slice(0, showAllReviewsMobile ? undefined : 4).map((rev, idx) => (
-                    <div key={rev.id} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:bg-neutral-50 transition-all cursor-pointer" onClick={() => setSelectedReview(rev)}>
+                    <div key={rev.id} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm cursor-pointer" onClick={() => setSelectedReview(rev)}>
                        <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
                               <img src={rev.userImage} loading="lazy" className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
@@ -444,7 +444,7 @@ export default function ListingDetail() {
                  <div className="mt-8 flex">
                     <button 
                        onClick={() => setShowAllReviewsMobile(!showAllReviewsMobile)}
-                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition active:scale-95 flex items-center justify-center"
+                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition flex items-center justify-center"
                     >
                        {showAllReviewsMobile ? 'Show less' : 'Show all'}
                     </button>
@@ -475,7 +475,7 @@ export default function ListingDetail() {
                   title={listing.title}
                   hideControls={isLandlordListingsOpen}
                 />
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-all scale-95 group-hover:scale-100">
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30">
                   <div className="bg-[#17294F] text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-2xl border border-white/20 backdrop-blur-md">
                     <Maximize size={16} />
                     <span className="text-[10px] font-black uppercase tracking-widest">Click to Expand</span>
@@ -558,13 +558,13 @@ export default function ListingDetail() {
                 <div>
                   <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-3">Social Media</p>
                   <div className="flex gap-3">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:opacity-90 transition">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl">
                       <Instagram size={18} />
                     </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-xl hover:opacity-90 transition">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-xl">
                       <Facebook size={18} />
                     </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-black text-white rounded-xl hover:opacity-90 transition">
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-black text-white rounded-xl">
                       <Twitter size={18} />
                     </a>
                   </div>
@@ -616,7 +616,7 @@ export default function ListingDetail() {
             <div className="absolute top-6 left-6 z-[600]">
               <button 
                 onClick={() => setIsMapModalOpen(false)}
-                className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg pointer-events-auto active:scale-90 transition-transform"
+                className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg pointer-events-auto"
               >
                 <ArrowLeft size={24} className="text-neutral-900" />
               </button>
@@ -633,7 +633,7 @@ export default function ListingDetail() {
             </div>
 
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[600] w-full px-6 flex justify-center">
-              <div className="bg-neutral-900/60 backdrop-blur-xl rounded-2xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 w-fit flex items-center gap-3.5 hover:scale-105 active:scale-95 cursor-default">
+              <div className="bg-neutral-900/60 backdrop-blur-xl rounded-2xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 w-fit flex items-center gap-3.5 cursor-default">
                 <div className="w-8 h-8 bg-[#2252D6] rounded-xl flex items-center justify-center shadow-lg shrink-0">
                   <Navigation size={16} className="text-white fill-white/20" />
                 </div>

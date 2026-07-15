@@ -6,7 +6,7 @@
 // @dependencies: RoommateSearchDropdown, AnnouncementsOverlay, motion, lucide-react, react-router-dom
 // @known-issues: window.innerWidth check on render (not reactive without resize listener)
 
-import { Search, MapPin, Megaphone, ChevronDown, ChevronUp, Wallet, X, Users, ShieldCheck } from 'lucide-react';
+import { Search, MapPin, Megaphone, ChevronDown, ChevronUp, Wallet, X } from 'lucide-react';
 
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
@@ -98,7 +98,7 @@ export default function RoommateHero({
           <button 
             aria-label="Home" 
             onClick={() => navigate('/')} 
-            className="flex items-center justify-center overflow-hidden w-10 h-10 md:w-16 md:h-16 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 rounded-xl"
+            className="flex items-center justify-center overflow-hidden w-10 h-10 md:w-16 md:h-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 rounded-xl"
           >
             <img 
               src="/khubo Logo.png" 
@@ -110,7 +110,7 @@ export default function RoommateHero({
 
           <button 
             onClick={() => setIsAnnouncementsOpen(true)}
-            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white hover:scale-105 active:scale-95 transition-transform"
+            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white"
           >
             <Megaphone className="w-5 h-5 md:w-8 md:h-8" />
           </button>
@@ -253,65 +253,9 @@ export default function RoommateHero({
                       setHideDropdown(true);
                       setIsSearchActive(false);
                     }}
-                    onSelect={(roommate) => onSelectRoommate?.(roommate)}
-                    items={ROOMMATES}
-                    filterItems={(items, query) =>
-                      items.filter(roommate => {
-                        const nameMatch = roommate.name.toLowerCase().includes(query);
-                        const bioMatch = roommate.bio ? roommate.bio.toLowerCase().includes(query) : false;
-                        const placeMatch = roommate.preferredPlace.toLowerCase().includes(query);
-                        const tagsMatch = roommate.tags.some(tag => tag.toLowerCase().includes(query));
-                        const genderMatch = roommate.gender ? roommate.gender.toLowerCase().includes(query) : false;
-                        const universityMatch = roommate.university ? roommate.university.toLowerCase().includes(query) : false;
-                        return nameMatch || bioMatch || placeMatch || tagsMatch || genderMatch || universityMatch;
-                      })
-                    }
-                    renderItem={(roommate, onSelect) => (
-                      <div
-                        onClick={onSelect}
-                        className="flex gap-3 bg-white p-2.5 rounded-xl border border-neutral-100 hover:border-[#17294F]/20 hover:shadow-sm transition-all duration-150 cursor-pointer group"
-                      >
-                        <div className="w-12 h-12 rounded-full overflow-hidden bg-neutral-100 border-2 border-white shadow-sm flex-shrink-0 relative">
-                          <img
-                            src={roommate.image}
-                            alt={roommate.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            referrerPolicy="no-referrer"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0 text-left flex flex-col justify-between py-0.5">
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-1">
-                              <h5 className="text-xs sm:text-sm font-semibold text-neutral-900 leading-snug truncate group-hover:text-[#2252D6] transition-colors">
-                                {roommate.name}
-                              </h5>
-                              <span className="text-[10px] text-neutral-500 font-medium flex-shrink-0">
-                                • {roommate.gender}
-                              </span>
-                            </div>
-                            <p className="text-[9px] sm:text-xs text-neutral-500 truncate flex items-center mt-0.5">
-                              <MapPin size={10} className="mr-0.5 text-neutral-400" />
-                              Prefers: {roommate.preferredPlace}
-                            </p>
-                          </div>
-                          <div className="flex items-center justify-between mt-1">
-                            <span className="text-xs font-semibold text-[#17294F] bg-[#17294F]/5 px-2 py-0.5 rounded">
-                              {roommate.budgetRange}
-                            </span>
-                            <span className="text-[9px] text-[#2252D6] font-semibold flex items-center gap-0.5 bg-[#2252D6]/5 px-1.5 py-0.5 rounded">
-                              <ShieldCheck size={10} />
-                              {roommate.university}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                     trendingTags={['Near MSU-IIT', 'All Female', 'Solo Room', 'Shared Room', 'All Male', 'Affordable', 'Bed Spacer', 'Boarding House', 'Quiet', 'Clean', 'Night owl', 'Introvert']}
                     scrollAnchorId="roommate-results-anchor"
-                    emptyText="No roommates match your search"
                     trendingTitle="Roommate Tags & Filters"
-                    resultsTitle="Matching Roommates"
-                    resultsIcon={<Users size={13} className="text-[#2252D6]" />}
                   />
                 )}
               </>
@@ -336,7 +280,7 @@ export default function RoommateHero({
                         {selectedLocation ? selectedLocation : 'Location'}
                       </span>
                     </div>
-                    <ChevronDown className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'location' ? 'rotate-180 text-neutral-900' : ''}`} />
+                    <ChevronDown className={`flex-shrink-0 opacity-50 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'location' ? 'rotate-180 text-neutral-900' : ''}`} />
                   </div>
 
                 </div>
@@ -362,7 +306,7 @@ export default function RoommateHero({
                         {selectedBudget ? selectedBudget : 'Budget'}
                       </span>
                     </div>
-                    <ChevronDown className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'budget' ? 'rotate-180 text-neutral-900' : ''}`} />
+                    <ChevronDown className={`flex-shrink-0 opacity-50 transition-opacity w-3 h-3 md:w-4 md:h-4 ml-1 ${activeDropdown === 'budget' ? 'rotate-180 text-neutral-900' : ''}`} />
                   </div>
 
                 </div>

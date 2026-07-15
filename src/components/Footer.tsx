@@ -31,9 +31,9 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'support' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'support' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Help Center</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Contact Us</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Report an Issue</a>
+              <a href="#" className="hover:text-[#17294F] transition">Help Center</a>
+              <a href="#" className="hover:text-[#17294F] transition">Contact Us</a>
+              <a href="#" className="hover:text-[#17294F] transition">Report an Issue</a>
             </div>
           </div>
 
@@ -46,9 +46,9 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'community' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'community' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Reviews</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Stories</a>
-              <a href="https://forms.gle/khaEHq6xsEfWnKeq8" target="_blank" rel="noopener noreferrer" className="hover:text-[#17294F] transition hover:underline">Suggest a Feature</a>
+              <a href="#" className="hover:text-[#17294F] transition">Reviews</a>
+              <a href="#" className="hover:text-[#17294F] transition">Stories</a>
+              <a href="https://forms.gle/khaEHq6xsEfWnKeq8" target="_blank" rel="noopener noreferrer" className="hover:text-[#17294F] transition">Suggest a Feature</a>
             </div>
           </div>
 
@@ -61,10 +61,10 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'hosting' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'hosting' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">List Your Property</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Host Resources</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Community Forum</a>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Hosting Tips</a>
+              <a href="#" className="hover:text-[#17294F] transition">List Your Property</a>
+              <a href="#" className="hover:text-[#17294F] transition">Host Resources</a>
+              <a href="#" className="hover:text-[#17294F] transition">Community Forum</a>
+              <a href="#" className="hover:text-[#17294F] transition">Hosting Tips</a>
             </div>
           </div>
 
@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'legal' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'legal' ? 'flex' : 'hidden md:flex'}`}>
-              <Link to="/privacy" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</Link>
+              <Link to="/privacy" className="hover:text-[#17294F] transition">Privacy Policy</Link>
             </div>
           </div>
 

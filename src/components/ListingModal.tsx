@@ -147,15 +147,15 @@ export const ListingModal: React.FC<ListingModalProps> = ({
         <div className="mb-6">
           <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-3">Social Media</h4>
           <div className="flex gap-2">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl text-xs font-bold hover:opacity-90 transition">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl text-xs font-bold">
               <Instagram size={14} />
               Instagram
             </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-[#1877F2] text-white rounded-xl text-xs font-bold hover:opacity-90 transition">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-[#1877F2] text-white rounded-xl text-xs font-bold">
               <Facebook size={14} />
               Facebook
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-xl text-xs font-bold hover:opacity-90 transition">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-xl text-xs font-bold">
               <Twitter size={14} />
               Twitter
             </a>

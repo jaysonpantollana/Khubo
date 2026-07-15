@@ -70,7 +70,7 @@ export default function Navbar() {
           {/* Search Bar */}
           <button
             aria-label="Open search menu"
-            className="border border-[#dddddd] h-[48px] rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-md transition cursor-pointer flex items-center px-2 pl-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+            className="border border-[#dddddd] h-[48px] rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] transition cursor-pointer flex items-center px-2 pl-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
           >
             <div className="flex flex-row items-center justify-between gap-4">
               <div className="text-sm font-semibold pr-4 border-r border-[#dddddd]">Anywhere</div>
@@ -114,7 +114,7 @@ export default function Navbar() {
             <button
               aria-label="User menu"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-1 pl-3 border border-[#dddddd] flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+              className="p-1 pl-3 border border-[#dddddd] flex flex-row items-center gap-3 rounded-full cursor-pointer transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               <Menu size={18} />
               <div className={`w-[30px] h-[30px] rounded-full flex items-center justify-center text-white ${user ? 'bg-[#17294F]' : 'bg-[#717171]'}`}>

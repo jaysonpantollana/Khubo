@@ -132,7 +132,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                     'w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center relative',
                     isSelected
                       ? 'border-[#2252D6] bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
-                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-sm'
+                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
                   )}
                 >
                   {isSelected && (
@@ -194,7 +194,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                   )}
                 >
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#2252D6]/10 to-[#2252D6]/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#2252D6]/10 to-[#2252D6]/5 flex items-center justify-center">
                       <CloudUpload size={26} className="text-[#2252D6]" />
                     </div>
                     <div className="text-center">

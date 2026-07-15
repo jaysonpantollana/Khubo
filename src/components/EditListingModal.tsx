@@ -211,7 +211,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       <button 
                         type="button" 
                         onClick={() => removeExistingImage(idx)}
-                        className="absolute top-1 right-1 bg-white rounded-full p-0.5 shadow hover:scale-110 transition text-red-500"
+                        className="absolute top-1 right-1 bg-white rounded-full p-0.5 shadow text-red-500"
                       >
                         <XCircle size={16} />
                       </button>
@@ -225,7 +225,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       <button 
                         type="button" 
                         onClick={() => removeNewImage(idx)}
-                        className="absolute top-1 right-1 bg-white rounded-full p-0.5 shadow hover:scale-110 transition text-red-500"
+                        className="absolute top-1 right-1 bg-white rounded-full p-0.5 shadow text-red-500"
                       >
                         <XCircle size={16} />
                       </button>

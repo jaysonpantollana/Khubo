@@ -86,7 +86,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
             <>
               <button
                 onClick={prevImage}
-                className="absolute left-4 sm:left-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all active:scale-95 shadow-lg"
+                className="absolute left-4 sm:left-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
                 aria-label="Previous image"
               >
                 <ChevronLeft size={28} />
@@ -94,7 +94,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
 
               <button
                 onClick={nextImage}
-                className="absolute right-4 sm:right-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all active:scale-95 shadow-lg"
+                className="absolute right-4 sm:right-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
                 aria-label="Next image"
               >
                 <ChevronRight size={28} />
@@ -125,7 +125,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
                   className={`w-16 h-12 rounded-md overflow-hidden border-2 transition-all flex-shrink-0 ${
-                    idx === currentIndex ? 'border-white scale-110' : 'border-transparent opacity-50 hover:opacity-100'
+                    idx === currentIndex ? 'border-white scale-110' : 'border-transparent opacity-50'
                   }`}
                 >
                   <img src={img} loading="lazy" className="w-full h-full object-cover" alt={`Gallery photo ${idx}`} referrerPolicy="no-referrer" />

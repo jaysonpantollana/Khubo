@@ -5,10 +5,10 @@
 // @side-effects: Calls createListing on submit; creates portal-based modal
 // @dependencies: useAuth, motion, lucide-react
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { z } from 'zod';
 
-import { X, Upload, XCircle, Loader2, ChevronDown } from 'lucide-react';
+import { X, Upload, XCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import MapPicker from './MapPicker';
 import { FocusTrap } from './ui/FocusTrap';
@@ -46,25 +46,12 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
   const [availableAmenities, setAvailableAmenities] = useState<string[]>(AMENITIES);
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
-  const [advancePaymentMonths, setAdvancePaymentMonths] = useState<number>(1);
-  const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
-  const monthDropdownRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<File[]>([]);
   const [pinLat, setPinLat] = useState<number | null>(null);
   const [pinLng, setPinLng] = useState<number | null>(null);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (monthDropdownRef.current && !monthDropdownRef.current.contains(event.target as Node)) {
-        setIsMonthDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   if (!isOpen) return null;
 
@@ -128,7 +115,6 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         location,
         category,
         amenities: selectedAmenities,
-        advance_payment_months: advancePaymentMonths,
         image: imageUrls[0], // Main image
         gallery: imageUrls,
         rating: 0,
@@ -155,7 +141,6 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setStreet('');
       setCategory(CATEGORIES[0]);
       setSelectedAmenities([]);
-      setAdvancePaymentMonths(1);
       setImages([]);
       setPinLat(null);
       setPinLng(null);
@@ -208,7 +193,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       <button 
                         type="button" 
                         onClick={() => removeImage(idx)}
-                        className="absolute top-1 right-1 bg-white rounded-full p-0.5 shadow hover:scale-110 transition text-red-500"
+                        className="absolute top-1 right-1 bg-white rounded-full p-0.5 shadow text-red-500"
                       >
                         <XCircle size={16} />
                       </button>
@@ -313,42 +298,6 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       setPinLng(lng);
                     }}
                   />
-                </div>
-
-                {/* Months of Advance Payment */}
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-neutral-800 mb-2">Months of Advance Payment</label>
-                  <div className="relative" ref={monthDropdownRef}>
-                    <button
-                      type="button"
-                      onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
-                      className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 cursor-pointer flex items-center justify-between"
-                    >
-                      <span>{advancePaymentMonths} {advancePaymentMonths === 1 ? 'month' : 'months'}</span>
-                      <ChevronDown size={16} className={`text-neutral-400 transition-transform ${isMonthDropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    {isMonthDropdownOpen && (
-                      <div className="absolute z-50 mt-1 w-full bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden">
-                        {[1, 2, 3, 6, 12].map(months => (
-                          <button
-                            key={months}
-                            type="button"
-                            onClick={() => {
-                              setAdvancePaymentMonths(months);
-                              setIsMonthDropdownOpen(false);
-                            }}
-                            className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
-                              advancePaymentMonths === months
-                                ? 'bg-[#2252D6] text-white'
-                                : 'text-neutral-800 hover:bg-neutral-50'
-                            }`}
-                          >
-                            {months} {months === 1 ? 'month' : 'months'}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
                 </div>
 
                 <div className="md:col-span-2">

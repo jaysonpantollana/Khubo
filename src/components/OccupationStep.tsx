@@ -102,7 +102,7 @@ export function OccupationStep({ data, onBack, onClose, onContinue }: Occupation
                     'w-full flex items-center gap-4 p-4 rounded-xl border transition-all duration-200 cursor-pointer text-left',
                     isSelected
                       ? 'border-[#2252D6]/60 bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
-                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-sm'
+                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
                   )}
                 >
                   <div

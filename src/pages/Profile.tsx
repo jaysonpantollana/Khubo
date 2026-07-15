@@ -262,7 +262,7 @@ export default function Profile() {
           <button
             aria-label="Announcements"
             onClick={() => setIsAnnouncementsOpen(true)}
-            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full pointer-events-auto cursor-pointer"
+            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full pointer-events-auto cursor-pointer"
           >
             <Megaphone className="w-5 h-5 md:w-8 md:h-8" />
           </button>
@@ -310,7 +310,7 @@ export default function Profile() {
                     {tag}
                     <button
                       onClick={() => setProfileTags(profileTags.filter(t => t !== tag))}
-                      className="absolute -top-1 -right-1 bg-neutral-800 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute -top-1 -right-1 bg-neutral-800 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 transition-opacity"
                     >
                       <X size={10} />
                     </button>
@@ -359,7 +359,7 @@ export default function Profile() {
           <div className="w-full md:w-[45%] lg:w-[40%] text-white/80 md:text-white text-sm md:text-xl lg:text-2xl font-normal md:font-semibold leading-relaxed drop-shadow-sm px-2 pb-0 pt-0 md:p-6 group text-center md:text-left mt-0">
             <div className="relative cursor-pointer hover:bg-white/10 p-2 rounded-xl transition" onClick={handleOpenEditProfile} title="Edit Quote/Bio">
               <span className="italic">{profileBio}</span>
-              <button className="absolute -top-4 right-0 opacity-0 group-hover:opacity-100 transition p-1 hover:bg-white/20 rounded-full cursor-pointer md:block hidden">
+              <button className="absolute -top-4 right-0 opacity-0 transition p-1 hover:bg-white/20 rounded-full cursor-pointer md:block hidden">
                 <Edit2 size={16} className="text-white" />
               </button>
             </div>
@@ -375,7 +375,7 @@ export default function Profile() {
             <div
               key={stat.title}
               onClick={() => handleStatClick(stat.title)}
-              className="bg-white rounded-[1.5rem] p-5 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col relative group cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300"
+              className="bg-white rounded-[1.5rem] p-5 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col relative group cursor-pointer"
             >
               <div className="absolute top-5 right-5 md:top-6 md:right-6">
                 <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-neutral-900" />
@@ -663,7 +663,7 @@ export default function Profile() {
               <div className="flex justify-center mb-8">
               <button
                 onClick={() => setShowAllProperties(!showAllProperties)}
-                className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
+                  className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition text-sm"
               >
                 {showAllProperties ? 'Show Less' : 'Show All'}
               </button>
@@ -674,12 +674,12 @@ export default function Profile() {
               {(showAllProperties ? myListings : myListings.slice(0, 1)).map(listing => {
                 const isListed = listingVisibility[listing.id] ?? true;
                 return (
-                <div key={listing.id} onClick={() => setSelectedListingDetail(listing)} className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 ${!isListed ? 'opacity-60' : ''}`}>
+                <div key={listing.id} onClick={() => setSelectedListingDetail(listing)} className={`bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 mx-auto max-w-[340px] md:max-w-none w-full cursor-pointer ${!isListed ? 'opacity-60' : ''}`}>
                   <div className="w-full lg:w-[380px] aspect-[4/3] lg:aspect-auto h-auto lg:h-[260px] shrink-0 relative overflow-hidden rounded-2xl md:rounded-[1.5rem] group">
                     <img
                       src={listing.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800'}
                       alt={listing.title}
-                      className="w-full h-full object-cover shrink-0 group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover shrink-0"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
                   </div>
@@ -792,7 +792,7 @@ export default function Profile() {
                         <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                       </div>
                       <div className="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto">
-                        <button onClick={(e) => { e.stopPropagation(); setEditingListing(listing); }} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold hover:bg-neutral-50 transition active:scale-95 text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
+                        <button onClick={(e) => { e.stopPropagation(); setEditingListing(listing); }} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold hover:bg-neutral-50 transition text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
                           <Edit2 size={16} className="text-neutral-600" /> Edit
                         </button>
                         <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
@@ -815,7 +815,7 @@ export default function Profile() {
             <div className="flex justify-center mb-8">
                 <button
                   onClick={() => setShowAllProperties(!showAllProperties)}
-                  className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition active:scale-95 text-sm"
+                className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition text-sm"
                 >
                   {showAllProperties ? 'Show Less' : 'Show All'}
                 </button>
@@ -837,7 +837,7 @@ export default function Profile() {
                     <img
                       src={res.image}
                       alt={res.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
                   </div>

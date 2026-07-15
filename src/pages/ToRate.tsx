@@ -172,7 +172,7 @@ export default function ToRate() {
                   <img
                     src={res.image}
                     alt={res.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
                 </div>
@@ -310,7 +310,7 @@ export default function ToRate() {
                           onMouseEnter={() => setHoveredStar((prev) => ({ ...prev, [res.id]: star }))}
                           onMouseLeave={() => setHoveredStar((prev) => ({ ...prev, [res.id]: 0 }))}
                           onClick={() => handleRatingChange(res.id, star)}
-                          className="p-0.5 transition-transform hover:scale-110 cursor-pointer"
+                          className="p-0.5 cursor-pointer"
                         >
                           <Star
                             size={28}
@@ -340,7 +340,7 @@ export default function ToRate() {
                     <div className="flex justify-center">
                       <button
                         onClick={() => handleSubmit(res.id, res.title)}
-                        className="flex items-center justify-center gap-2 px-8 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl hover:bg-[#1a3fa8] active:scale-[0.98] transition-all cursor-pointer"
+                        className="flex items-center justify-center gap-2 px-8 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl hover:bg-[#1a3fa8] transition-all cursor-pointer"
                       >
                         <Send size={16} />
                         Submit Rating

@@ -15,8 +15,7 @@ import {
   ChevronUp,
   Wallet,
   X,
-  Building,
-  Star,
+
 } from "lucide-react";
 
 import SearchDropdown from "./SearchDropdown";
@@ -115,7 +114,7 @@ export default function Hero({
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between py-4 md:py-6 px-4 md:px-12 gap-4 z-20">
           <button
             aria-label="Home"
-            className="flex items-center justify-center overflow-hidden w-10 h-10 md:w-16 md:h-16 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 rounded-xl"
+            className="flex items-center justify-center overflow-hidden w-10 h-10 md:w-16 md:h-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 rounded-xl"
           >
             <img
               src="/khubo Logo.png"
@@ -128,7 +127,7 @@ export default function Hero({
           <button
             aria-label="Announcements"
             onClick={() => setIsAnnouncementsOpen(true)}
-            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
+            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
           >
             <Megaphone className="w-5 h-5 md:w-8 md:h-8" />
           </button>
@@ -304,54 +303,9 @@ export default function Hero({
                         setHideDropdown(true);
                         setIsSearchActive(false);
                       }}
-                      onSelect={() => {}}
-                      items={listings || []}
-                      filterItems={(items, query) =>
-                        items.filter(listing =>
-                          listing.title.toLowerCase().includes(query) ||
-                          listing.location.toLowerCase().includes(query) ||
-                          listing.category.toLowerCase().includes(query) ||
-                          listing.description.toLowerCase().includes(query)
-                        )
-                      }
-                      renderItem={(listing, onSelect) => (
-                        <div
-                          onClick={onSelect}
-                          className="flex gap-3 bg-white p-2.5 rounded-xl border border-neutral-100 hover:border-[#17294F]/20 hover:shadow-sm transition-all duration-150 cursor-pointer group"
-                        >
-                          <div className="w-14 h-14 rounded-lg overflow-hidden bg-neutral-200 flex-shrink-0 relative">
-                            <img
-                              src={listing.image}
-                              alt={listing.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              referrerPolicy="no-referrer"
-                            />
-                            <div className="absolute top-1 left-1 bg-[#17294F] text-white text-[8px] sm:text-[9px] font-extrabold px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                              <Star size={7} fill="currentColor" stroke="none" />
-                              {listing.rating.toFixed(1)}
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0 text-left flex flex-col justify-between py-0.5">
-                            <div className="min-w-0">
-                              <h5 className="text-xs sm:text-sm font-extrabold text-neutral-900 leading-snug truncate group-hover:text-[#2252D6] transition-colors">{listing.title}</h5>
-                              <p className="text-[10px] sm:text-xs text-neutral-500 truncate flex items-center mt-1">
-                                <MapPin size={10} className="mr-0.5" />
-                                {listing.location}
-                              </p>
-                            </div>
-                            <div className="flex items-center justify-between mt-1">
-                              <span className="text-xs sm:text-[13px] font-black text-[#17294F]">₱{listing.price.toLocaleString()}/mo</span>
-                              <span className="text-[9px] sm:text-[10px] bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded font-semibold font-mono">{listing.category}</span>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                       trendingTags={['Near MSU-IIT', 'Solo Room', 'All Female', 'Affordable', 'With Aircon', 'WiFi Included']}
                       scrollAnchorId="search-results-anchor"
-                      emptyText="No rooms match your search"
                       trendingTitle="Trending Searches"
-                      resultsTitle="Matching Dorms & Rooms"
-                      resultsIcon={<Building size={13} className="text-[#2252D6]" />}
                     />
                   )}
                 </>
@@ -385,7 +339,7 @@ export default function Hero({
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-all w-3 h-3 md:w-4 md:h-4 ${activeDropdown === "location" ? "rotate-180 text-neutral-900" : ""}`}
+                        className={`flex-shrink-0 opacity-50 w-3 h-3 md:w-4 md:h-4 ${activeDropdown === "location" ? "rotate-180 text-neutral-900" : ""}`}
                       />
                     </div>
                   </div>
@@ -418,7 +372,7 @@ export default function Hero({
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-all w-3 h-3 md:w-4 md:h-4 ${activeDropdown === "budget" ? "rotate-180 text-neutral-900" : ""}`}
+                        className={`flex-shrink-0 opacity-50 w-3 h-3 md:w-4 md:h-4 ${activeDropdown === "budget" ? "rotate-180 text-neutral-900" : ""}`}
                       />
                     </div>
                   </div>

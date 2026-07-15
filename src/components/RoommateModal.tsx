@@ -62,7 +62,7 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="absolute top-6 right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 transition-all active:scale-90 shadow-sm"
+                className="absolute top-6 right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 transition-all shadow-sm"
               >
                 <X size={20} />
               </button>
@@ -119,7 +119,7 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                           key={idx}
                           className="px-3 py-1.5 sm:px-4 sm:py-2 bg-neutral-50 border border-neutral-100 rounded-full flex items-center gap-2 group hover:border-[#17294F]/30 hover:bg-white transition-all cursor-default whitespace-nowrap"
                         >
-                          <Zap size={12} className="text-[#17294F] opacity-30 group-hover:opacity-100" />
+                          <Zap size={12} className="text-[#17294F] opacity-30" />
                           <span className="text-[11px] sm:text-[13px] font-bold text-neutral-600 group-hover:text-[#17294F] tracking-tight">{tag}</span>
                         </div>
                       ))}
@@ -194,9 +194,9 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                     <section className="pt-2">
                       <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-3">Social Identity</h3>
                       <div className="flex items-center gap-5">
-                        <Instagram size={18} className="text-pink-500 cursor-pointer hover:opacity-70 transition-opacity" />
-                        <Twitter size={18} className="text-blue-400 cursor-pointer hover:opacity-70 transition-opacity" />
-                        <Facebook size={18} className="text-blue-600 cursor-pointer hover:opacity-70 transition-opacity" />
+                        <Instagram size={18} className="text-pink-500 cursor-pointer" />
+                        <Twitter size={18} className="text-blue-400 cursor-pointer" />
+                        <Facebook size={18} className="text-blue-600 cursor-pointer" />
                       </div>
                     </section>
                   )}

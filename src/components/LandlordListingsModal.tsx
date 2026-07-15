@@ -89,14 +89,14 @@ export const LandlordListingsModal: React.FC<LandlordListingsModalProps> = ({
               <div
                 key={listing.id}
                 onClick={() => handleListingClick(listing.id)}
-                className="cursor-pointer bg-white rounded-xl border border-neutral-100 overflow-hidden hover:shadow-md transition-shadow group"
+                className="cursor-pointer bg-white rounded-xl border border-neutral-100 overflow-hidden group"
               >
                 <div className="aspect-[4/3] relative overflow-hidden">
                   <img
                     src={listing.image}
                     alt={listing.title}
                     loading="lazy"
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover w-full h-full"
                   />
                   <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm rounded-full text-white text-[10px] font-bold">
                     {listing.date}

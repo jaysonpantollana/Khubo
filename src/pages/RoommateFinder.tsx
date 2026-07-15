@@ -21,8 +21,6 @@ import {
   Wallet,
   X,
   UserPlus,
-  Users,
-  ShieldCheck,
 } from "lucide-react";
 import RoommateModal from "../components/RoommateModal";
 import { Roommate } from "../types";
@@ -337,66 +335,10 @@ export default function RoommateFinder() {
                           onClose={() => {
                             setHideStickyDropdown(true);
                             setIsStickySearchActive(false);
-                          }}
-                          onSelect={(roommate) => openProfile(roommate)}
-                          items={roommates}
-                          filterItems={(items, query) =>
-                            items.filter(roommate => {
-                              const nameMatch = roommate.name.toLowerCase().includes(query);
-                              const bioMatch = roommate.bio ? roommate.bio.toLowerCase().includes(query) : false;
-                              const placeMatch = roommate.preferredPlace.toLowerCase().includes(query);
-                              const tagsMatch = roommate.tags.some(tag => tag.toLowerCase().includes(query));
-                              const genderMatch = roommate.gender ? roommate.gender.toLowerCase().includes(query) : false;
-                              const universityMatch = roommate.university ? roommate.university.toLowerCase().includes(query) : false;
-                              return nameMatch || bioMatch || placeMatch || tagsMatch || genderMatch || universityMatch;
-                            })
-                          }
-                          renderItem={(roommate, onSelect) => (
-                            <div
-                              onClick={onSelect}
-                              className="flex gap-3 bg-white p-2.5 rounded-xl border border-neutral-100 hover:border-[#17294F]/20 hover:shadow-sm transition-all duration-150 cursor-pointer group"
-                            >
-                              <div className="w-12 h-12 rounded-full overflow-hidden bg-neutral-100 border-2 border-white shadow-sm flex-shrink-0 relative">
-                                <img
-                                  src={roommate.image}
-                                  alt={roommate.name}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                  referrerPolicy="no-referrer"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0 text-left flex flex-col justify-between py-0.5">
-                                <div className="min-w-0">
-                                  <div className="flex items-center gap-1">
-                                    <h5 className="text-xs sm:text-sm font-semibold text-neutral-900 leading-snug truncate group-hover:text-[#2252D6] transition-colors">
-                                      {roommate.name}
-                                    </h5>
-                                    <span className="text-[10px] text-neutral-500 font-medium flex-shrink-0">
-                                      • {roommate.gender}
-                                    </span>
-                                  </div>
-                                  <p className="text-[9px] sm:text-xs text-neutral-500 truncate flex items-center mt-0.5">
-                                    <MapPin size={10} className="mr-0.5 text-neutral-400" />
-                                    Prefers: {roommate.preferredPlace}
-                                  </p>
-                                </div>
-                                <div className="flex items-center justify-between mt-1">
-                                  <span className="text-xs font-semibold text-[#17294F] bg-[#17294F]/5 px-2 py-0.5 rounded">
-                                    {roommate.budgetRange}
-                                  </span>
-                                  <span className="text-[9px] text-[#2252D6] font-semibold flex items-center gap-0.5 bg-[#2252D6]/5 px-1.5 py-0.5 rounded">
-                                    <ShieldCheck size={10} />
-                                    {roommate.university}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          trendingTags={['Near MSU-IIT', 'All Female', 'Solo Room', 'Shared Room', 'All Male', 'Affordable', 'Bed Spacer', 'Boarding House', 'Quiet', 'Clean', 'Night owl', 'Introvert']}
-                          scrollAnchorId="roommate-results-anchor"
-                          emptyText="No roommates match your search"
-                          trendingTitle="Roommate Tags & Filters"
-                          resultsTitle="Matching Roommates"
-                          resultsIcon={<Users size={13} className="text-[#2252D6]" />}
+                           }}
+                           trendingTags={['Near MSU-IIT', 'All Female', 'Solo Room', 'Shared Room', 'All Male', 'Affordable', 'Bed Spacer', 'Boarding House', 'Quiet', 'Clean', 'Night owl', 'Introvert']}
+                           scrollAnchorId="roommate-results-anchor"
+                           trendingTitle="Roommate Tags & Filters"
                         />
                       )}
                     </>
@@ -439,7 +381,7 @@ export default function RoommateFinder() {
                             </span>
                           </div>
                           <ChevronDown
-                            className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "location" ? "rotate-180" : ""}`}
+                            className={`flex-shrink-0 opacity-50 text-neutral-500 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "location" ? "rotate-180" : ""}`}
                           />
                         </div>
 
@@ -535,7 +477,7 @@ export default function RoommateFinder() {
                             </span>
                           </div>
                           <ChevronDown
-                            className={`flex-shrink-0 opacity-50 text-neutral-500 group-hover:opacity-100 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "budget" ? "rotate-180" : ""}`}
+                            className={`flex-shrink-0 opacity-50 text-neutral-500 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "budget" ? "rotate-180" : ""}`}
                           />
                         </div>
 
@@ -618,7 +560,7 @@ export default function RoommateFinder() {
 
               <button
                 onClick={() => scroll(tagsScrollRef, "left")}
-                className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 active:scale-95 transition-all hidden md:flex"
+                className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
                 aria-label="Scroll left"
               >
                 <ChevronLeft size={16} strokeWidth={2} />
@@ -626,7 +568,7 @@ export default function RoommateFinder() {
 
               <button
                 onClick={() => scroll(tagsScrollRef, "right")}
-                className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 active:scale-95 transition-all hidden md:flex"
+                className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
                 aria-label="Scroll right"
               >
                 <ChevronRight size={16} strokeWidth={2} />
@@ -641,7 +583,7 @@ export default function RoommateFinder() {
                     <button
                       key={tag}
                       onClick={() => setSelectedTag(tag)}
-                      className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 active:scale-95 cursor-pointer ${
+                      className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 cursor-pointer ${
                         selectedTag === tag
                           ? "bg-neutral-900 text-white border-neutral-900 shadow-sm"
                           : "bg-white text-neutral-700 border-neutral-200 hover:border-neutral-800 hover:text-neutral-900"
@@ -739,13 +681,13 @@ export default function RoommateFinder() {
                 <div className="hidden md:flex items-center gap-3">
                   <button
                     onClick={() => scroll(recommendedRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
                   >
                     <ChevronLeft size={20} />
                   </button>
                   <button
                     onClick={() => scroll(recommendedRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
                   >
                     <ChevronRight size={20} />
                   </button>
@@ -802,13 +744,13 @@ export default function RoommateFinder() {
                 <div className="hidden md:flex items-center gap-3">
                   <button
                     onClick={() => scroll(nearMsuIitRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
                   >
                     <ChevronLeft size={20} />
                   </button>
                   <button
                     onClick={() => scroll(nearMsuIitRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all active:scale-90"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
                   >
                     <ChevronRight size={20} />
                   </button>

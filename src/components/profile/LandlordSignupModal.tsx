@@ -129,7 +129,7 @@ export default function LandlordSignupModal({ isOpen, onClose, onSuccess }: Prop
             {isLandlordLogin ? "Don't have an account?" : 'Already have an account?'}
             <button
               onClick={() => setIsLandlordLogin(!isLandlordLogin)}
-              className="font-bold text-[#2252D6] hover:underline"
+              className="font-bold text-[#2252D6]"
             >
               {isLandlordLogin ? 'Sign up' : 'Sign in'}
             </button>

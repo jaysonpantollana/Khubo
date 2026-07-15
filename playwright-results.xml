@@ -1,0 +1,36 @@
+<testsuites id="" name="" tests="13" failures="0" skipped="0" errors="0" time="41.059114">
+<testsuite name="home.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="4" failures="0" skipped="0" time="75.103" errors="0">
+<testcase name="Home Page › should display the hero section with welcome text" classname="home.spec.ts" time="19.63">
+</testcase>
+<testcase name="Home Page › should display categories navigation" classname="home.spec.ts" time="16.229">
+</testcase>
+<testcase name="Home Page › should display listing carousels" classname="home.spec.ts" time="23.09">
+</testcase>
+<testcase name="Home Page › should display footer and bottom navigation" classname="home.spec.ts" time="16.154">
+</testcase>
+</testsuite>
+<testsuite name="listing.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="2" failures="0" skipped="0" time="43.541" errors="0">
+<testcase name="Listing Detail › should display listing details" classname="listing.spec.ts" time="22.807">
+</testcase>
+<testcase name="Listing Detail › should navigate back from listing detail" classname="listing.spec.ts" time="20.734">
+</testcase>
+</testsuite>
+<testsuite name="navigation.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="4" failures="0" skipped="0" time="52.134" errors="0">
+<testcase name="Navigation › should navigate to maps page" classname="navigation.spec.ts" time="17.299">
+</testcase>
+<testcase name="Navigation › should navigate to roommate finder" classname="navigation.spec.ts" time="7.734">
+</testcase>
+<testcase name="Navigation › should navigate to profile page" classname="navigation.spec.ts" time="14.139">
+</testcase>
+<testcase name="Navigation › should navigate to listing detail from carousel" classname="navigation.spec.ts" time="12.962">
+</testcase>
+</testsuite>
+<testsuite name="search.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="3" failures="0" skipped="0" time="32.882" errors="0">
+<testcase name="Search Functionality › should activate search mode" classname="search.spec.ts" time="12.48">
+</testcase>
+<testcase name="Search Functionality › should type in search input" classname="search.spec.ts" time="10.514">
+</testcase>
+<testcase name="Search Functionality › should filter by category" classname="search.spec.ts" time="9.888">
+</testcase>
+</testsuite>
+</testsuites>

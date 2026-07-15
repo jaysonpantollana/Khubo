@@ -66,7 +66,7 @@ export function StickySearchBar({
             ref={stickyDropdownRef}
           >
             {/* Dropdown panels — rendered OUTSIDE the pill so they expand below it */}
-            {!isSearchActive && stickyActiveDropdown === "location" && (
+            {!isStickySearchActive && stickyActiveDropdown === "location" && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-[100] text-left cursor-default pointer-events-auto">
                 <div className="space-y-3">
                   <div>
@@ -108,7 +108,7 @@ export function StickySearchBar({
               </div>
             )}
 
-            {!isSearchActive && stickyActiveDropdown === "budget" && (
+            {!isStickySearchActive && stickyActiveDropdown === "budget" && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}

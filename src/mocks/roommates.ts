@@ -17,7 +17,9 @@ export const ROOMMATES: Roommate[] = [
     image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Andrea67',
     tags: ['Non-smoker', 'Quiet', 'Clean'],
     budgetRange: 'P2500-P3000',
-    preferredPlace: "Nathan's Female Boarders"
+    preferredPlace: "Nathan's Female Boarders",
+    phone: '09171234567',
+    email: 'andrea.padillan@email.com'
   },
   {
     id: 'rm2',
@@ -30,7 +32,9 @@ export const ROOMMATES: Roommate[] = [
     image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Irvin99',
     tags: ['Clean', 'Night owl', 'Introvert'],
     budgetRange: 'P2600-P2800',
-    preferredPlace: "Layla's Residences & Dormitory"
+    preferredPlace: "Layla's Residences & Dormitory",
+    phone: '09181234567',
+    email: 'irvin.labaste@email.com'
   },
   {
     id: 'rm3',
@@ -43,7 +47,9 @@ export const ROOMMATES: Roommate[] = [
     image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex22',
     tags: ['Pet friendly', 'Morning person', 'Clean'],
     budgetRange: 'P2500-P3000',
-    preferredPlace: "Nathan's Female Boarders"
+    preferredPlace: "Nathan's Female Boarders",
+    phone: '09191234567',
+    email: 'alex.gustavo@email.com'
   },
   {
     id: 'rm4',
@@ -56,7 +62,9 @@ export const ROOMMATES: Roommate[] = [
     image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SophiaReyes',
     tags: ['Outgoing', 'Studious', 'Clean'],
     budgetRange: 'P2000-P3500',
-    preferredPlace: "Green Residences"
+    preferredPlace: "Green Residences",
+    phone: '09201234567',
+    email: 'sophia.reyes@email.com'
   },
   {
     id: 'rm5',
@@ -69,7 +77,9 @@ export const ROOMMATES: Roommate[] = [
     image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MarkSantos',
     tags: ['Gym goer', 'Tidy', 'Respectful'],
     budgetRange: 'P2500-P3000',
-    preferredPlace: "City Scape Dorms"
+    preferredPlace: "City Scape Dorms",
+    phone: '09211234567',
+    email: 'mark.santos@email.com'
   },
   {
     id: 'rm6',
@@ -82,6 +92,8 @@ export const ROOMMATES: Roommate[] = [
     image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ElenaGomez',
     tags: ['Night owl', 'Quiet', 'Studious'],
     budgetRange: 'P3000-P4000',
-    preferredPlace: "Villa Maria Boarding House"
+    preferredPlace: "Villa Maria Boarding House",
+    phone: '09221234567',
+    email: 'elena.gomez@email.com'
   }
 ];

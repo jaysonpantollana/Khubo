@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 
-import { X, MapPin, GraduationCap, Wallet, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles, Heart } from 'lucide-react';
+import { X, MapPin, GraduationCap, Wallet, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles, Heart, Phone, Mail } from 'lucide-react';
 import { Roommate } from '../types';
 import { FocusTrap } from './ui/FocusTrap';
 
@@ -123,6 +123,31 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                       <p className="text-base font-black text-neutral-900">{roommate.budgetRange} <span className="text-[10px] font-bold text-neutral-400">/ mo</span></p>
                     </div>
                   </section>
+
+                  {/* Contact Info */}
+                  {(roommate.phone || roommate.email) && (
+                    <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-6 border-y border-neutral-100">
+                      {!roommate.hidePhone && roommate.phone && (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <Phone size={16} className="text-blue-500" />
+                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Phone Number</h4>
+                          </div>
+                          <p className="text-base font-black text-neutral-900">{roommate.phone}</p>
+                        </div>
+                      )}
+
+                      {!roommate.hideEmail && roommate.email && (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <Mail size={16} className="text-purple-500" />
+                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Email</h4>
+                          </div>
+                          <p className="text-base font-black text-neutral-900">{roommate.email}</p>
+                        </div>
+                      )}
+                    </section>
+                  )}
 
                   {/* Social & Connect */}
                   {!roommate.hideSocialLinks && (

@@ -2,6 +2,10 @@
 
 This file contains agent instructions for the project.
 
+## CRITICAL: Agent Name Format
+
+**Always use bare agent names** (e.g. `code-reviewer`, `e2e-runner`, `tdd-guide`). Never prefix with `everything-claude-code:` or any other plugin name. The prefixed form does NOT work in OpenCode and causes "Agent not found" errors.
+
 ## Auto-Load Skills
 
 At the start of EVERY task, automatically load these skills using the `skill` tool:

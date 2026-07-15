@@ -190,6 +190,8 @@ When creating PRs:
 
 ## Agent Orchestration
 
+> **CRITICAL**: Always use bare agent names (e.g. `code-reviewer`, NOT `everything-claude-code:code-reviewer`). The `everything-claude-code:` prefix does NOT work in OpenCode and will cause "Agent not found" errors. See `AGENT-NAMES.md` for the full list.
+
 ### Available Agents
 
 | Agent | Purpose | When to Use |

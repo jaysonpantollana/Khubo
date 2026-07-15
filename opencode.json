@@ -3,7 +3,8 @@
   "plugin": [
     "./.opencode/plugins/ponytail.mjs",
     "./.opencode/plugins",
-    "compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git"
+    "compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git",
+    "opencode-skills-collection@latest"
   ],
   "model": "opencode/mimo-v2-free",
   "small_model": "opencode/mimo-v2-free",

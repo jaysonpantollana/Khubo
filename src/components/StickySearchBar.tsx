@@ -112,21 +112,21 @@ export function StickySearchBar({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                  className="absolute top-3 right-3 p-2.5 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
                   aria-label="Scroll up"
                 >
-                  <ChevronUp className="w-4 h-4 text-neutral-600" />
+                  <ChevronUp className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                  className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
                   aria-label="Scroll down"
                 >
-                  <ChevronDown className="w-4 h-4 text-neutral-600" />
+                  <ChevronDown className="w-5 h-5" />
                 </button>
                 <div
                   ref={budgetScrollRef}
-                  className="max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200 pr-8"
+                  className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
                 >
                   <div className="grid grid-cols-1 gap-1">
                     {budgetRanges.map((range) => (

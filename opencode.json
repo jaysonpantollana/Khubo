@@ -114,6 +114,27 @@
       "model": "opencode/mimo-v2.5-free",
       "prompt": "{file:.opencode/prompts/agents/python-reviewer.txt}",
       "tools": { "read": true, "bash": true, "write": false, "edit": false }
+    },
+    "database-reviewer": {
+      "description": "PostgreSQL database specialist for schema, queries, and performance",
+      "mode": "subagent",
+      "model": "opencode/mimo-v2.5-free",
+      "prompt": "{file:.opencode/prompts/agents/database-reviewer.txt}",
+      "tools": { "read": true, "bash": true, "write": false, "edit": false }
+    },
+    "go-reviewer": {
+      "description": "Expert Go code reviewer for idiomatic patterns and concurrency",
+      "mode": "subagent",
+      "model": "opencode/mimo-v2.5-free",
+      "prompt": "{file:.opencode/prompts/agents/go-reviewer.txt}",
+      "tools": { "read": true, "bash": true, "write": false, "edit": false }
+    },
+    "go-build-resolver": {
+      "description": "Go build, vet, and compilation error resolution specialist",
+      "mode": "subagent",
+      "model": "opencode/mimo-v2.5-free",
+      "prompt": "{file:.opencode/prompts/agents/go-build-resolver.txt}",
+      "tools": { "read": true, "write": true, "edit": true, "bash": true }
     }
   },
   "command": {

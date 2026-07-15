@@ -83,7 +83,7 @@ export default function RoommateHero({
   };
 
   return (
-    <div className="relative min-h-[440px] md:h-[500px] w-full z-50">
+    <div className="relative min-h-[400px] md:h-[500px] w-full z-50 overflow-hidden">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -117,20 +117,20 @@ export default function RoommateHero({
         </div>
 
         {/* Center Content */}
-        <div className="flex flex-col items-center justify-center text-center h-full pt-8 md:pt-10">
+        <div className="flex flex-col items-center justify-center text-center h-full pt-10 md:pt-10">
           <div 
-            className="flex items-baseline gap-3 md:gap-4"
+            className="flex items-baseline gap-2 sm:gap-3 md:gap-4 flex-wrap justify-center"
           >
-            <h1 className="font-noto-serif italic text-white text-xl sm:text-2xl md:text-[35px] tracking-tight leading-tight">
+            <h1 className="font-noto-serif italic text-white text-base sm:text-xl md:text-[35px] tracking-tight leading-tight">
               The Smarter Way to Share
             </h1>
-            <p className="text-white/70 font-roboto font-bold text-[10px] md:text-base tracking-[0.3em] uppercase">
+            <p className="text-white/70 font-roboto font-bold text-[9px] sm:text-[10px] md:text-base tracking-[0.15em] sm:tracking-[0.3em] uppercase">
               by <span className="text-white">KHUBO</span>
             </p>
           </div>
 
           <div 
-            className="mt-5 md:mt-12 w-full flex justify-center relative dropdown-container"
+            className="mt-3 sm:mt-5 md:mt-12 w-full flex justify-center relative dropdown-container"
           >
             {/* Dropdown panels — rendered OUTSIDE the pill so they expand below it */}
             {!isSearchActive && activeDropdown === 'location' && (
@@ -199,7 +199,7 @@ export default function RoommateHero({
             )}
             
             {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-1 sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[96%] sm:w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
             {isSearchActive ? (
               <>
                 <div className="flex-1 flex items-center pl-4 md:pl-6 pr-0 py-0 w-full">
@@ -235,7 +235,7 @@ export default function RoommateHero({
                     onClick={() => {
                       setIsSearchActive(false);
                     }}
-                    className="bg-[#17294F] p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-1.5 sm:p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                     aria-label="Search"
                   >
                     <Search size={16} className="text-white group-hover:stroke-[3px] transition-all md:hidden" />
@@ -268,7 +268,7 @@ export default function RoommateHero({
                     aria-label="Location: Location"
                     onClick={() => toggleDropdown('location')}
                     onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggleDropdown('location'))}
-                    className={`w-full flex items-center justify-between px-1.5 md:pl-6 md:pr-4 py-2.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
+                    className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-2 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'location' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
                         : 'hover:bg-white/5 rounded-full'
@@ -276,7 +276,7 @@ export default function RoommateHero({
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
                       <MapPin className="text-[#2252D6] flex-shrink-0 w-3 h-3 md:w-[16px] md:h-[16px]" />
-                      <span className={`text-[10px] md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'location' ? 'text-neutral-900' : 'text-white'}`}>
+                      <span className={`text-[10px] sm:text-xs md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'location' ? 'text-neutral-900' : 'text-white'}`}>
                         {selectedLocation ? selectedLocation : 'Location'}
                       </span>
                     </div>
@@ -285,7 +285,7 @@ export default function RoommateHero({
 
                 </div>
 
-                <div className="w-[1px] h-5 md:h-8 bg-white/20" />
+                <div className="w-[1px] h-4 sm:h-5 md:h-8 bg-white/20" />
 
                 <div className="flex-1 min-w-0">
                   <div 
@@ -294,7 +294,7 @@ export default function RoommateHero({
                     aria-label="Add budget"
                     onClick={() => toggleDropdown('budget')}
                     onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggleDropdown('budget'))}
-                    className={`w-full flex items-center justify-between px-1.5 md:pl-6 md:pr-4 py-2.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
+                    className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-2 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'budget' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
                         : 'hover:bg-white/5 rounded-full'
@@ -302,7 +302,7 @@ export default function RoommateHero({
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
                       <Wallet className="text-[#2252D6] flex-shrink-0 w-3 h-3 md:w-[16px] md:h-[16px]" />
-                      <span className={`text-[10px] md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'budget' ? 'text-neutral-900' : 'text-white'}`}>
+                      <span className={`text-[10px] sm:text-xs md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'budget' ? 'text-neutral-900' : 'text-white'}`}>
                         {selectedBudget ? selectedBudget : 'Budget'}
                       </span>
                     </div>
@@ -331,7 +331,7 @@ export default function RoommateHero({
                       setActiveDropdown(null);
                     }
                   }}
-                  className="bg-[#17294F] p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                  className="bg-[#17294F] p-1.5 sm:p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                 >
                   <Search size={16} className="text-white group-hover:stroke-[3px] transition-all md:hidden" />
                   <Search size={22} className="text-white group-hover:stroke-[3px] transition-all hidden md:block" />

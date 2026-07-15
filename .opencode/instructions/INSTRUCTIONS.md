@@ -208,6 +208,17 @@ When creating PRs:
 | go-reviewer | Go code review | Go projects |
 | go-build-resolver | Go build errors | Go build failures |
 | database-reviewer | Database optimization | SQL, schema design |
+| python-reviewer | Python code review | Python projects |
+
+### Auto-Dispatch Orchestrator
+
+All agents are automatically triggered based on prompt analysis. See `AGENTS.md` for the full orchestrator logic. Key points:
+
+- **Multiple agents fire simultaneously** when their conditions match
+- **Independent agents run in parallel** (code-reviewer + security-reviewer + database-reviewer)
+- **Dependent agents run in order** (architect → planner → tdd-guide → implementation)
+- **Never wait for user permission** — trigger conditions are the permission
+- **Bias toward over-triggering** security-reviewer and database-reviewer
 
 ### Immediate Agent Usage
 

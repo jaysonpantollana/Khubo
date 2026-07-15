@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Search, MapPin, Wallet, ChevronDown, X, Building, Star } from 'lucide-react';
+import { Search, MapPin, Wallet, ChevronDown, ChevronUp, X, Building, Star } from 'lucide-react';
 import { Listing } from '../types';
 import SearchDropdown from './SearchDropdown';
 import { POPULAR_LOCATIONS } from '../lib/constants';
@@ -40,10 +40,10 @@ export function StickySearchBar({
   onSearch,
 }: StickySearchBarProps) {
   const stickyDropdownRef = useRef<HTMLDivElement>(null);
-  const [budgetExpanded, setBudgetExpanded] = React.useState(false);
+  const budgetScrollRef = React.useRef<HTMLDivElement>(null);
 
   const budgetRanges = [
-    { label: "Lower than ₱1,000" },
+    { label: "less 1k" },
     { label: "₱1k - ₱2k" },
     { label: "₱2k - ₱3k" },
     { label: "₱3k - ₱4k" },
@@ -53,9 +53,8 @@ export function StickySearchBar({
     { label: "₱7k - ₱8k" },
     { label: "₱8k - ₱9k" },
     { label: "₱9k - ₱10k" },
-    { label: "Higher than ₱10k" },
+    { label: "10k+" },
   ];
-  const visibleBudgetRanges = budgetExpanded ? budgetRanges : budgetRanges.slice(0, 4);
 
   return (
     <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm">
@@ -293,31 +292,42 @@ export function StickySearchBar({
 
                     {stickyActiveDropdown === "budget" && (
                       <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left">
-                        <div className="space-y-2 md:space-y-3">
-                          <div className="grid grid-cols-1 gap-1">
-                            {visibleBudgetRanges.map((range) => (
-                              <button
-                                key={range.label}
-                                onClick={() => {
-                                  setSelectedStickyBudget(range.label);
-                                  setStickyActiveDropdown(null);
-                                  setBudgetExpanded(false);
-                                }}
-                                className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
-                              >
-                                <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">{range.label}</span>
-                              </button>
-                            ))}
-                          </div>
-                          <button
-                            onClick={() => setBudgetExpanded(!budgetExpanded)}
-                            className="w-full flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-[#2252D6] hover:bg-[#2252D6]/5 rounded-lg transition-colors"
+                        <div className="flex gap-2">
+                          <div
+                            ref={budgetScrollRef}
+                            className="flex-1 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200"
                           >
-                            {budgetExpanded ? "Show Less" : "Show More"}
-                            <ChevronDown
-                              className={`w-3.5 h-3.5 transition-transform ${budgetExpanded ? "rotate-180" : ""}`}
-                            />
-                          </button>
+                            <div className="grid grid-cols-1 gap-1">
+                              {budgetRanges.map((range) => (
+                                <button
+                                  key={range.label}
+                                  onClick={() => {
+                                    setSelectedStickyBudget(range.label);
+                                    setStickyActiveDropdown(null);
+                                  }}
+                                  className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
+                                >
+                                  <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">{range.label}</span>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1 flex-shrink-0">
+                            <button
+                              onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
+                              className="p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors"
+                              aria-label="Scroll up"
+                            >
+                              <ChevronUp className="w-4 h-4 text-neutral-600" />
+                            </button>
+                            <button
+                              onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
+                              className="p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors"
+                              aria-label="Scroll down"
+                            >
+                              <ChevronDown className="w-4 h-4 text-neutral-600" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     )}

@@ -7,6 +7,8 @@ metadata:
 
 # Team Builder
 
+> **⚠️ OpenCode users**: This skill was written for Claude Code. In OpenCode, **always use bare agent names** (e.g. `code-reviewer`, NOT `everything-claude-code:code-reviewer`). The plugin prefix does NOT work in OpenCode and causes "Agent not found" errors.
+
 Interactive menu for browsing and composing agent teams on demand. Works with flat or domain-subdirectory agent collections.
 
 ## When to Use

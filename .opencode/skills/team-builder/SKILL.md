@@ -7,6 +7,8 @@ metadata:
 
 # Team Builder
 
+> **⚠️ OpenCode users**: This skill was written for Claude Code. In OpenCode, **always use bare agent names** (e.g. `code-reviewer`, NOT `everything-claude-code:code-reviewer`). The plugin prefix does NOT work in OpenCode and causes "Agent not found" errors.
+
 Interactive menu for browsing and composing agent teams on demand. Works with flat or domain-subdirectory agent collections.
 
 ## When to Use
@@ -48,9 +50,11 @@ agents/
 
 ## Configuration
 
+> **⚠️ OpenCode**: The `claude agents` command does NOT exist in OpenCode. In OpenCode, agents are defined in `opencode.json` under the `agent` key. Use bare agent names only.
+
 Agents are discovered via two methods, merged and deduplicated by agent name:
 
-1. **`claude agents` command** (primary) — run `claude agents` to get all agents known to the CLI, including user agents, plugin agents (e.g. `everything-claude-code:architect`), and built-in agents. This automatically covers ECC marketplace installs without any path configuration.
+1. **`claude agents` command** (primary) — run `claude agents` to get all agents known to the CLI, including user agents, plugin agents (e.g. `everything-claude-code:architect`), and built-in agents. This automatically covers ECC marketplace installs without any path configuration. **NOT AVAILABLE IN OpenCode** — use bare agent names from `opencode.json` instead.
 2. **File glob** (fallback, for reading agent content) — agent markdown files are read from:
    - `./agents/**/*.md` + `./agents/*.md` — project-local agents
    - `~/.claude/agents/**/*.md` + `~/.claude/agents/*.md` — global user agents
@@ -61,8 +65,10 @@ Earlier sources take precedence when names collide: user agents > plugin agents 
 
 ### Step 1: Discover Available Agents
 
+> **⚠️ OpenCode**: Skip this step. In OpenCode, agents are defined in `opencode.json`. Use bare agent names only (no `everything-claude-code:` prefix).
+
 Run `claude agents` to get the full agent list. Parse each line:
-- **Plugin agents** are prefixed with `plugin-name:` (e.g., `everything-claude-code:security-reviewer`). Use the part after `:` as the agent name and the plugin name as the domain.
+- **Plugin agents** are prefixed with `plugin-name:` (e.g., `everything-claude-code:security-reviewer`). Use the part after `:` as the agent name and the plugin name as the domain. **NOT IN OpenCode** — use bare names only.
 - **User agents** have no prefix. Read the corresponding markdown file from `~/.claude/agents/` or `./agents/` to extract the name and description.
 - **Built-in agents** (e.g., `Explore`, `Plan`) are skipped unless the user explicitly asks to include them.
 

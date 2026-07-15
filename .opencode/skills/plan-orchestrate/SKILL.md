@@ -7,6 +7,8 @@ metadata:
 
 # Plan Orchestrate
 
+> **⚠️ OpenCode users**: This skill was written for Claude Code. In OpenCode, **always use legacy mode** with bare agent names (e.g. `tdd-guide`, NOT `everything-claude-code:tdd-guide`). The plugin prefix does NOT work in OpenCode and causes "Agent not found" errors. Force `ECC_MODE=legacy` and use `/orchestrate` (not `/everything-claude-code:orchestrate`).
+
 Bridge a plan document to `/orchestrate custom` by emitting one ready-to-paste invocation per step. The skill is generative only — it never executes `/orchestrate`. The user pastes each line when ready.
 
 ## When to Activate
@@ -44,6 +46,8 @@ Where `{ORCH_CMD}` is determined in Phase 0 (see below). The command string in t
 - Agent names come from the catalogue in this skill. Embedded double quotes in the task description are escaped as `\"`.
 
 ## ECC install form and namespacing
+
+> **⚠️ OpenCode**: Ignore the plugin detection logic below. In OpenCode, **always use legacy mode** (`ECC_MODE=legacy`). The `everything-claude-code:` prefix does NOT exist in OpenCode. Use bare agent names and `/orchestrate` command only.
 
 Two install forms determine the prefix on **both** the slash command and every agent name. The two MUST stay in sync — one form per output, never mixed:
 

@@ -4,9 +4,9 @@
 // @behavior: Social media link icons (Instagram, Twitter, Facebook) — currently non-functional
 // @dependencies: motion, lucide-react, Roommate type
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
-import { X, MapPin, GraduationCap, Wallet, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles, Heart, Phone, Mail } from 'lucide-react';
+import { X, MapPin, GraduationCap, Wallet, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles, Heart, Phone, Mail, Copy, Check } from 'lucide-react';
 import { Roommate } from '../types';
 import { FocusTrap } from './ui/FocusTrap';
 
@@ -18,6 +18,27 @@ interface RoommateModalProps {
 
 export default function RoommateModal({ roommate, isOpen, onClose }: RoommateModalProps) {
   const [isSaved, setIsSaved] = useState(false);
+  const [copiedField, setCopiedField] = useState<'phone' | 'email' | null>(null);
+
+  const handleCopy = useCallback(async (text: string, field: 'phone' | 'email') => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 1500);
+    } catch {
+      // Fallback for older browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 1500);
+    }
+  }, []);
 
   if (!roommate) return null;
 
@@ -77,7 +98,7 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
 
               {/* Right Column: Content */}
               <div className="flex-1 overflow-y-auto custom-scrollbar bg-white rounded-t-[40px] md:rounded-t-none md:rounded-l-[40px] -mt-10 md:mt-0 relative z-10 p-6 md:p-10">
-                <div className="max-w-2xl mx-auto space-y-8">
+                <div className="max-w-2xl mx-auto space-y-6">
                   
                   {/* Bio Section */}
                   <section>
@@ -105,66 +126,83 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                     </div>
                   </section>
 
-                  {/* Logistics Grid */}
-                  <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-6 border-y border-neutral-100">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <MapPin size={16} className="text-red-500" />
-                        <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Target Area</h4>
+                  {/* Details Section — Logistics + Contact */}
+                  <section className="border-y border-neutral-100 py-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      {/* Target Area */}
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <MapPin size={14} className="text-red-500" />
+                          <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Target Area</h4>
+                        </div>
+                        <p className="text-sm font-bold text-neutral-900">{roommate.preferredPlace}</p>
                       </div>
-                      <p className="text-base font-black text-neutral-900">{roommate.preferredPlace}</p>
-                    </div>
 
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <Wallet size={16} className="text-green-600" />
-                        <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Budget Range</h4>
+                      {/* Budget Range */}
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Wallet size={14} className="text-green-600" />
+                          <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Budget Range</h4>
+                        </div>
+                        <p className="text-sm font-bold text-neutral-900">{roommate.budgetRange} <span className="text-[10px] font-semibold text-neutral-400">/ mo</span></p>
                       </div>
-                      <p className="text-base font-black text-neutral-900">{roommate.budgetRange} <span className="text-[10px] font-bold text-neutral-400">/ mo</span></p>
+
+                      {/* Phone Number */}
+                      {!roommate.hidePhone && roommate.phone && (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Phone size={14} className="text-blue-500" />
+                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Phone Number</h4>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-bold text-neutral-900">{roommate.phone}</p>
+                            <button
+                              onClick={() => handleCopy(roommate.phone!, 'phone')}
+                              className="p-1 rounded-md hover:bg-neutral-100 transition-colors text-neutral-400 hover:text-neutral-600"
+                              title="Copy phone number"
+                            >
+                              {copiedField === 'phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Email */}
+                      {!roommate.hideEmail && roommate.email && (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Mail size={14} className="text-purple-500" />
+                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Email</h4>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-bold text-neutral-900 truncate">{roommate.email}</p>
+                            <button
+                              onClick={() => handleCopy(roommate.email!, 'email')}
+                              className="p-1 rounded-md hover:bg-neutral-100 transition-colors text-neutral-400 hover:text-neutral-600 shrink-0"
+                              title="Copy email"
+                            >
+                              {copiedField === 'email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </section>
 
-                  {/* Contact Info */}
-                  {(roommate.phone || roommate.email) && (
-                    <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-6 border-y border-neutral-100">
-                      {!roommate.hidePhone && roommate.phone && (
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-2">
-                            <Phone size={16} className="text-blue-500" />
-                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Phone Number</h4>
-                          </div>
-                          <p className="text-base font-black text-neutral-900">{roommate.phone}</p>
-                        </div>
-                      )}
-
-                      {!roommate.hideEmail && roommate.email && (
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-2">
-                            <Mail size={16} className="text-purple-500" />
-                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Email</h4>
-                          </div>
-                          <p className="text-base font-black text-neutral-900">{roommate.email}</p>
-                        </div>
-                      )}
-                    </section>
-                  )}
-
-                  {/* Social & Connect */}
+                  {/* Social Identity */}
                   {!roommate.hideSocialLinks && (
-                    <section className="flex flex-col md:flex-row items-center justify-between gap-6 pt-2">
-                      <div className="space-y-4 w-full md:w-auto">
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 text-center md:text-left">Social Identity</h3>
-                        <div className="flex items-center justify-center md:justify-start gap-6">
-                          <Instagram size={20} className="text-pink-500 cursor-pointer" />
-                          <Twitter size={20} className="text-blue-400 cursor-pointer" />
-                          <Facebook size={20} className="text-blue-600 cursor-pointer" />
-                        </div>
+                    <section className="pt-2">
+                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-3">Social Identity</h3>
+                      <div className="flex items-center gap-5">
+                        <Instagram size={18} className="text-pink-500 cursor-pointer hover:opacity-70 transition-opacity" />
+                        <Twitter size={18} className="text-blue-400 cursor-pointer hover:opacity-70 transition-opacity" />
+                        <Facebook size={18} className="text-blue-600 cursor-pointer hover:opacity-70 transition-opacity" />
                       </div>
                     </section>
                   )}
 
                   {/* Save Button */}
-                  <section className="pt-2">
+                  <section>
                     <button
                       onClick={() => setIsSaved(!isSaved)}
                       className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-xs uppercase tracking-[0.1em] transition-all shadow-md ${

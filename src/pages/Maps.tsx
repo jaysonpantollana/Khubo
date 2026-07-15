@@ -47,7 +47,7 @@ export default function Maps() {
   const budgetTriggerRef = useRef<HTMLDivElement>(null);
 
   const budgetRanges = [
-    { label: "₱ less 1k" },
+    { label: "less ₱1k" },
     { label: "₱1k - ₱2k" },
     { label: "₱2k - ₱3k" },
     { label: "₱3k - ₱4k" },

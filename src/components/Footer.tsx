@@ -77,8 +77,6 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'legal' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'legal' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition hover:underline">Cookie Policy</a>
-              <Link to="/terms" className="hover:text-[#17294F] transition hover:underline">Terms of Service</Link>
               <Link to="/privacy" className="hover:text-[#17294F] transition hover:underline">Privacy Policy</Link>
             </div>
           </div>

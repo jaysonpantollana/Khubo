@@ -54,7 +54,7 @@ export default function Hero({
   const hasSelections = selectedLocation || selectedBudget;
 
   const budgetRanges = [
-    { label: "₱ less 1k" },
+    { label: "less ₱1k" },
     { label: "₱1k - ₱2k" },
     { label: "₱2k - ₱3k" },
     { label: "₱3k - ₱4k" },

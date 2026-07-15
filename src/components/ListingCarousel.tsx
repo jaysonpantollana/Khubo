@@ -21,6 +21,7 @@ interface ListingCarouselProps {
   skeletonPrefix: string;
   carouselItemClass: string;
   onListingClick: (id: string) => void;
+  hideHeader?: boolean;
 }
 
 const CAROUSEL_SCROLLER_CLASS =
@@ -35,6 +36,7 @@ export function ListingCarousel({
   skeletonPrefix,
   carouselItemClass,
   onListingClick,
+  hideHeader = false,
 }: ListingCarouselProps) {
   const ref = React.useRef<HTMLDivElement>(null);
   const [showPopup, setShowPopup] = React.useState(false);
@@ -52,19 +54,21 @@ export function ListingCarousel({
   return (
     <div className="flex flex-col gap-5 md:gap-6">
       <div className="flex items-center justify-between">
-        <div
-          className="flex items-center gap-2 group cursor-pointer min-w-0"
-          onClick={() => setShowPopup(true)}
-        >
-          <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
-            {title}
-          </h2>
-          <div className="flex items-center gap-1 px-3 py-1 bg-[#17294F] text-white rounded-full ml-1 sm:ml-2 flex-shrink-0">
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-              See more
-            </span>
+        {!hideHeader && (
+          <div
+            className="flex items-center gap-2 group cursor-pointer min-w-0"
+            onClick={() => setShowPopup(true)}
+          >
+            <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
+              {title}
+            </h2>
+            <div className="flex items-center gap-1 px-3 py-1 bg-[#17294F] text-white rounded-full ml-1 sm:ml-2 flex-shrink-0">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap">
+                See more
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="hidden md:flex items-center gap-3">
           <button

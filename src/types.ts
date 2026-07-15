@@ -34,6 +34,7 @@ export interface Listing {
   advancePaymentMonths?: number;
   lat?: number;
   lng?: number;
+  preContractualDoc?: string;
   reviews: Review[];
   host?: HostInfo;
   tenants?: TenantInfo[];

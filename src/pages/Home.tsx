@@ -207,8 +207,8 @@ export default function Home() {
           {listingsLoading || filteredListings.length > 0 ? (
             <>
               <ListingCarousel title="Recommended" listings={filteredListings} loading={listingsLoading} sliceStart={0} sliceEnd={21} skeletonPrefix="rec" carouselItemClass={CAROUSEL_ITEM_CLASS} onListingClick={handleListingClick} />
-              <ListingCarousel title="Top Listing" listings={filteredListings} loading={listingsLoading} sliceStart={7} sliceEnd={28} skeletonPrefix="top" carouselItemClass={CAROUSEL_ITEM_CLASS} onListingClick={handleListingClick} />
-              <ListingCarousel title="Near MSU-IIT" listings={filteredListings} loading={listingsLoading} sliceStart={14} sliceEnd={35} skeletonPrefix="msu" carouselItemClass={CAROUSEL_ITEM_CLASS} onListingClick={handleListingClick} />
+              <ListingCarousel title="Top Listing" listings={filteredListings} loading={listingsLoading} sliceStart={7} sliceEnd={28} skeletonPrefix="top" carouselItemClass={CAROUSEL_ITEM_CLASS} onListingClick={handleListingClick} hideHeader />
+              <ListingCarousel title="Near MSU-IIT" listings={filteredListings} loading={listingsLoading} sliceStart={14} sliceEnd={35} skeletonPrefix="msu" carouselItemClass={CAROUSEL_ITEM_CLASS} onListingClick={handleListingClick} hideHeader />
             </>
           ) : null}
         </div>

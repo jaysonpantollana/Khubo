@@ -29,7 +29,7 @@ interface CreateListingModalProps {
   onSuccess?: () => void;
 }
 
-const CATEGORIES = ["boarding", "apartment", "pad", "condo", "shared"];
+const DEFAULT_CATEGORIES = ["boarding", "apartment", "pad", "condo", "shared"];
 const AMENITIES = ["Wifi", "Kitchen", "AC", "Washer", "Free parking", "Pool", "Gym", "Private bathroom"];
 
 export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListingModalProps) {
@@ -41,12 +41,16 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
   const [city, setCity] = useState('');
   const [barangay, setBarangay] = useState('');
   const [street, setStreet] = useState('');
-  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0]);
+  const [availableCategories, setAvailableCategories] = useState<string[]>(DEFAULT_CATEGORIES);
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const [newCategoryInput, setNewCategoryInput] = useState('');
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [availableAmenities, setAvailableAmenities] = useState<string[]>(AMENITIES);
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
   const [images, setImages] = useState<File[]>([]);
+  const [preContractualDoc, setPreContractualDoc] = useState<File | null>(null);
   const [pinLat, setPinLat] = useState<number | null>(null);
   const [pinLng, setPinLng] = useState<number | null>(null);
   
@@ -78,6 +82,14 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
     );
   };
 
+  const handleDocChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setPreContractualDoc(e.target.files[0]);
+    }
+  };
+
+  const removeDoc = () => setPreContractualDoc(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
@@ -106,7 +118,10 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         imageUrls.push(URL.createObjectURL(file));
       }
 
-      // 2. Save listing via API
+      // 2. Mock document upload
+      const docUrl = preContractualDoc ? URL.createObjectURL(preContractualDoc) : undefined;
+
+      // 3. Save listing via API
       const location = `${street}, ${barangay}, ${city}`;
       const newListing = {
         title,
@@ -121,6 +136,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         host_id: user.id,
         lat: pinLat ?? undefined,
         lng: pinLng ?? undefined,
+        preContractualDoc: docUrl,
       };
 
       const { error: dbError } = await import('../lib/api/listings').then(m =>
@@ -139,9 +155,11 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setCity('');
       setBarangay('');
       setStreet('');
-      setCategory(CATEGORIES[0]);
+      setCategory(DEFAULT_CATEGORIES[0]);
+      setAvailableCategories(DEFAULT_CATEGORIES);
       setSelectedAmenities([]);
       setImages([]);
+      setPreContractualDoc(null);
       setPinLat(null);
       setPinLng(null);
 
@@ -310,7 +328,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
               <div>
                 <label className="block text-sm font-semibold text-neutral-800 mb-2">Category</label>
                 <div className="flex flex-wrap gap-2">
-                  {CATEGORIES.map(cat => (
+                  {availableCategories.map(cat => (
                     <button
                       key={cat}
                       type="button"
@@ -320,6 +338,47 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       {cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
                   ))}
+                  {isAddingCategory ? (
+                    <input
+                      autoFocus
+                      type="text"
+                      value={newCategoryInput}
+                      onChange={(e) => setNewCategoryInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          if (newCategoryInput.trim() && !availableCategories.includes(newCategoryInput.trim().toLowerCase())) {
+                            const val = newCategoryInput.trim().toLowerCase();
+                            setAvailableCategories([...availableCategories, val]);
+                            setCategory(val);
+                          }
+                          setNewCategoryInput('');
+                          setIsAddingCategory(false);
+                        } else if (e.key === 'Escape') {
+                          setIsAddingCategory(false);
+                        }
+                      }}
+                      onBlur={() => {
+                        if (newCategoryInput.trim() && !availableCategories.includes(newCategoryInput.trim().toLowerCase())) {
+                          const val = newCategoryInput.trim().toLowerCase();
+                          setAvailableCategories([...availableCategories, val]);
+                          setCategory(val);
+                        }
+                        setNewCategoryInput('');
+                        setIsAddingCategory(false);
+                      }}
+                      className="px-3 py-[7px] border border-neutral-300 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#17294F] w-32"
+                      placeholder="New..."
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setIsAddingCategory(true)}
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50"
+                    >
+                      + Add
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -379,6 +438,27 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     </button>
                   )}
                 </div>
+              </div>
+
+              {/* Pre-Contractual Document */}
+              <div>
+                <label className="block text-sm font-semibold text-neutral-800 mb-2">Pre-Contractual Document (optional)</label>
+                <p className="text-xs text-neutral-500 mb-3">Upload the contract or agreement tenants will review before signing.</p>
+                {preContractualDoc ? (
+                  <div className="flex items-center gap-3 px-4 py-3 bg-neutral-50 rounded-xl border border-neutral-200">
+                    <svg className="w-5 h-5 text-[#17294F] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <span className="text-sm text-neutral-700 truncate flex-1">{preContractualDoc.name}</span>
+                    <button type="button" onClick={removeDoc} className="text-neutral-400 hover:text-red-500 transition-colors">
+                      <XCircle size={16} />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-dashed border-neutral-300 cursor-pointer hover:bg-neutral-50 transition">
+                    <Upload size={18} className="text-neutral-500" />
+                    <span className="text-sm text-neutral-600">Choose file (PDF, DOC, DOCX)</span>
+                    <input type="file" accept=".pdf,.doc,.docx" onChange={handleDocChange} className="hidden" />
+                  </label>
+                )}
               </div>
 
             </form>

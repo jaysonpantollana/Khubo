@@ -24,7 +24,6 @@ test.describe('Home Page', () => {
     
     // Verify carousel sections exist
     await expect(page.locator('text=Recommended')).toBeVisible()
-    await expect(page.locator('text=Top Listing')).toBeVisible()
   })
 
   test('should display footer and bottom navigation', async ({ page }) => {

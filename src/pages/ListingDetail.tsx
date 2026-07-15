@@ -44,7 +44,7 @@ export default function ListingDetail() {
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
   const [initialGalleryIndex, setInitialGalleryIndex] = useState(0);
   const [showAllAmenities, setShowAllAmenities] = useState(false);
-  const [showAllRules, setShowAllRules] = useState(false);
+
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const { user } = useAuth();
@@ -323,47 +323,7 @@ export default function ListingDetail() {
               )}
             </div>
 
-            <div className="py-12 border-b border-gray-100">
-              <h3 className="text-2xl font-semibold text-neutral-900 mb-6">House Rules</h3>
-              {(() => {
-                const allRules = [
-                  'Curfew at 10:00 PM',
-                  'No visitors allowed after 9:00 PM',
-                  'No smoking indoors',
-                  'Quiet hours from 10:00 PM - 7:00 AM',
-                  'Clean up after cooking in shared kitchen',
-                  'No loud music',
-                  'Dispose garbage properly in designated bins',
-                ];
-                const visibleRules = showAllRules ? allRules : allRules.slice(0, 3);
-                const remaining = allRules.length - 3;
-                return (
-                  <div className="flex flex-wrap gap-3">
-                    {visibleRules.map((rule, i) => (
-                      <span key={i} className="px-4 py-2.5 border border-neutral-200 rounded-xl text-sm text-neutral-700 bg-white">
-                        {rule}
-                      </span>
-                    ))}
-                    {!showAllRules && remaining > 0 && (
-                      <button
-                        onClick={() => setShowAllRules(true)}
-                        className="px-4 py-2.5 border border-dashed border-neutral-300 rounded-xl text-sm font-bold text-neutral-500 hover:border-neutral-400 hover:text-neutral-700 transition"
-                      >
-                        +{remaining}
-                      </button>
-                    )}
-                    {showAllRules && (
-                      <button
-                        onClick={() => setShowAllRules(false)}
-                        className="px-4 py-2.5 border border-dashed border-neutral-300 rounded-xl text-sm font-bold text-neutral-500 hover:border-neutral-400 hover:text-neutral-700 transition"
-                      >
-                        Show less
-                      </button>
-                    )}
-                  </div>
-                );
-              })()}
-            </div>
+
 
             <div className="py-12 border-b border-gray-100">
               <h3 className="text-2xl font-semibold text-neutral-900 mb-6">Pre-contractual Document</h3>

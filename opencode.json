@@ -1,6 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["./.opencode/plugins/ponytail.mjs", "./.opencode/plugins"],
+  "plugin": [
+    "./.opencode/plugins/ponytail.mjs",
+    "./.opencode/plugins",
+    "compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git"
+  ],
   "model": "anthropic/claude-sonnet-4-5",
   "small_model": "anthropic/claude-haiku-4-5",
   "default_agent": "build",

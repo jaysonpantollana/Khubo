@@ -87,16 +87,17 @@ export function Modal({
   if (!isOpen) return null;
 
   const modalContent = (
-    <div
-      className={cn(
-        'fixed inset-0 z-modal-backdrop flex items-center justify-center p-4',
-        'bg-black/60 backdrop-blur-sm transition-opacity duration-200',
-        overlayClassName
-      )}
-      onClick={handleOverlayClick}
-      onKeyDown={handleKeyDown}
-      role="presentation"
-    >
+      <div
+        className={cn(
+          'fixed inset-0 flex items-center justify-center p-4',
+          'bg-black/60 backdrop-blur-sm transition-opacity duration-200',
+          overlayClassName
+        )}
+        style={{ zIndex: 300 }}
+        onClick={handleOverlayClick}
+        onKeyDown={handleKeyDown}
+        role="presentation"
+      >
       <div
         ref={contentRef}
         role="dialog"
@@ -104,6 +105,7 @@ export function Modal({
         aria-labelledby={title && !hideTitle ? `${title.replace(/\s+/g, '-').toLowerCase()}-title` : undefined}
         aria-describedby={description && title ? `${title.replace(/\s+/g, '-').toLowerCase()}-description` : undefined}
         onClick={handleContentClick}
+        style={{ zIndex: 301 }}
         className={cn(
           'relative w-full bg-white rounded-modal shadow-modal',
           'transform transition-all duration-200',

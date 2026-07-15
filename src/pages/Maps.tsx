@@ -40,6 +40,22 @@ export default function Maps() {
 
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+  const [budgetExpanded, setBudgetExpanded] = useState(false);
+
+  const budgetRanges = [
+    { label: "Lower than ₱1,000" },
+    { label: "₱1k - ₱2k" },
+    { label: "₱2k - ₱3k" },
+    { label: "₱3k - ₱4k" },
+    { label: "₱4k - ₱5k" },
+    { label: "₱5k - ₱6k" },
+    { label: "₱6k - ₱7k" },
+    { label: "₱7k - ₱8k" },
+    { label: "₱8k - ₱9k" },
+    { label: "₱9k - ₱10k" },
+    { label: "Higher than ₱10k" },
+  ];
+  const visibleBudgetRanges = budgetExpanded ? budgetRanges : budgetRanges.slice(0, 4);
 
   useEffect(() => {
     document.title = "Maps | Khubo";
@@ -562,16 +578,13 @@ export default function Maps() {
                     <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-50 text-left">
                       <div className="space-y-3">
                         <div className="grid grid-cols-1 gap-1">
-                          {[
-                            { label: "₱1k - ₱3k" },
-                            { label: "₱3k - ₱5k" },
-                            { label: "₱5k+" },
-                          ].map((range) => (
+                          {visibleBudgetRanges.map((range) => (
                             <button
                               key={range.label}
                               onClick={() => {
                                 setSelectedBudget(range.label);
                                 setActiveDropdown(null);
+                                setBudgetExpanded(false);
                               }}
                               className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
                             >
@@ -581,6 +594,15 @@ export default function Maps() {
                             </button>
                           ))}
                         </div>
+                        <button
+                          onClick={() => setBudgetExpanded(!budgetExpanded)}
+                          className="w-full flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-[#2252D6] hover:bg-[#2252D6]/5 rounded-lg transition-colors"
+                        >
+                          {budgetExpanded ? "Show Less" : "Show More"}
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 transition-transform ${budgetExpanded ? "rotate-180" : ""}`}
+                          />
+                        </button>
                       </div>
                     </div>
                   )}

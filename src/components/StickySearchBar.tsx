@@ -62,12 +62,94 @@ export function StickySearchBar({
         <div className="flex items-center justify-between w-full py-3 px-2 sm:px-0">
           <div className="hidden md:block flex-1 min-w-0"></div>
           <div
-            className="flex justify-center flex-[3] lg:flex-none min-w-0 w-full px-2 sm:px-0"
+            className="flex justify-center flex-[3] lg:flex-none min-w-0 w-full px-2 sm:px-0 relative"
             ref={stickyDropdownRef}
           >
+            {/* Dropdown panels — rendered OUTSIDE the pill so they expand below it */}
+            {!isSearchActive && stickyActiveDropdown === "location" && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-[100] text-left cursor-default pointer-events-auto">
+                <div className="space-y-3">
+                  <div>
+                    <div
+                      className="flex items-center px-2.5 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 cursor-text"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        (e.currentTarget.querySelector("input") as HTMLInputElement)?.focus();
+                      }}
+                    >
+                      <Search className="w-3.5 h-3.5 text-neutral-400 mr-1.5 flex-shrink-0" />
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-transparent border-none outline-none text-xs font-semibold text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      {POPULAR_LOCATIONS.map((loc) => (
+                        <button
+                          key={loc}
+                          onClick={() => {
+                            setSelectedStickyLocation(loc);
+                            setStickyActiveDropdown(null);
+                          }}
+                          className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 group"
+                        >
+                          <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white flex-shrink-0">
+                            <MapPin size={12} />
+                          </div>
+                          <span className="font-medium text-neutral-800 text-xs whitespace-nowrap">{loc}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!isSearchActive && stickyActiveDropdown === "budget" && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-[100] text-left pointer-events-auto">
+                <button
+                  onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
+                  className="absolute top-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                  aria-label="Scroll up"
+                >
+                  <ChevronUp className="w-4 h-4 text-neutral-600" />
+                </button>
+                <button
+                  onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
+                  className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                  aria-label="Scroll down"
+                >
+                  <ChevronDown className="w-4 h-4 text-neutral-600" />
+                </button>
+                <div
+                  ref={budgetScrollRef}
+                  className="max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200 pr-8"
+                >
+                  <div className="grid grid-cols-1 gap-1">
+                    {budgetRanges.map((range) => (
+                      <button
+                        key={range.label}
+                        onClick={() => {
+                          setSelectedStickyBudget(range.label);
+                          setStickyActiveDropdown(null);
+                        }}
+                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
+                      >
+                        <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">{range.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Pill search bar */}
             <div
               id="2nd-search-bar"
-              className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] relative z-40 rounded-full pointer-events-auto cursor-default"
+              className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default"
             >
               {isStickySearchActive ? (
                 <>
@@ -176,7 +258,7 @@ export function StickySearchBar({
               ) : (
                 <>
                   {/* Sticky Location Section */}
-                  <div className="flex-[1.2] min-w-0 relative">
+                  <div className="flex-[1.2] min-w-0">
                     <div
                       role="button"
                       tabIndex={0}
@@ -210,53 +292,12 @@ export function StickySearchBar({
                       />
                     </div>
 
-                    {stickyActiveDropdown === "location" && (
-                      <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-50 text-left cursor-default">
-                        <div className="space-y-3">
-                          <div>
-                            <div
-                              className="flex items-center px-2.5 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 cursor-text"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                (e.currentTarget.querySelector("input") as HTMLInputElement)?.focus();
-                              }}
-                            >
-                              <Search className="w-3.5 h-3.5 text-neutral-400 mr-1.5 flex-shrink-0" />
-                              <input
-                                type="text"
-                                placeholder="Search..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full bg-transparent border-none outline-none text-xs font-semibold text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                              />
-                            </div>
-                            <div className="space-y-1">
-                              {POPULAR_LOCATIONS.map((loc) => (
-                                <button
-                                  key={loc}
-                                  onClick={() => {
-                                    setSelectedStickyLocation(loc);
-                                    setStickyActiveDropdown(null);
-                                  }}
-                                  className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 group"
-                                >
-                                  <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white flex-shrink-0">
-                                    <MapPin size={12} />
-                                  </div>
-                                  <span className="font-medium text-neutral-800 text-xs whitespace-nowrap">{loc}</span>
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
 
                   {/* Sticky Budget Section */}
-                  <div className="flex-1 min-w-0 relative">
+                  <div className="flex-1 min-w-0">
                     <div
                       role="button"
                       tabIndex={0}
@@ -290,43 +331,6 @@ export function StickySearchBar({
                       />
                     </div>
 
-                    {stickyActiveDropdown === "budget" && (
-                      <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left relative">
-                        <button
-                          onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                          className="absolute top-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
-                          aria-label="Scroll up"
-                        >
-                          <ChevronUp className="w-4 h-4 text-neutral-600" />
-                        </button>
-                        <button
-                          onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                          className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
-                          aria-label="Scroll down"
-                        >
-                          <ChevronDown className="w-4 h-4 text-neutral-600" />
-                        </button>
-                        <div
-                          ref={budgetScrollRef}
-                          className="max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200 pr-8"
-                        >
-                          <div className="grid grid-cols-1 gap-1">
-                            {budgetRanges.map((range) => (
-                              <button
-                                key={range.label}
-                                onClick={() => {
-                                  setSelectedStickyBudget(range.label);
-                                  setStickyActiveDropdown(null);
-                                }}
-                                className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
-                              >
-                                <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">{range.label}</span>
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Search Button */}

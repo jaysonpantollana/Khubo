@@ -151,6 +151,97 @@ export default function Hero({
             className="relative mt-5 md:mt-12 w-full flex justify-center"
             ref={dropdownRef}
           >
+            {/* Dropdown panels — rendered OUTSIDE the pill so they expand below it */}
+            {!isSearchActive && activeDropdown === "location" && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-[100] text-left pointer-events-auto">
+                <div className="space-y-3 md:space-y-4">
+                  <div>
+                    <div
+                      className="flex items-center px-2.5 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        (
+                          e.currentTarget.querySelector(
+                            "input",
+                          ) as HTMLInputElement
+                        )?.focus();
+                      }}
+                    >
+                      <Search className="w-3.5 h-3.5 md:w-4 md:h-4 text-neutral-400 mr-1.5 flex-shrink-0" />
+                      <input
+                        type="text"
+                        placeholder="Search location..."
+                        className="w-full bg-transparent border-none outline-none text-xs md:text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      {["Iligan City"].map((loc) => (
+                        <button
+                          key={loc}
+                          onClick={() => {
+                            setSelectedLocation(loc);
+                            setActiveDropdown(null);
+                          }}
+                          className="w-full flex items-center gap-2 md:gap-3 p-1.5 md:p-2 rounded-xl hover:bg-neutral-50 transition-colors group"
+                        >
+                          <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all flex-shrink-0">
+                            <MapPin
+                              size={12}
+                              className="md:w-3.5 md:h-3.5"
+                            />
+                          </div>
+                          <span className="font-medium text-neutral-800 text-xs md:text-sm whitespace-nowrap">
+                            {loc}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!isSearchActive && activeDropdown === "budget" && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-[100] text-left pointer-events-auto">
+                <button
+                  onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
+                  className="absolute top-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                  aria-label="Scroll up"
+                >
+                  <ChevronUp className="w-4 h-4 text-neutral-600" />
+                </button>
+                <button
+                  onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
+                  className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
+                  aria-label="Scroll down"
+                >
+                  <ChevronDown className="w-4 h-4 text-neutral-600" />
+                </button>
+                <div
+                  ref={budgetScrollRef}
+                  className="max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200 pr-8"
+                >
+                  <div className="grid grid-cols-1 gap-1">
+                    {budgetRanges.map((range) => (
+                      <button
+                        key={range.label}
+                        onClick={() => {
+                          setSelectedBudget(range.label);
+                          setActiveDropdown(null);
+                        }}
+                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                      >
+                        <span className="font-medium text-neutral-900 text-xs md:text-sm">
+                          {range.label}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Pill search bar */}
             <div
               className="bg-white/10 backdrop-blur-md border border-white/20 p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default"
             >
@@ -267,7 +358,7 @@ export default function Hero({
               ) : (
                 <>
                   {/* Location Section */}
-                  <div className="flex-[1.2] min-w-0 relative">
+                  <div className="flex-[1.2] min-w-0">
                     <div
                       role="button"
                       tabIndex={0}
@@ -297,63 +388,12 @@ export default function Hero({
                         className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-all w-3 h-3 md:w-4 md:h-4 ${activeDropdown === "location" ? "rotate-180 text-neutral-900" : ""}`}
                       />
                     </div>
-
-                      {activeDropdown === "location" && (
-                        <div
-                          className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-50 text-left"
-                        >
-                          <div className="space-y-3 md:space-y-4">
-                            <div>
-                              <div
-                                className="flex items-center px-2.5 py-2 block bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  (
-                                    e.currentTarget.querySelector(
-                                      "input",
-                                    ) as HTMLInputElement
-                                  )?.focus();
-                                }}
-                              >
-                                <Search className="w-3.5 h-3.5 md:w-4 md:h-4 text-neutral-400 mr-1.5 flex-shrink-0" />
-                                <input
-                                  type="text"
-                                  placeholder="Search..."
-                                  className="w-full bg-transparent border-none outline-none text-xs md:text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                                />
-                              </div>
-                              <div className="space-y-1">
-                                {["Iligan City"].map((loc) => (
-                                  <button
-                                    key={loc}
-                                    onClick={() => {
-                                      setSelectedLocation(loc);
-                                      setActiveDropdown(null);
-                                    }}
-                                    className="w-full flex items-center gap-2 md:gap-3 p-1.5 md:p-2 rounded-xl hover:bg-neutral-50 transition-colors group"
-                                  >
-                                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all flex-shrink-0">
-                                      <MapPin
-                                        size={12}
-                                        className="md:w-3.5 md:h-3.5"
-                                      />
-                                    </div>
-                                    <span className="font-medium text-neutral-800 text-xs md:text-sm whitespace-nowrap">
-                                      {loc}
-                                    </span>
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                   </div>
 
                   <div className="w-[1px] h-5 md:h-8 bg-white/20" />
 
                   {/* Budget Section */}
-                  <div className="flex-1 min-w-0 relative">
+                  <div className="flex-1 min-w-0">
                     <div
                       role="button"
                       tabIndex={0}
@@ -381,48 +421,6 @@ export default function Hero({
                         className={`flex-shrink-0 opacity-50 group-hover:opacity-100 transition-all w-3 h-3 md:w-4 md:h-4 ${activeDropdown === "budget" ? "rotate-180 text-neutral-900" : ""}`}
                       />
                     </div>
-
-                      {activeDropdown === "budget" && (
-                        <div
-                          className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 md:p-6 z-50 text-left relative"
-                        >
-                          <button
-                            onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                            className="absolute top-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
-                            aria-label="Scroll up"
-                          >
-                            <ChevronUp className="w-4 h-4 text-neutral-600" />
-                          </button>
-                          <button
-                            onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                            className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors z-10"
-                            aria-label="Scroll down"
-                          >
-                            <ChevronDown className="w-4 h-4 text-neutral-600" />
-                          </button>
-                          <div
-                            ref={budgetScrollRef}
-                            className="max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-200 pr-8"
-                          >
-                            <div className="grid grid-cols-1 gap-1">
-                              {budgetRanges.map((range) => (
-                                <button
-                                  key={range.label}
-                                  onClick={() => {
-                                    setSelectedBudget(range.label);
-                                    setActiveDropdown(null);
-                                  }}
-                                  className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
-                                >
-                                  <span className="font-medium text-neutral-900 text-xs md:text-sm">
-                                    {range.label}
-                                  </span>
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
                   </div>
 
                   <button

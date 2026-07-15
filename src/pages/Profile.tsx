@@ -269,7 +269,10 @@ export default function Profile() {
         </div>
 
         <div className="relative md:absolute md:inset-0 max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 flex flex-col md:flex-row items-center justify-between z-10 pt-16 pb-2 md:pt-24 md:pb-12 gap-4 md:gap-0">
-          <div className="bg-black/30 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 md:p-8 w-full md:w-[60%] lg:w-[45%] text-white shadow-2xl">
+          <div className="bg-black/30 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 md:p-8 w-full md:w-[60%] lg:w-[45%] text-white shadow-2xl relative">
+            <button onClick={handleOpenEditProfile} className="absolute top-4 right-4 hover:bg-white/20 p-2 rounded-full transition cursor-pointer" title="Edit Profile Details">
+              <MoreVertical className="w-5 h-5 text-white" />
+            </button>
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
               <div className="relative shrink-0">
                 <img
@@ -289,9 +292,6 @@ export default function Profile() {
                   <h1 className="text-2xl md:text-[28px] font-bold tracking-tight text-white">
                     {profileName || 'Your Name'}
                   </h1>
-                  <button onClick={handleOpenEditProfile} className="hover:bg-white/20 p-1.5 rounded-full transition cursor-pointer" title="Edit Profile Details">
-                    <Edit2 className="w-4 h-4 text-white" />
-                  </button>
                 </div>
                 <div className="flex items-center justify-center sm:justify-start gap-2 mt-3 text-sm text-white/90">
                   <GraduationCap className="w-4 h-4 shrink-0 text-white" />

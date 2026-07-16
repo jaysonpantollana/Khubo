@@ -28,7 +28,7 @@ Built with React 19, TypeScript 5.8, Tailwind CSS 4.1, and Vite 6.2.
 - **Browse Listings** - Explore accommodations categorized by type (apartments, houses, condos, etc.)
 - **Interactive Maps** - View property locations on an interactive map with MapTiler SDK 4.0
 - **Advanced Filtering** - Filter listings by price, date, amenities, and location
-- **Detailed Property Views** - Access comprehensive property information including photo galleries, amenities, host details, and reviews
+- **Detailed Property Views** - Access comprehensive property information including photo galleries, amenities, host details, reviews, and pre-contractual documents
 - **Secure Booking Flow** - Streamlined modal-based booking interface
 - **Search History** - Track your recent searches for quick access
 - **Photo Galleries** - Full-screen photo carousel overlays for property images
@@ -43,7 +43,9 @@ Built with React 19, TypeScript 5.8, Tailwind CSS 4.1, and Vite 6.2.
 
 ### For Hosts
 - **Listing Management** - Create, edit, and manage your property listings through an intuitive dashboard
-- **Profile Customization** - Showcase your hosting experience, work background, and property details
+- **Custom Categories** - Use suggested categories or add your own when creating listings
+- **Pre-Contractual Document Upload** - Attach a PDF contract or agreement for tenants to review before booking
+- **Profile Customization** - Showcase your hosting experience, work background, and property details (with explicit save)
 - **Review System** - Build trust through authentic guest reviews and ratings
 - **Analytics Dashboard** - Track property performance with charts and statistics
 - **Tenant Management** - View and manage tenants with status tracking (active, leaving, moved out) and payment status
@@ -53,7 +55,7 @@ Built with React 19, TypeScript 5.8, Tailwind CSS 4.1, and Vite 6.2.
 - **Tenant Profiles** - View detailed tenant information and history
 
 ### User Experience
-- **5-Step Onboarding Wizard** - Post-auth profile setup: identity → occupation → ID verification → review → finish
+- **5-Step Onboarding Wizard** - Post-auth profile setup: identity → occupation → ID verification & pre-contractual doc → review → finish
 - **Authentication** - Secure sign-up and login functionality
 - **Dark/Light Mode** - Toggle between themes for comfortable viewing in any environment
 - **Responsive Design** - Fully optimized for mobile, tablet, and desktop devices
@@ -62,7 +64,7 @@ Built with React 19, TypeScript 5.8, Tailwind CSS 4.1, and Vite 6.2.
 - **Toast Notifications** - Real-time feedback for user actions
 - **Error Boundaries** - Graceful error handling with fallback UI components
 - **Announcements** - View app news and updates via AnnouncementsOverlay
-- **File Upload** - Drag-and-drop and file picker for image and document uploads
+- **File Upload** - Drag-and-drop and file picker for image and document uploads (pre-contractual PDFs)
 - **Legal Pages** - Terms of Service and Privacy Policy pages
 
 ---
@@ -274,4 +276,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-*Last Updated: July 2, 2026*
+*Last Updated: July 16, 2026*

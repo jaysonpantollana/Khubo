@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'support' ? 'flex' : 'hidden md:flex'}`}>
               <a href="#" className="hover:text-[#17294F] transition">Help Center</a>
               <a href="#" className="hover:text-[#17294F] transition">Contact Us</a>
-              <a href="#" className="hover:text-[#17294F] transition">Report an Issue</a>
+              <a href="https://forms.gle/QLdAfaUjVyNFoKSr6" target="_blank" rel="noopener noreferrer" className="hover:text-[#17294F] transition">Report an Issue</a>
             </div>
           </div>
 

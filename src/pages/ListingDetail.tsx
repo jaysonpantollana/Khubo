@@ -186,6 +186,21 @@ export default function ListingDetail() {
             {currentIndex + 1} / {images.length}
           </div>
         </div>
+
+        {/* Save Button - Mobile */}
+        <button
+          onClick={() => {
+            setIsSaved(!isSaved);
+            if (!isSaved) showToast('Listing saved to your wishlist!');
+          }}
+          className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg hover:bg-white transition-all"
+        >
+          <Heart
+            size={24}
+            className={cn(isSaved ? "fill-[#FF385C] text-[#FF385C]" : "text-neutral-900")}
+          />
+          <span className="text-base font-semibold">{isSaved ? 'Saved' : 'Save'}</span>
+        </button>
       </div>
 
       <main className={cn(
@@ -227,27 +242,25 @@ export default function ListingDetail() {
             ))}
           </div>
 
-
+          {/* Save Button - Desktop */}
+          <button
+            onClick={() => {
+              setIsSaved(!isSaved);
+              if (!isSaved) showToast('Listing saved to your wishlist!');
+            }}
+            className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg hover:bg-white transition-all"
+          >
+            <Heart
+              size={24}
+              className={cn(isSaved ? "fill-[#FF385C] text-[#FF385C]" : "text-neutral-900")}
+            />
+            <span className="text-base font-semibold">{isSaved ? 'Saved' : 'Save'}</span>
+          </button>
         </div>
 
         {/* Desktop Title Bar - Now below images */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-2 pt-4">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-neutral-900 tracking-tight leading-tight">{listing.title}</h1>
-          <div className="hidden md:flex items-center shrink-0">
-            <button 
-              onClick={() => {
-                setIsSaved(!isSaved);
-                if (!isSaved) showToast('Listing saved to your wishlist!');
-              }}
-              className="flex items-center gap-2 hover:bg-neutral-100 px-4 py-2 rounded-xl transition-colors font-semibold underline decoration-transparent hover:decoration-neutral-900 underline-offset-4"
-            >
-              <Heart 
-                size={20} 
-                className={cn(isSaved ? "fill-[#FF385C] text-[#FF385C]" : "text-neutral-900")} 
-              />
-              <span className="text-base">{isSaved ? 'Saved' : 'Save'}</span>
-            </button>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 pb-32">

@@ -52,35 +52,30 @@ export function ListingCarousel({
   };
 
   return (
-    <div className="flex flex-col gap-5 md:gap-6">
+    <div className="flex flex-col gap-2 md:gap-3">
       <div className="flex items-center justify-between">
-        {!hideHeader && (
-          <div
-            className="flex items-center gap-2 group cursor-pointer min-w-0"
+        {!hideHeader ? (
+          <h2
+            className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate cursor-pointer"
             onClick={() => setShowPopup(true)}
           >
-            <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
-              {title}
-            </h2>
-            <div className="flex items-center gap-1 px-3 py-1 bg-[#17294F] text-white rounded-full ml-1 sm:ml-2 flex-shrink-0">
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                See more
-              </span>
-            </div>
-          </div>
+            {title}
+          </h2>
+        ) : (
+          <div className="hidden md:block" />
         )}
 
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={() => scroll('left')}
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
+            className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-black transition-all"
             aria-label={`Previous ${title}`}
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={() => scroll('right')}
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
+            className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-black transition-all"
             aria-label={`Next ${title}`}
           >
             <ChevronRight size={20} />
@@ -89,10 +84,10 @@ export function ListingCarousel({
       </div>
 
       <div
-        ref={ref}
-        className={CAROUSEL_SCROLLER_CLASS}
-        style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
-      >
+          ref={ref}
+          className={CAROUSEL_SCROLLER_CLASS}
+          style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+        >
         {loading ? (
           Array.from({ length: 5 }).map((_, i) => (
             <div key={`skeleton-${skeletonPrefix}-${i}`} className={carouselItemClass}>

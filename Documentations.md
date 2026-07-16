@@ -2,8 +2,8 @@
 
 **Accommodation & Roommate Finder Platform for Iligan City, Philippines**
 
-> Last Updated: July 2, 2026
-> Version: 2.5.0
+> Last Updated: July 16, 2026
+> Version: 2.6.0
 
 ---
 
@@ -48,7 +48,7 @@
 
 - 28 property listings across 17 categories specific to Iligan City
 - Interactive MapTiler-powered maps with preloading for instant readiness
-- 5-step onboarding wizard for new users
+- 5-step onboarding wizard for new users (includes ID and pre-contractual document upload)
 - Dark/light mode toggle with system preference detection
 - Camera integration for profile photos and ID verification
 - Drag-and-drop file upload with type filtering
@@ -174,7 +174,7 @@ Specific flows:
 - **Auth Flow**: `AuthModal` → `AuthContext.signIn(email)` → `{user, session}` → Conditional UI render
 - **Roommate Search**: `RoommateFinder` → client-side filter → `RoommateCard[]`
 - **Map View**: `Maps.tsx` → `MapTilerView` with markers from mock listing coordinates
-- **Booking**: `ListingCard` → `ListingModal` → `DateScrollPicker` → Toast notification (no real booking)
+- **Booking**: `ListingCard` → `ListingModal` → Date selection → Toast notification (no real booking)
 
 ### Provider Hierarchy
 
@@ -415,7 +415,6 @@ Full-featured property detail page with all property information.
 **Content Sections:**
 - About This Place — description with `whitespace-pre-wrap`
 - Amenities — 2-column grid with circular icon + label (10 amenities); expandable "Show all" / "Show less"
-- House Rules — 2-column grid with icon + rule text (7 rules); expandable "Show more" / "Show less"
 - Pre-contractual Document — PDF download card for lease agreement
 - Reviews — 2-column grid of review cards with user avatar, name, verified badge, comment, date, like/share buttons; "Show all N reviews" toggle (first 4 shown)
 
@@ -441,7 +440,6 @@ Full-featured property detail page with all property information.
 - Landlord Profile card with avatar, name, verified badge
 - Contact section with phone (tel link), email (mailto link), social media icons (Instagram, Facebook, Twitter)
 - "Contact Owner" button (opens auth modal for unregistered users)
-- Price breakdown: Monthly Rent + Cleaning Fee + Service Fee + Grand Total
 
 **Mobile Action Bar:**
 - Fixed bottom bar with "Contact Owner" button
@@ -537,6 +535,7 @@ User account dashboard with dual landlord/tenant identity.
 **Settings & Preferences:**
 - Landlord mode toggle switch
 - Menu items: Notifications, Account Settings, Help Center, Terms of Service, Privacy Policy
+- Profile edits require explicit Save button click to persist changes
 - Logout button with confirmation modal
 
 **Modals (10+):**
@@ -650,7 +649,7 @@ Static legal page with 9 numbered sections:
 | `ListingCarousel` | `ListingCarousel.tsx` | Horizontal scrollable row of listings with navigation arrows |
 | `ListingDetailSkeleton` | `ListingDetailSkeleton.tsx` | Loading skeleton for full detail view |
 | `ListingsPopup` | `ListingsPopup.tsx` | Reusable modal popup with grid of listing cards |
-| `ListingModal` | `ListingModal.tsx` | Detailed listing view with booking options |
+| `ListingModal` | `ListingModal.tsx` | Landlord profile modal with contact info, stats, and inquiry actions |
 | `ListingDetailModal` | `ListingDetailModal.tsx` | Listing detail for manage dashboard |
 | `PhotoCarouselOverlay` | `PhotoCarouselOverlay.tsx` | Full-screen image gallery with keyboard navigation and thumbnails |
 
@@ -682,7 +681,7 @@ Static legal page with 9 numbered sections:
 | `OnboardingFlow` | `OnboardingFlow.tsx` | 5-step wizard orchestrator |
 | `OnboardingModal` | `OnboardingModal.tsx` | Step 1 — identity, address, profile photo |
 | `OccupationStep` | `OccupationStep.tsx` | Step 2 — Student / Professional / Working Student |
-| `VerificationStep` | `VerificationStep.tsx` | Step 3 — Government/school ID upload (max 50MB) |
+| `VerificationStep` | `VerificationStep.tsx` | Step 3 — Government/school ID upload + optional pre-contractual PDF (max 50MB total) |
 | `ReviewProfile` | `ReviewProfile.tsx` | Step 4 — Review all data with inline editing |
 
 ### Map Components
@@ -714,7 +713,7 @@ Static legal page with 9 numbered sections:
 | `AuthModal` | `AuthModal.tsx` | Login/signup modal dialog |
 | `CameraOverlay` | `CameraOverlay.tsx` | Full-screen camera view with capture, front/rear toggle, native fallback |
 | `Categories` | `Categories.tsx` | Horizontal scrollable category selector |
-| `CreateListingModal` | `CreateListingModal.tsx` | Form for creating new listings |
+| `CreateListingModal` | `CreateListingModal.tsx` | Form for creating new listings with custom categories and pre-contractual doc upload |
 | `CreatePostModal` | `CreatePostModal.tsx` | Form for creating roommate posts |
 | `DateScrollPicker` | `DateScrollPicker.tsx` | Custom date selection (Month/Day/Year with snap-to-center) |
 | `EditListingModal` | `EditListingModal.tsx` | Form for editing existing listings |
@@ -902,8 +901,9 @@ All API functions use mock data with simulated delays (300-500ms). The API layer
 
 - **28 seed listings** for Iligan City with real Unsplash images
 - **18 categories** (ALL + 17 specific types)
-- Listings k1-k5 have full reviews (3-5 reviews each); k6-k28 have empty reviews
-- Each listing includes: id, title, location, description, price, rating, image, gallery, category, date, amenities, lat/lng, reviews, host info, tenant info
+- Listing IDs: `k1` through `k28`; reviews: `r1` through `r4`; users: `u1` through `u4`
+- New listings created via `createListing` generate IDs using `'mock_' + Date.now()`
+- Each listing includes: id, title, location, description, price, rating, image, gallery, category, date, amenities, lat/lng, preContractualDoc, reviews, host info, tenant info
 
 ### Roommates (`src/mocks/roommates.ts`)
 
@@ -939,6 +939,7 @@ interface Listing {
   advancePaymentMonths?: number;
   lat?: number;
   lng?: number;
+  preContractualDoc?: string;
   reviews: Review[];
   host?: HostInfo;
   tenants?: TenantInfo[];

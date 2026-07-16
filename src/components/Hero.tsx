@@ -123,9 +123,9 @@ export default function Hero({
           <button
             aria-label="Announcements"
             onClick={() => setIsAnnouncementsOpen(true)}
-            className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-transparent text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
+            className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-transparent text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
           >
-            <Megaphone className="w-8 h-8 sm:w-10 sm:h-10" />
+            <Megaphone className="w-7 h-7 sm:w-8 sm:h-8" />
           </button>
         </div>
 

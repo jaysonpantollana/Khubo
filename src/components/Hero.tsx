@@ -134,7 +134,7 @@ export default function Hero({
         </div>
 
         {/* Center Content - Perfectly symmetrical */}
-        <div className="flex flex-col items-center justify-center text-center h-full pt-14 sm:pt-16 md:pt-10">
+        <div className="flex flex-col items-center justify-center text-center h-full">
           <h1 className="flex flex-col items-center justify-center gap-y-0.5 sm:gap-y-1 md:flex-row md:gap-y-0 md:gap-x-6 text-white px-2 sm:px-4 w-full">
             <span className="font-noto-serif italic tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.3em] opacity-80" style={{ fontSize: 'clamp(1.1rem, 4.5vw, 2.2rem)' }}>
               WELCOME TO

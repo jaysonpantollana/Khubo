@@ -202,17 +202,17 @@ export default function Hero({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[95%] sm:w-[98%] max-w-[320px] sm:max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 sm:p-3 md:p-6 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 p-2.5 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
+                  className="absolute top-2 right-2 sm:top-3 sm:right-3 p-2 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
                   aria-label="Scroll up"
                 >
-                  <ChevronUp className="w-5 h-5" />
+                  <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
+                  className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 p-2 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
                   aria-label="Scroll down"
                 >
-                  <ChevronDown className="w-5 h-5" />
+                  <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 <div
                   ref={budgetScrollRef}

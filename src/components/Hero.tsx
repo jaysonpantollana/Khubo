@@ -216,9 +216,9 @@ export default function Hero({
                 </button>
                 <div
                   ref={budgetScrollRef}
-                  className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
+                  className="max-h-[150px] sm:max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-8 sm:pr-10"
                 >
-                  <div className="grid grid-cols-1 gap-1">
+                  <div className="grid grid-cols-1 gap-0.5 sm:gap-1">
                     {budgetRanges.map((range) => (
                       <button
                         key={range.label}
@@ -226,9 +226,9 @@ export default function Hero({
                           setSelectedBudget(range.label);
                           setActiveDropdown(null);
                         }}
-                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                        className="flex flex-col px-2 py-1.5 sm:px-3 sm:py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
                       >
-                        <span className="font-medium text-neutral-900 text-xs md:text-sm">
+                        <span className="font-medium text-neutral-900 text-[10px] sm:text-xs md:text-sm">
                           {range.label}
                         </span>
                       </button>

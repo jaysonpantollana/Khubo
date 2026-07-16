@@ -78,6 +78,193 @@
   },
   "suites": [
     {
+      "title": "category.spec.ts",
+      "file": "category.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Category Listings",
+          "file": "category.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load recommended listings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7519,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:16:52.663Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "adbed821842d55a94d05-83da24e1d69bf0a69a1d",
+              "file": "category.spec.ts",
+              "line": 4,
+              "column": 3
+            },
+            {
+              "title": "should load top listings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 5565,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:16:52.447Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "adbed821842d55a94d05-b71810bfef70bc6cf39d",
+              "file": "category.spec.ts",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "should load near MSU-IIT listings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 4439,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:16:52.593Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "adbed821842d55a94d05-d3db45f1c44d36b0a69d",
+              "file": "category.spec.ts",
+              "line": 20,
+              "column": 3
+            },
+            {
+              "title": "should navigate back from category page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 7567,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:16:52.672Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "adbed821842d55a94d05-38032a20d215c775028d",
+              "file": "category.spec.ts",
+              "line": 28,
+              "column": 3
+            },
+            {
+              "title": "should show empty state for unknown category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 3637,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:16:52.677Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "adbed821842d55a94d05-145203795c5b4f363c1b",
+              "file": "category.spec.ts",
+              "line": 39,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "home.spec.ts",
       "file": "home.spec.ts",
       "column": 0,
@@ -103,15 +290,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
                       "status": "passed",
-                      "duration": 19630,
+                      "duration": 16341,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:12.160Z",
+                      "startTime": "2026-07-16T15:16:52.695Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -137,15 +324,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 16229,
+                      "duration": 14756,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:12.244Z",
+                      "startTime": "2026-07-16T15:16:56.898Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -174,12 +361,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 23090,
+                      "duration": 14323,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:12.260Z",
+                      "startTime": "2026-07-16T15:16:57.482Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -205,15 +392,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 16154,
+                      "duration": 15223,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:12.207Z",
+                      "startTime": "2026-07-16T15:16:58.620Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -223,7 +410,7 @@
               ],
               "id": "d318381359a9b96acb1e-5ea3af6b3707c8884003",
               "file": "home.spec.ts",
-              "line": 30,
+              "line": 29,
               "column": 3
             }
           ]
@@ -256,15 +443,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 22807,
+                      "duration": 11455,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:12.378Z",
+                      "startTime": "2026-07-16T15:17:00.802Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -290,15 +477,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 20734,
+                      "duration": 19224,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:12.166Z",
+                      "startTime": "2026-07-16T15:17:00.793Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -309,6 +496,165 @@
               "id": "1a50f007eb892139d22b-7b3a45c1890750494272",
               "file": "listing.spec.ts",
               "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "maps.spec.ts",
+      "file": "maps.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Maps Page",
+          "file": "maps.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load the maps page with location and budget filters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 8283,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:09.614Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "255cf7fa90e830ea069e-6687dd57c83dfa82f1fb",
+              "file": "maps.spec.ts",
+              "line": 13,
+              "column": 3
+            },
+            {
+              "title": "should display listing cards on the maps page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 8397,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\maps.spec.ts:25:19",
+                        "location": {
+                          "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\maps.spec.ts",
+                          "column": 19,
+                          "line": 25
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 23 |\u001b[39m     \u001b[36mconst\u001b[39m listingCards \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'main button'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[35m/Iligan City/\u001b[39m })\n \u001b[90m 24 |\u001b[39m     \u001b[36mconst\u001b[39m count \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m listingCards\u001b[33m.\u001b[39mcount()\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 25 |\u001b[39m     expect(count)\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\n \u001b[90m    |\u001b[39m                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 26 |\u001b[39m   })\n \u001b[90m 27 |\u001b[39m\n \u001b[90m 28 |\u001b[39m   test(\u001b[32m'should show map or map unavailable message'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\maps.spec.ts",
+                            "column": 19,
+                            "line": 25
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  23 |     const listingCards = page.locator('main button').filter({ hasText: /Iligan City/ })\n  24 |     const count = await listingCards.count()\n> 25 |     expect(count).toBeGreaterThan(0)\n     |                   ^\n  26 |   })\n  27 |\n  28 |   test('should show map or map unavailable message', async ({ page }) => {\n    at C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\maps.spec.ts:25:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:11.727Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\maps.spec.ts",
+                        "column": 19,
+                        "line": 25
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "255cf7fa90e830ea069e-7b927cb7a975c9012ecf",
+              "file": "maps.spec.ts",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should show map or map unavailable message",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 6771,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:11.855Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "255cf7fa90e830ea069e-6ed77cfea8cc4317fb2e",
+              "file": "maps.spec.ts",
+              "line": 28,
               "column": 3
             }
           ]
@@ -341,15 +687,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 17299,
+                      "duration": 12772,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:28.747Z",
+                      "startTime": "2026-07-16T15:17:12.360Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -378,12 +724,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 7734,
+                      "duration": 14811,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:28.928Z",
+                      "startTime": "2026-07-16T15:17:13.910Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -409,15 +755,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
                       "status": "passed",
-                      "duration": 14139,
+                      "duration": 12839,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:32.245Z",
+                      "startTime": "2026-07-16T15:17:17.963Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -443,15 +789,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 12962,
+                      "duration": 13050,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:33.268Z",
+                      "startTime": "2026-07-16T15:17:18.675Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -462,6 +808,454 @@
               "id": "5d2868f7d23420c27cca-e561af638299f1c52bf5",
               "file": "navigation.spec.ts",
               "line": 37,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "profile.spec.ts",
+      "file": "profile.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Profile Page",
+          "file": "profile.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load profile page with user info",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 9288,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:20.068Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-71ebc4ff51141f0a719c",
+              "file": "profile.spec.ts",
+              "line": 13,
+              "column": 3
+            },
+            {
+              "title": "should display stat cards",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7838,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:25.178Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-6aecd447b3bcc6a95b20",
+              "file": "profile.spec.ts",
+              "line": 20,
+              "column": 3
+            },
+            {
+              "title": "should display profile tags",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 7653,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:28.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-b1c95e5e462e3be45780",
+              "file": "profile.spec.ts",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "should display bio quote",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 7133,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:29.404Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-825d23fbce7b9a8a1442",
+              "file": "profile.spec.ts",
+              "line": 34,
+              "column": 3
+            },
+            {
+              "title": "should display properties section",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 15462,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('My Living Space')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('My Living Space')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('My Living Space')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('My Living Space')\u001b[22m\n\n    at C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\profile.spec.ts:41:53",
+                        "location": {
+                          "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\profile.spec.ts",
+                          "column": 53,
+                          "line": 41
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 39 |\u001b[39m   test(\u001b[32m'should display properties section'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 40 |\u001b[39m     \u001b[90m// Verify My Living Space section\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'My Living Space'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\n \u001b[90m    |\u001b[39m                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m   })\n \u001b[90m 43 |\u001b[39m\n \u001b[90m 44 |\u001b[39m   test(\u001b[32m'should open announcements modal'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\profile.spec.ts",
+                            "column": 53,
+                            "line": 41
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('My Living Space')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('My Living Space')\u001b[22m\n\n\n  39 |   test('should display properties section', async ({ page }) => {\n  40 |     // Verify My Living Space section\n> 41 |     await expect(page.getByText('My Living Space')).toBeVisible()\n     |                                                     ^\n  42 |   })\n  43 |\n  44 |   test('should open announcements modal', async ({ page }) => {\n    at C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\profile.spec.ts:41:53"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:31.089Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\profile-Profile-Page-should-display-properties-section-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\profile-Profile-Page-should-display-properties-section-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\profile-Profile-Page-should-display-properties-section-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\profile.spec.ts",
+                        "column": 53,
+                        "line": 41
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-be21e5cac01434149ee7",
+              "file": "profile.spec.ts",
+              "line": 39,
+              "column": 3
+            },
+            {
+              "title": "should open announcements modal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 13081,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:31.876Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-fba66f739347d350be96",
+              "file": "profile.spec.ts",
+              "line": 44,
+              "column": 3
+            },
+            {
+              "title": "should display footer and bottom nav",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13519,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:33.153Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-28b221536f76fc8d42f0",
+              "file": "profile.spec.ts",
+              "line": 53,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "roommate.spec.ts",
+      "file": "roommate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Roommate Finder",
+          "file": "roommate.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load the roommate page with hero section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 15434,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:36.846Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6cf26df95ecdc8c30982-d6b02d488b170026d75f",
+              "file": "roommate.spec.ts",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "should display tag filter buttons",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 14445,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:36.854Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6cf26df95ecdc8c30982-a51579c3ca55928f9d08",
+              "file": "roommate.spec.ts",
+              "line": 19,
+              "column": 3
+            },
+            {
+              "title": "should filter roommates by tag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 7141,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:45.342Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6cf26df95ecdc8c30982-e54e73d32e7265b550f6",
+              "file": "roommate.spec.ts",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "should display footer and bottom nav",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5065,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:46.821Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6cf26df95ecdc8c30982-24c8da0e455a5ebddfbd",
+              "file": "roommate.spec.ts",
+              "line": 35,
               "column": 3
             }
           ]
@@ -494,15 +1288,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 6,
+                      "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 12480,
+                      "duration": 11777,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:35.884Z",
+                      "startTime": "2026-07-16T15:17:54.927Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -528,15 +1322,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 10514,
+                      "duration": 9728,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:35.935Z",
+                      "startTime": "2026-07-16T15:17:51.430Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -562,15 +1356,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 9888,
+                      "duration": 11681,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-15T12:25:36.712Z",
+                      "startTime": "2026-07-16T15:17:51.961Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -586,15 +1380,242 @@
           ]
         }
       ]
+    },
+    {
+      "title": "user-journey.spec.ts",
+      "file": "user-journey.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Critical User Journeys",
+          "file": "user-journey.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "full flow: home → search → listing detail → back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 12812,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:59.306Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-545911726fcc98b474d9",
+              "file": "user-journey.spec.ts",
+              "line": 4,
+              "column": 3
+            },
+            {
+              "title": "full flow: home → category filter → category page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 12650,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:52.449Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-3a56f34ebd953ac028b6",
+              "file": "user-journey.spec.ts",
+              "line": 31,
+              "column": 3
+            },
+            {
+              "title": "full flow: bottom nav across all pages",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 23447,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Roommate' })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Roommate' })\u001b[22m\n\n    at C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\user-journey.spec.ts:57:57",
+                        "location": {
+                          "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\user-journey.spec.ts",
+                          "column": 57,
+                          "line": 57
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 55 |\u001b[39m       \u001b[90m// Wait for stable DOM before clicking\u001b[39m\n \u001b[90m 56 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m300\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 57 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m p\u001b[33m.\u001b[39mlabel })\u001b[33m.\u001b[39mclick({ timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\n \u001b[90m    |\u001b[39m                                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 58 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\n \u001b[90m 59 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m500\u001b[39m)\n \u001b[90m 60 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(p\u001b[33m.\u001b[39murl)\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\user-journey.spec.ts",
+                            "column": 57,
+                            "line": 57
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Roommate' })\u001b[22m\n\n\n  55 |       // Wait for stable DOM before clicking\n  56 |       await page.waitForTimeout(300)\n> 57 |       await page.getByRole('button', { name: p.label }).click({ timeout: 15000 })\n     |                                                         ^\n  58 |       await page.waitForLoadState('domcontentloaded')\n  59 |       await page.waitForTimeout(500)\n  60 |       await expect(page).toHaveURL(p.url)\n    at C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\user-journey.spec.ts:57:57"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:17:52.834Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\test-results\\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\hp\\OneDrive\\Desktop\\khubo\\tests\\e2e\\user-journey.spec.ts",
+                        "column": 57,
+                        "line": 57
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-972a03e9336518d80d97",
+              "file": "user-journey.spec.ts",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "full flow: profile → landlord features",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 11690,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:18:01.216Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-d2b3db7f3ada8e908e9b",
+              "file": "user-journey.spec.ts",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "full flow: roommate finder → filter → modal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12277,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-16T15:18:03.896Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-5d22f4f106df587eda09",
+              "file": "user-journey.spec.ts",
+              "line": 75,
+              "column": 3
+            }
+          ]
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-15T12:25:07.912Z",
-    "duration": 41059.114,
-    "expected": 13,
+    "startTime": "2026-07-16T15:16:50.144Z",
+    "duration": 86537.835,
+    "expected": 34,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 3,
     "flaky": 0
   }
 }

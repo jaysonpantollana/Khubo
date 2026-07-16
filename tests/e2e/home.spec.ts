@@ -22,8 +22,8 @@ test.describe('Home Page', () => {
     // Wait for listings to load
     await page.waitForTimeout(1000)
     
-    // Verify carousel sections exist
-    await expect(page.locator('text=Recommended')).toBeVisible()
+    // Verify carousel scroll buttons exist
+    await expect(page.getByRole('button', { name: 'Scroll right' })).toBeVisible()
   })
 
   test('should display footer and bottom navigation', async ({ page }) => {

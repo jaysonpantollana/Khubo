@@ -1,36 +1,212 @@
-<testsuites id="" name="" tests="13" failures="0" skipped="0" errors="0" time="41.059114">
-<testsuite name="home.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="4" failures="0" skipped="0" time="75.103" errors="0">
-<testcase name="Home Page › should display the hero section with welcome text" classname="home.spec.ts" time="19.63">
+<testsuites id="" name="" tests="37" failures="2" skipped="0" errors="1" time="86.537835">
+<testsuite name="category.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="5" failures="0" skipped="0" time="28.727" errors="0">
+<testcase name="Category Listings › should load recommended listings" classname="category.spec.ts" time="7.519">
 </testcase>
-<testcase name="Home Page › should display categories navigation" classname="home.spec.ts" time="16.229">
+<testcase name="Category Listings › should load top listings" classname="category.spec.ts" time="5.565">
 </testcase>
-<testcase name="Home Page › should display listing carousels" classname="home.spec.ts" time="23.09">
+<testcase name="Category Listings › should load near MSU-IIT listings" classname="category.spec.ts" time="4.439">
 </testcase>
-<testcase name="Home Page › should display footer and bottom navigation" classname="home.spec.ts" time="16.154">
+<testcase name="Category Listings › should navigate back from category page" classname="category.spec.ts" time="7.567">
 </testcase>
-</testsuite>
-<testsuite name="listing.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="2" failures="0" skipped="0" time="43.541" errors="0">
-<testcase name="Listing Detail › should display listing details" classname="listing.spec.ts" time="22.807">
-</testcase>
-<testcase name="Listing Detail › should navigate back from listing detail" classname="listing.spec.ts" time="20.734">
+<testcase name="Category Listings › should show empty state for unknown category" classname="category.spec.ts" time="3.637">
 </testcase>
 </testsuite>
-<testsuite name="navigation.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="4" failures="0" skipped="0" time="52.134" errors="0">
-<testcase name="Navigation › should navigate to maps page" classname="navigation.spec.ts" time="17.299">
+<testsuite name="home.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="4" failures="0" skipped="0" time="60.643" errors="0">
+<testcase name="Home Page › should display the hero section with welcome text" classname="home.spec.ts" time="16.341">
 </testcase>
-<testcase name="Navigation › should navigate to roommate finder" classname="navigation.spec.ts" time="7.734">
+<testcase name="Home Page › should display categories navigation" classname="home.spec.ts" time="14.756">
 </testcase>
-<testcase name="Navigation › should navigate to profile page" classname="navigation.spec.ts" time="14.139">
+<testcase name="Home Page › should display listing carousels" classname="home.spec.ts" time="14.323">
 </testcase>
-<testcase name="Navigation › should navigate to listing detail from carousel" classname="navigation.spec.ts" time="12.962">
+<testcase name="Home Page › should display footer and bottom navigation" classname="home.spec.ts" time="15.223">
 </testcase>
 </testsuite>
-<testsuite name="search.spec.ts" timestamp="2026-07-15T12:25:10.785Z" hostname="chromium" tests="3" failures="0" skipped="0" time="32.882" errors="0">
-<testcase name="Search Functionality › should activate search mode" classname="search.spec.ts" time="12.48">
+<testsuite name="listing.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="2" failures="0" skipped="0" time="30.679" errors="0">
+<testcase name="Listing Detail › should display listing details" classname="listing.spec.ts" time="11.455">
 </testcase>
-<testcase name="Search Functionality › should type in search input" classname="search.spec.ts" time="10.514">
+<testcase name="Listing Detail › should navigate back from listing detail" classname="listing.spec.ts" time="19.224">
 </testcase>
-<testcase name="Search Functionality › should filter by category" classname="search.spec.ts" time="9.888">
+</testsuite>
+<testsuite name="maps.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="3" failures="1" skipped="0" time="23.451" errors="0">
+<testcase name="Maps Page › should load the maps page with location and budget filters" classname="maps.spec.ts" time="8.283">
+</testcase>
+<testcase name="Maps Page › should display listing cards on the maps page" classname="maps.spec.ts" time="8.397">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\video.webm]]
+
+[[ATTACHMENT|test-results\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\error-context.md]]
+]]>
+</system-out>
+<failure message="expect(received).toBeGreaterThan(expected)" type="expect.toBeGreaterThan">
+<![CDATA[  [chromium] › maps.spec.ts:21:3 › Maps Page › should display listing cards on the maps page ───────
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      23 |     const listingCards = page.locator('main button').filter({ hasText: /Iligan City/ })
+      24 |     const count = await listingCards.count()
+    > 25 |     expect(count).toBeGreaterThan(0)
+         |                   ^
+      26 |   })
+      27 |
+      28 |   test('should show map or map unavailable message', async ({ page }) => {
+        at C:\Users\hp\OneDrive\Desktop\khubo\tests\e2e\maps.spec.ts:25:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\maps-Maps-Page-should-display-listing-cards-on-the-maps-page-chromium\error-context.md
+]]>
+</failure>
+</testcase>
+<testcase name="Maps Page › should show map or map unavailable message" classname="maps.spec.ts" time="6.771">
+</testcase>
+</testsuite>
+<testsuite name="navigation.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="4" failures="0" skipped="0" time="53.472" errors="0">
+<testcase name="Navigation › should navigate to maps page" classname="navigation.spec.ts" time="12.772">
+</testcase>
+<testcase name="Navigation › should navigate to roommate finder" classname="navigation.spec.ts" time="14.811">
+</testcase>
+<testcase name="Navigation › should navigate to profile page" classname="navigation.spec.ts" time="12.839">
+</testcase>
+<testcase name="Navigation › should navigate to listing detail from carousel" classname="navigation.spec.ts" time="13.05">
+</testcase>
+</testsuite>
+<testsuite name="profile.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="7" failures="1" skipped="0" time="73.974" errors="0">
+<testcase name="Profile Page › should load profile page with user info" classname="profile.spec.ts" time="9.288">
+</testcase>
+<testcase name="Profile Page › should display stat cards" classname="profile.spec.ts" time="7.838">
+</testcase>
+<testcase name="Profile Page › should display profile tags" classname="profile.spec.ts" time="7.653">
+</testcase>
+<testcase name="Profile Page › should display bio quote" classname="profile.spec.ts" time="7.133">
+</testcase>
+<testcase name="Profile Page › should display properties section" classname="profile.spec.ts" time="15.462">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\profile-Profile-Page-should-display-properties-section-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\profile-Profile-Page-should-display-properties-section-chromium\video.webm]]
+
+[[ATTACHMENT|test-results\profile-Profile-Page-should-display-properties-section-chromium\error-context.md]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [chromium] › profile.spec.ts:39:3 › Profile Page › should display properties section ─────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('My Living Space')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText('My Living Space')
+
+
+      39 |   test('should display properties section', async ({ page }) => {
+      40 |     // Verify My Living Space section
+    > 41 |     await expect(page.getByText('My Living Space')).toBeVisible()
+         |                                                     ^
+      42 |   })
+      43 |
+      44 |   test('should open announcements modal', async ({ page }) => {
+        at C:\Users\hp\OneDrive\Desktop\khubo\tests\e2e\profile.spec.ts:41:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\profile-Profile-Page-should-display-properties-section-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\profile-Profile-Page-should-display-properties-section-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\profile-Profile-Page-should-display-properties-section-chromium\error-context.md
+]]>
+</failure>
+</testcase>
+<testcase name="Profile Page › should open announcements modal" classname="profile.spec.ts" time="13.081">
+</testcase>
+<testcase name="Profile Page › should display footer and bottom nav" classname="profile.spec.ts" time="13.519">
+</testcase>
+</testsuite>
+<testsuite name="roommate.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="4" failures="0" skipped="0" time="42.085" errors="0">
+<testcase name="Roommate Finder › should load the roommate page with hero section" classname="roommate.spec.ts" time="15.434">
+</testcase>
+<testcase name="Roommate Finder › should display tag filter buttons" classname="roommate.spec.ts" time="14.445">
+</testcase>
+<testcase name="Roommate Finder › should filter roommates by tag" classname="roommate.spec.ts" time="7.141">
+</testcase>
+<testcase name="Roommate Finder › should display footer and bottom nav" classname="roommate.spec.ts" time="5.065">
+</testcase>
+</testsuite>
+<testsuite name="search.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="3" failures="0" skipped="0" time="33.186" errors="0">
+<testcase name="Search Functionality › should activate search mode" classname="search.spec.ts" time="11.777">
+</testcase>
+<testcase name="Search Functionality › should type in search input" classname="search.spec.ts" time="9.728">
+</testcase>
+<testcase name="Search Functionality › should filter by category" classname="search.spec.ts" time="11.681">
+</testcase>
+</testsuite>
+<testsuite name="user-journey.spec.ts" timestamp="2026-07-16T15:16:50.855Z" hostname="chromium" tests="5" failures="0" skipped="0" time="72.876" errors="1">
+<testcase name="Critical User Journeys › full flow: home → search → listing detail → back" classname="user-journey.spec.ts" time="12.812">
+</testcase>
+<testcase name="Critical User Journeys › full flow: home → category filter → category page" classname="user-journey.spec.ts" time="12.65">
+</testcase>
+<testcase name="Critical User Journeys › full flow: bottom nav across all pages" classname="user-journey.spec.ts" time="23.447">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|test-results\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\video.webm]]
+
+[[ATTACHMENT|test-results\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\error-context.md]]
+]]>
+</system-out>
+<error message="locator.click: Timeout 15000ms exceeded." type="TimeoutError">
+<![CDATA[  [chromium] › user-journey.spec.ts:41:3 › Critical User Journeys › full flow: bottom nav across all pages 
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Roommate' })
+
+
+      55 |       // Wait for stable DOM before clicking
+      56 |       await page.waitForTimeout(300)
+    > 57 |       await page.getByRole('button', { name: p.label }).click({ timeout: 15000 })
+         |                                                         ^
+      58 |       await page.waitForLoadState('domcontentloaded')
+      59 |       await page.waitForTimeout(500)
+      60 |       await expect(page).toHaveURL(p.url)
+        at C:\Users\hp\OneDrive\Desktop\khubo\tests\e2e\user-journey.spec.ts:57:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\user-journey-Critical-User-248b5-bottom-nav-across-all-pages-chromium\error-context.md
+]]>
+</error>
+</testcase>
+<testcase name="Critical User Journeys › full flow: profile → landlord features" classname="user-journey.spec.ts" time="11.69">
+</testcase>
+<testcase name="Critical User Journeys › full flow: roommate finder → filter → modal" classname="user-journey.spec.ts" time="12.277">
 </testcase>
 </testsuite>
 </testsuites>

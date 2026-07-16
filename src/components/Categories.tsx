@@ -71,12 +71,12 @@ export default function Categories({ selectedCategory, onSelect }: CategoriesPro
 
   return (
     <div className="py-2 sm:py-4 bg-white w-full relative">
-      <div className="hidden sm:block absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-      <div className="hidden sm:block absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+      <div className="hidden md:block absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+      <div className="hidden md:block absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
       
       <button 
         onClick={() => scroll('left')}
-        className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
         aria-label="Scroll left"
       >
         <Icons.ChevronLeft size={16} strokeWidth={2} />
@@ -84,7 +84,7 @@ export default function Categories({ selectedCategory, onSelect }: CategoriesPro
 
       <button 
         onClick={() => scroll('right')}
-        className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
         aria-label="Scroll right"
       >
         <Icons.ChevronRight size={16} strokeWidth={2} />
@@ -92,7 +92,7 @@ export default function Categories({ selectedCategory, onSelect }: CategoriesPro
 
       <div 
         ref={scrollRef}
-        className="flex flex-row items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth pl-4 md:pl-12 py-1 w-full touch-pan-x"
+        className="flex flex-row items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth pl-4 md:pl-12 pr-4 md:pr-12 py-1 w-full touch-pan-x"
       >
         {displayedCategories.map((category) => {
           const isSelected = selectedCategory === category.label;

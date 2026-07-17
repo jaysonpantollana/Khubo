@@ -93,7 +93,7 @@ export default function Hero({
     >
       <div className="absolute inset-0 bg-black/40 z-0" />
 
-      <div className="relative z-10 flex flex-col min-h-[420px] sm:min-h-[480px] lg:min-h-[520px]">
+      <div className="relative z-10 flex flex-col min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
         <div className="flex items-center justify-between px-5 sm:px-8 lg:px-12 py-5 sm:py-6">
           <button
             aria-label="Home"
@@ -116,17 +116,17 @@ export default function Hero({
           </button>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8 lg:px-12 pb-10">
-          <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-4 sm:gap-x-6 text-white">
+        <div className="flex-1 flex flex-col items-center justify-center text-center px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
+          <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-2 sm:gap-x-4 md:gap-x-6 text-white w-full px-2">
             <span
-              className="font-noto-serif italic tracking-[0.3em] opacity-80"
-              style={{ fontSize: "clamp(1.1rem, 4.5vw, 2.2rem)" }}
+              className="font-noto-serif italic opacity-80 break-words"
+              style={{ fontSize: "clamp(0.95rem, 4vw, 2.2rem)", letterSpacing: "clamp(0.05em, 1.5vw, 0.3em)" }}
             >
               WELCOME TO
             </span>
             <span
-              className="font-roboto font-bold tracking-[0.08em]"
-              style={{ fontSize: "clamp(1.25rem, 5vw, 2.2rem)" }}
+              className="font-roboto font-bold"
+              style={{ fontSize: "clamp(1.1rem, 4.5vw, 2.2rem)", letterSpacing: "clamp(0.02em, 0.5vw, 0.08em)" }}
             >
               KHUBO
             </span>
@@ -221,7 +221,7 @@ export default function Hero({
             )}
 
             {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-1 sm:p-2 rounded-full flex items-center text-white shadow-2xl w-full max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-0.5 sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-full max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
               {isSearchActive ? (
                 <>
                   <div className="flex-1 flex items-center pl-3 sm:pl-6 pr-0 py-0 w-full">
@@ -238,7 +238,7 @@ export default function Hero({
                         }
                       }}
                       placeholder="what are you looking for?"
-                      className="w-full bg-transparent border-none outline-none text-base font-bold text-white placeholder:text-white/50 focus:ring-0 p-0"
+                      className="w-full bg-transparent border-none outline-none text-sm sm:text-base font-bold text-white placeholder:text-white/50 focus:ring-0 p-0"
                       autoFocus
                     />
                     {searchQuery && (
@@ -257,11 +257,11 @@ export default function Hero({
                       onClick={() => {
                         setIsSearchActive(false);
                       }}
-                      className="bg-[#17294F] p-2.5 sm:p-4 rounded-full transition-all duration-200 shadow-lg ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-2 sm:p-3 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-1 sm:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                       aria-label="Search"
                     >
                       <Search
-                        className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px] text-white group-hover:stroke-[3px] transition-all"
+                        className="w-4 h-4 sm:w-[22px] sm:h-[22px] text-white group-hover:stroke-[3px] transition-all"
                       />
                     </button>
                   </div>
@@ -295,18 +295,18 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("location"))
                       }
-                      className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-6 md:pr-4 py-2.5 sm:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-6 md:pr-4 py-2 sm:py-3 md:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "location"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "hover:bg-white/5 rounded-full"
                       }`}
                     >
-                      <div className="flex items-center gap-3 min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                         <MapPin
-                          className="text-[#2252D6] flex-shrink-0 w-[16px] h-[16px]"
+                          className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4"
                         />
                         <span
-                          className={`text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-sm sm:text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedLocation || "Location"}
                         </span>
@@ -329,16 +329,16 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("budget"))
                       }
-                      className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-6 md:pr-4 py-2.5 sm:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-6 md:pr-4 py-2 sm:py-3 md:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "budget"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "hover:bg-white/5 rounded-full"
                       }`}
                     >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <Wallet className="text-[#2252D6] flex-shrink-0 w-[16px] h-[16px]" />
+                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <Wallet className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         <span
-                          className={`text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-sm sm:text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedBudget || "Budget"}
                         </span>

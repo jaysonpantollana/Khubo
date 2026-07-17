@@ -1,11 +1,4 @@
-// @context: Home page hero section — search banner with dropdowns
-// @purpose: Full-width hero with background image, search bar, location/date/budget dropdowns, announcements toggle
-// @behavior: Search bar toggles between idle and active input states; dropdowns for location, dates, budget
-// @behavior: External click closes dropdowns; announcements overlay trigger
-// @side-effects: useEffect for click-outside handler
-// @dependencies: SearchDropdown, AnnouncementsOverlay, lucide-react
-
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Search,
   MapPin,
@@ -18,8 +11,6 @@ import {
 
 import SearchDropdown from "./SearchDropdown";
 import { AnnouncementsOverlay } from "./AnnouncementsOverlay";
-import { useListings } from "../hooks/useListings";
-import { Listing } from "../types";
 
 interface HeroProps {
   searchQuery?: string;
@@ -36,9 +27,8 @@ export default function Hero({
   setIsSearchActive = () => {},
   suppressDropdown = false,
 }: HeroProps) {
-  const { listings } = useListings();
   const [activeDropdown, setActiveDropdown] = useState<
-    "location" | "budget" | "general" | null
+    "location" | "budget" | null
   >(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [hideDropdown, setHideDropdown] = useState(false);
@@ -91,7 +81,7 @@ export default function Hero({
   }, [suppressDropdown, setIsSearchActive]);
 
   const toggleDropdown = (
-    dropdown: "location" | "budget" | "general",
+    dropdown: "location" | "budget",
   ) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
@@ -101,12 +91,9 @@ export default function Hero({
       className="relative w-full overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: "url('/bg_1.png')" }}
     >
-      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/40 z-0" />
 
-      {/* Flow layout — no absolute positioning, no scale hack */}
       <div className="relative z-10 flex flex-col min-h-[420px] sm:min-h-[480px] lg:min-h-[520px]">
-        {/* Top bar — padding handles spacing, flex justify-between pins edges */}
         <div className="flex items-center justify-between px-5 sm:px-8 lg:px-12 py-5 sm:py-6">
           <button
             aria-label="Home"
@@ -129,7 +116,6 @@ export default function Hero({
           </button>
         </div>
 
-        {/* Center content — flex-1 + justify-center handles vertical centering */}
         <div className="flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8 lg:px-12 pb-10">
           <h1 className="flex flex-row items-center justify-center gap-x-4 sm:gap-x-6 text-white">
             <span
@@ -150,48 +136,45 @@ export default function Hero({
             className="relative mt-8 sm:mt-12 w-full max-w-none flex justify-center"
             ref={dropdownRef}
           >
-            {/* Dropdown panels */}
             {!isSearchActive && activeDropdown === "location" && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[700px] lg:max-w-[820px] bg-white rounded-3xl shadow-xl border border-neutral-100 p-6 z-[100] text-left pointer-events-auto">
-                <div className="space-y-4">
-                  <div>
-                    <div
-                      className="flex items-center px-2.5 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        (
-                          e.currentTarget.querySelector(
-                            "input",
-                          ) as HTMLInputElement
-                        )?.focus();
-                      }}
-                    >
-                      <Search className="w-4 h-4 text-neutral-400 mr-1.5 flex-shrink-0" />
-                      <input
-                        type="text"
-                        placeholder="Search location..."
-                        className="w-full bg-transparent border-none outline-none text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      {["Iligan City"].map((loc) => (
-                        <button
-                          key={loc}
-                          onClick={() => {
-                            setSelectedLocation(loc);
-                            setActiveDropdown(null);
-                          }}
-                          className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 transition-colors group"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all flex-shrink-0">
-                            <MapPin size={14} className="w-3.5 h-3.5" />
-                          </div>
-                          <span className="font-medium text-neutral-800 text-sm whitespace-nowrap">
-                            {loc}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
+                <div>
+                  <div
+                    className="flex items-center px-2.5 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      (
+                        e.currentTarget.querySelector(
+                          "input",
+                        ) as HTMLInputElement
+                      )?.focus();
+                    }}
+                  >
+                    <Search className="w-4 h-4 text-neutral-400 mr-1.5 flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="Search location..."
+                      className="w-full bg-transparent border-none outline-none text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    {["Iligan City"].map((loc) => (
+                      <button
+                        key={loc}
+                        onClick={() => {
+                          setSelectedLocation(loc);
+                          setActiveDropdown(null);
+                        }}
+                        className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 transition-colors group"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all flex-shrink-0">
+                          <MapPin size={14} className="w-3.5 h-3.5" />
+                        </div>
+                        <span className="font-medium text-neutral-800 text-sm whitespace-nowrap">
+                          {loc}
+                        </span>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -217,7 +200,7 @@ export default function Hero({
                   ref={budgetScrollRef}
                   className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
                 >
-                  <div className="grid grid-cols-1 gap-1">
+                  <div className="grid gap-1">
                     {budgetRanges.map((range) => (
                       <button
                         key={range.label}
@@ -321,12 +304,12 @@ export default function Hero({
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <MapPin
-                          className={`${activeDropdown === "location" ? "text-[#2252D6]" : "text-[#2252D6]"} flex-shrink-0 w-[16px] h-[16px]`}
+                          className="text-[#2252D6] flex-shrink-0 w-[16px] h-[16px]"
                         />
                         <span
                           className={`text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
                         >
-                          {selectedLocation ? selectedLocation : "Location"}
+                          {selectedLocation || "Location"}
                         </span>
                       </div>
                       <ChevronDown
@@ -337,7 +320,6 @@ export default function Hero({
 
                   <div className="w-[1px] h-8 bg-white/20" />
 
-                  {/* Budget Section */}
                   <div className="flex-1 min-w-0">
                     <div
                       role="button"
@@ -359,7 +341,7 @@ export default function Hero({
                         <span
                           className={`text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
                         >
-                          {selectedBudget ? selectedBudget : "Budget"}
+                          {selectedBudget || "Budget"}
                         </span>
                       </div>
                       <ChevronDown

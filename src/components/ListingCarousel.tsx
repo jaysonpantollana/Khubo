@@ -25,7 +25,7 @@ interface ListingCarouselProps {
 }
 
 const CAROUSEL_SCROLLER_CLASS =
-  'flex gap-3 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth';
+  'grid grid-cols-2 gap-3 pb-4 sm:flex sm:overflow-x-auto sm:no-scrollbar sm:snap-x sm:snap-mandatory sm:scroll-smooth';
 
 export function ListingCarousel({
   title,

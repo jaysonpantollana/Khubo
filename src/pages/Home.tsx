@@ -15,7 +15,7 @@ import { SearchHistory } from "../components/SearchHistory";
 import { StickySearchBar } from "../components/StickySearchBar";
 
 const CAROUSEL_ITEM_CLASS =
-  "w-[48vw] min-w-[48vw] sm:w-[calc((100%-12px)/2)] sm:min-w-[calc((100%-12px)/2)] md:portrait:min-w-[calc((100%-24px)/3)] md:portrait:w-[calc((100%-24px)/3)] md:landscape:min-w-[calc((100%-48px)/5)] md:landscape:w-[calc((100%-48px)/5)] lg:min-w-[calc((100%-48px)/5)] lg:w-[calc((100%-48px)/5)] xl:min-w-[calc((100%-48px)/5)] xl:w-[calc((100%-48px)/5)] snap-center";
+  "sm:w-[calc((100%-12px)/2)] sm:min-w-[calc((100%-12px)/2)] md:portrait:min-w-[calc((100%-24px)/3)] md:portrait:w-[calc((100%-24px)/3)] md:landscape:min-w-[calc((100%-48px)/5)] md:landscape:w-[calc((100%-48px)/5)] lg:min-w-[calc((100%-48px)/5)] lg:w-[calc((100%-48px)/5)] xl:min-w-[calc((100%-48px)/5)] xl:w-[calc((100%-48px)/5)] snap-center";
 
 export default function Home() {
   const { listings: LISTINGS, loading: listingsLoading } = useListings();

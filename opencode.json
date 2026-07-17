@@ -3,6 +3,7 @@
   "plugin": [
     "./.opencode/plugins/ponytail.mjs",
     "./.opencode/plugins",
+    "./.opencode/plugins/pensyve",
     "compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git",
     "opencode-skills-collection@latest"
   ],
@@ -14,6 +15,13 @@
       "type": "local",
       "command": ["npx", "-y", "@playwright/mcp@latest"],
       "enabled": true
+    },
+    "pensyve": {
+      "type": "http",
+      "url": "https://mcp.pensyve.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${PENSYVE_API_KEY}"
+      }
     }
   },
   "instructions": [

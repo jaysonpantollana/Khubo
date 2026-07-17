@@ -23,7 +23,7 @@ export default function BottomNav() {
       className="fixed bottom-[calc(12px+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-50 pointer-events-none"
     >
       <nav 
-        className="bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-1.5 sm:px-6 py-1.5 sm:py-2 flex items-center justify-around pointer-events-auto w-[min(92vw,380px)]"
+        className="bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-1 sm:px-4 py-1 sm:py-1.5 flex items-center justify-evenly pointer-events-auto w-[min(95vw,360px)]"
       >
         {items.map((item, idx) => {
           const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '') || (item.path !== '/' && location.pathname.startsWith(item.path));
@@ -35,10 +35,10 @@ export default function BottomNav() {
               onClick={() => navigate(item.path)}
               className="flex flex-col items-center justify-center min-w-0 flex-1 py-0.5 group transition-all duration-200 relative"
             >
-              <div className={`p-1 sm:p-2 rounded-xl sm:rounded-2xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
-                <item.icon className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px]" strokeWidth={isActive ? 2.5 : 2} />
+              <div className={`p-0.5 sm:p-1.5 rounded-xl sm:rounded-2xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
+                <item.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={isActive ? 2.5 : 2} />
               </div>
-              <span className={`text-[7px] sm:text-[9.5px] font-black uppercase tracking-wider text-center transition-colors duration-200 mt-0.5 block leading-tight ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
+              <span className={`text-[6px] sm:text-[8px] font-bold uppercase tracking-wide text-center transition-colors duration-200 mt-px leading-tight whitespace-nowrap ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
                 {item.label}
               </span>
             </button>

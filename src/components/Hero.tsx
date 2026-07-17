@@ -257,11 +257,11 @@ export default function Hero({
                       onClick={() => {
                         setIsSearchActive(false);
                       }}
-                    className="bg-[#17294F] p-2 sm:p-3 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-1 sm:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-1.5 sm:p-3 md:p-3.5 rounded-full transition-all duration-200 shadow-lg ml-0.5 sm:ml-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                       aria-label="Search"
                     >
                       <Search
-                        className="w-4 h-4 sm:w-[22px] sm:h-[22px] text-white group-hover:stroke-[3px] transition-all"
+                        className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white group-hover:stroke-[3px] transition-all"
                       />
                     </button>
                   </div>
@@ -295,18 +295,18 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("location"))
                       }
-                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-6 md:pr-4 py-2 sm:py-3 md:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-2 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "location"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "hover:bg-white/5 rounded-full"
                       }`}
                     >
-                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                      <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
                         <MapPin
-                          className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4"
+                          className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4"
                         />
                         <span
-                          className={`text-sm sm:text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-xs sm:text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedLocation || "Location"}
                         </span>
@@ -317,7 +317,7 @@ export default function Hero({
                     </div>
                   </div>
 
-                  <div className="w-[1px] h-5 sm:h-8 bg-white/20" />
+                  <div className="w-px h-4 sm:h-6 bg-white/20 flex-shrink-0" />
 
                   <div className="flex-1 min-w-0">
                     <div
@@ -329,16 +329,16 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("budget"))
                       }
-                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-6 md:pr-4 py-2 sm:py-3 md:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-2 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "budget"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "hover:bg-white/5 rounded-full"
                       }`}
                     >
-                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                        <Wallet className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+                        <Wallet className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4" />
                         <span
-                          className={`text-sm sm:text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-xs sm:text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedBudget || "Budget"}
                         </span>

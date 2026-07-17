@@ -117,7 +117,7 @@ export default function Hero({
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8 lg:px-12 pb-10">
-          <h1 className="flex flex-row items-center justify-center gap-x-4 sm:gap-x-6 text-white">
+          <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-4 sm:gap-x-6 text-white">
             <span
               className="font-noto-serif italic tracking-[0.3em] opacity-80"
               style={{ fontSize: "clamp(1.1rem, 4.5vw, 2.2rem)" }}
@@ -221,10 +221,10 @@ export default function Hero({
             )}
 
             {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-2 rounded-full flex items-center text-white shadow-2xl w-full max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-1 sm:p-2 rounded-full flex items-center text-white shadow-2xl w-full max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
               {isSearchActive ? (
                 <>
-                  <div className="flex-1 flex items-center pl-6 pr-0 py-0 w-full">
+                  <div className="flex-1 flex items-center pl-3 sm:pl-6 pr-0 py-0 w-full">
                     <input
                       type="text"
                       value={searchQuery}
@@ -257,12 +257,11 @@ export default function Hero({
                       onClick={() => {
                         setIsSearchActive(false);
                       }}
-                      className="bg-[#17294F] p-4 rounded-full transition-all duration-200 shadow-lg ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                      className="bg-[#17294F] p-2.5 sm:p-4 rounded-full transition-all duration-200 shadow-lg ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                       aria-label="Search"
                     >
                       <Search
-                        size={22}
-                        className="text-white group-hover:stroke-[3px] transition-all"
+                        className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px] text-white group-hover:stroke-[3px] transition-all"
                       />
                     </button>
                   </div>
@@ -296,7 +295,7 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("location"))
                       }
-                      className={`w-full flex items-center justify-between px-3 md:pl-6 md:pr-4 py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-6 md:pr-4 py-2.5 sm:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "location"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "hover:bg-white/5 rounded-full"
@@ -318,7 +317,7 @@ export default function Hero({
                     </div>
                   </div>
 
-                  <div className="w-[1px] h-8 bg-white/20" />
+                  <div className="w-[1px] h-5 sm:h-8 bg-white/20" />
 
                   <div className="flex-1 min-w-0">
                     <div
@@ -330,7 +329,7 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("budget"))
                       }
-                      className={`w-full flex items-center justify-between px-3 md:pl-6 md:pr-4 py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-6 md:pr-4 py-2.5 sm:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "budget"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "hover:bg-white/5 rounded-full"
@@ -373,11 +372,10 @@ export default function Hero({
                       }
                     }}
                     aria-label="Search"
-                    className="bg-[#17294F] p-4 rounded-full transition-all duration-200 shadow-lg ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-2.5 sm:p-4 rounded-full transition-all duration-200 shadow-lg ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                   >
                     <Search
-                      size={22}
-                      className="text-white group-hover:stroke-[3px] transition-all"
+                      className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px] text-white group-hover:stroke-[3px] transition-all"
                     />
                   </button>
                 </>

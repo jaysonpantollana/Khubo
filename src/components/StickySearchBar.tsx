@@ -187,7 +187,7 @@ export function StickySearchBar({
                         onSearch(searchQuery);
                         setIsStickySearchActive(false);
                       }}
-                      className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                      className="bg-[#17294F] p-2 sm:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                       aria-label="Search"
                     >
                       <Search size={16} className="text-white" />
@@ -312,7 +312,7 @@ export function StickySearchBar({
                       }
                     }}
                     aria-label="Search"
-                    className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-2 sm:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                   >
                     <Search size={16} className="text-white" />
                   </button>

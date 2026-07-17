@@ -6,7 +6,7 @@
 // @code-template: Pattern for listing display items: forward onClick + keyboard handlers
 
 import React from 'react';
-import { Star, ShieldCheck } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { Listing } from '../types';
 
 interface ListingCardProps {
@@ -85,7 +85,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
       aria-label={`View details for ${listing.title} at ${listing.location}. Price P${listing.price} per month. Rating ${listing.rating.toFixed(2)} stars.`}
       className="col-span-1 cursor-pointer bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent hover:border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] focus-visible:ring-offset-2"
     >
-      <div className="flex flex-col gap-2.5 sm:gap-3 w-full">
+      <div className="flex flex-col gap-2 sm:gap-2.5 w-full">
         <div className="aspect-[4/3] relative overflow-hidden rounded-xl">
           <img
             src={listing.image}
@@ -97,43 +97,39 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
             }}
             className="object-cover h-full w-full"
           />
-          <div aria-hidden="true" className="absolute top-2.5 right-2.5 z-10 px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded-full text-white text-[9px] sm:text-[10px] font-bold">
+          <div aria-hidden="true" className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-10 px-2 py-0.5 sm:px-2.5 sm:py-1 bg-black/60 backdrop-blur-sm rounded-full text-white text-[8px] sm:text-[10px] font-bold">
             {listing.date}
           </div>
         </div>
         
-        <div className="px-1.5 sm:px-1 flex flex-col gap-1">
-          <h3 className="font-display font-extrabold text-[15px] sm:text-[16px] leading-tight truncate text-[#1a1a1a]">{listing.title}</h3>
+        <div className="px-1 sm:px-1 flex flex-col gap-0.5">
+          <h3 className="font-display font-extrabold text-[13px] sm:text-[16px] leading-snug line-clamp-2 text-[#1a1a1a]">{listing.title}</h3>
           
-          <div className="flex items-center justify-between gap-1.5 mt-0.5">
-            <div className="text-[11px] sm:text-[12px] text-gray-500 font-medium truncate flex-1">{listing.location}</div>
-            <div className="flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md border border-blue-100 flex-shrink-0">
-               <ShieldCheck size={10} className="fill-blue-600 text-white sm:w-3 sm:h-3" />
-               <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-tight">Verified</span>
-            </div>
+          <div className="flex items-center gap-1 mt-0.5">
+            <div className="text-[10px] sm:text-[12px] text-gray-500 font-medium truncate flex-1 min-w-0">{listing.location}</div>
           </div>
 
-          <div className="flex items-center justify-between mt-1 sm:mt-1.5">
-            <div className="flex items-baseline gap-1">
-               <div className="font-display font-extrabold text-[#17294F] text-[15px] sm:text-[17px]">P{listing.price}</div>
-               <div className="text-[10px] sm:text-[11px] text-gray-500 font-medium">/month</div>
+          <div className="flex items-center justify-between mt-0.5 sm:mt-1">
+            <div className="flex items-baseline gap-0.5">
+               <div className="font-display font-extrabold text-[#17294F] text-[14px] sm:text-[17px]">P{listing.price}</div>
+               <div className="text-[9px] sm:text-[11px] text-gray-500 font-medium">/mo</div>
             </div>
-            <div className="flex items-center gap-1">
-              <Star size={11} className="fill-amber-400 text-amber-400 sm:w-[13px] sm:h-[13px]" />
-              <span className="text-[12px] sm:text-[13px] font-bold text-gray-700">{listing.rating.toFixed(2)}</span>
+            <div className="flex items-center gap-0.5">
+              <Star size={10} className="fill-amber-400 text-amber-400 sm:w-[13px] sm:h-[13px]" />
+              <span className="text-[11px] sm:text-[13px] font-bold text-gray-700">{listing.rating.toFixed(2)}</span>
             </div>
           </div>
           
-          <div aria-hidden="true" className="flex items-center justify-end mt-2 pt-2 border-t border-gray-50">
-            <div className="flex gap-1.5 overflow-hidden">
-              {listing.amenities.slice(0, 3).map((amenity, i) => (
-                <span key={i} className="px-2 py-0.5 bg-gray-50 rounded text-[8px] sm:text-[9px] text-gray-500 border border-gray-100 whitespace-nowrap font-medium">
+          <div aria-hidden="true" className="flex items-center mt-1.5 sm:mt-2 pt-1.5 sm:pt-2 border-t border-gray-50">
+            <div className="flex gap-1 sm:gap-1.5 flex-wrap">
+              {listing.amenities.slice(0, 2).map((amenity, i) => (
+                <span key={i} className="px-1.5 py-0.5 sm:px-2 bg-gray-50 rounded text-[7px] sm:text-[9px] text-gray-500 border border-gray-100 font-medium">
                   {amenity}
                 </span>
               ))}
-              {listing.amenities.length > 3 && (
-                <span className="px-2 py-0.5 bg-gray-50 rounded text-[8px] sm:text-[9px] text-gray-500 border border-gray-100 whitespace-nowrap font-medium">
-                  +{listing.amenities.length - 3}
+              {listing.amenities.length > 2 && (
+                <span className="px-1.5 py-0.5 sm:px-2 bg-gray-50 rounded text-[7px] sm:text-[9px] text-gray-500 border border-gray-100 font-medium">
+                  +{listing.amenities.length - 2}
                 </span>
               )}
             </div>

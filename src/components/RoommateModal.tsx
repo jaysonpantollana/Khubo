@@ -6,7 +6,7 @@
 
 import React, { useState, useCallback } from 'react';
 
-import { X, MapPin, GraduationCap, Wallet, ShieldCheck, Instagram, Twitter, Facebook, Zap, Sparkles, Heart, Phone, Mail, Copy, Check } from 'lucide-react';
+import { X, MapPin, GraduationCap, Wallet, Instagram, Twitter, Facebook, Zap, Sparkles, Heart, Phone, Mail, Copy, Check } from 'lucide-react';
 import { Roommate } from '../types';
 import { FocusTrap } from './ui/FocusTrap';
 
@@ -77,13 +77,6 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                 <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="bg-blue-500 p-0.5 rounded-full">
-                      <ShieldCheck size={10} className="text-white" />
-                    </div>
-                    <span className="text-[9px] font-black uppercase tracking-widest">Verified Resident</span>
-                  </div>
-                  
                   <h2 className="text-3xl md:text-4xl font-black tracking-tighter mb-1.5">{roommate.name}</h2>
                   <div className="flex items-center gap-2.5 text-white/80 font-bold text-xs">
                     <div className="flex items-center gap-1.5">

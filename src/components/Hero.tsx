@@ -70,7 +70,7 @@ export default function Hero({
     >
       <div className="absolute inset-0 bg-black/40 z-0" />
 
-      <div className="relative z-10 flex flex-col min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
+      <div className="relative flex flex-col min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
         <div className="flex items-center justify-between px-5 sm:px-8 lg:px-12 py-5 sm:py-6">
           <button
             aria-label="Home"

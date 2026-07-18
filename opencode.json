@@ -23,6 +23,11 @@
         "Authorization": "Bearer ${PENSYVE_API_KEY}"
       },
       "enabled": true
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp",
+      "enabled": true
     }
   },
   "instructions": [

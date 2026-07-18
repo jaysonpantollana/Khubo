@@ -83,7 +83,7 @@ export default function RoommateHero({
   };
 
   return (
-    <div className="relative min-h-[400px] md:h-[500px] w-full z-50 overflow-hidden">
+    <div className="relative min-h-[400px] md:h-[500px] w-full z-50">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"

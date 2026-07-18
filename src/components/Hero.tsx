@@ -213,7 +213,7 @@ export default function Hero({
             )}
 
             {/* Pill search bar — always horizontal, scales down on mobile */}
-            <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-1 sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
+            <div className="bg-[rgba(20,24,34,0.55)] backdrop-blur-xl border border-white/10 p-1 sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
               {isSearchActive ? (
                 <>
                   <div className="flex-1 flex items-center pl-3 sm:pl-6 pr-0 py-0 w-full min-w-0">

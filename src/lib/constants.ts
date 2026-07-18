@@ -24,7 +24,7 @@ export function parseBudgetRange(range: string): { min: number; max: number } | 
   return null;
 }
 
-export const POPULAR_LOCATIONS = [
+export const BARANGAY_LOCATIONS = [
   'Abuno', 'Acmac', 'Bagong Silang', 'Bonbonon', 'Bunawan', 'Buru-un',
   'Dalipuga', 'Del Carmen', 'Digkilaan', 'Ditucalan', 'Dulag',
   'Hinaplanon', 'Hindang', 'Kabacsanan', 'Kalilangan', 'Kiwalan',

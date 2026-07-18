@@ -13,7 +13,7 @@ import React, { useState, useEffect } from 'react';
 import SearchDropdown from './SearchDropdown';
 import { Roommate } from '../types';
 import { AnnouncementsOverlay } from './AnnouncementsOverlay';
-import { POPULAR_LOCATIONS } from '../lib/constants';
+import { BARANGAY_LOCATIONS } from '../lib/constants';
 import { ROOMMATES } from '../mocks/roommates';
 import { BUDGET_RANGES } from '../lib/constants';
 
@@ -137,22 +137,35 @@ export default function RoommateHero({
             {/* Dropdown panels — rendered OUTSIDE the pill so they expand below it */}
             {!isSearchActive && activeDropdown === 'location' && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-[100] text-left pointer-events-auto">
-                <div className="space-y-4">
-                  <div>
-                    <div className="space-y-1">
-                      {POPULAR_LOCATIONS.map((loc) => (
-                        <button 
-                          key={loc}
-                          onClick={() => { setSelectedLocation(loc); setActiveDropdown(null); }}
-                          className="w-full flex items-center gap-3 p-2 rounded-xl g-neutral-50 transition-colors group"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-g-[#2252D6] group-ext-white transition-all">
-                            <MapPin size={14} />
-                          </div>
-                          <span className="font-medium text-neutral-800 text-sm">{loc}</span>
-                        </button>
-                      ))}
-                    </div>
+                <button
+                  onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: 'smooth' })}
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  aria-label="Scroll up"
+                >
+                  <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
+                </button>
+                <button
+                  onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: 'smooth' })}
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  aria-label="Scroll down"
+                >
+                  <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
+                </button>
+                <div
+                  ref={locationScrollRef}
+                  className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
+                >
+                  <div className="grid gap-1">
+                    {BARANGAY_LOCATIONS.map((loc) => (
+                      <button
+                        key={loc}
+                        onClick={() => { setSelectedLocation(loc); setActiveDropdown(null); }}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                      >
+                        <MapPin size={14} className="text-[#2252D6] flex-shrink-0" />
+                        <span className="font-medium text-neutral-900 text-sm">{loc}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -255,7 +268,7 @@ export default function RoommateHero({
               </>
             ) : (
               <>
-                <div className="flex-[1.2] min-w-0">
+                <div className="flex-1 min-w-0">
                   <div 
                     role="button" 
                     tabIndex={0} 

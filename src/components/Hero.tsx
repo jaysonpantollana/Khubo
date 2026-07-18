@@ -11,7 +11,7 @@ import {
 
 import SearchDropdown from "./SearchDropdown";
 import { AnnouncementsOverlay } from "./AnnouncementsOverlay";
-import { BUDGET_RANGES, POPULAR_LOCATIONS } from "../lib/constants";
+import { BUDGET_RANGES, BARANGAY_LOCATIONS } from "../lib/constants";
 import { useClickOutside } from "../hooks/useClickOutside";
 
 interface HeroProps {
@@ -135,7 +135,7 @@ export default function Hero({
                   className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
                 >
                    <div className="grid gap-1">
-                    {POPULAR_LOCATIONS.map((loc) => (
+                    {BARANGAY_LOCATIONS.map((loc) => (
                       <button
                         key={loc}
                         onClick={() => {
@@ -144,9 +144,7 @@ export default function Hero({
                         }}
                         className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] flex-shrink-0">
-                          <MapPin size={14} className="w-3.5 h-3.5" />
-                        </div>
+                        <MapPin size={14} className="w-3.5 h-3.5 text-[#2252D6] flex-shrink-0" />
                         <span className="font-medium text-neutral-900 text-sm whitespace-nowrap">
                           {loc}
                         </span>

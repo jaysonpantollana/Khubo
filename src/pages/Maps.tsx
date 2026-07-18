@@ -27,7 +27,7 @@ import { FilterState } from "../types";
 import * as maptilersdk from "@maptiler/sdk";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { takeMap, resetMapPreload } from "../lib/mapPreloader";
-import { POPULAR_LOCATIONS } from "../lib/constants";
+import { BARANGAY_LOCATIONS } from "../lib/constants";
 export default function Maps() {
   const { listings: LISTINGS, loading } = useListings();
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
@@ -43,6 +43,7 @@ export default function Maps() {
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
   const budgetScrollRef = useRef<HTMLDivElement>(null);
+  const locationScrollRef = useRef<HTMLDivElement>(null);
   const locationTriggerRef = useRef<HTMLDivElement>(null);
   const budgetTriggerRef = useRef<HTMLDivElement>(null);
 
@@ -456,7 +457,7 @@ export default function Maps() {
             ) : (
               <>
                 {/* Location Section */}
-                <div className="flex-[1.2] min-w-0">
+                <div className="flex-1 min-w-0">
                   <div
                     ref={locationTriggerRef}
                     role="button"
@@ -488,29 +489,44 @@ export default function Maps() {
                       }}
                     >
                        <div className="space-y-4">
-                         <div>
-                           <div className="space-y-1">
-                            {POPULAR_LOCATIONS.map((loc) => (
-                              <button
-                                key={loc}
-                                onClick={() => {
-                                  setSelectedLocation(loc);
-                                  setActiveDropdown(null);
-                                  setDropdownPosition(null);
-                                }}
-                                className="w-full flex items-center gap-3 p-2 rounded-xl g-neutral-50 group/item"
-                              >
-                                <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6]">
-                                  <MapPin size={14} />
-                                </div>
-                                <span className="font-bold text-neutral-800 text-sm">
-                                  {loc}
-                                </span>
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+                          <button
+                           onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
+                           className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center transition-all z-10 shadow-sm hover:bg-neutral-50"
+                           aria-label="Scroll up"
+                         >
+                           <ChevronUp className="w-5 h-5 text-neutral-600" />
+                         </button>
+                         <button
+                           onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
+                           className="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center transition-all z-10 shadow-sm hover:bg-neutral-50"
+                           aria-label="Scroll down"
+                         >
+                           <ChevronDown className="w-5 h-5 text-neutral-600" />
+                         </button>
+                         <div
+                           ref={locationScrollRef}
+                           className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
+                         >
+                           <div className="grid gap-1">
+                             {BARANGAY_LOCATIONS.map((loc) => (
+                               <button
+                                 key={loc}
+                                 onClick={() => {
+                                   setSelectedLocation(loc);
+                                   setActiveDropdown(null);
+                                   setDropdownPosition(null);
+                                 }}
+                                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                               >
+                                  <MapPin size={14} className="text-[#2252D6] flex-shrink-0" />
+                                 <span className="font-medium text-neutral-900 text-sm">
+                                   {loc}
+                                 </span>
+                               </button>
+                             ))}
+                           </div>
+                         </div>
+                       </div>
                     </div>
                   )}
                 </div>
@@ -551,17 +567,17 @@ export default function Maps() {
                     >
                       <button
                         onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                        className="absolute top-3 right-3 p-2.5 rounded-xl bg-neutral-200 g-[#17294F] ext-white transition-all z-10 shadow-sm"
+                        className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center transition-all z-10 shadow-sm hover:bg-neutral-50"
                         aria-label="Scroll up"
                       >
-                        <ChevronUp className="w-5 h-5" />
+                        <ChevronUp className="w-5 h-5 text-neutral-600" />
                       </button>
                       <button
                         onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                        className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-neutral-200 g-[#17294F] ext-white transition-all z-10 shadow-sm"
+                        className="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center transition-all z-10 shadow-sm hover:bg-neutral-50"
                         aria-label="Scroll down"
                       >
-                        <ChevronDown className="w-5 h-5" />
+                        <ChevronDown className="w-5 h-5 text-neutral-600" />
                       </button>
                       <div
                         ref={budgetScrollRef}

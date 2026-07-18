@@ -11,7 +11,7 @@ import {
 
 import SearchDropdown from "./SearchDropdown";
 import { AnnouncementsOverlay } from "./AnnouncementsOverlay";
-import { BUDGET_RANGES } from "../lib/constants";
+import { BUDGET_RANGES, POPULAR_LOCATIONS } from "../lib/constants";
 import { useClickOutside } from "../hooks/useClickOutside";
 
 interface HeroProps {
@@ -39,6 +39,7 @@ export default function Hero({
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
   const budgetScrollRef = useRef<HTMLDivElement>(null);
+  const locationScrollRef = useRef<HTMLDivElement>(null);
 
   const hasSelections = selectedLocation || selectedBudget;
 
@@ -115,22 +116,38 @@ export default function Hero({
           >
             {!isSearchActive && activeDropdown === "location" && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[700px] lg:max-w-[820px] bg-white rounded-3xl shadow-xl border border-neutral-100 p-6 z-[100] text-left pointer-events-auto">
-                <div>
-                  <div
-                   <div className="space-y-1">
-                    {["Iligan City"].map((loc) => (
+                <button
+                  onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  aria-label="Scroll up"
+                >
+                  <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
+                </button>
+                <button
+                  onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  aria-label="Scroll down"
+                >
+                  <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
+                </button>
+                <div
+                  ref={locationScrollRef}
+                  className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
+                >
+                   <div className="grid gap-1">
+                    {POPULAR_LOCATIONS.map((loc) => (
                       <button
                         key={loc}
                         onClick={() => {
                           setSelectedLocation(loc);
                           setActiveDropdown(null);
                         }}
-                        className="w-full flex items-center gap-3 p-2 rounded-xl g-neutral-50 transition-colors group"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-g-[#2252D6] group-ext-white transition-all flex-shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] flex-shrink-0">
                           <MapPin size={14} className="w-3.5 h-3.5" />
                         </div>
-                        <span className="font-medium text-neutral-800 text-sm whitespace-nowrap">
+                        <span className="font-medium text-neutral-900 text-sm whitespace-nowrap">
                           {loc}
                         </span>
                       </button>

@@ -24,7 +24,17 @@ export function parseBudgetRange(range: string): { min: number; max: number } | 
   return null;
 }
 
-export const POPULAR_LOCATIONS = ['Iligan City'];
+export const POPULAR_LOCATIONS = [
+  'Abuno', 'Acmac', 'Bagong Silang', 'Bonbonon', 'Bunawan', 'Buru-un',
+  'Dalipuga', 'Del Carmen', 'Digkilaan', 'Ditucalan', 'Dulag',
+  'Hinaplanon', 'Hindang', 'Kabacsanan', 'Kalilangan', 'Kiwalan',
+  'Lanipao', 'Luinab', 'Mahayahay', 'Mainit', 'Mandulog',
+  'Maria Cristina', 'Palao', 'Panoroganan', 'Poblacion', 'Puga-an',
+  'Rogongon', 'San Miguel', 'San Roque', 'Santa Elena', 'Santa Filomena',
+  'Santiago', 'Santo Rosario', 'Saray', 'Suarez', 'Tambacan', 'Tibanga',
+  'Tipanoy', 'Tomas L. Cabili', 'Tubod', 'Ubaldo Laya',
+  'Upper Hinaplanon', 'Upper Tominobo', 'Villa Verde'
+];
 
 export const DEFAULT_FILTERS = {
   minPrice: 0,

@@ -13,6 +13,7 @@ import React, { useState, useEffect } from 'react';
 import SearchDropdown from './SearchDropdown';
 import { Roommate } from '../types';
 import { AnnouncementsOverlay } from './AnnouncementsOverlay';
+import { POPULAR_LOCATIONS } from '../lib/constants';
 import { ROOMMATES } from '../mocks/roommates';
 import { BUDGET_RANGES } from '../lib/constants';
 
@@ -49,6 +50,7 @@ export default function RoommateHero({
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
   const budgetScrollRef = React.useRef<HTMLDivElement>(null);
+  const locationScrollRef = React.useRef<HTMLDivElement>(null);
 
   const hasSelections = selectedLocation || selectedBudget;
 
@@ -138,7 +140,7 @@ export default function RoommateHero({
                 <div className="space-y-4">
                   <div>
                     <div className="space-y-1">
-                      {['Iligan City'].map((loc) => (
+                      {POPULAR_LOCATIONS.map((loc) => (
                         <button 
                           key={loc}
                           onClick={() => { setSelectedLocation(loc); setActiveDropdown(null); }}

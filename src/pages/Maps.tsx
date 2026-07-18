@@ -27,6 +27,7 @@ import { FilterState } from "../types";
 import * as maptilersdk from "@maptiler/sdk";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { takeMap, resetMapPreload } from "../lib/mapPreloader";
+import { POPULAR_LOCATIONS } from "../lib/constants";
 export default function Maps() {
   const { listings: LISTINGS, loading } = useListings();
   const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
@@ -489,7 +490,7 @@ export default function Maps() {
                        <div className="space-y-4">
                          <div>
                            <div className="space-y-1">
-                            {["Iligan City"].map((loc) => (
+                            {POPULAR_LOCATIONS.map((loc) => (
                               <button
                                 key={loc}
                                 onClick={() => {

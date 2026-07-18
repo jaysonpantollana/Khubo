@@ -23,10 +23,15 @@ const PHILIPPINE_CITIES = [
 
 const BARANGAYS_ILIGAN: Record<string, string[]> = {
   'Iligan City': [
-    'Tibanga', 'Pala-o', 'San Miguel', 'Hinaplanon',
-    'Suarez', 'Tambacan', 'Barrio Castilla', 'Mahayahay',
-    'Ulog', 'Del Carmen', 'Sabay', 'Bagong Silang',
-    'Sta. Filomena', 'Sta. Elena', 'Tominobo', 'Digkilaan'
+    'Abuno', 'Acmac', 'Bagong Silang', 'Bonbonon', 'Bunawan', 'Buru-un',
+    'Dalipuga', 'Del Carmen', 'Digkilaan', 'Ditucalan', 'Dulag',
+    'Hinaplanon', 'Hindang', 'Kabacsanan', 'Kalilangan', 'Kiwalan',
+    'Lanipao', 'Luinab', 'Mahayahay', 'Mainit', 'Mandulog',
+    'Maria Cristina', 'Palao', 'Panoroganan', 'Poblacion', 'Puga-an',
+    'Rogongon', 'San Miguel', 'San Roque', 'Santa Elena', 'Santa Filomena',
+    'Santiago', 'Santo Rosario', 'Saray', 'Suarez', 'Tambacan', 'Tibanga',
+    'Tipanoy', 'Tomas L. Cabili', 'Tubod', 'Ubaldo Laya',
+    'Upper Hinaplanon', 'Upper Tominobo', 'Villa Verde'
   ],
   'Cagayan de Oro City': [
     'Carmen', 'Lapasan', 'Cogon', 'Puntod',

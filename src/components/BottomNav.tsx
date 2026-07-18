@@ -18,22 +18,23 @@ export default function BottomNav() {
     { icon: User, label: 'Profile', path: '/profile' },
   ];
 
+  if (isModalOpen) return null;
+
   return (
     <div 
       className="fixed bottom-[calc(12px+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-50 pointer-events-none"
     >
       <nav
-        className="bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-4 py-1 sm:px-6 sm:py-1.5 md:px-7 md:py-2 flex items-center justify-between gap-0.5 sm:gap-1 pointer-events-auto w-[92vw] max-w-[420px]"
+        className="inline-flex items-center bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-4 py-1 sm:px-6 sm:py-1.5 md:px-7 md:py-2 gap-x-3 sm:gap-x-6 md:gap-x-7 pointer-events-auto"
       >
         {items.map((item, idx) => {
           const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '') || (item.path !== '/' && location.pathname.startsWith(item.path));
-          if (isModalOpen) return null;
 
           return (
             <button 
               key={idx}
               onClick={() => navigate(item.path)}
-              className="flex flex-col items-center justify-center min-w-0 flex-1 py-0.5 group transition-all duration-200 relative"
+              className="flex flex-col items-center justify-center py-0.5 group transition-all duration-200 relative"
             >
               <div className={`p-0.5 sm:p-1.5 md:p-2 rounded-xl sm:rounded-2xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-ext-white'}`}>
                 <item.icon className="w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-5 md:h-5" strokeWidth={isActive ? 2.5 : 2} />

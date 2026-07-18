@@ -518,10 +518,10 @@ export default function RoommateFinder() {
                                         Math.max(0, prev - 1)
                                       )
                                     }
-                                    className="absolute right-2 top-0 w-8 h-8 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-all"
+                                    className="absolute -right-1 top-0 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm"
                                     aria-label="Scroll up"
                                   >
-                                    <ChevronUp size={16} className="text-neutral-600" />
+                                    <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                                   </button>
                                 )}
                                 {/* Scroll Down Button */}
@@ -536,10 +536,10 @@ export default function RoommateFinder() {
                                         )
                                       )
                                     }
-                                    className="absolute right-2 bottom-0 w-8 h-8 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-all"
+                                    className="absolute -right-1 bottom-0 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm"
                                     aria-label="Scroll down"
                                   >
-                                    <ChevronDown size={16} className="text-neutral-600" />
+                                    <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
                                   </button>
                                 )}
                               </div>

@@ -208,7 +208,7 @@ export default function RoommateHero({
             )}
             
             {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
+            <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
             {isSearchActive ? (
               <>
                 <div className="flex-1 flex items-center pl-4 md:pl-6 pr-0 py-0 w-full">

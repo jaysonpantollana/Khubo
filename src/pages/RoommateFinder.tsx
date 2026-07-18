@@ -310,7 +310,7 @@ export default function RoommateFinder() {
                               setSearchQuery("");
                               setHideStickyDropdown(true);
                             }}
-                            className="p-1 g-neutral-100 rounded-full transition-colors flex-shrink-0"
+                            className="p-1 bg-neutral-100 rounded-full transition-colors flex-shrink-0"
                             aria-label="Clear search"
                           >
                             <X className="w-3.5 h-3.5 text-neutral-500" />
@@ -320,7 +320,7 @@ export default function RoommateFinder() {
                           onClick={() => {
                             setIsStickySearchActive(false);
                           }}
-                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] flex-shrink-0 flex items-center justify-center cursor-pointer"
+                          className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-lg ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                         >
                           <Search
                             size={16}
@@ -372,19 +372,19 @@ export default function RoommateFinder() {
                           className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
                             activeStickyDropdown === "location"
                               ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                              : "g-neutral-50 rounded-full"
+                              : "rounded-full"
                           }`}
                         >
                           <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
                             <MapPin className="text-[#2252D6] flex-shrink-0 w-4 h-4 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
                             <span
-                              className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
+                              className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap ${activeStickyDropdown === "location" ? "text-neutral-900" : "text-neutral-800"}`}
                             >
                               Location
                             </span>
                           </div>
                           <ChevronDown
-                            className={`flex-shrink-0 opacity-50 text-neutral-500 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "location" ? "rotate-180" : ""}`}
+                            className={`flex-shrink-0 opacity-50 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "location" ? "rotate-180 text-neutral-900" : "text-neutral-400"}`}
                           />
                         </div>
 
@@ -448,19 +448,19 @@ export default function RoommateFinder() {
                           className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
                             activeStickyDropdown === "budget"
                               ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                              : "g-neutral-50 rounded-full"
+                              : "rounded-full"
                           }`}
                         >
                           <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
                             <Wallet className="text-[#2252D6] flex-shrink-0 w-4 h-4 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
                             <span
-                              className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800`}
+                              className={`text-xs sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap ${activeStickyDropdown === "budget" ? "text-neutral-900" : "text-neutral-800"}`}
                             >
                               Budget
                             </span>
                           </div>
                           <ChevronDown
-                            className={`flex-shrink-0 opacity-50 text-neutral-500 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "budget" ? "rotate-180" : ""}`}
+                            className={`flex-shrink-0 opacity-50 transition-all w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeStickyDropdown === "budget" ? "rotate-180 text-neutral-900" : "text-neutral-400"}`}
                           />
                         </div>
 
@@ -562,7 +562,7 @@ export default function RoommateFinder() {
                           }
                         }}
                         aria-label="Search"
-                        className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                        className="bg-[#17294F] p-2.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 shadow-lg ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                       >
                         <Search
                           size={16}

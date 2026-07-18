@@ -72,10 +72,15 @@ export default function Hero({
       <div className="absolute inset-0 bg-black/40 z-0" />
 
       <div className="relative flex flex-col min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
-        <div className="flex items-center justify-between px-5 sm:px-8 lg:px-12 py-5 sm:py-6">
+        {/* Top bar — logo and announcements */}
+        <div
+          className="flex items-center justify-between py-5 sm:py-6"
+          style={{ paddingInline: "clamp(1.25rem, 4vw, 3rem)" }}
+        >
           <button
             aria-label="Home"
-            className="flex items-center justify-center overflow-hidden w-14 h-14 sm:w-16 sm:h-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xl"
+            className="flex items-center justify-center overflow-hidden flex-shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            style={{ width: "clamp(56px, 8vw, 64px)", height: "clamp(56px, 8vw, 64px)" }}
           >
             <img
               src="/khubo Logo.png"
@@ -89,44 +94,54 @@ export default function Hero({
           <button
             aria-label="Announcements"
             onClick={() => setIsAnnouncementsOpen(true)}
-            className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-transparent text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
+            className="flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-transparent text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
           >
-            <Megaphone className="w-7 h-7 sm:w-8 sm:h-8" />
+            <Megaphone className="w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8" />
           </button>
         </div>
 
+        {/* Heading + search bar */}
         <div className="flex-1 flex flex-col items-center justify-center text-center px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
           <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-2 sm:gap-x-4 md:gap-x-6 text-white w-full px-2">
             <span
               className="font-noto-serif italic opacity-80 break-words"
-              style={{ fontSize: "clamp(0.95rem, 4vw, 2.2rem)", letterSpacing: "clamp(0.05em, 1.5vw, 0.3em)" }}
+              style={{
+                fontSize: "clamp(0.95rem, 4vw, 2.2rem)",
+                letterSpacing: "clamp(0.05em, 1.5vw, 0.3em)",
+              }}
             >
               WELCOME TO
             </span>
             <span
               className="font-roboto font-bold"
-              style={{ fontSize: "clamp(1.1rem, 4.5vw, 2.2rem)", letterSpacing: "clamp(0.02em, 0.5vw, 0.08em)" }}
+              style={{
+                fontSize: "clamp(1.1rem, 4.5vw, 2.2rem)",
+                letterSpacing: "clamp(0.02em, 0.5vw, 0.08em)",
+              }}
             >
               KHUBO
             </span>
           </h1>
 
+          {/* Search bar wrapper — fluid margin, capped float offset */}
           <div
-            className="relative mt-8 sm:mt-12 w-full max-w-none flex justify-center"
+            className="relative w-full max-w-none flex justify-center"
+            style={{ marginTop: "clamp(2rem, 5vw, 3rem)" }}
             ref={dropdownRef}
           >
+            {/* Location dropdown */}
             {!isSearchActive && activeDropdown === "location" && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[700px] lg:max-w-[820px] bg-white rounded-3xl shadow-xl border border-neutral-100 p-6 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -143,7 +158,7 @@ export default function Hero({
                           setSelectedLocation(loc);
                           setActiveDropdown(null);
                         }}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
                       >
                         <MapPin size={14} className="w-3.5 h-3.5 text-[#2252D6] flex-shrink-0" />
                         <span className="font-medium text-neutral-900 text-sm whitespace-nowrap">
@@ -156,18 +171,19 @@ export default function Hero({
               </div>
             )}
 
+            {/* Budget dropdown */}
             {!isSearchActive && activeDropdown === "budget" && (
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[700px] lg:max-w-[820px] bg-white rounded-3xl shadow-xl border border-neutral-100 p-6 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -184,7 +200,7 @@ export default function Hero({
                           setSelectedBudget(range.label);
                           setActiveDropdown(null);
                         }}
-                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
                       >
                         <span className="font-medium text-neutral-900 text-sm">
                           {range.label}
@@ -196,11 +212,11 @@ export default function Hero({
               </div>
             )}
 
-            {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
+            {/* Pill search bar — always horizontal, scales down on mobile */}
+            <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-1 sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
               {isSearchActive ? (
                 <>
-                  <div className="flex-1 flex items-center pl-3 sm:pl-6 pr-0 py-0 w-full">
+                  <div className="flex-1 flex items-center pl-3 sm:pl-6 pr-0 py-0 w-full min-w-0">
                     <input
                       type="text"
                       value={searchQuery}
@@ -223,7 +239,7 @@ export default function Hero({
                           setSearchQuery("");
                           setHideDropdown(true);
                         }}
-                        className="p-1 g-white/10 rounded-full transition-colors flex-shrink-0"
+                        className="p-1 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
                         aria-label="Clear search"
                       >
                         <X className="w-4 h-4 text-white/80" />
@@ -233,11 +249,11 @@ export default function Hero({
                       onClick={() => {
                         setIsSearchActive(false);
                       }}
-                    className="bg-[#17294F] p-1.5 sm:p-3 md:p-3.5 rounded-full transition-all duration-200 shadow-lg ml-0.5 sm:ml-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                      className="bg-[#17294F] p-1.5 sm:p-3 md:p-3.5 rounded-full transition-all duration-200 shadow-lg ml-0.5 sm:ml-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                       aria-label="Search"
                     >
                       <Search
-                        className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white group-troke-[3px] transition-all"
+                        className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white group-hover:stroke-[3px] transition-all"
                       />
                     </button>
                   </div>
@@ -260,7 +276,7 @@ export default function Hero({
                 </>
               ) : (
                 <>
-                  {/* Location Section */}
+                  {/* Location field */}
                   <div className="flex-1 min-w-0">
                     <div
                       role="button"
@@ -271,18 +287,18 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("location"))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-1.5 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1.5 sm:px-2.5 md:pl-5 md:pr-3 py-2 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none rounded-full ${
                         activeDropdown === "location"
-                          ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
-                          : "g-white/5 rounded-full"
+                          ? "bg-white text-[#17294F] relative z-[60] shadow-md"
+                          : "bg-white/5 hover:bg-white/10"
                       }`}
                     >
                       <div className="flex items-center gap-1 sm:gap-2.5 min-w-0">
                         <MapPin
-                          className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4"
+                          className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4"
                         />
                         <span
-                          className={`text-[10px] sm:text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-[11px] sm:text-base font-bold truncate ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedLocation || "Location"}
                         </span>
@@ -293,8 +309,10 @@ export default function Hero({
                     </div>
                   </div>
 
-                  <div className="w-px h-3 sm:h-6 bg-white/20 flex-shrink-0" />
+                  {/* Divider — vertical between Location and Budget */}
+                  <div className="w-px self-stretch bg-white/20 flex-shrink-0" />
 
+                  {/* Budget field */}
                   <div className="flex-1 min-w-0">
                     <div
                       role="button"
@@ -305,16 +323,16 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("budget"))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-1.5 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1.5 sm:px-2.5 md:pl-5 md:pr-3 py-2 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none rounded-full ${
                         activeDropdown === "budget"
-                          ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
-                          : "g-white/5 rounded-full"
+                          ? "bg-white text-[#17294F] relative z-[60] shadow-md"
+                          : "bg-white/5 hover:bg-white/10"
                       }`}
                     >
                       <div className="flex items-center gap-1 sm:gap-2.5 min-w-0">
-                        <Wallet className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4" />
+                        <Wallet className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4" />
                         <span
-                          className={`text-[10px] sm:text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-[11px] sm:text-base font-bold truncate ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedBudget || "Budget"}
                         </span>
@@ -325,6 +343,7 @@ export default function Hero({
                     </div>
                   </div>
 
+                  {/* Search button — always a circle */}
                   <button
                     onClick={(e) => {
                       e.preventDefault();
@@ -348,10 +367,10 @@ export default function Hero({
                       }
                     }}
                     aria-label="Search"
-                    className="bg-[#17294F] p-1.5 sm:p-4 rounded-full transition-all duration-200 shadow-lg ml-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-2 sm:p-3 md:p-3.5 rounded-full shadow-lg flex-shrink-0 flex items-center justify-center cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <Search
-                      className="w-3 h-3 sm:w-[22px] sm:h-[22px] text-white group-troke-[3px] transition-all"
+                      className="w-3.5 h-3.5 sm:w-[22px] sm:h-[22px] text-white group-hover:stroke-[3px] transition-all"
                     />
                   </button>
                 </>

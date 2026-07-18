@@ -161,7 +161,7 @@ export function StickySearchBar({
             {/* Pill search bar */}
             <div
               id="2nd-search-bar"
-              className="bg-white border border-neutral-200 p-1 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-[calc(100vw-1.5rem)] max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative"
+              className="bg-white border border-neutral-200 p-1 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-[calc(100vw-1.5rem)] max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative overflow-hidden"
             >
               {isStickySearchActive ? (
                 <>
@@ -243,20 +243,20 @@ export function StickySearchBar({
                           stickyActiveDropdown === "location" ? null : "location",
                         ))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group select-none focus-visible:outline-none rounded-full ${
                         stickyActiveDropdown === "location"
-                          ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                          : "g-neutral-50 rounded-full"
+                          ? "bg-neutral-100 text-[#17294F] relative z-[60] shadow-sm"
+                          : "bg-neutral-50"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                        <MapPin className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                        <span className="text-[9px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800">
+                        <MapPin className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                        <span className="text-[11px] sm:text-sm md:text-sm font-bold truncate text-neutral-800">
                           {selectedStickyLocation || "Location"}
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-2.5 h-2.5 sm:w-4 sm:h-4 ${stickyActiveDropdown === "location" ? "rotate-180" : ""}`}
+                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "location" ? "rotate-180" : ""}`}
                       />
                     </div>
 
@@ -282,20 +282,20 @@ export function StickySearchBar({
                           stickyActiveDropdown === "budget" ? null : "budget",
                         ))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group select-none focus-visible:outline-none rounded-full ${
                         stickyActiveDropdown === "budget"
-                          ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                          : "g-neutral-50 rounded-full"
+                          ? "bg-neutral-100 text-[#17294F] relative z-[60] shadow-sm"
+                          : "bg-neutral-50"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                        <Wallet className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                        <span className="text-[9px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800">
+                        <Wallet className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                        <span className="text-[11px] sm:text-sm md:text-sm font-bold truncate text-neutral-800">
                           {selectedStickyBudget || "Budget"}
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-2.5 h-2.5 sm:w-4 sm:h-4 ${stickyActiveDropdown === "budget" ? "rotate-180" : ""}`}
+                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "budget" ? "rotate-180" : ""}`}
                       />
                     </div>
 

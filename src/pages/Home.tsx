@@ -1,7 +1,6 @@
 import Hero from "../components/Hero";
 import Categories from "../components/Categories";
 import BottomNav from "../components/BottomNav";
-import { FilterState } from "../types";
 import Footer from "../components/Footer";
 import { ListingCarousel } from "../components/ListingCarousel";
 import { useListings } from "../hooks/useListings";
@@ -13,6 +12,8 @@ import { Search } from "lucide-react";
 import { useSearchHistory } from "../hooks/useSearchHistory";
 import { SearchHistory } from "../components/SearchHistory";
 import { StickySearchBar } from "../components/StickySearchBar";
+import { useMediaQuery } from "../hooks/useMediaQuery";
+import { DEFAULT_FILTERS } from "../lib/constants";
 
 const CAROUSEL_ITEM_CLASS =
   "sm:w-[calc((100%-12px)/2)] sm:min-w-[calc((100%-12px)/2)] md:portrait:min-w-[calc((100%-24px)/3)] md:portrait:w-[calc((100%-24px)/3)] md:landscape:min-w-[calc((100%-48px)/5)] md:landscape:w-[calc((100%-48px)/5)] lg:min-w-[calc((100%-48px)/5)] lg:w-[calc((100%-48px)/5)] xl:min-w-[calc((100%-48px)/5)] xl:w-[calc((100%-48px)/5)] snap-center";
@@ -41,20 +42,12 @@ export default function Home() {
 
   const [isSticky, setIsSticky] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const observerRef = useRef<HTMLDivElement>(null);
   const searchObserverRef = useRef<HTMLDivElement>(null);
 
-  const filters: FilterState = {
-    minPrice: 0,
-    maxPrice: 50000,
-    minRating: 0,
-    sortBy: "relevance",
-  };
-
   const navigate = useNavigate();
   const [stickyActiveDropdown, setStickyActiveDropdown] = useState<"location" | "budget" | "general" | null>(null);
-  const stickyDropdownRef = useRef<HTMLDivElement>(null);
 
   // Map preloader
   const mapPreloadRef = useRef<HTMLDivElement>(null);
@@ -76,26 +69,10 @@ export default function Home() {
   }, [apiKey]);
 
   React.useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (stickyDropdownRef.current && !stickyDropdownRef.current.contains(event.target as Node)) {
-        setStickyActiveDropdown(null);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  React.useEffect(() => {
     if (!isSticky || !isStickySearchActive) {
       setStickyActiveDropdown(null);
     }
   }, [isSticky, isStickySearchActive]);
-
-  React.useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   React.useEffect(() => {
     const observer = new IntersectionObserver(
@@ -135,7 +112,7 @@ export default function Home() {
     }
   }, [displaySearch]);
 
-  const filteredListings = useListingsFilter(LISTINGS, filters, searchQuery, selectedCategory);
+  const filteredListings = useListingsFilter(LISTINGS, DEFAULT_FILTERS, searchQuery, selectedCategory);
 
   const handleListingClick = useCallback((id: string) => {
     navigate(`/listing/${id}`);

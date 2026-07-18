@@ -11,6 +11,8 @@ import {
 
 import SearchDropdown from "./SearchDropdown";
 import { AnnouncementsOverlay } from "./AnnouncementsOverlay";
+import { BUDGET_RANGES } from "../lib/constants";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 interface HeroProps {
   searchQuery?: string;
@@ -40,38 +42,13 @@ export default function Hero({
 
   const hasSelections = selectedLocation || selectedBudget;
 
-  const budgetRanges = [
-    { label: "less ₱1k" },
-    { label: "₱1k - ₱2k" },
-    { label: "₱2k - ₱3k" },
-    { label: "₱3k - ₱4k" },
-    { label: "₱4k - ₱5k" },
-    { label: "₱5k - ₱6k" },
-    { label: "₱6k - ₱7k" },
-    { label: "₱7k - ₱8k" },
-    { label: "₱8k - ₱9k" },
-    { label: "₱9k - ₱10k" },
-    { label: "₱10k+" },
-  ];
-
   useEffect(() => {
     if (isSearchActive) {
       setHideDropdown(false);
     }
   }, [isSearchActive]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setActiveDropdown(null);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(dropdownRef, () => setActiveDropdown(null));
 
   useEffect(() => {
     if (suppressDropdown) {
@@ -201,7 +178,7 @@ export default function Hero({
                   className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
                 >
                   <div className="grid gap-1">
-                    {budgetRanges.map((range) => (
+                    {BUDGET_RANGES.map((range) => (
                       <button
                         key={range.label}
                         onClick={() => {

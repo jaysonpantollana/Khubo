@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Search, MapPin, Wallet, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { Listing } from '../types';
 import SearchDropdown from './SearchDropdown';
-import { POPULAR_LOCATIONS } from '../lib/constants';
+import { POPULAR_LOCATIONS, BUDGET_RANGES } from '../lib/constants';
 
 interface StickySearchBarProps {
   searchQuery: string;
@@ -41,20 +41,6 @@ export function StickySearchBar({
 }: StickySearchBarProps) {
   const stickyDropdownRef = useRef<HTMLDivElement>(null);
   const budgetScrollRef = React.useRef<HTMLDivElement>(null);
-
-  const budgetRanges = [
-    { label: "less ₱1k" },
-    { label: "₱1k - ₱2k" },
-    { label: "₱2k - ₱3k" },
-    { label: "₱3k - ₱4k" },
-    { label: "₱4k - ₱5k" },
-    { label: "₱5k - ₱6k" },
-    { label: "₱6k - ₱7k" },
-    { label: "₱7k - ₱8k" },
-    { label: "₱8k - ₱9k" },
-    { label: "₱9k - ₱10k" },
-    { label: "₱10k+" },
-  ];
 
   return (
     <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm">
@@ -129,7 +115,7 @@ export function StickySearchBar({
                   className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
                 >
                   <div className="grid grid-cols-1 gap-1">
-                    {budgetRanges.map((range) => (
+                    {BUDGET_RANGES.map((range) => (
                       <button
                         key={range.label}
                         onClick={() => {

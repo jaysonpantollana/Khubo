@@ -123,7 +123,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
           <div aria-hidden="true" className="flex items-center mt-1.5 sm:mt-2 pt-1.5 sm:pt-2 border-t border-gray-50">
             <div className="flex gap-1 sm:gap-1.5 flex-wrap">
               {listing.amenities.slice(0, 2).map((amenity, i) => (
-                <span key={i} className="px-1.5 py-0.5 sm:px-2 bg-gray-50 rounded text-[7px] sm:text-[9px] text-gray-500 border border-gray-100 font-medium">
+                <span key={amenity} className="px-1.5 py-0.5 sm:px-2 bg-gray-50 rounded text-[7px] sm:text-[9px] text-gray-500 border border-gray-100 font-medium">
                   {amenity}
                 </span>
               ))}

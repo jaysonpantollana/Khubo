@@ -21,7 +21,6 @@ export interface ModalProps {
   showCloseButton?: boolean;
   hideTitle?: boolean;
   portal?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
 }
 
 const sizeStyles = {
@@ -49,7 +48,6 @@ export function Modal({
   showCloseButton = true,
   hideTitle = false,
   portal = true,
-  onOpenChange,
 }: ModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -58,15 +56,13 @@ export function Modal({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      onOpenChange?.(true);
     } else {
       document.body.style.overflow = '';
-      onOpenChange?.(false);
     }
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen, onOpenChange]);
+  }, [isOpen]);
 
   const handleOverlayClick = useCallback((e: React.MouseEvent) => {
     if (e.target === e.currentTarget && closeOnOverlayClick) {
@@ -77,12 +73,6 @@ export function Modal({
   const handleContentClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
   }, []);
-
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Escape' && closeOnEscape) {
-      onClose();
-    }
-  }, [closeOnEscape, onClose]);
 
   if (!isOpen) return null;
 
@@ -95,7 +85,6 @@ export function Modal({
         )}
         style={{ zIndex: 300 }}
         onClick={handleOverlayClick}
-        onKeyDown={handleKeyDown}
         role="presentation"
       >
       <div

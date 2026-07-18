@@ -9,19 +9,16 @@ import App from './App.tsx';
 import './index.css';
 import ErrorBoundary from './components/errors/ErrorBoundary';
 
+// ponytail: session-based hash reset — keeps profile/roommate routes from stale state on hard reload
 const runId = 'app_run_' + Math.random().toString(36).substring(7);
-
+const shouldResetHash = !window.location.hash || window.location.hash.includes('profile') || window.location.hash.includes('roommate');
 try {
   if (sessionStorage.getItem('currentRunId') !== runId) {
     sessionStorage.setItem('currentRunId', runId);
-    if (!window.location.hash || window.location.hash.includes('profile') || window.location.hash.includes('roommate')) {
-       window.location.hash = '#/';
-    }
+    if (shouldResetHash) window.location.hash = '#/';
   }
 } catch {
-  if (!window.location.hash || window.location.hash.includes('profile') || window.location.hash.includes('roommate')) {
-     window.location.hash = '#/';
-  }
+  if (shouldResetHash) window.location.hash = '#/';
 }
 
 createRoot(document.getElementById('root')!).render(

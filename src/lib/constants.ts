@@ -1,8 +1,3 @@
-export const BRAND_COLOR = '#17294F';
-export const ACCENT_BLUE = '#2252D6';
-export const MOBILE_BREAKPOINT = 768;
-export const STICKY_SEARCH_HEIGHT = 70;
-
 export const BUDGET_RANGES = [
   { min: 0, max: 1000, label: 'Less than ₱1k' },
   { min: 1000, max: 2000, label: '₱1k - ₱2k' },
@@ -31,8 +26,6 @@ export function parseBudgetRange(range: string): { min: number; max: number } | 
 }
 
 export const POPULAR_LOCATIONS = ['Iligan City'];
-
-export const FALLBACK_LISTING_IMAGE = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800';
 
 export const DEFAULT_FILTERS = {
   minPrice: 0,

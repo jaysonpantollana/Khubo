@@ -65,7 +65,7 @@ export default function Hero({
 
   return (
     <div
-      className="relative w-full overflow-hidden bg-cover bg-center"
+      className="relative w-full bg-cover bg-center"
       style={{ backgroundImage: "url('/bg_1.png')" }}
     >
       <div className="absolute inset-0 bg-black/40 z-0" />

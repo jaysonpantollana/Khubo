@@ -26,9 +26,7 @@ import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
 import { InquiriesModal } from '../components/InquiriesModal';
 import { ListingDetailModal } from '../components/ListingDetailModal';
 import EditProfileModal from '../components/profile/EditProfileModal';
-import LogoutModal from '../components/profile/LogoutModal';
-import LandlordSignupModal from '../components/profile/LandlordSignupModal';
-import StatCardModal from '../components/profile/StatCardModal';
+import ConfirmDialog from '../components/ConfirmDialog';
 import TenantProfileModal from '../components/TenantProfileModal';
 import { reservations } from '../mocks/reservations';
 
@@ -37,8 +35,6 @@ export default function Profile() {
   const { user, signOut } = useAuth();
   const { isLandlord, setIsLandlord } = useLandlord();
   const { showToast } = useToast();
-  const [showSignupModal, setShowSignupModal] = useState(false);
-
   const [isInquiriesModalOpen, setIsInquiriesModalOpen] = useState(false);
   const [selectedListingDetail, setSelectedListingDetail] = useState<Listing | null>(null);
   const [selectedTenants, setSelectedTenants] = useState<TenantInfo[]>([]);
@@ -91,8 +87,6 @@ export default function Profile() {
 
   const [isEditingTags, setIsEditingTags] = useState(false);
   const [newTagInput, setNewTagInput] = useState('');
-  const [selectedStatModal, setSelectedStatModal] = useState<string | null>(null);
-
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [tempIsOnline, setTempIsOnline] = useState(true);
@@ -165,13 +159,13 @@ export default function Profile() {
   };
 
   const isAnyModalOpen = useMemo(() =>
-    isCreateListingOpen || showSignupModal ||
+    isCreateListingOpen ||
     isInquiriesModalOpen ||
-    isEditProfileOpen || selectedStatModal !== null || editingListing !== null ||
+    isEditProfileOpen || editingListing !== null ||
     isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
     selectedListingDetail !== null,
-    [isCreateListingOpen, showSignupModal,
-     isInquiriesModalOpen, isEditProfileOpen, selectedStatModal,
+    [isCreateListingOpen,
+     isInquiriesModalOpen, isEditProfileOpen,
      editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
      selectedListingDetail]
   );
@@ -245,7 +239,6 @@ export default function Profile() {
   const handleStatClick = (title: string) => {
     if (title === 'Tenants') navigate('/landlord/tenants');
     else if (title === 'Properties') navigate('/landlord/properties');
-    else setSelectedStatModal(title);
   };
 
   return (
@@ -963,12 +956,6 @@ export default function Profile() {
       <BottomNav />
 
       {/* Modals */}
-      <LandlordSignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSuccess={() => { setIsLandlord(true); }}
-      />
-
       {editingListing && (
         <EditListingModal
           isOpen={true}
@@ -986,8 +973,6 @@ export default function Profile() {
         />
       )}
 
-      <StatCardModal title={selectedStatModal} onClose={() => setSelectedStatModal(null)} />
-
       <EditProfileModal
         isOpen={isEditProfileOpen}
         onClose={() => setIsEditProfileOpen(false)}
@@ -1004,10 +989,12 @@ export default function Profile() {
         onSave={handleSaveProfile}
       />
 
-      <LogoutModal
+      <ConfirmDialog
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
         onConfirm={() => { signOut(); setIsLogoutModalOpen(false); navigate('/'); }}
+        title="Are you absolutely sure?"
+        message="This action cannot be undone. This will permanently log you out of your account and remove your active session from our servers."
       />
 
       <PhotoCarouselOverlay

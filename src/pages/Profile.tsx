@@ -244,7 +244,7 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-[#F9F9F9] pb-32 transition-colors duration-300">
       {/* Hero Section */}
-      <div className="relative min-h-[440px] md:h-[500px] w-full bg-black flex flex-col justify-end">
+      <div className="relative min-h-[360px] md:min-h-[500px] w-full bg-black flex flex-col justify-end">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: 'url("/bg_2.webp")', opacity: 0.6 }}

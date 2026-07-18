@@ -371,7 +371,7 @@ export default function Maps() {
     <div className="flex flex-col h-screen bg-white relative">
       <button
         onClick={() => navigate(-1)}
-        className="md:hidden absolute top-[76px] left-3 z-30 w-10 h-10 flex items-center justify-center bg-white shadow-md pointer-events-auto rounded-full border border-neutral-100"
+        className="md:hidden absolute top-14 left-3 z-30 w-10 h-10 flex items-center justify-center bg-white shadow-md pointer-events-auto rounded-full border border-neutral-100"
         aria-label="Go back"
       >
         <ArrowLeft size={20} className="text-neutral-900" />

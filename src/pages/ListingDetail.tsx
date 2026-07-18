@@ -322,12 +322,12 @@ export default function ListingDetail() {
                   <div className="flex flex-wrap gap-4 mb-8">
                     {listing.amenities.slice(0, showAllAmenities ? listing.amenities.length : 3).map((amenity, idx) => (
                       <div key={idx} className="px-5 py-3.5 border border-neutral-200 rounded-xl">
-                        <span className="text-[15px] text-neutral-800 font-medium">{amenity}</span>
+                        <span className="text-base text-neutral-800 font-medium">{amenity}</span>
                       </div>
                     ))}
                     {!showAllAmenities && listing.amenities.length > 3 && (
                       <div className="px-5 py-3.5 border border-dashed border-neutral-300 rounded-xl">
-                        <span className="text-[15px] text-neutral-800 font-medium">+{listing.amenities.length - 3}</span>
+                        <span className="text-base text-neutral-800 font-medium">+{listing.amenities.length - 3}</span>
                       </div>
                     )}
                   </div>
@@ -357,8 +357,8 @@ export default function ListingDetail() {
                     <FileText size={24} className="text-[#17294F]" />
                   </div>
                   <div>
-                    <h4 className="text-[16px] font-semibold text-neutral-900">Standard Lease Agreement</h4>
-                    <p className="text-[13px] text-neutral-500 mt-0.5">PDF • 2.4 MB</p>
+                    <h4 className="text-base font-semibold text-neutral-900">Standard Lease Agreement</h4>
+                    <p className="text-sm text-neutral-500 mt-0.5">PDF • 2.4 MB</p>
                   </div>
                 </div>
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#17294F] g-[#17294F] ext-white transition-colors border border-neutral-200">
@@ -377,13 +377,13 @@ export default function ListingDetail() {
                     <div key={rev.id} className="bg-white border border-neutral-200 rounded-3xl p-6 flex flex-col gap-4 shadow-sm cursor-pointer" onClick={() => setSelectedReview(rev)}>
                        <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
-                              <img src={rev.userImage} loading="lazy" className="w-[46px] h-[46px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
+                              <img src={rev.userImage} loading="lazy" className="w-11 h-11 rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={rev.userName} />
                              <div className="flex flex-col">
                                 <div className="flex items-center gap-1.5">
-                                   <span className="font-bold text-neutral-900 text-[15px] leading-tight">{rev.userName}</span>
+                                   <span className="font-bold text-neutral-900 text-base leading-tight">{rev.userName}</span>
                                    <BadgeCheck size={16} className="text-[#2252D6]" />
                                 </div>
-                                <span className="text-neutral-500 text-[13px] font-medium leading-tight mt-0.5">@{rev.userName.toLowerCase().replace(/\s+/g, '_')}</span>
+                                <span className="text-neutral-500 text-sm font-medium leading-tight mt-0.5">@{rev.userName.toLowerCase().replace(/\s+/g, '_')}</span>
                              </div>
                           </div>
                           {isLandlord && (
@@ -397,12 +397,12 @@ export default function ListingDetail() {
                           )}
                        </div>
                        
-                       <p className="text-neutral-800 leading-relaxed text-[15px] pt-1">
+                       <p className="text-neutral-800 leading-relaxed text-base pt-1">
                           {rev.comment}
                        </p>
 
                        <div className="flex items-center justify-between mt-auto pt-4 text-neutral-500">
-                          <div className="text-[13px] font-medium">
+                          <div className="text-sm font-medium">
                              {rev.date}
                           </div>
                        <div className="flex items-center gap-5 text-neutral-400">
@@ -445,7 +445,7 @@ export default function ListingDetail() {
 
               {/* Map View */}
               <div 
-                className="w-full h-[540px] relative z-0 group cursor-pointer"
+                className="w-full h-[60vh] md:h-[540px] relative z-0 group cursor-pointer"
                 onClick={() => setIsMapModalOpen(true)}
               >
                 <div className="absolute inset-0 z-20 group-g-black/5 transition-colors rounded-3xl" />
@@ -480,7 +480,7 @@ export default function ListingDetail() {
 
           {/* Booking Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-[100px] flex flex-col gap-4 max-h-[calc(100vh-120px)]">
+            <div className="sticky top-14 lg:top-20 flex flex-col gap-4 max-h-[calc(100vh-120px)]">
 
                <div className="border border-gray-200 rounded-[2.5rem] py-8 px-8 shadow-2xl flex flex-col gap-5 bg-white overflow-y-auto min-h-0">
                  <div className="flex justify-between items-center bg-neutral-50 px-5 py-4 rounded-[2rem] border border-neutral-100 flex-shrink-0">
@@ -647,13 +647,13 @@ export default function ListingDetail() {
           <div className="bg-white rounded-3xl p-6 w-full max-w-lg shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-3">
-                  <img src={selectedReview.userImage} loading="lazy" className="w-[50px] h-[50px] rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={selectedReview.userName} />
+                   <img src={selectedReview.userImage} loading="lazy" className="w-12 h-12 rounded-full object-cover bg-neutral-100 ring-2 ring-white shadow-sm" alt={selectedReview.userName} />
                  <div className="flex flex-col">
                     <div className="flex items-center gap-1.5">
-                       <span className="font-bold text-neutral-900 text-[16px] leading-tight">{selectedReview.userName}</span>
+                       <span className="font-bold text-neutral-900 text-base leading-tight">{selectedReview.userName}</span>
                        <BadgeCheck size={18} className="text-[#2252D6]" />
                     </div>
-                    <span className="text-neutral-500 text-[14px] font-medium leading-tight mt-0.5">@{selectedReview.userName.toLowerCase().replace(/\s+/g, '_')}</span>
+                    <span className="text-neutral-500 text-sm font-medium leading-tight mt-0.5">@{selectedReview.userName.toLowerCase().replace(/\s+/g, '_')}</span>
                  </div>
               </div>
               <div className="flex items-center gap-2">
@@ -678,11 +678,11 @@ export default function ListingDetail() {
               </div>
             </div>
             
-            <p className="text-neutral-800 leading-relaxed text-[16px] md:text-[18px]">
+            <p className="text-neutral-800 leading-relaxed text-base md:text-lg">
                {selectedReview.comment}
             </p>
 
-            <div className="mt-8 text-neutral-500 text-[14px] font-medium">
+            <div className="mt-8 text-neutral-500 text-sm font-medium">
                {selectedReview.date}
             </div>
           </div>

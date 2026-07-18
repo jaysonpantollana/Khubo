@@ -147,7 +147,7 @@ export default function Home() {
         />
       ) : (
         <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm">
-          <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-[70px]">
+          <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-16">
             <div className="flex items-center justify-between w-full">
               <div className="flex-1 min-w-0 relative group/cat pl-2 sm:pl-0">
                 <Categories selectedCategory={selectedCategory} onSelect={setSelectedCategory} />

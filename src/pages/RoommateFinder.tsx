@@ -276,7 +276,7 @@ export default function RoommateFinder() {
 
       {/* Sticky Header with Categories & Search */}
       <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm transition-all duration-300">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-[70px]">
+        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-16">
           {displaySearch ? (
             <div className="flex items-center justify-between w-full py-3 px-2 sm:px-0">
               <div className="hidden md:block flex-1 min-w-0"></div>

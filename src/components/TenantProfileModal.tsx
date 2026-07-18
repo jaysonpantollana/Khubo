@@ -44,7 +44,7 @@ export default function TenantProfileModal({ tenants, isOpen, onClose }: TenantP
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900"
+            className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-500 ext-neutral-900"
           >
             <X size={20} />
           </button>
@@ -56,7 +56,7 @@ export default function TenantProfileModal({ tenants, isOpen, onClose }: TenantP
         {/* Tenant list */}
         <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3">
           {tenants.map((tenant) => (
-            <div key={tenant.id} className="flex items-center gap-4 p-4 bg-neutral-50 rounded-2xl hover:bg-neutral-100 transition-colors">
+            <div key={tenant.id} className="flex items-center gap-4 p-4 bg-neutral-50 rounded-2xl g-neutral-100 transition-colors">
               {/* Avatar */}
               <img
                 src={tenant.image}

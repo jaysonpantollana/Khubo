@@ -73,7 +73,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
           <h2 className="text-xl md:text-2xl font-extrabold text-[#17294F]">Landlord Profile</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-neutral-100 rounded-full transition-colors"
+            className="p-2 g-neutral-100 rounded-full transition-colors"
           >
             <X size={20} />
           </button>
@@ -123,7 +123,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
               <span className="text-sm font-bold text-[#17294F] flex-1">+63 912 345 6789</span>
               <button
                 onClick={() => copyToClipboard('+639123456789', 'Phone')}
-                className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+                className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
               >
                 {copiedContact === 'Phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
               </button>
@@ -135,7 +135,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
               <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
               <button
                 onClick={() => copyToClipboard('layla@khubo.com', 'Email')}
-                className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+                className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
               >
                 {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
               </button>
@@ -165,7 +165,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
         {/* Contact Button */}
         <button
           onClick={handleContact}
-          className="w-full py-3 bg-[#17294F] text-white text-sm font-bold rounded-xl shadow-lg hover:bg-[#1e3566] transition flex items-center justify-center gap-2"
+          className="w-full py-3 bg-[#17294F] text-white text-sm font-bold rounded-xl shadow-lg g-[#1e3566] transition flex items-center justify-center gap-2"
         >
           <MessageCircle size={18} />
           Contact Owner

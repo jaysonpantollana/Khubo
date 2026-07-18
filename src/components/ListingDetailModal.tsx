@@ -48,7 +48,7 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
           <h2 className="text-xl font-bold text-neutral-900 truncate pr-4">{listing.title}</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900 shrink-0"
+            className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-500 ext-neutral-900 shrink-0"
           >
             <X size={20} />
           </button>
@@ -71,13 +71,13 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
               <>
                 <button
                   onClick={prevImage}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg g-white transition"
                 >
                   <ChevronLeft size={20} className="text-neutral-900" />
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg g-white transition"
                 >
                   <ChevronRight size={20} className="text-neutral-900" />
                 </button>

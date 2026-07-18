@@ -104,16 +104,16 @@ function SectionCard({ title, onEdit, editing, onSave, onCancel, children }: {
             <button
               type="button"
               onClick={onCancel}
-              className="p-1.5 hover:bg-neutral-100 rounded-full transition-colors cursor-pointer"
+              className="p-1.5 g-neutral-100 rounded-full transition-colors cursor-pointer"
             >
-              <X size={14} className="text-neutral-400 hover:text-red-500 transition-colors" />
+              <X size={14} className="text-neutral-400 ext-red-500 transition-colors" />
             </button>
             <button
               type="button"
               onClick={onSave}
-              className="p-1.5 hover:bg-[#2252D6]/10 rounded-full transition-colors cursor-pointer"
+              className="p-1.5 g-[#2252D6]/10 rounded-full transition-colors cursor-pointer"
             >
-              <Check size={14} className="text-neutral-400 hover:text-[#2252D6] transition-colors" />
+              <Check size={14} className="text-neutral-400 ext-[#2252D6] transition-colors" />
             </button>
           </div>
         ) : (
@@ -121,9 +121,9 @@ function SectionCard({ title, onEdit, editing, onSave, onCancel, children }: {
             <button
               type="button"
               onClick={onEdit}
-              className="p-1.5 hover:bg-neutral-100 rounded-full transition-colors cursor-pointer"
+              className="p-1.5 g-neutral-100 rounded-full transition-colors cursor-pointer"
             >
-              <Pencil size={14} className="text-neutral-400 hover:text-[#2252D6] transition-colors" />
+              <Pencil size={14} className="text-neutral-400 ext-[#2252D6] transition-colors" />
             </button>
           )
         )}
@@ -220,7 +220,7 @@ export function ReviewProfile({ data, onBack, onClose, onContinue, onUpdateData 
       <FocusTrap onClose={onClose} ariaLabel="Review Profile" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
+          className="absolute top-5 right-5 p-2 g-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
         >
           <X size={20} className="text-neutral-500" />
         </button>
@@ -445,7 +445,7 @@ export function ReviewProfile({ data, onBack, onClose, onContinue, onUpdateData 
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 hover:border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-200 order-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Back
           </button>
@@ -454,7 +454,7 @@ export function ReviewProfile({ data, onBack, onClose, onContinue, onUpdateData 
             <button
               type="button"
               onClick={onContinue}
-              className="px-8 py-2.5 bg-[#2252D6] hover:bg-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
+              className="px-8 py-2.5 bg-[#2252D6] g-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
             >
               Continue
             </button>

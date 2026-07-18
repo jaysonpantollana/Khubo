@@ -35,10 +35,10 @@ export default function BottomNav() {
               onClick={() => navigate(item.path)}
               className="flex flex-col items-center justify-center min-w-0 flex-1 py-0.5 group transition-all duration-200 relative"
             >
-              <div className={`p-1 sm:p-1.5 md:p-2 rounded-xl sm:rounded-2xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
+              <div className={`p-1 sm:p-1.5 md:p-2 rounded-xl sm:rounded-2xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-ext-white'}`}>
                 <item.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5" strokeWidth={isActive ? 2.5 : 2} />
               </div>
-              <span className={`text-[6px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-wide text-center transition-colors duration-200 mt-px leading-tight whitespace-nowrap ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-hover:text-white'}`}>
+              <span className={`text-[6px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-wide text-center transition-colors duration-200 mt-px leading-tight whitespace-nowrap ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-ext-white'}`}>
                 {item.label}
               </span>
             </button>

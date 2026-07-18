@@ -27,13 +27,13 @@ export default function ConfirmDialog({ isOpen, onClose, onConfirm, title, messa
         <div className="flex gap-3 mt-auto">
           <button
             onClick={onClose}
-            className="flex-1 py-3 px-4 bg-neutral-100 hover:bg-neutral-200 text-neutral-900 rounded-xl font-bold transition-colors"
+            className="flex-1 py-3 px-4 bg-neutral-100 g-neutral-200 text-neutral-900 rounded-xl font-bold transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 py-3 px-4 bg-[#0A2B4E] hover:bg-[#153a66] text-white rounded-xl font-bold transition-colors"
+            className="flex-1 py-3 px-4 bg-[#0A2B4E] g-[#153a66] text-white rounded-xl font-bold transition-colors"
           >
             Confirm
           </button>

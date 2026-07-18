@@ -57,7 +57,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
           {onRetry && (
             <button 
               onClick={onRetry}
-              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#17294F] dark:bg-[#2252D6] hover:bg-[#1a2d55] dark:hover:bg-[#1e49c0] text-white rounded-full font-medium transition-colors w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#17294F] dark:bg-[#2252D6] g-[#1a2d55] dark:g-[#1e49c0] text-white rounded-full font-medium transition-colors w-full sm:w-auto"
             >
               <RefreshCw className="w-4 h-4" />
               <span>Try Again</span>
@@ -67,7 +67,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
           {onGoBack && (
             <button 
               onClick={onGoBack}
-              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-800 text-neutral-700 dark:text-slate-300 border border-neutral-200 dark:border-slate-700 hover:bg-neutral-50 dark:hover:bg-slate-700 rounded-full font-medium transition-colors w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-800 text-neutral-700 dark:text-slate-300 border border-neutral-200 dark:border-slate-700 g-neutral-50 dark:g-slate-700 rounded-full font-medium transition-colors w-full sm:w-auto"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Go Back</span>

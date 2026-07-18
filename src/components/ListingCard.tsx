@@ -83,7 +83,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
       tabIndex={0}
       role="button"
       aria-label={`View details for ${listing.title} at ${listing.location}. Price P${listing.price} per month. Rating ${listing.rating.toFixed(2)} stars.`}
-      className="col-span-1 cursor-pointer bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent hover:border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] focus-visible:ring-offset-2"
+      className="col-span-1 cursor-pointer bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent order-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] focus-visible:ring-offset-2"
     >
       <div className="flex flex-col gap-2 sm:gap-2.5 w-full">
         <div className="aspect-[4/3] relative overflow-hidden rounded-xl">

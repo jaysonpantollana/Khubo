@@ -71,7 +71,7 @@ export default function ToRate() {
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [ratings, setRatings] = useState<Record<string, RatingData>>({});
-  const [hoveredStar, setHoveredStar] = useState<Record<string, number>>({});
+
   const [isAnonymous, setIsAnonymous] = useState<Record<string, boolean>>({});
   const [isRatingExpanded, setIsRatingExpanded] = useState<Record<string, boolean>>({});
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
@@ -150,7 +150,7 @@ export default function ToRate() {
         <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 -ml-2 hover:bg-neutral-100 rounded-full transition-colors"
+            className="p-2 -ml-2 g-neutral-100 rounded-full transition-colors"
           >
             <ArrowLeft size={20} className="text-neutral-700" />
           </button>
@@ -174,7 +174,7 @@ export default function ToRate() {
                     alt={res.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+                  <div className="absolute inset-0 bg-black/0 group-g-black/10 transition-colors pointer-events-none" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
                   <div>
@@ -208,7 +208,7 @@ export default function ToRate() {
                         {res.tenants.slice(0, 4).map((t, i) => (
                           <div
                             key={i}
-                            className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                            className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ing-2 ing-[#2252D6] ing-offset-1 transition-all overflow-hidden"
                             style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: res.tenants.length - i }}
                             title={t.name}
                           >
@@ -221,7 +221,7 @@ export default function ToRate() {
                         ))}
                         {res.tenants.length > 4 && (
                           <span
-                            className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                            className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer g-[#3a3b3c] transition-colors"
                             style={{ marginLeft: '-8px', zIndex: 0 }}
                           >
                             +{res.tenants.length - 4}
@@ -267,7 +267,7 @@ export default function ToRate() {
                           return next;
                         });
                       }}
-                      className="mt-3 text-xs font-semibold text-green-700 hover:text-green-900 underline cursor-pointer"
+                      className="mt-3 text-xs font-semibold text-green-700 ext-green-900 underline cursor-pointer"
                     >
                       Edit review
                     </button>
@@ -307,15 +307,13 @@ export default function ToRate() {
                         <button
                           key={star}
                           type="button"
-                          onMouseEnter={() => setHoveredStar((prev) => ({ ...prev, [res.id]: star }))}
-                          onMouseLeave={() => setHoveredStar((prev) => ({ ...prev, [res.id]: 0 }))}
                           onClick={() => handleRatingChange(res.id, star)}
                           className="p-0.5 cursor-pointer"
                         >
                           <Star
                             size={28}
                             className={`transition-colors ${
-                              star <= (hoveredStar[res.id] || ratings[res.id]?.rating || 0)
+                              star <= (ratings[res.id]?.rating || 0)
                                 ? 'text-amber-400 fill-amber-400'
                                 : 'text-neutral-300'
                             }`}
@@ -340,7 +338,7 @@ export default function ToRate() {
                     <div className="flex justify-center">
                       <button
                         onClick={() => handleSubmit(res.id, res.title)}
-                        className="flex items-center justify-center gap-2 px-8 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl hover:bg-[#1a3fa8] transition-all cursor-pointer"
+                        className="flex items-center justify-center gap-2 px-8 py-3 bg-[#2252D6] text-white text-sm font-bold rounded-2xl g-[#1a3fa8] transition-all cursor-pointer"
                       >
                         <Send size={16} />
                         Submit Rating
@@ -350,7 +348,7 @@ export default function ToRate() {
                 ) : (
                   <button
                     onClick={() => setIsRatingExpanded((prev) => ({ ...prev, [res.id]: true }))}
-                    className="mx-auto flex items-center justify-center gap-2 px-6 py-3 bg-[#2252D6] text-white rounded-full cursor-pointer hover:bg-[#1a3fa8] transition-colors"
+                    className="mx-auto flex items-center justify-center gap-2 px-6 py-3 bg-[#2252D6] text-white rounded-full cursor-pointer g-[#1a3fa8] transition-colors"
                   >
                     <span className="text-sm font-bold">Add review</span>
                     <ChevronDown size={18} className="transition-transform" />

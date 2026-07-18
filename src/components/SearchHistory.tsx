@@ -27,7 +27,7 @@ export const SearchHistory: React.FC<SearchHistoryProps> = ({ history, onSelect,
             <button
               key={query}
               onClick={() => onSelect(query)}
-              className="flex items-center gap-1.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 px-3 py-1.5 rounded-full text-xs font-medium text-neutral-800 dark:text-neutral-200 transition-colors"
+              className="flex items-center gap-1.5 bg-neutral-100 dark:bg-neutral-800 g-neutral-200 dark:g-neutral-700 px-3 py-1.5 rounded-full text-xs font-medium text-neutral-800 dark:text-neutral-200 transition-colors"
             >
               {query}
               <span
@@ -35,7 +35,7 @@ export const SearchHistory: React.FC<SearchHistoryProps> = ({ history, onSelect,
                   e.stopPropagation();
                   onRemove(query);
                 }}
-                className="hover:text-red-500 rounded-full"
+                className="ext-red-500 rounded-full"
               >
                 <X size={12} />
               </span>

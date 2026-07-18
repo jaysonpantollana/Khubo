@@ -310,7 +310,7 @@ export default function RoommateFinder() {
                               setSearchQuery("");
                               setHideStickyDropdown(true);
                             }}
-                            className="p-1 hover:bg-neutral-100 rounded-full transition-colors flex-shrink-0"
+                            className="p-1 g-neutral-100 rounded-full transition-colors flex-shrink-0"
                             aria-label="Clear search"
                           >
                             <X className="w-3.5 h-3.5 text-neutral-500" />
@@ -324,7 +324,7 @@ export default function RoommateFinder() {
                         >
                           <Search
                             size={16}
-                            className="text-white group-hover:stroke-[3px] transition-all"
+                            className="text-white group-troke-[3px] transition-all"
                           />
                         </button>
                       </div>
@@ -372,7 +372,7 @@ export default function RoommateFinder() {
                           className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
                             activeStickyDropdown === "location"
                               ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                              : "hover:bg-neutral-50 rounded-full"
+                              : "g-neutral-50 rounded-full"
                           }`}
                         >
                           <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
@@ -392,28 +392,6 @@ export default function RoommateFinder() {
                           <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-3 z-50 text-left">
                             <div className="space-y-3">
                               <div>
-                                <div
-                                  className="flex items-center px-3 py-2 bg-neutral-100 rounded-xl mb-2 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    (
-                                      e.currentTarget.querySelector(
-                                        "input",
-                                      ) as HTMLInputElement
-                                    )?.focus();
-                                  }}
-                                >
-                                  <Search className="w-3.5 h-3.5 text-neutral-400 mr-2 flex-shrink-0" />
-                                  <input
-                                    type="text"
-                                    placeholder="Search location..."
-                                    value={searchQuery}
-                                    onChange={(e) =>
-                                      setSearchQuery(e.target.value)
-                                    }
-                                    className="w-full bg-transparent border-none outline-none text-xs font-semibold text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                                  />
-                                </div>
                                 <div className="space-y-1">
                                   {["MSU-IIT", "Pala-o", "Tibanga"].map(
                                     (loc) => (
@@ -423,9 +401,9 @@ export default function RoommateFinder() {
                                           setSearchQuery(loc);
                                           setActiveStickyDropdown(null);
                                         }}
-                                        className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 transition-colors group"
+                                        className="w-full flex items-center gap-2 p-1.5 rounded-lg g-neutral-50 transition-colors group"
                                       >
-                                        <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all">
+                                        <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-g-[#2252D6] group-ext-white transition-all">
                                           <MapPin size={12} />
                                         </div>
                                         <span className="font-medium text-neutral-800 text-xs">
@@ -470,7 +448,7 @@ export default function RoommateFinder() {
                           className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
                             activeStickyDropdown === "budget"
                               ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                              : "hover:bg-neutral-50 rounded-full"
+                              : "g-neutral-50 rounded-full"
                           }`}
                         >
                           <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
@@ -502,7 +480,7 @@ export default function RoommateFinder() {
                                         setActiveStickyDropdown(null);
                                         setStickyBudgetScrollIndex(0);
                                       }}
-                                      className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                                      className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
                                     >
                                       <span className="font-medium text-neutral-900 text-xs">
                                         {range.label}
@@ -518,7 +496,7 @@ export default function RoommateFinder() {
                                         Math.max(0, prev - 1)
                                       )
                                     }
-                                    className="absolute -right-1 top-0 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm"
+                                    className="absolute -right-1 top-0 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm"
                                     aria-label="Scroll up"
                                   >
                                     <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -536,7 +514,7 @@ export default function RoommateFinder() {
                                         )
                                       )
                                     }
-                                    className="absolute -right-1 bottom-0 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm"
+                                    className="absolute -right-1 bottom-0 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm"
                                     aria-label="Scroll down"
                                   >
                                     <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -588,7 +566,7 @@ export default function RoommateFinder() {
                       >
                         <Search
                           size={16}
-                          className="text-white group-hover:stroke-[3px] transition-all"
+                          className="text-white group-troke-[3px] transition-all"
                         />
                       </button>
                     </>
@@ -603,7 +581,7 @@ export default function RoommateFinder() {
 
               <button
                 onClick={() => scroll(tagsScrollRef, "left")}
-                className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
+                className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm ext-neutral-800 order-neutral-300 transition-all hidden md:flex"
                 aria-label="Scroll left"
               >
                 <ChevronLeft size={16} strokeWidth={2} />
@@ -611,7 +589,7 @@ export default function RoommateFinder() {
 
               <button
                 onClick={() => scroll(tagsScrollRef, "right")}
-                className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
+                className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm ext-neutral-800 order-neutral-300 transition-all hidden md:flex"
                 aria-label="Scroll right"
               >
                 <ChevronRight size={16} strokeWidth={2} />
@@ -629,7 +607,7 @@ export default function RoommateFinder() {
                       className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 cursor-pointer ${
                         selectedTag === tag
                           ? "bg-neutral-900 text-white border-neutral-900 shadow-sm"
-                          : "bg-white text-neutral-700 border-neutral-200 hover:border-neutral-800 hover:text-neutral-900"
+                          : "bg-white text-neutral-700 border-neutral-200 order-neutral-800 ext-neutral-900"
                       }`}
                     >
                       {tag.toUpperCase()}
@@ -662,7 +640,7 @@ export default function RoommateFinder() {
               />
               <input
                 type="text"
-                className="flex-1 bg-white border border-neutral-200 rounded-full px-5 py-3 md:py-3.5 font-medium text-neutral-800 placeholder:text-neutral-500 hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/20 focus:border-[#2252D6] transition shadow-sm text-sm md:text-base cursor-pointer"
+                className="flex-1 bg-white border border-neutral-200 rounded-full px-5 py-3 md:py-3.5 font-medium text-neutral-800 placeholder:text-neutral-500 g-neutral-50 focus:outline-none focus:ring-2 focus:ring-[#2252D6]/20 focus:border-[#2252D6] transition shadow-sm text-sm md:text-base cursor-pointer"
                 placeholder={
                   postMode === "finding"
                     ? "What kind of roommate are you looking for, Micheal?"
@@ -677,11 +655,11 @@ export default function RoommateFinder() {
               <div className="inline-flex bg-white rounded-full p-1 shadow-sm border border-neutral-200">
                 <button
                   onClick={() => setPostMode("applying")}
-                  className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === "applying" ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50"}`}
+                  className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === "applying" ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-500 ext-neutral-900 g-neutral-50"}`}
                 >
                   <UserPlus
                     size={14}
-                    className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === "applying" ? "text-white" : "text-neutral-400 group-hover:text-neutral-600"}`}
+                    className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === "applying" ? "text-white" : "text-neutral-400 group-ext-neutral-600"}`}
                   />
                   <span className="font-semibold text-[11px] sm:text-[15px]">
                     Applying as Roommate
@@ -689,11 +667,11 @@ export default function RoommateFinder() {
                 </button>
                 <button
                   onClick={() => setPostMode("finding")}
-                  className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === "finding" ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50"}`}
+                  className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === "finding" ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-500 ext-neutral-900 g-neutral-50"}`}
                 >
                   <Search
                     size={14}
-                    className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === "finding" ? "text-white" : "text-neutral-400 group-hover:text-neutral-600"}`}
+                    className={`shrink-0 md:w-[18px] md:h-[18px] ${postMode === "finding" ? "text-white" : "text-neutral-400 group-ext-neutral-600"}`}
                   />
                   <span className="font-semibold text-[11px] sm:text-[15px]">
                     Finding a roommate
@@ -724,13 +702,13 @@ export default function RoommateFinder() {
                 <div className="hidden md:flex items-center gap-3">
                   <button
                     onClick={() => scroll(recommendedRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
                   >
                     <ChevronLeft size={20} />
                   </button>
                   <button
                     onClick={() => scroll(recommendedRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
                   >
                     <ChevronRight size={20} />
                   </button>
@@ -787,13 +765,13 @@ export default function RoommateFinder() {
                 <div className="hidden md:flex items-center gap-3">
                   <button
                     onClick={() => scroll(nearMsuIitRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
                   >
                     <ChevronLeft size={20} />
                   </button>
                   <button
                     onClick={() => scroll(nearMsuIitRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-black hover:bg-neutral-50 transition-all"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
                   >
                     <ChevronRight size={20} />
                   </button>
@@ -850,7 +828,7 @@ export default function RoommateFinder() {
                   setSelectedTag("ALL");
                   setSearchQuery("");
                 }}
-                className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800 transition"
+                className="px-6 py-3 bg-black text-white rounded-full font-bold g-neutral-800 transition"
               >
                 Clear all filters
               </button>

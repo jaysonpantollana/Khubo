@@ -137,22 +137,14 @@ export default function RoommateHero({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-[100] text-left pointer-events-auto">
                 <div className="space-y-4">
                   <div>
-                      <div className="flex items-center px-4 py-2 bg-neutral-100 rounded-xl mb-3 focus-within:ring-2 focus-within:ring-[#2252D6]/20 transition-all cursor-text" onClick={(e) => { e.stopPropagation(); (e.currentTarget.querySelector('input') as HTMLInputElement)?.focus(); }}>
-                        <Search className="w-4 h-4 text-neutral-400 mr-2 flex-shrink-0" />
-                        <input 
-                          type="text"
-                          placeholder="Search location..."
-                          className="w-full bg-transparent border-none outline-none text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                        />
-                      </div>
                     <div className="space-y-1">
                       {['Iligan City'].map((loc) => (
                         <button 
                           key={loc}
                           onClick={() => { setSelectedLocation(loc); setActiveDropdown(null); }}
-                          className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 transition-colors group"
+                          className="w-full flex items-center gap-3 p-2 rounded-xl g-neutral-50 transition-colors group"
                         >
-                          <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white transition-all">
+                          <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-g-[#2252D6] group-ext-white transition-all">
                             <MapPin size={14} />
                           </div>
                           <span className="font-medium text-neutral-800 text-sm">{loc}</span>
@@ -167,14 +159,14 @@ export default function RoommateHero({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: 'smooth' })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: 'smooth' })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -188,7 +180,7 @@ export default function RoommateHero({
                       <button 
                         key={range.label}
                         onClick={() => { setSelectedBudget(range.label); setActiveDropdown(null); onBudgetSelect?.(range); }}
-                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
                       >
                         <span className="font-medium text-neutral-900 text-sm">{range.label}</span>
                       </button>
@@ -225,7 +217,7 @@ export default function RoommateHero({
                         setSearchQuery('');
                         setHideDropdown(true);
                       }} 
-                      className="p-1 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
+                      className="p-1 g-white/10 rounded-full transition-colors flex-shrink-0"
                       aria-label="Clear search"
                     >
                       <X className="w-4 h-4 text-white/80" />
@@ -238,8 +230,8 @@ export default function RoommateHero({
                     className="bg-[#17294F] p-1.5 sm:p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                     aria-label="Search"
                   >
-                    <Search size={16} className="text-white group-hover:stroke-[3px] transition-all md:hidden" />
-                    <Search size={22} className="text-white group-hover:stroke-[3px] transition-all hidden md:block" />
+                    <Search size={16} className="text-white group-troke-[3px] transition-all md:hidden" />
+                    <Search size={22} className="text-white group-troke-[3px] transition-all hidden md:block" />
                   </button>
                 </div>
                 {!suppressDropdown && !hideDropdown && (
@@ -271,7 +263,7 @@ export default function RoommateHero({
                     className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-2 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'location' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
-                        : 'hover:bg-white/5 rounded-full'
+                        : 'g-white/5 rounded-full'
                       }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -297,7 +289,7 @@ export default function RoommateHero({
                     className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-2 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'budget' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
-                        : 'hover:bg-white/5 rounded-full'
+                        : 'g-white/5 rounded-full'
                       }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -333,8 +325,8 @@ export default function RoommateHero({
                   }}
                   className="bg-[#17294F] p-1.5 sm:p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                 >
-                  <Search size={16} className="text-white group-hover:stroke-[3px] transition-all md:hidden" />
-                  <Search size={22} className="text-white group-hover:stroke-[3px] transition-all hidden md:block" />
+                  <Search size={16} className="text-white group-troke-[3px] transition-all md:hidden" />
+                  <Search size={22} className="text-white group-troke-[3px] transition-all hidden md:block" />
                 </button>
               </>
             )}

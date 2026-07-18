@@ -133,7 +133,7 @@ export default function ListingDetail() {
         <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 h-16 flex items-center justify-between">
           <button 
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 hover:bg-neutral-100 p-2 pr-4 -ml-2 rounded-full transition text-neutral-900 cursor-pointer pointer-events-auto"
+            className="flex items-center gap-2 g-neutral-100 p-2 pr-4 -ml-2 rounded-full transition text-neutral-900 cursor-pointer pointer-events-auto"
           >
             <ArrowLeft size={24} />
             <span className="font-semibold text-sm hidden sm:block">Back</span>
@@ -193,7 +193,7 @@ export default function ListingDetail() {
             setIsSaved(!isSaved);
             if (!isSaved) showToast('Listing saved to your wishlist!');
           }}
-          className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg hover:bg-white transition-all"
+          className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg g-white transition-all"
         >
           <Heart
             size={24}
@@ -230,7 +230,7 @@ export default function ListingDetail() {
               <div 
                 key={idx} 
                 onClick={() => openGallery(idx + 1)}
-                className="hidden md:block relative overflow-hidden bg-neutral-100 cursor-zoom-in group-hover:first:opacity-100"
+                className="hidden md:block relative overflow-hidden bg-neutral-100 cursor-zoom-in group-irst:opacity-100"
               >
                 <img
                   src={img}
@@ -248,7 +248,7 @@ export default function ListingDetail() {
               setIsSaved(!isSaved);
               if (!isSaved) showToast('Listing saved to your wishlist!');
             }}
-            className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg hover:bg-white transition-all"
+            className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg g-white transition-all"
           >
             <Heart
               size={24}
@@ -327,7 +327,7 @@ export default function ListingDetail() {
                   {listing.amenities.length > 3 && (
                     <button
                       onClick={() => setShowAllAmenities(!showAllAmenities)}
-                      className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition inline-block"
+                      className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold g-[#17294F]/5 transition inline-block"
                     >
                       {showAllAmenities ? 'Show less' : 'Show more'}
                     </button>
@@ -344,7 +344,7 @@ export default function ListingDetail() {
                 Review the terms and conditions before you proceed with booking. This document outlines the house rules, payment schedules, and other important agreements.
               </p>
 
-              <div className="flex items-center justify-between p-5 border border-neutral-200 rounded-2xl bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer" onClick={() => window.open('#', '_blank')}>
+              <div className="flex items-center justify-between p-5 border border-neutral-200 rounded-2xl bg-neutral-50 g-neutral-100 transition-colors cursor-pointer" onClick={() => window.open('#', '_blank')}>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm border border-neutral-100 shrink-0">
                     <FileText size={24} className="text-[#17294F]" />
@@ -354,7 +354,7 @@ export default function ListingDetail() {
                     <p className="text-[13px] text-neutral-500 mt-0.5">PDF • 2.4 MB</p>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#17294F] hover:bg-[#17294F] hover:text-white transition-colors border border-neutral-200">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#17294F] g-[#17294F] ext-white transition-colors border border-neutral-200">
                   <Download size={18} />
                 </div>
               </div>
@@ -383,7 +383,7 @@ export default function ListingDetail() {
                             <button
                               aria-label="Delete review"
                               onClick={(e) => { e.stopPropagation(); setReviewToDelete(rev.id); }}
-                              className="p-1.5 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer pointer-events-auto"
+                              className="p-1.5 text-neutral-400 ext-red-500 g-red-50 rounded-lg transition-colors cursor-pointer pointer-events-auto"
                             >
                               <Trash2 size={16} />
                             </button>
@@ -399,11 +399,11 @@ export default function ListingDetail() {
                              {rev.date}
                           </div>
                        <div className="flex items-center gap-5 text-neutral-400">
-                              <button aria-label="Like review" className="flex items-center gap-1.5 hover:text-[#2252D6] transition-colors group cursor-pointer pointer-events-auto">
-                                 <Heart size={16} className="group-hover:fill-current transition-colors" />
+                              <button aria-label="Like review" className="flex items-center gap-1.5 ext-[#2252D6] transition-colors group cursor-pointer pointer-events-auto">
+                                 <Heart size={16} className="group-ill-current transition-colors" />
                                  <span className="text-xs font-semibold">{(idx * 7 + 12) % 40 + 10}</span>
                               </button>
-                              <button aria-label="Repeat review" className="flex items-center gap-1.5 hover:text-green-500 transition-colors cursor-pointer pointer-events-auto">
+                              <button aria-label="Repeat review" className="flex items-center gap-1.5 ext-green-500 transition-colors cursor-pointer pointer-events-auto">
                                  <Repeat2 size={16} />
                                  <span className="text-xs font-semibold">{(idx * 3 + 4) % 10 + 1}</span>
                               </button>
@@ -417,7 +417,7 @@ export default function ListingDetail() {
                  <div className="mt-8 flex">
                     <button 
                        onClick={() => setShowAllReviewsMobile(!showAllReviewsMobile)}
-                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold hover:bg-[#17294F]/5 transition flex items-center justify-center"
+                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold g-[#17294F]/5 transition flex items-center justify-center"
                     >
                        {showAllReviewsMobile ? 'Show less' : 'Show all'}
                     </button>
@@ -441,7 +441,7 @@ export default function ListingDetail() {
                 className="w-full h-[540px] relative z-0 group cursor-pointer"
                 onClick={() => setIsMapModalOpen(true)}
               >
-                <div className="absolute inset-0 z-20 group-hover:bg-black/5 transition-colors rounded-3xl" />
+                <div className="absolute inset-0 z-20 group-g-black/5 transition-colors rounded-3xl" />
                 <MapTilerView
                   lat={listing.lat || 8.2280}
                   lng={listing.lng || 124.2452}
@@ -510,7 +510,7 @@ export default function ListingDetail() {
                       <span className="text-sm font-bold text-[#17294F] flex-1">+63 912 345 6789</span>
                       <button
                         onClick={() => copyToClipboard('+639123456789', 'Phone')}
-                        className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+                        className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
                       >
                         {copiedContact === 'Phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                       </button>
@@ -520,7 +520,7 @@ export default function ListingDetail() {
                       <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
                       <button
                         onClick={() => copyToClipboard('layla@khubo.com', 'Email')}
-                        className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors text-neutral-500 hover:text-[#17294F]"
+                        className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
                       >
                         {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                       </button>
@@ -645,7 +645,7 @@ export default function ListingDetail() {
                 {isLandlord && (
                   <button
                     onClick={(e) => { e.stopPropagation(); setReviewToDelete(selectedReview.id); }}
-                    className="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors focus:outline-none cursor-pointer"
+                    className="p-2 text-neutral-400 ext-red-500 g-red-50 rounded-full transition-colors focus:outline-none cursor-pointer"
                     aria-label="Delete review"
                   >
                     <Trash2 size={20} />
@@ -656,7 +656,7 @@ export default function ListingDetail() {
                     e.stopPropagation();
                     setSelectedReview(null);
                   }}
-                  className="p-2 bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors focus:outline-none"
+                  className="p-2 bg-neutral-100 g-neutral-200 rounded-full transition-colors focus:outline-none"
                 >
                   <X size={20} className="text-neutral-600" />
                 </button>
@@ -682,13 +682,13 @@ export default function ListingDetail() {
             <div className="flex gap-3">
               <button
                 onClick={() => setReviewToDelete(null)}
-                className="flex-1 px-4 py-2.5 border border-neutral-200 rounded-xl font-semibold text-neutral-700 hover:bg-neutral-50 transition cursor-pointer"
+                className="flex-1 px-4 py-2.5 border border-neutral-200 rounded-xl font-semibold text-neutral-700 g-neutral-50 transition cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDeleteReview(reviewToDelete)}
-                className="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition cursor-pointer"
+                className="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-xl font-semibold g-red-600 transition cursor-pointer"
               >
                 Delete
               </button>

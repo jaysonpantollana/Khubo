@@ -66,7 +66,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
         <div className="flex justify-between items-center px-6 py-2 text-white z-20">
           <button
             onClick={onClose}
-            className="flex items-center gap-2 bg-black/40 hover:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full transition text-sm"
+            className="flex items-center gap-2 bg-black/40 g-black/60 backdrop-blur-md px-3 py-1.5 rounded-full transition text-sm"
           >
             <X size={18} />
             <span className="font-medium hidden sm:block">Close</span>
@@ -86,7 +86,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
             <>
               <button
                 onClick={prevImage}
-                className="absolute left-4 sm:left-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
+                className="absolute left-4 sm:left-10 z-10 w-14 h-14 bg-black/40 g-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
                 aria-label="Previous image"
               >
                 <ChevronLeft size={28} />
@@ -94,7 +94,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
 
               <button
                 onClick={nextImage}
-                className="absolute right-4 sm:right-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
+                className="absolute right-4 sm:right-10 z-10 w-14 h-14 bg-black/40 g-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
                 aria-label="Next image"
               >
                 <ChevronRight size={28} />

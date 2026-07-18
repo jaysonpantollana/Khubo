@@ -80,9 +80,9 @@ export function StickySearchBar({
                             setSelectedStickyLocation(loc);
                             setStickyActiveDropdown(null);
                           }}
-                          className="w-full flex items-center gap-2 p-1.5 rounded-lg hover:bg-neutral-50 group"
+                          className="w-full flex items-center gap-2 p-1.5 rounded-lg g-neutral-50 group"
                         >
-                          <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover:bg-[#2252D6] group-hover:text-white flex-shrink-0">
+                          <div className="w-6 h-6 rounded bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-g-[#2252D6] group-ext-white flex-shrink-0">
                             <MapPin size={12} />
                           </div>
                           <span className="font-medium text-neutral-800 text-xs whitespace-nowrap">{loc}</span>
@@ -98,14 +98,14 @@ export function StickySearchBar({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -122,7 +122,7 @@ export function StickySearchBar({
                           setSelectedStickyBudget(range.label);
                           setStickyActiveDropdown(null);
                         }}
-                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
+                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 text-left w-full"
                       >
                         <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">{range.label}</span>
                       </button>
@@ -162,7 +162,7 @@ export function StickySearchBar({
                           setSearchQuery("");
                           setHideStickyDropdown(true);
                         }}
-                        className="p-1 hover:bg-neutral-100 rounded-full mr-2 flex-shrink-0"
+                        className="p-1 g-neutral-100 rounded-full mr-2 flex-shrink-0"
                         aria-label="Clear search"
                       >
                         <X className="w-3.5 h-3.5 text-neutral-500" />
@@ -219,7 +219,7 @@ export function StickySearchBar({
                       className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
                         stickyActiveDropdown === "location"
                           ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                          : "hover:bg-neutral-50 rounded-full"
+                          : "g-neutral-50 rounded-full"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
@@ -258,7 +258,7 @@ export function StickySearchBar({
                       className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
                         stickyActiveDropdown === "budget"
                           ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
-                          : "hover:bg-neutral-50 rounded-full"
+                          : "g-neutral-50 rounded-full"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-2.5 min-w-0">

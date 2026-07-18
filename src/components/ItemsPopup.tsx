@@ -27,7 +27,7 @@ export function ItemsPopup<T extends { id: string }>({
         <h2 className="text-xl font-bold text-neutral-900">{title}</h2>
         <button
           onClick={onClose}
-          className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300"
+          className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-500 ext-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300"
         >
           <X size={20} />
         </button>

@@ -62,7 +62,7 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="absolute top-6 right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 transition-all shadow-sm"
+                className="absolute top-6 right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-500 g-neutral-100 ext-neutral-900 transition-all shadow-sm"
               >
                 <X size={20} />
               </button>
@@ -110,10 +110,10 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                       {roommate.tags.map((tag, idx) => (
                         <div 
                           key={idx}
-                          className="px-3 py-1.5 sm:px-4 sm:py-2 bg-neutral-50 border border-neutral-100 rounded-full flex items-center gap-2 group hover:border-[#17294F]/30 hover:bg-white transition-all cursor-default whitespace-nowrap"
+                          className="px-3 py-1.5 sm:px-4 sm:py-2 bg-neutral-50 border border-neutral-100 rounded-full flex items-center gap-2 group order-[#17294F]/30 g-white transition-all cursor-default whitespace-nowrap"
                         >
                           <Zap size={12} className="text-[#17294F] opacity-30" />
-                          <span className="text-[11px] sm:text-[13px] font-bold text-neutral-600 group-hover:text-[#17294F] tracking-tight">{tag}</span>
+                          <span className="text-[11px] sm:text-[13px] font-bold text-neutral-600 group-ext-[#17294F] tracking-tight">{tag}</span>
                         </div>
                       ))}
                     </div>
@@ -151,7 +151,7 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                             <p className="text-sm font-bold text-neutral-900">{roommate.phone}</p>
                             <button
                               onClick={() => handleCopy(roommate.phone!, 'phone')}
-                              className="p-1 rounded-md hover:bg-neutral-100 transition-colors text-neutral-400 hover:text-neutral-600"
+                              className="p-1 rounded-md g-neutral-100 transition-colors text-neutral-400 ext-neutral-600"
                               title="Copy phone number"
                             >
                               {copiedField === 'phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
@@ -171,7 +171,7 @@ export default function RoommateModal({ roommate, isOpen, onClose }: RoommateMod
                             <p className="text-sm font-bold text-neutral-900 truncate">{roommate.email}</p>
                             <button
                               onClick={() => handleCopy(roommate.email!, 'email')}
-                              className="p-1 rounded-md hover:bg-neutral-100 transition-colors text-neutral-400 hover:text-neutral-600 shrink-0"
+                              className="p-1 rounded-md g-neutral-100 transition-colors text-neutral-400 ext-neutral-600 shrink-0"
                               title="Copy email"
                             >
                               {copiedField === 'email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}

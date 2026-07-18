@@ -17,7 +17,7 @@ export const Toast = ({ message, type, onClose }: ToastProps) => {
     >
       <Icon size={20} className={iconColor} />
       <p className="text-sm font-medium">{message}</p>
-      <button onClick={onClose} className="p-1 hover:bg-neutral-100 rounded-full ml-auto">
+      <button onClick={onClose} className="p-1 g-neutral-100 rounded-full ml-auto">
         <X size={16} />
       </button>
     </div>

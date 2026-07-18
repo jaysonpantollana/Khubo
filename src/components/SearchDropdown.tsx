@@ -45,7 +45,7 @@ export default function SearchDropdown({
           <button
             key={idx}
             onClick={() => handleSuggestionClick(item)}
-            className="text-xs sm:text-[13px] font-bold text-[#17294F] hover:bg-[#17294F] hover:text-white px-3 py-1.5 rounded-full transition-all duration-150 w-fit flex items-center gap-1.5 cursor-pointer focus-visible:outline-none"
+            className="text-xs sm:text-[13px] font-bold text-[#17294F] g-[#17294F] ext-white px-3 py-1.5 rounded-full transition-all duration-150 w-fit flex items-center gap-1.5 cursor-pointer focus-visible:outline-none"
           >
             <Search size={11} />
             {item}

@@ -43,7 +43,7 @@ export function NotificationDialog({ isOpen, onClose, notifications, onClear }: 
           {notifications.map((n) => {
             const { icon: Icon, iconColor, label } = TOAST_CONFIG[n.type];
             return (
-              <div key={n.id} className="flex items-start gap-3 p-4 hover:bg-neutral-50 transition-colors">
+              <div key={n.id} className="flex items-start gap-3 p-4 g-neutral-50 transition-colors">
                 <div className={`p-1.5 rounded-full bg-neutral-100 shrink-0 ${iconColor}`}>
                   <Icon size={16} />
                 </div>
@@ -69,7 +69,7 @@ export function NotificationDialog({ isOpen, onClose, notifications, onClear }: 
         <div className="p-4 border-t border-neutral-100 shrink-0">
           <button
             onClick={onClear}
-            className="w-full py-2.5 text-sm font-semibold text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+            className="w-full py-2.5 text-sm font-semibold text-red-500 g-red-50 rounded-xl transition-colors"
           >
             Clear all notifications
           </button>

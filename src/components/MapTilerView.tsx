@@ -126,13 +126,13 @@ const MapTilerView: React.FC<MapTilerViewProps> = ({ lat, lng, title, loadImmedi
         <div className="flex flex-col bg-white rounded-xl md:rounded-2xl shadow-xl border border-neutral-100 overflow-hidden divide-y divide-neutral-100">
           <button 
             onClick={handleZoomIn}
-            className="w-9 h-9 md:w-12 md:h-12 flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-800"
+            className="w-9 h-9 md:w-12 md:h-12 flex items-center justify-center g-neutral-50 transition-colors text-neutral-800"
           >
             <svg className="w-4 h-4 md:w-[22px] md:h-[22px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
           <button 
             onClick={handleZoomOut}
-            className="w-9 h-9 md:w-12 md:h-12 flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-800"
+            className="w-9 h-9 md:w-12 md:h-12 flex items-center justify-center g-neutral-50 transition-colors text-neutral-800"
           >
             <svg className="w-4 h-4 md:w-[22px] md:h-[22px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>

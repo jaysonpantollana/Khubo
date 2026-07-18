@@ -209,7 +209,7 @@ export default function Home() {
                 setIsStickySearchActive(false);
                 setHideStickyDropdown(true);
               }}
-              className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800"
+              className="px-6 py-3 bg-black text-white rounded-full font-bold g-neutral-800"
             >
               Clear all filters & search
             </button>

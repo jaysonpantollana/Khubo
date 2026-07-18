@@ -122,7 +122,7 @@ export default function LandlordProperties() {
         <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate('/profile')}
-            className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-600 hover:text-neutral-900"
+            className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-600 ext-neutral-900"
           >
             <ArrowLeft size={20} />
           </button>
@@ -135,7 +135,7 @@ export default function LandlordProperties() {
           <div className="flex justify-end mb-4">
             <button
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center gap-2 bg-[#17294F] text-white px-5 py-2.5 rounded-xl font-bold hover:bg-[#1e3466] transition-colors text-sm"
+              className="flex items-center gap-2 bg-[#17294F] text-white px-5 py-2.5 rounded-xl font-bold g-[#1e3466] transition-colors text-sm"
             >
               <Plus size={18} />
               Add Listing
@@ -173,7 +173,7 @@ export default function LandlordProperties() {
                   return (
                     <tr 
                       key={listing.id} 
-                      className={`${index !== displayListings.length - 1 ? 'border-b border-neutral-50' : ''} hover:bg-neutral-50/50 transition-colors`}
+                      className={`${index !== displayListings.length - 1 ? 'border-b border-neutral-50' : ''} g-neutral-50/50 transition-colors`}
                     >
                       <td className="p-4 pl-6 text-neutral-500 font-medium">{index + 1}</td>
                       <td className="p-4 font-bold text-[#0A2B4E] whitespace-nowrap">{listing.title}</td>

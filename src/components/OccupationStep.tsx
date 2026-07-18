@@ -52,7 +52,7 @@ export function OccupationStep({ data, onBack, onClose, onContinue }: Occupation
       <FocusTrap onClose={onClose} ariaLabel="Occupation" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
+          className="absolute top-5 right-5 p-2 g-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
         >
           <X size={20} className="text-neutral-500" />
         </button>
@@ -102,7 +102,7 @@ export function OccupationStep({ data, onBack, onClose, onContinue }: Occupation
                     'w-full flex items-center gap-4 p-4 rounded-xl border transition-all duration-200 cursor-pointer text-left',
                     isSelected
                       ? 'border-[#2252D6]/60 bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
-                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
+                      : 'border-neutral-200 bg-white order-neutral-300 g-neutral-50'
                   )}
                 >
                   <div
@@ -160,7 +160,7 @@ export function OccupationStep({ data, onBack, onClose, onContinue }: Occupation
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 hover:border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-200 order-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Back
           </button>
@@ -173,7 +173,7 @@ export function OccupationStep({ data, onBack, onClose, onContinue }: Occupation
               className={cn(
                 'px-8 py-2.5 font-bold rounded-full transition text-sm cursor-pointer',
                 selected
-                  ? 'bg-[#2252D6] hover:bg-[#1a41aa] text-white shadow-md shadow-[#2252D6]/20'
+                  ? 'bg-[#2252D6] g-[#1a41aa] text-white shadow-md shadow-[#2252D6]/20'
                   : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
               )}
             >

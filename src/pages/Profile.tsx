@@ -263,7 +263,7 @@ export default function Profile() {
 
         <div className="relative md:absolute md:inset-0 max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 flex flex-col md:flex-row items-center justify-between z-10 pt-16 pb-2 md:pt-24 md:pb-12 gap-4 md:gap-0">
           <div className="bg-black/30 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 md:p-8 w-full md:w-[60%] lg:w-[45%] text-white shadow-2xl relative">
-            <button onClick={handleOpenEditProfile} className="absolute top-4 right-4 hover:bg-white/20 p-2 rounded-full transition cursor-pointer" title="Edit Profile Details">
+            <button onClick={handleOpenEditProfile} className="absolute top-4 right-4 g-white/20 p-2 rounded-full transition cursor-pointer" title="Edit Profile Details">
               <MoreVertical className="w-5 h-5 text-white" />
             </button>
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
@@ -299,7 +299,7 @@ export default function Profile() {
             {!isLandlord && (
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2">
                 {profileTags.map(tag => (
-                  <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-transparent text-white hover:bg-white/10 transition cursor-default group relative">
+                  <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-transparent text-white g-white/10 transition cursor-default group relative">
                     {tag}
                     <button
                       onClick={() => setProfileTags(profileTags.filter(t => t !== tag))}
@@ -340,7 +340,7 @@ export default function Profile() {
                 ) : (
                   <button
                     onClick={() => setIsEditingTags(true)}
-                    className="px-4 py-1.5 rounded-full border border-white/50 border-dashed text-[11px] md:text-xs font-semibold bg-black/40 text-white hover:bg-black/60 transition cursor-pointer"
+                    className="px-4 py-1.5 rounded-full border border-white/50 border-dashed text-[11px] md:text-xs font-semibold bg-black/40 text-white g-black/60 transition cursor-pointer"
                   >
                     + Add tag
                   </button>
@@ -350,9 +350,9 @@ export default function Profile() {
           </div>
 
           <div className="w-full md:w-[45%] lg:w-[40%] text-white/80 md:text-white text-sm md:text-xl lg:text-2xl font-normal md:font-semibold leading-relaxed drop-shadow-sm px-2 pb-0 pt-0 md:p-6 group text-center md:text-left mt-0">
-            <div className="relative cursor-pointer hover:bg-white/10 p-2 rounded-xl transition" onClick={handleOpenEditProfile} title="Edit Quote/Bio">
+            <div className="relative cursor-pointer g-white/10 p-2 rounded-xl transition" onClick={handleOpenEditProfile} title="Edit Quote/Bio">
               <span className="italic">{profileBio}</span>
-              <button className="absolute -top-4 right-0 opacity-0 transition p-1 hover:bg-white/20 rounded-full cursor-pointer md:block hidden">
+              <button className="absolute -top-4 right-0 opacity-0 transition p-1 g-white/20 rounded-full cursor-pointer md:block hidden">
                 <Edit2 size={16} className="text-white" />
               </button>
             </div>
@@ -390,7 +390,7 @@ export default function Profile() {
           {isLandlord && (
             <button
               onClick={() => setIsCreateListingOpen(true)}
-              className="px-6 py-2.5 bg-[#17294F] text-white rounded-full font-bold hover:bg-[#1e3466] shadow-md transition text-sm md:text-base whitespace-nowrap"
+              className="px-6 py-2.5 bg-[#17294F] text-white rounded-full font-bold g-[#1e3466] shadow-md transition text-sm md:text-base whitespace-nowrap"
             >
               + Add Listing
             </button>
@@ -449,7 +449,7 @@ export default function Profile() {
                       <div className="relative" onClick={(e) => e.stopPropagation()}>
                         <button
                           onClick={() => setOpenMenuId(openMenuId === 'mock-listing' ? null : 'mock-listing')}
-                          className="p-2 hover:bg-neutral-100 rounded-full transition cursor-pointer"
+                          className="p-2 g-neutral-100 rounded-full transition cursor-pointer"
                         >
                           <MoreVertical size={18} className="text-neutral-600" />
                         </button>
@@ -473,14 +473,14 @@ export default function Profile() {
                                 });
                                 setOpenMenuId(null);
                               }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
                             >
                               <Edit2 size={14} /> Edit
                             </button>
                             <div className="h-px bg-neutral-100 my-1" />
                             <button
                               onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
                             >
                               <Copy size={14} /> Copy link
                             </button>
@@ -511,7 +511,7 @@ export default function Profile() {
                       {MOCK_TENANTS.slice(0, 4).map((t, i) => (
                         <div
                           key={t.id}
-                          className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                          className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ing-2 ing-[#2252D6] ing-offset-1 transition-all overflow-hidden"
                           style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
                           onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                         >
@@ -524,7 +524,7 @@ export default function Profile() {
                       ))}
                       {MOCK_TENANTS.length > 4 && (
                         <span
-                          className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                          className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer g-[#3a3b3c] transition-colors"
                           style={{ marginLeft: '-8px', zIndex: 0 }}
                           onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                         >
@@ -574,7 +574,7 @@ export default function Profile() {
                       <div className="relative" onClick={(e) => e.stopPropagation()}>
                         <button
                           onClick={() => setOpenMenuId(openMenuId === 'mock-listing-2' ? null : 'mock-listing-2')}
-                          className="p-2 hover:bg-neutral-100 rounded-full transition cursor-pointer"
+                          className="p-2 g-neutral-100 rounded-full transition cursor-pointer"
                         >
                           <MoreVertical size={18} className="text-neutral-600" />
                         </button>
@@ -598,14 +598,14 @@ export default function Profile() {
                                 });
                                 setOpenMenuId(null);
                               }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
                             >
                               <Edit2 size={14} /> Edit
                             </button>
                             <div className="h-px bg-neutral-100 my-1" />
                             <button
                               onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
                             >
                               <Copy size={14} /> Copy link
                             </button>
@@ -656,7 +656,7 @@ export default function Profile() {
               <div className="flex justify-center mb-8">
               <button
                 onClick={() => setShowAllProperties(!showAllProperties)}
-                  className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition text-sm"
+                  className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold g-neutral-100 transition text-sm"
               >
                 {showAllProperties ? 'Show Less' : 'Show All'}
               </button>
@@ -674,7 +674,7 @@ export default function Profile() {
                       alt={listing.title}
                       className="w-full h-full object-cover shrink-0"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+                    <div className="absolute inset-0 bg-black/0 group-g-black/10 transition-colors pointer-events-none" />
                   </div>
                   <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
                     <div>
@@ -690,7 +690,7 @@ export default function Profile() {
                           <div className="relative" onClick={(e) => e.stopPropagation()}>
                             <button
                               onClick={() => setOpenMenuId(openMenuId === listing.id ? null : listing.id)}
-                              className="p-2 hover:bg-neutral-100 rounded-full transition cursor-pointer"
+                              className="p-2 g-neutral-100 rounded-full transition cursor-pointer"
                             >
                               <MoreVertical size={18} className="text-neutral-600" />
                             </button>
@@ -698,14 +698,14 @@ export default function Profile() {
                               <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-neutral-100 py-1 z-50 min-w-[160px]">
                                 <button
                                   onClick={() => { setEditingListing(listing); setOpenMenuId(null); }}
-                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
                                 >
                                   <Edit2 size={14} /> Edit
                                 </button>
                                 <div className="h-px bg-neutral-100 my-1" />
                                 <button
                                   onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
-                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
                                 >
                                   <Copy size={14} /> Copy link
                                 </button>
@@ -753,7 +753,7 @@ export default function Profile() {
                               {visible.map((tenant, i) => (
                                 <div
                                   key={tenant.id}
-                                    className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                                    className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ing-2 ing-[#2252D6] ing-offset-1 transition-all overflow-hidden"
                                     style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
                                    title={tenant.name}
                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
@@ -767,7 +767,7 @@ export default function Profile() {
                                ))}
                                {remaining > 0 && (
                                  <span
-                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer g-[#3a3b3c] transition-colors"
                                     style={{ marginLeft: '-8px', zIndex: 0 }}
                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
                                 >
@@ -785,7 +785,7 @@ export default function Profile() {
                         <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                       </div>
                       <div className="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto">
-                        <button onClick={(e) => { e.stopPropagation(); setEditingListing(listing); }} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold hover:bg-neutral-50 transition text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
+                        <button onClick={(e) => { e.stopPropagation(); setEditingListing(listing); }} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold g-neutral-50 transition text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
                           <Edit2 size={16} className="text-neutral-600" /> Edit
                         </button>
                         <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
@@ -808,7 +808,7 @@ export default function Profile() {
             <div className="flex justify-center mb-8">
                 <button
                   onClick={() => setShowAllProperties(!showAllProperties)}
-                className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold hover:bg-neutral-100 transition text-sm"
+                className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold g-neutral-100 transition text-sm"
                 >
                   {showAllProperties ? 'Show Less' : 'Show All'}
                 </button>
@@ -832,7 +832,7 @@ export default function Profile() {
                       alt={res.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+                    <div className="absolute inset-0 bg-black/0 group-g-black/10 transition-colors pointer-events-none" />
                   </div>
                   <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
                     <div>
@@ -866,7 +866,7 @@ export default function Profile() {
                           {res.tenants.slice(0, 4).map((t, i) => (
                             <div
                               key={t.id}
-                              className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
+                              className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ing-2 ing-[#2252D6] ing-offset-1 transition-all overflow-hidden"
                               style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: res.tenants.length - i }}
                               title={t.name}
                               onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
@@ -880,7 +880,7 @@ export default function Profile() {
                           ))}
                           {res.tenants.length > 4 && (
                             <span
-                              className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
+                              className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer g-[#3a3b3c] transition-colors"
                               style={{ marginLeft: '-8px', zIndex: 0 }}
                               onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
                             >
@@ -908,10 +908,10 @@ export default function Profile() {
           <div className="flex flex-col gap-6 md:gap-7 my-2 pl-2">
             <div className="flex items-center justify-between w-full group cursor-pointer" onClick={() => setIsLandlord(!isLandlord)}>
               <div className="flex items-center gap-5">
-                <div className={`transition-colors duration-200 ${isLandlord ? 'text-[#2252D6]' : 'text-neutral-800 group-hover:text-[#2252D6]'}`}>
+                <div className={`transition-colors duration-200 ${isLandlord ? 'text-[#2252D6]' : 'text-neutral-800 group-ext-[#2252D6]'}`}>
                   <Building className="w-6 h-6 stroke-[1.8]" />
                 </div>
-                <span className={`text-lg font-medium transition-colors duration-200 ${isLandlord ? 'text-neutral-950' : 'text-neutral-800 group-hover:text-neutral-950'}`}>
+                <span className={`text-lg font-medium transition-colors duration-200 ${isLandlord ? 'text-neutral-950' : 'text-neutral-800 group-ext-neutral-950'}`}>
                   Landlord Mode
                 </span>
               </div>
@@ -926,10 +926,10 @@ export default function Profile() {
 
             {menuItems.map((item) => (
               <button key={item.title} onClick={item.action} className="flex items-center gap-5 text-left w-full group cursor-pointer">
-                <div className="text-neutral-800 group-hover:text-[#2252D6] transition-colors duration-200">
+                <div className="text-neutral-800 group-ext-[#2252D6] transition-colors duration-200">
                   <item.icon className="w-6 h-6 stroke-[1.8]" />
                 </div>
-                <span className="text-lg font-medium text-neutral-800 group-hover:text-neutral-950 transition-colors duration-200">
+                <span className="text-lg font-medium text-neutral-800 group-ext-neutral-950 transition-colors duration-200">
                   {item.title}
                 </span>
               </button>
@@ -941,10 +941,10 @@ export default function Profile() {
               onClick={() => setIsLogoutModalOpen(true)}
               className="flex items-center gap-5 text-left w-full group cursor-pointer"
             >
-              <div className="text-red-500 group-hover:text-red-600 transition-colors duration-200">
+              <div className="text-red-500 group-ext-red-600 transition-colors duration-200">
                 <LogOut className="w-6 h-6 stroke-[1.8]" />
               </div>
-              <span className="text-lg font-semibold text-red-500 group-hover:text-red-600 transition-colors duration-200">
+              <span className="text-lg font-semibold text-red-500 group-ext-red-600 transition-colors duration-200">
                 Log out
               </span>
             </button>

@@ -45,7 +45,7 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
       <FocusTrap onClose={onClose} ariaLabel="Onboarding" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
+          className="absolute top-5 right-5 p-2 g-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
         >
           <X size={20} className="text-neutral-500" />
         </button>
@@ -92,7 +92,7 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 hover:border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-200 order-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Back
           </button>
@@ -101,7 +101,7 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
             <button
               type="button"
               onClick={onComplete}
-              className="px-8 py-2.5 bg-[#2252D6] hover:bg-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
+              className="px-8 py-2.5 bg-[#2252D6] g-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
             >
               Finish
             </button>

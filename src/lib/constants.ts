@@ -1,5 +1,4 @@
 export const BUDGET_RANGES = [
-  { min: 0, max: 1000, label: 'Less than ₱1k' },
   { min: 1000, max: 2000, label: '₱1k - ₱2k' },
   { min: 2000, max: 3000, label: '₱2k - ₱3k' },
   { min: 3000, max: 4000, label: '₱3k - ₱4k' },

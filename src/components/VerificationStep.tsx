@@ -70,7 +70,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
       <FocusTrap onClose={onClose} ariaLabel="Verification" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 hover:bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
+          className="absolute top-5 right-5 p-2 g-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
         >
           <X size={20} className="text-neutral-500" />
         </button>
@@ -132,7 +132,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                     'w-full py-4 px-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center relative',
                     isSelected
                       ? 'border-[#2252D6] bg-[#2252D6]/5 shadow-sm shadow-[#2252D6]/10'
-                      : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50'
+                      : 'border-neutral-200 bg-white order-neutral-300 g-neutral-50'
                   )}
                 >
                   {isSelected && (
@@ -190,7 +190,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                     'w-full border-2 border-dashed rounded-2xl p-8 transition-all duration-200 cursor-pointer group',
                     isDragOver
                       ? 'border-[#2252D6] bg-[#2252D6]/5'
-                      : 'border-neutral-300 hover:border-[#2252D6]/50 hover:bg-neutral-50/50'
+                      : 'border-neutral-300 order-[#2252D6]/50 g-neutral-50/50'
                   )}
                 >
                   <div className="flex flex-col items-center gap-3">
@@ -198,7 +198,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                       <CloudUpload size={26} className="text-[#2252D6]" />
                     </div>
                     <div className="text-center">
-                      <p className="text-sm font-bold text-neutral-700 group-hover:text-[#2252D6] transition-colors duration-200">
+                      <p className="text-sm font-bold text-neutral-700 group-ext-[#2252D6] transition-colors duration-200">
                         <span className="text-[#2252D6]">Click to upload</span> or drag and drop
                       </p>
                       <p className="text-xs text-neutral-400 mt-1">
@@ -208,7 +208,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
-                      className="px-5 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-bold rounded-full transition-colors cursor-pointer"
+                      className="px-5 py-2 bg-neutral-100 g-neutral-200 text-neutral-700 text-xs font-bold rounded-full transition-colors cursor-pointer"
                     >
                       Browse Files
                     </button>
@@ -232,9 +232,9 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                     <button
                       type="button"
                       onClick={handleRemoveFile}
-                      className="absolute top-2 right-2 p-1.5 bg-white/90 hover:bg-red-50 rounded-full shadow-sm border border-neutral-200 transition-colors cursor-pointer"
+                      className="absolute top-2 right-2 p-1.5 bg-white/90 g-red-50 rounded-full shadow-sm border border-neutral-200 transition-colors cursor-pointer"
                     >
-                      <Trash2 size={14} className="text-red-400 hover:text-red-500" />
+                      <Trash2 size={14} className="text-red-400 ext-red-500" />
                     </button>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3 border-t border-neutral-100 bg-white">
@@ -268,7 +268,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 hover:border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-200 order-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Back
           </button>
@@ -281,7 +281,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
               className={cn(
                 'px-8 py-2.5 font-bold rounded-full transition text-sm cursor-pointer',
                 isReady
-                  ? 'bg-[#2252D6] hover:bg-[#1a41aa] text-white shadow-md shadow-[#2252D6]/20'
+                  ? 'bg-[#2252D6] g-[#1a41aa] text-white shadow-md shadow-[#2252D6]/20'
                   : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
               )}
             >

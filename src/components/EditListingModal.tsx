@@ -184,7 +184,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
             <h2 className="text-xl font-bold text-neutral-800">Edit Listing</h2>
             <button 
               onClick={onClose}
-              className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500"
+              className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-500"
             >
               <X size={20} />
             </button>
@@ -233,7 +233,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                   ))}
                   
                   {(existingImages.length + newImages.length) < 5 && (
-                    <label className="w-24 h-24 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer hover:bg-neutral-50 transition">
+                    <label className="w-24 h-24 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer g-neutral-50 transition">
                       <Upload size={24} className="mb-1" />
                       <span className="text-xs font-medium">Add Photo</span>
                       <input type="file" multiple accept="image/*" onChange={handleImageChange} className="hidden" />
@@ -277,7 +277,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                     <button
                       type="button"
                       onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
-                      className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 hover:bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 cursor-pointer flex items-center justify-between"
+                      className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 cursor-pointer flex items-center justify-between"
                     >
                       <span>{advancePaymentMonths} {advancePaymentMonths === 1 ? 'month' : 'months'}</span>
                       <ChevronDown size={16} className={`text-neutral-400 transition-transform ${isMonthDropdownOpen ? 'rotate-180' : ''}`} />
@@ -295,7 +295,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                             className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
                               advancePaymentMonths === months
                                 ? 'bg-[#2252D6] text-white'
-                                : 'text-neutral-800 hover:bg-neutral-50'
+                                : 'text-neutral-800 g-neutral-50'
                             }`}
                           >
                             {months} {months === 1 ? 'month' : 'months'}
@@ -321,7 +321,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       key={cat}
                       type="button"
                       onClick={() => setCategory(cat)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 g-neutral-200'}`}
                     >
                       {cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
@@ -338,7 +338,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       key={amenity}
                       type="button"
                       onClick={() => toggleAmenity(amenity)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 hover:border-neutral-300'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 order-neutral-300'}`}
                     >
                       {amenity}
                     </button>
@@ -379,7 +379,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                     <button
                       type="button"
                       onClick={() => setIsAddingAmenity(true)}
-                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50"
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 ext-neutral-700 g-neutral-50"
                     >
                       + Add
                     </button>
@@ -395,7 +395,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
               type="submit"
               form="edit-listing-form"
               disabled={isSubmitting}
-              className="flex items-center justify-center gap-2 bg-[#17294F] text-white px-8 py-3.5 rounded-xl font-bold hover:bg-[#1e3466] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center justify-center gap-2 bg-[#17294F] text-white px-8 py-3.5 rounded-xl font-bold g-[#1e3466] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? (
                 <>

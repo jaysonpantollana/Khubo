@@ -92,7 +92,7 @@ export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
               <h2 className="text-xl font-bold text-neutral-900">Inquiries</h2>
               <button 
                 onClick={onClose}
-                className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-500 hover:text-neutral-900"
+                className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-500 ext-neutral-900"
               >
                 <X size={20} />
               </button>
@@ -113,7 +113,7 @@ export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
                     className={`relative flex items-center justify-center px-4 py-2 rounded-full text-sm font-bold transition-colors ${
                       filter === f 
                         ? 'bg-neutral-900 text-white' 
-                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                        : 'bg-neutral-100 text-neutral-600 g-neutral-200'
                     }`}
                   >
                     {f}
@@ -134,7 +134,7 @@ export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
                   <div 
                     key={inquiry.id}
                     onClick={handleInquiryClick}
-                    className={`group flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 hover:bg-neutral-50 cursor-pointer transition-colors ${
+                    className={`group flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 g-neutral-50 cursor-pointer transition-colors ${
                       index !== filteredInquiries.length - 1 ? 'border-b border-neutral-100' : ''
                     }`}
                   >

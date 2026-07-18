@@ -42,7 +42,7 @@ export function AnnouncementsOverlay({ isOpen, onClose }: AnnouncementsOverlayPr
                 <Megaphone size={24} className="text-black" />
                 Announcements
               </h3>
-              <button onClick={onClose} className="p-2 hover:bg-neutral-100 rounded-full transition-colors">
+              <button onClick={onClose} className="p-2 g-neutral-100 rounded-full transition-colors">
                 <X size={20} />
               </button>
             </div>

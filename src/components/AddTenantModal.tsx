@@ -191,7 +191,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
               <button
                 type="button"
                 onClick={() => removeSocialLink(index)}
-                className="p-2.5 rounded-xl text-neutral-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                className="p-2.5 rounded-xl text-neutral-400 ext-red-500 g-red-50 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -202,7 +202,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
             <button
               type="button"
               onClick={addSocialLink}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-[#17294F] border-2 border-dashed border-neutral-300 hover:border-[#17294F] transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-[#17294F] border-2 border-dashed border-neutral-300 order-[#17294F] transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
               Add Social Link
@@ -214,14 +214,14 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
           <button
             type="button"
             onClick={handleClose}
-            className="flex-1 px-4 py-3 rounded-xl border border-neutral-200 text-sm font-bold text-neutral-600 hover:bg-neutral-50 transition-colors"
+            className="flex-1 px-4 py-3 rounded-xl border border-neutral-200 text-sm font-bold text-neutral-600 g-neutral-50 transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#17294F] text-white text-sm font-bold hover:bg-[#1a3058] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#17294F] text-white text-sm font-bold g-[#1a3058] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
               <>

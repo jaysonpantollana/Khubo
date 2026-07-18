@@ -88,14 +88,14 @@ export default function Navbar() {
           <div className="flex flex-row items-center gap-3 relative" ref={menuRef}>
             <button
               onClick={handleKhuboYourHome}
-              className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+              className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full g-neutral-100 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               Khubo your home
             </button>
             <button
               onClick={openNotifications}
               aria-label="Notifications"
-              className="hidden sm:flex relative p-3 hover:bg-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+              className="hidden sm:flex relative p-3 g-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               <Bell size={18} />
               {notifications.length > 0 && (
@@ -106,7 +106,7 @@ export default function Navbar() {
             </button>
             <button
               aria-label="Choose language"
-              className="hidden sm:block p-3 hover:bg-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+              className="hidden sm:block p-3 g-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               <Globe size={18} />
             </button>
@@ -134,21 +134,21 @@ export default function Navbar() {
                         <p className="text-xs text-neutral-500 mt-0.5">Signed in</p>
                       </div>
                       <div className="py-2">
-                        <button className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition">
+                        <button className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition">
                           Trips
                         </button>
-                        <button className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition">
+                        <button className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition">
                           Wishlists
                         </button>
                       </div>
                       <div className="py-2 border-t border-neutral-100">
                         <button 
                           onClick={handleKhuboYourHome}
-                          className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition"
+                          className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
                         >
                           Khubo your home
                         </button>
-                        <Link to="/manage-listings" className="block w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition" onClick={() => setIsMenuOpen(false)}>
+                        <Link to="/manage-listings" className="block w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition" onClick={() => setIsMenuOpen(false)}>
                           Manage listings
                         </Link>
                       </div>
@@ -158,7 +158,7 @@ export default function Navbar() {
                             signOut();
                             setIsMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-2 text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-[#17294F] font-medium transition"
+                          className="w-full flex items-center gap-2 text-left px-4 py-2.5 text-sm g-neutral-50 text-[#17294F] font-medium transition"
                         >
                           <LogOut size={16} />
                           Log out
@@ -172,7 +172,7 @@ export default function Navbar() {
                           setIsAuthModalOpen(true);
                           setIsMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm font-semibold hover:bg-neutral-50 text-neutral-800 transition"
+                        className="w-full text-left px-4 py-2.5 text-sm font-semibold g-neutral-50 text-neutral-800 transition"
                       >
                         Sign up
                       </button>
@@ -181,18 +181,18 @@ export default function Navbar() {
                           setIsAuthModalOpen(true);
                           setIsMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition"
+                        className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
                       >
                         Log in
                       </button>
                       <div className="my-2 border-t border-neutral-100"></div>
                       <button 
                         onClick={handleKhuboYourHome}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition"
+                        className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
                       >
                         Khubo your home
                       </button>
-                      <button className="w-full text-left px-4 py-2.5 text-sm hover:bg-neutral-50 text-neutral-700 transition">
+                      <button className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition">
                         Help
                       </button>
                     </>

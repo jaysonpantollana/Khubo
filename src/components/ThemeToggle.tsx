@@ -16,7 +16,7 @@ export function ThemeToggle() {
       onClick={() => {
         toggleTheme();
       }}
-      className="p-2 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700 transition"
+      className="p-2 rounded-full g-neutral-200 dark:g-neutral-700 transition"
       aria-label="Toggle theme"
     >
       {theme === 'light' ? <Moon size={20} className="text-neutral-800" /> : <Sun size={20} className="text-yellow-400" />}

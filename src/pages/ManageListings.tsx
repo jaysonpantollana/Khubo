@@ -141,12 +141,12 @@ export default function ManageListings() {
                     <div className="flex gap-3 w-full sm:w-auto">
                       <button 
                         onClick={() => setEditingListing(listing)}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-neutral-300 text-neutral-800 font-bold hover:bg-neutral-50 transition"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-neutral-300 text-neutral-800 font-bold g-neutral-50 transition"
                       >
                         <Edit size={18} />
                         Edit Listing
                       </button>
-                      <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#4CB051] text-white font-bold hover:bg-[#3f9443] transition">
+                      <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#4CB051] text-white font-bold g-[#3f9443] transition">
                         <Users size={18} />
                         Manage Tenants
                       </button>

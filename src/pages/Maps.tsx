@@ -46,7 +46,6 @@ export default function Maps() {
   const budgetTriggerRef = useRef<HTMLDivElement>(null);
 
   const budgetRanges = [
-    { label: "less ₱1k" },
     { label: "₱1k - ₱2k" },
     { label: "₱2k - ₱3k" },
     { label: "₱3k - ₱4k" },
@@ -402,7 +401,7 @@ export default function Maps() {
         <div className="hidden md:flex flex-1 justify-start">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 -ml-1 md:-ml-2 rounded-full hover:bg-neutral-100"
+            className="p-2 -ml-1 md:-ml-2 rounded-full g-neutral-100"
             aria-label="Go back"
           >
             <ArrowLeft size={24} className="text-neutral-900" />
@@ -428,7 +427,7 @@ export default function Maps() {
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery("")}
-                      className="p-1 hover:bg-neutral-100 rounded-full flex-shrink-0 mr-2"
+                      className="p-1 g-neutral-100 rounded-full flex-shrink-0 mr-2"
                       aria-label="Clear search"
                     >
                       <X className="w-3.5 h-3.5 text-neutral-500" />
@@ -464,7 +463,7 @@ export default function Maps() {
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group text-black focus-visible:outline-none ${
                       activeDropdown === "location"
                         ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
-                        : "hover:bg-neutral-50 rounded-full"
+                        : "g-neutral-50 rounded-full"
                     }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -487,27 +486,9 @@ export default function Maps() {
                         width: dropdownPosition.width,
                       }}
                     >
-                      <div className="space-y-4">
-                        <div>
-                          <div
-                            className="flex items-center px-4 py-2 bg-neutral-100 rounded-xl mb-3 focus-within:ring-2 focus-within:ring-[#2252D6]/20 cursor-text"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              (
-                                e.currentTarget.querySelector(
-                                  "input",
-                                ) as HTMLInputElement
-                              )?.focus();
-                            }}
-                          >
-                            <Search className="w-4 h-4 text-neutral-400 mr-2 flex-shrink-0" />
-                            <input
-                              type="text"
-                              placeholder="Search location..."
-                              className="w-full bg-transparent border-none outline-none text-sm font-medium text-neutral-900 placeholder:text-neutral-400 p-0 focus:ring-0"
-                            />
-                          </div>
-                          <div className="space-y-1">
+                       <div className="space-y-4">
+                         <div>
+                           <div className="space-y-1">
                             {["Iligan City"].map((loc) => (
                               <button
                                 key={loc}
@@ -516,9 +497,9 @@ export default function Maps() {
                                   setActiveDropdown(null);
                                   setDropdownPosition(null);
                                 }}
-                                className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 group/item"
+                                className="w-full flex items-center gap-3 p-2 rounded-xl g-neutral-50 group/item"
                               >
-                                <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6] group-hover/item:bg-[#2252D6] group-hover/item:text-white">
+                                <div className="w-8 h-8 rounded-lg bg-[#2252D6]/10 flex items-center justify-center text-[#2252D6]">
                                   <MapPin size={14} />
                                 </div>
                                 <span className="font-bold text-neutral-800 text-sm">
@@ -544,7 +525,7 @@ export default function Maps() {
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group text-black focus-visible:outline-none ${
                       activeDropdown === "budget"
                         ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
-                        : "hover:bg-neutral-50 rounded-full"
+                        : "g-neutral-50 rounded-full"
                     }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -569,14 +550,14 @@ export default function Maps() {
                     >
                       <button
                         onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                        className="absolute top-3 right-3 p-2.5 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
+                        className="absolute top-3 right-3 p-2.5 rounded-xl bg-neutral-200 g-[#17294F] ext-white transition-all z-10 shadow-sm"
                         aria-label="Scroll up"
                       >
                         <ChevronUp className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                        className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-neutral-200 hover:bg-[#17294F] hover:text-white transition-all z-10 shadow-sm"
+                        className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-neutral-200 g-[#17294F] ext-white transition-all z-10 shadow-sm"
                         aria-label="Scroll down"
                       >
                         <ChevronDown className="w-5 h-5" />
@@ -594,7 +575,7 @@ export default function Maps() {
                                 setActiveDropdown(null);
                                 setDropdownPosition(null);
                               }}
-                              className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 text-left w-full"
+                              className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 text-left w-full"
                             >
                               <span className="font-bold text-neutral-900 text-sm">
                                 {range.label}
@@ -684,7 +665,7 @@ export default function Maps() {
                     onClick={() => {
                       setSearchQuery("");
                     }}
-                    className="px-6 py-3 bg-black text-white rounded-full font-bold hover:bg-neutral-800 text-sm"
+                    className="px-6 py-3 bg-black text-white rounded-full font-bold g-neutral-800 text-sm"
                   >
                     Clear all filters
                   </button>
@@ -699,7 +680,7 @@ export default function Maps() {
         {/* Desktop Collapse Toggle Button */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className={`hidden md:flex items-center justify-center absolute top-1/2 z-30 bg-white border border-neutral-200 w-6 h-14 rounded-r-xl shadow-md hover:bg-neutral-50 -translate-y-1/2 transform ${isSidebarCollapsed ? "left-0" : "md:portrait:left-[330px] md:landscape:left-[420px] lg:left-[480px]"}`}
+          className={`hidden md:flex items-center justify-center absolute top-1/2 z-30 bg-white border border-neutral-200 w-6 h-14 rounded-r-xl shadow-md g-neutral-50 -translate-y-1/2 transform ${isSidebarCollapsed ? "left-0" : "md:portrait:left-[330px] md:landscape:left-[420px] lg:left-[480px]"}`}
         >
           {isSidebarCollapsed ? (
             <ChevronRight size={16} className="text-neutral-500" />
@@ -724,7 +705,7 @@ export default function Maps() {
                   href="https://cloud.maptiler.com/account/keys/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 px-5 py-2.5 bg-[#17294F] text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-[#2252D6]"
+                  className="mt-2 px-5 py-2.5 bg-[#17294F] text-white text-xs font-bold uppercase tracking-wider rounded-xl g-[#2252D6]"
                 >
                   Get a free key
                 </a>
@@ -737,14 +718,14 @@ export default function Maps() {
             <div className="bg-white rounded-2xl shadow-xl border border-neutral-100 overflow-hidden divide-y divide-neutral-100 flex flex-col">
               <button
                 aria-label="Zoom in"
-                className="p-3 hover:bg-neutral-50 font-bold text-neutral-600"
+                className="p-3 g-neutral-50 font-bold text-neutral-600"
                 onClick={() => map.current?.zoomIn()}
               >
                 +
               </button>
               <button
                 aria-label="Zoom out"
-                className="p-3 hover:bg-neutral-50 font-bold text-neutral-600"
+                className="p-3 g-neutral-50 font-bold text-neutral-600"
                 onClick={() => map.current?.zoomOut()}
               >
                 −

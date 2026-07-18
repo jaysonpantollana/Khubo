@@ -17,6 +17,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
+  ChevronUp,
   MapPin,
   Wallet,
   X,
@@ -71,6 +72,8 @@ export default function RoommateFinder() {
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
   const [findingPopupOpen, setFindingPopupOpen] = useState(false);
   const [applyingPopupOpen, setApplyingPopupOpen] = useState(false);
+  const [stickyBudgetScrollIndex, setStickyBudgetScrollIndex] = useState(0);
+  const BUDGET_VISIBLE_COUNT = 5;
 
   const [roommates, setRoommates] = useState<Roommate[]>(() => {
     const saved = localStorage.getItem("custom_roommates");
@@ -452,6 +455,7 @@ export default function RoommateFinder() {
                                 ? null
                                 : "budget",
                             );
+                            setStickyBudgetScrollIndex(0);
                           }}
                           onKeyDown={(e) =>
                             (e.key === "Enter" || e.key === " ") &&
@@ -460,7 +464,8 @@ export default function RoommateFinder() {
                               activeStickyDropdown === "budget"
                                 ? null
                                 : "budget",
-                            ))
+                            ),
+                            setStickyBudgetScrollIndex(0))
                           }
                           className={`w-full flex items-center justify-between px-2 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 transition-all cursor-pointer select-none group focus-visible:outline-none ${
                             activeStickyDropdown === "budget"
@@ -484,21 +489,59 @@ export default function RoommateFinder() {
                         {activeStickyDropdown === "budget" && (
                           <div className="absolute top-[100%] mt-2 left-0 w-full bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-2 md:p-4 z-50 text-left">
                             <div className="space-y-2">
-                              <div className="grid grid-cols-1 gap-1">
-                                {BUDGET_RANGES.map((range) => (
+                              <div className="relative">
+                                <div className="grid grid-cols-1 gap-1">
+                                  {BUDGET_RANGES.slice(
+                                    stickyBudgetScrollIndex,
+                                    stickyBudgetScrollIndex + BUDGET_VISIBLE_COUNT
+                                  ).map((range) => (
+                                    <button
+                                      key={range.label}
+                                      onClick={() => {
+                                        setSelectedBudgetRange({ min: range.min, max: range.max });
+                                        setActiveStickyDropdown(null);
+                                        setStickyBudgetScrollIndex(0);
+                                      }}
+                                      className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                                    >
+                                      <span className="font-medium text-neutral-900 text-xs">
+                                        {range.label}
+                                      </span>
+                                    </button>
+                                  ))}
+                                </div>
+                                {/* Scroll Up Button */}
+                                {stickyBudgetScrollIndex > 0 && (
                                   <button
-                                    key={range.label}
-                                    onClick={() => {
-                                      setSelectedBudgetRange({ min: range.min, max: range.max });
-                                      setActiveStickyDropdown(null);
-                                    }}
-                                    className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent hover:bg-neutral-100 transition-all text-left w-full"
+                                    onClick={() =>
+                                      setStickyBudgetScrollIndex((prev) =>
+                                        Math.max(0, prev - 1)
+                                      )
+                                    }
+                                    className="absolute right-2 top-0 w-8 h-8 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-all"
+                                    aria-label="Scroll up"
                                   >
-                                    <span className="font-medium text-neutral-900 text-xs">
-                                      {range.label}
-                                    </span>
+                                    <ChevronUp size={16} className="text-neutral-600" />
                                   </button>
-                                ))}
+                                )}
+                                {/* Scroll Down Button */}
+                                {stickyBudgetScrollIndex + BUDGET_VISIBLE_COUNT <
+                                  BUDGET_RANGES.length && (
+                                  <button
+                                    onClick={() =>
+                                      setStickyBudgetScrollIndex((prev) =>
+                                        Math.min(
+                                          BUDGET_RANGES.length - BUDGET_VISIBLE_COUNT,
+                                          prev + 1
+                                        )
+                                      )
+                                    }
+                                    className="absolute right-2 bottom-0 w-8 h-8 flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-all"
+                                    aria-label="Scroll down"
+                                  >
+                                    <ChevronDown size={16} className="text-neutral-600" />
+                                  </button>
+                                )}
                               </div>
                             </div>
                           </div>

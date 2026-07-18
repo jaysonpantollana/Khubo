@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Search, MapPin, Wallet, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { Listing } from '../types';
 import SearchDropdown from './SearchDropdown';
-import { POPULAR_LOCATIONS } from '../lib/constants';
+import { POPULAR_LOCATIONS, BUDGET_RANGES } from '../lib/constants';
 
 interface StickySearchBarProps {
   searchQuery: string;

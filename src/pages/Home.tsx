@@ -123,7 +123,7 @@ export default function Home() {
   }, [addSearch]);
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] pb-32 overflow-x-hidden">
+    <div className="min-h-screen bg-[#F9F9F9] pb-32">
       <Hero
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

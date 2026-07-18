@@ -67,7 +67,7 @@ export default function Hero({
   return (
     <div
       className="relative w-full bg-cover bg-center"
-      style={{ backgroundImage: "url('/bg_1.png')" }}
+      style={{ backgroundImage: "url('/bg_1.webp')" }}
     >
       <div className="absolute inset-0 bg-black/40 z-0" />
 
@@ -80,6 +80,7 @@ export default function Hero({
             <img
               src="/khubo Logo.png"
               alt="Khubo Logo"
+              fetchPriority="high"
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />

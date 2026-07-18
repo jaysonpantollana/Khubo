@@ -3,12 +3,12 @@
 // @behavior: Shows reservation list with rating form (stars + comment); submitted ratings shown as review cards
 // @dependencies: lucide-react, useNavigate, BottomNav, ToastProvider, shared reservations
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Send, Users, ChevronDown } from 'lucide-react';
 
 import { useToast } from '../components/ToastProvider';
-import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
+const PhotoCarouselOverlay = lazy(() => import('../components/PhotoCarouselOverlay').then(m => ({ default: m.PhotoCarouselOverlay })));
 import { reservations } from '../mocks/reservations';
 
 interface RatingData {
@@ -281,9 +281,9 @@ export default function ToRate() {
                     >
                       <div className="flex items-center gap-2.5">
                         {anon ? (
-                          <img src={getAnonymousAvatar(res.id)} alt={displayName} className="w-8 h-8 rounded-full object-cover shrink-0" />
+                           <img src={getAnonymousAvatar(res.id)} alt={displayName} loading="lazy" decoding="async" className="w-8 h-8 rounded-full object-cover shrink-0" />
                         ) : (
-                          <img src={realAvatarUrl} alt={realUserName} className="w-8 h-8 rounded-full object-cover shrink-0" />
+                           <img src={realAvatarUrl} alt={realUserName} loading="lazy" decoding="async" className="w-8 h-8 rounded-full object-cover shrink-0" />
                         )}
                         <span className="text-sm font-semibold text-neutral-800">{displayName}</span>
                         <button
@@ -360,12 +360,16 @@ export default function ToRate() {
         })}
       </div>
 
-      <PhotoCarouselOverlay
-        isOpen={isGalleryOpen}
-        images={galleryImages}
-        initialIndex={galleryIndex}
-        onClose={() => setIsGalleryOpen(false)}
-      />
+      {isGalleryOpen && (
+        <Suspense fallback={<div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center"><div className="text-white animate-pulse">Loading gallery...</div></div>}>
+          <PhotoCarouselOverlay
+            isOpen={isGalleryOpen}
+            images={galleryImages}
+            initialIndex={galleryIndex}
+            onClose={() => setIsGalleryOpen(false)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

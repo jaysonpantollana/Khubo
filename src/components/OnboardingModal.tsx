@@ -119,7 +119,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
             <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
               <div className="w-24 h-24 rounded-full overflow-hidden bg-neutral-100 border-[3px] border-white shadow-lg ring-2 ring-[#2252D6]/20 group-ing-[#2252D6]/40 transition-all">
                 {profilePhoto ? (
-                  <img src={profilePhoto} alt="Profile" className="w-full h-full object-cover" />
+                  <img src={profilePhoto} alt="Profile" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#2252D6]/5 to-[#17294F]/10">
                     <User size={32} className="text-neutral-400" />

@@ -26,7 +26,6 @@ import SearchDropdown from "../components/SearchDropdown";
 import { FilterState } from "../types";
 import * as maptilersdk from "@maptiler/sdk";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
-import { takeMap, resetMapPreload } from "../lib/mapPreloader";
 import { BARANGAY_LOCATIONS } from "../lib/constants";
 export default function Maps() {
   const { listings: LISTINGS, loading } = useListings();
@@ -264,24 +263,7 @@ export default function Maps() {
     if (map.current) return;
     if (!apiKey) return;
 
-    // Try to take the pre-initialized map from the preloader
-    const preloaded = takeMap();
-    if (preloaded) {
-      // Re-parent the preloaded container into our layout
-      const container = mapContainer.current;
-      if (container) {
-        container.appendChild(preloaded.container);
-        preloaded.container.style.cssText =
-          "position:static;visibility:visible;width:100%;height:100%;";
-        map.current = preloaded.map;
-        sdkRef.current = maptilersdk;
-        map.current.resize();
-        updateMarkersRef.current();
-      }
-      return;
-    }
-
-    // Fallback: create a new map directly with the imported SDK
+    // Create a new map directly with the imported SDK
     sdkRef.current = maptilersdk;
     maptilersdk.config.apiKey = apiKey;
 
@@ -362,14 +344,12 @@ export default function Maps() {
     });
   }, [selectedListing, filteredListings]);
 
-  // Reset preloader on unmount so Home.tsx can re-init on next visit
   useEffect(() => {
     return () => {
       if (map.current) {
         map.current.remove();
         map.current = null;
       }
-      resetMapPreload();
     };
   }, []);
 

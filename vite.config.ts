@@ -3,7 +3,7 @@
 // @purpose: Containerized via Vite dev server (port 3000); no Docker/k8s manifests yet
 // @config: @ alias → project root (NOT src/ — potential mismatch with tsconfig @/* → src/* — ADR-005)
 // @config: Dev server: port 3000, host 0.0.0.0 (accessible on LAN), HMR toggle via DISABLE_HMR env var
-// @config: Manual chunk splitting strategy: maptiler (~500KB), recharts+d3, lucide, motion, vendor (rest)
+// @config: Manual chunk splitting strategy: maptiler (~500KB), lucide, motion, vendor (rest)
 // @config: chunkSizeWarningLimit: 2000KB — adjusted up from default 500KB for chunk splitting
 // @cicd: Build step: npm run build → vite build → outputs to dist/
 // @cicd: Preview step: npm run preview → vite preview → serves dist/ locally
@@ -38,6 +38,7 @@ export default defineConfig(() => {
       },
     },
     build: {
+      sourcemap: 'hidden',
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
         output: {
@@ -45,9 +46,6 @@ export default defineConfig(() => {
             if (id.includes('node_modules')) {
               if (id.includes('@maptiler') || id.includes('maplibre')) {
                 return 'maptiler';
-              }
-              if (id.includes('recharts') || id.includes('d3')) {
-                return 'recharts';
               }
               if (id.includes('lucide')) {
                 return 'lucide';

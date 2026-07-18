@@ -8,13 +8,13 @@ import { useToast } from '../components/ToastProvider';
 import { useAuth } from '../lib/AuthContext';
 import { useLandlord } from '../lib/LandlordContext';
 import { X, Star, MapPin, ArrowLeft, Utensils, Wifi, Tv, ArrowDownUp, Briefcase, Car, Fence, Refrigerator, Microwave, Cctv, Navigation, Maximize, Heart, BadgeCheck, Repeat2, FileText, Download, Users, Trash2, Instagram, Facebook, Twitter, Phone, Mail, Copy, Check } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { ListingModal } from '../components/ListingModal';
 import { LandlordListingsModal } from '../components/LandlordListingsModal';
-import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
-import MapTilerView from '../components/MapTilerView';
+const PhotoCarouselOverlay = lazy(() => import('../components/PhotoCarouselOverlay').then(m => ({ default: m.PhotoCarouselOverlay })));
+const MapTilerView = lazy(() => import('../components/MapTilerView'));
 import Footer from '../components/Footer';
 import HostProfile from '../components/HostProfile';
 import { AuthModal } from '../components/AuthModal';
@@ -172,6 +172,8 @@ export default function ListingDetail() {
                 src={img}
                 className="w-full h-full object-cover cursor-zoom-in"
                 alt={`${listing.title} - ${idx + 1}`}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                decoding="async"
                 referrerPolicy="no-referrer"
                 onClick={() => openGallery(idx)}
               />
@@ -221,6 +223,7 @@ export default function ListingDetail() {
                 src={images[0]}
                 className="w-full h-full object-cover"
                 alt={`${listing.title} - main`}
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -236,6 +239,8 @@ export default function ListingDetail() {
                   src={img}
                   className="w-full h-full object-cover"
                   alt={`${listing.title} - gallery ${idx + 1}`}
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -295,6 +300,8 @@ export default function ListingDetail() {
                     key={i}
                     src={src}
                     alt={`Tenant ${i + 1}`}
+                    loading="lazy"
+                    decoding="async"
                     className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm"
                     style={{ marginLeft: i > 0 ? '-10px' : '0', zIndex: 4 - i }}
                   />
@@ -442,12 +449,14 @@ export default function ListingDetail() {
                 onClick={() => setIsMapModalOpen(true)}
               >
                 <div className="absolute inset-0 z-20 group-g-black/5 transition-colors rounded-3xl" />
-                <MapTilerView
-                  lat={listing.lat || 8.2280}
-                  lng={listing.lng || 124.2452}
-                  title={listing.title}
-                  hideControls={isLandlordListingsOpen}
-                />
+                <Suspense fallback={<div className="w-full h-full bg-neutral-100 animate-pulse rounded-3xl" />}>
+                  <MapTilerView
+                    lat={listing.lat || 8.2280}
+                    lng={listing.lng || 124.2452}
+                    title={listing.title}
+                    hideControls={isLandlordListingsOpen}
+                  />
+                </Suspense>
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30">
                   <div className="bg-[#17294F] text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-2xl border border-white/20 backdrop-blur-md">
                     <Maximize size={16} />
@@ -596,13 +605,15 @@ export default function ListingDetail() {
             </div>
 
             <div className="flex-1 w-full h-full">
-              <MapTilerView
-                lat={listing.lat || 8.2280}
-                lng={listing.lng || 124.2452}
-                title={listing.title}
-                loadImmediately={true}
-                hideControls={isLandlordListingsOpen}
-              />
+              <Suspense fallback={<div className="w-full h-full bg-neutral-100 animate-pulse" />}>
+                <MapTilerView
+                  lat={listing.lat || 8.2280}
+                  lng={listing.lng || 124.2452}
+                  title={listing.title}
+                  loadImmediately={true}
+                  hideControls={isLandlordListingsOpen}
+                />
+              </Suspense>
             </div>
 
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[600] w-full px-6 flex justify-center">
@@ -620,12 +631,16 @@ export default function ListingDetail() {
         </div>
       )}
 
-      <PhotoCarouselOverlay 
-        isOpen={isPhotoGalleryOpen}
-        images={images}
-        initialIndex={initialGalleryIndex}
-        onClose={() => setIsPhotoGalleryOpen(false)}
-      />
+      {isPhotoGalleryOpen && (
+        <Suspense fallback={<div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center"><div className="text-white animate-pulse">Loading gallery...</div></div>}>
+          <PhotoCarouselOverlay 
+            isOpen={isPhotoGalleryOpen}
+            images={images}
+            initialIndex={initialGalleryIndex}
+            onClose={() => setIsPhotoGalleryOpen(false)}
+          />
+        </Suspense>
+      )}
 
       {selectedReview && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4" onClick={() => setSelectedReview(null)}>

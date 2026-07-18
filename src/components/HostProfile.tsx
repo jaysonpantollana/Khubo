@@ -37,7 +37,7 @@ const HostProfile: React.FC<HostProfileProps> = ({
             onClick={onClick}
             className={`flex items-center gap-5 mb-8 ${onClick ? 'cursor-pointer g-neutral-50 -mx-3 px-3 py-2 rounded-xl transition-colors' : ''}`}
           >
-              <img src={image} loading="lazy" alt={name} className="w-16 h-16 rounded-full object-cover bg-neutral-100 ring-4 ring-neutral-50 shadow-sm" />
+              <img src={image} loading="lazy" decoding="async" alt={name} className="w-16 h-16 rounded-full object-cover bg-neutral-100 ring-4 ring-neutral-50 shadow-sm" />
              <div>
                 <h3 className="text-xl font-bold text-[#17294F] flex items-center gap-1.5 font-display">
                   {name} <BadgeCheck size={18} className="text-[#2252D6]" />

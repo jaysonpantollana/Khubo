@@ -35,6 +35,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
             src={listing.image}
             alt={listing.title}
             loading="lazy"
+            decoding="async"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800';
@@ -91,6 +92,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
             src={listing.image}
             alt={listing.title}
             loading="lazy"
+            decoding="async"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800';

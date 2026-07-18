@@ -7,7 +7,6 @@ import { useListings } from "../hooks/useListings";
 import { useListingsFilter } from "../hooks/useListingsFilter";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { initMapPreload, isMapReady } from "../lib/mapPreloader";
 import { Search } from "lucide-react";
 import { useSearchHistory } from "../hooks/useSearchHistory";
 import { SearchHistory } from "../components/SearchHistory";
@@ -48,25 +47,6 @@ export default function Home() {
 
   const navigate = useNavigate();
   const [stickyActiveDropdown, setStickyActiveDropdown] = useState<"location" | "budget" | "general" | null>(null);
-
-  // Map preloader
-  const mapPreloadRef = useRef<HTMLDivElement>(null);
-  const apiKey = import.meta.env.VITE_MAPTILER_API_KEY || "";
-
-  const mapContainerCallback = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (node && apiKey && !isMapReady()) {
-        initMapPreload(node, apiKey);
-      }
-    },
-    [apiKey],
-  );
-
-  useEffect(() => {
-    if (mapPreloadRef.current && apiKey && !isMapReady()) {
-      initMapPreload(mapPreloadRef.current, apiKey);
-    }
-  }, [apiKey]);
 
   React.useEffect(() => {
     if (!isSticky || !isStickySearchActive) {
@@ -219,17 +199,6 @@ export default function Home() {
 
       <Footer />
       <BottomNav />
-
-      {apiKey && (
-        <div
-          ref={(node) => {
-            mapPreloadRef.current = node;
-            mapContainerCallback(node);
-          }}
-          aria-hidden="true"
-          style={{ position: "fixed", bottom: 0, right: 0, width: "1200px", height: "800px", zIndex: -1, pointerEvents: "none" }}
-        />
-      )}
     </div>
   );
 }

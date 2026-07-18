@@ -84,6 +84,8 @@ export const ListingModal: React.FC<ListingModalProps> = ({
           <img
             src={landlord.image}
             alt={landlord.name}
+            loading="lazy"
+            decoding="async"
             className="w-16 h-16 rounded-full object-cover ring-4 ring-neutral-100"
           />
           <div>

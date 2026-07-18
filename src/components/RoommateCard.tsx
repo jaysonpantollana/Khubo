@@ -26,6 +26,8 @@ export default React.memo(function RoommateCard({ roommate, onProfileClick, acti
           <img 
             src={roommate.image} 
             alt={roommate.name} 
+            loading="lazy"
+            decoding="async"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${roommate.name}&backgroundColor=b6e3f4`;

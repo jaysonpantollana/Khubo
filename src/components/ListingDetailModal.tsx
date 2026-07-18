@@ -61,6 +61,8 @@ export function ListingDetailModal({ isOpen, onClose, listing }: ListingDetailMo
             <img
               src={images[currentImageIndex]}
               alt={listing.title}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />

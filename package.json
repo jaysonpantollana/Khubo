@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Accommodation & roommate finder platform (Iligan City). React 19 + TypeScript 5.8 + Vite 6.2. Migration history: v0.0.0 = initial scaffold from AI Studio (Staybnb rename). Dependencies: react (UI), react-router-dom (routing), @maptiler/sdk (maps), @google/genai (AI), lucide-react (icons), motion (animations), recharts (charts), date-fns (dates), clsx+tailwind-merge (styling). DevDeps: vite, tailwindcss, typescript, eslint, prettier, autoprefixer.",
+  "description": "Accommodation & roommate finder platform (Iligan City). React 19 + TypeScript 5.8 + Vite 6.2. Migration history: v0.0.0 = initial scaffold from AI Studio (Staybnb rename). Dependencies: react (UI), react-router-dom (routing), @maptiler/sdk (maps), lucide-react (icons), motion (animations), clsx+tailwind-merge (styling). DevDeps: vite, tailwindcss, typescript, eslint, prettier, autoprefixer.",
   "scripts": {
     "dev": "vite --port=3002 --host=0.0.0.0 --strictPort",
     "build": "vite build",
@@ -27,7 +27,6 @@
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
     "react-router-dom": "^7.14.2",
-    "recharts": "^3.8.1",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.4.3"
   },

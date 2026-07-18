@@ -89,7 +89,7 @@ export default function RoommateHero({
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg_3.png')" }}
+        style={{ backgroundImage: "url('/bg_3.webp')" }}
       >
         <div className="absolute inset-0 bg-black/50" />
       </div>
@@ -105,6 +105,8 @@ export default function RoommateHero({
             <img 
               src="/khubo Logo.png" 
               alt="Khubo Logo" 
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />

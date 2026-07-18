@@ -3,7 +3,7 @@
 // @behavior: Opens EditProfileModal, LandlordSignupModal, LogoutModal, InquiriesModal, StatCardModal
 // @dependencies: useAuth, BottomNav, EditProfileModal, LandlordSignupModal, LogoutModal, InquiriesModal, StatCardModal, motion, lucide-react
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Listing, TenantInfo } from '../types';
@@ -20,7 +20,7 @@ import { useToast } from '../components/ToastProvider';
 import { updateListing } from '../lib/api/listings';
 import { EditListingModal } from '../components/EditListingModal';
 import { CreateListingModal } from '../components/CreateListingModal';
-import { PhotoCarouselOverlay } from '../components/PhotoCarouselOverlay';
+const PhotoCarouselOverlay = lazy(() => import('../components/PhotoCarouselOverlay').then(m => ({ default: m.PhotoCarouselOverlay })));
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
 
 import { InquiriesModal } from '../components/InquiriesModal';
@@ -247,7 +247,7 @@ export default function Profile() {
       <div className="relative min-h-[440px] md:h-[500px] w-full bg-black flex flex-col justify-end">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url("/bg_2.png")', opacity: 0.6 }}
+          style={{ backgroundImage: 'url("/bg_2.webp")', opacity: 0.6 }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
 
@@ -997,12 +997,16 @@ export default function Profile() {
         message="This action cannot be undone. This will permanently log you out of your account and remove your active session from our servers."
       />
 
-      <PhotoCarouselOverlay
-        isOpen={isPhotoGalleryOpen}
-        images={galleryImages}
-        initialIndex={0}
-        onClose={() => setIsPhotoGalleryOpen(false)}
-      />
+      {isPhotoGalleryOpen && (
+        <Suspense fallback={<div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center"><div className="text-white animate-pulse">Loading gallery...</div></div>}>
+          <PhotoCarouselOverlay
+            isOpen={isPhotoGalleryOpen}
+            images={galleryImages}
+            initialIndex={0}
+            onClose={() => setIsPhotoGalleryOpen(false)}
+          />
+        </Suspense>
+      )}
       <AnnouncementsOverlay isOpen={isAnnouncementsOpen} onClose={() => setIsAnnouncementsOpen(false)} />
       <InquiriesModal isOpen={isInquiriesModalOpen} onClose={() => setIsInquiriesModalOpen(false)} />
       {selectedListingDetail && (

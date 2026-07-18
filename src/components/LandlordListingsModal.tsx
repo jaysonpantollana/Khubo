@@ -52,6 +52,8 @@ export const LandlordListingsModal: React.FC<LandlordListingsModalProps> = ({
         <img
           src={host.image}
           alt={host.name}
+          loading="lazy"
+          decoding="async"
           className="w-14 h-14 rounded-full object-cover ring-3 ring-neutral-100"
         />
         <div className="flex-1">

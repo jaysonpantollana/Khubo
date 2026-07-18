@@ -128,7 +128,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
                     idx === currentIndex ? 'border-white scale-110' : 'border-transparent opacity-50'
                   }`}
                 >
-                  <img src={img} loading="lazy" className="w-full h-full object-cover" alt={`Gallery photo ${idx}`} referrerPolicy="no-referrer" />
+                   <img src={img} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={`Gallery photo ${idx}`} referrerPolicy="no-referrer" />
                 </button>
               ))}
            </div>

@@ -208,7 +208,7 @@ export default function RoommateHero({
             )}
             
             {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-1 sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[96%] sm:w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[92vw] max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
             {isSearchActive ? (
               <>
                 <div className="flex-1 flex items-center pl-4 md:pl-6 pr-0 py-0 w-full">
@@ -247,7 +247,8 @@ export default function RoommateHero({
                     className="bg-[#17294F] p-1.5 sm:p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                     aria-label="Search"
                   >
-                    <Search size={16} className="text-white group-troke-[3px] transition-all md:hidden" />
+                    <Search size={14} className="text-white group-troke-[3px] transition-all sm:hidden" />
+                    <Search size={16} className="text-white group-troke-[3px] transition-all hidden sm:block md:hidden" />
                     <Search size={22} className="text-white group-troke-[3px] transition-all hidden md:block" />
                   </button>
                 </div>
@@ -277,15 +278,15 @@ export default function RoommateHero({
                     aria-label="Location: Location"
                     onClick={() => toggleDropdown('location')}
                     onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggleDropdown('location'))}
-                    className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-2 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
+                    className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'location' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
                         : 'g-white/5 rounded-full'
                       }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
-                      <MapPin className="text-[#2252D6] flex-shrink-0 w-3 h-3 md:w-[16px] md:h-[16px]" />
-                      <span className={`text-[10px] sm:text-xs md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'location' ? 'text-neutral-900' : 'text-white'}`}>
+                      <MapPin className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 md:w-[16px] md:h-[16px]" />
+                      <span className={`text-[9px] sm:text-xs md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'location' ? 'text-neutral-900' : 'text-white'}`}>
                         {selectedLocation ? selectedLocation : 'Location'}
                       </span>
                     </div>
@@ -294,7 +295,7 @@ export default function RoommateHero({
 
                 </div>
 
-                <div className="w-[1px] h-4 sm:h-5 md:h-8 bg-white/20" />
+                <div className="w-[1px] h-3 sm:h-5 md:h-8 bg-white/20" />
 
                 <div className="flex-1 min-w-0">
                   <div 
@@ -303,15 +304,15 @@ export default function RoommateHero({
                     aria-label="Add budget"
                     onClick={() => toggleDropdown('budget')}
                     onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggleDropdown('budget'))}
-                    className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-2 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
+                    className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'budget' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
                         : 'g-white/5 rounded-full'
                       }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
-                      <Wallet className="text-[#2252D6] flex-shrink-0 w-3 h-3 md:w-[16px] md:h-[16px]" />
-                      <span className={`text-[10px] sm:text-xs md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'budget' ? 'text-neutral-900' : 'text-white'}`}>
+                      <Wallet className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 md:w-[16px] md:h-[16px]" />
+                      <span className={`text-[9px] sm:text-xs md:text-base font-bold truncate md:whitespace-nowrap ${activeDropdown === 'budget' ? 'text-neutral-900' : 'text-white'}`}>
                         {selectedBudget ? selectedBudget : 'Budget'}
                       </span>
                     </div>
@@ -342,7 +343,8 @@ export default function RoommateHero({
                   }}
                   className="bg-[#17294F] p-1.5 sm:p-2 md:p-4 rounded-full transition-all duration-200 shadow-lg ml-0.5 md:ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                 >
-                  <Search size={16} className="text-white group-troke-[3px] transition-all md:hidden" />
+                  <Search size={14} className="text-white group-troke-[3px] transition-all sm:hidden" />
+                  <Search size={16} className="text-white group-troke-[3px] transition-all hidden sm:block md:hidden" />
                   <Search size={22} className="text-white group-troke-[3px] transition-all hidden md:block" />
                 </button>
               </>

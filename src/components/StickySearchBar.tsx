@@ -161,7 +161,7 @@ export function StickySearchBar({
             {/* Pill search bar */}
             <div
               id="2nd-search-bar"
-              className="bg-white border border-neutral-200 p-1.5 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-full max-w-[340px] sm:max-w-[480px] md:max-w-[650px] lg:max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative"
+              className="bg-white border border-neutral-200 p-1 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-[92vw] max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative"
             >
               {isStickySearchActive ? (
                 <>
@@ -199,10 +199,11 @@ export function StickySearchBar({
                         onSearch(searchQuery);
                         setIsStickySearchActive(false);
                       }}
-                      className="bg-[#17294F] p-2 sm:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                      className="bg-[#17294F] p-1.5 sm:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                       aria-label="Search"
                     >
-                      <Search size={16} className="text-white" />
+                      <Search size={14} className="text-white sm:hidden" />
+                      <Search size={16} className="text-white hidden sm:block" />
                     </button>
                   </div>
                   {!hideStickyDropdown && (
@@ -242,26 +243,26 @@ export function StickySearchBar({
                           stickyActiveDropdown === "location" ? null : "location",
                         ))
                       }
-                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
                         stickyActiveDropdown === "location"
                           ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
                           : "g-neutral-50 rounded-full"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                        <MapPin className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                        <span className="text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800">
+                        <MapPin className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                        <span className="text-[9px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800">
                           {selectedStickyLocation || "Location"}
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "location" ? "rotate-180" : ""}`}
+                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-2.5 h-2.5 sm:w-4 sm:h-4 ${stickyActiveDropdown === "location" ? "rotate-180" : ""}`}
                       />
                     </div>
 
                   </div>
 
-                  <div className="w-[1px] h-3 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
+                  <div className="w-[1px] h-2.5 sm:h-4 bg-neutral-200 flex-shrink-0 self-center" />
 
                   {/* Sticky Budget Section */}
                   <div className="flex-1 min-w-0">
@@ -281,20 +282,20 @@ export function StickySearchBar({
                           stickyActiveDropdown === "budget" ? null : "budget",
                         ))
                       }
-                      className={`w-full flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-2 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group select-none focus-visible:outline-none ${
                         stickyActiveDropdown === "budget"
                           ? "bg-neutral-100 rounded-full text-[#17294F] relative z-[60] shadow-sm"
                           : "g-neutral-50 rounded-full"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-2.5 min-w-0">
-                        <Wallet className="text-[#2252D6] flex-shrink-0 w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
-                        <span className="text-[10px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800">
+                        <Wallet className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4 md:w-[15px] md:h-[15px]" />
+                        <span className="text-[9px] sm:text-sm md:text-sm font-bold truncate md:whitespace-nowrap text-neutral-800">
                           {selectedStickyBudget || "Budget"}
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-3 h-3 sm:w-4 sm:h-4 ${stickyActiveDropdown === "budget" ? "rotate-180" : ""}`}
+                        className={`flex-shrink-0 opacity-50 text-neutral-500 w-2.5 h-2.5 sm:w-4 sm:h-4 ${stickyActiveDropdown === "budget" ? "rotate-180" : ""}`}
                       />
                     </div>
 
@@ -324,9 +325,10 @@ export function StickySearchBar({
                       }
                     }}
                     aria-label="Search"
-                    className="bg-[#17294F] p-2 sm:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-1.5 sm:p-2.5 rounded-full shadow-md ml-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                   >
-                    <Search size={16} className="text-white" />
+                    <Search size={14} className="text-white sm:hidden" />
+                    <Search size={16} className="text-white hidden sm:block" />
                   </button>
                 </>
               )}

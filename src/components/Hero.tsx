@@ -197,7 +197,7 @@ export default function Hero({
             )}
 
             {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-0.5 sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-full max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[92vw] max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
               {isSearchActive ? (
                 <>
                   <div className="flex-1 flex items-center pl-3 sm:pl-6 pr-0 py-0 w-full">
@@ -271,29 +271,29 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("location"))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-2 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-1.5 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "location"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "g-white/5 rounded-full"
                       }`}
                     >
-                      <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+                      <div className="flex items-center gap-1 sm:gap-2.5 min-w-0">
                         <MapPin
-                          className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4"
+                          className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4"
                         />
                         <span
-                          className={`text-xs sm:text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-[10px] sm:text-base font-bold ${activeDropdown === "location" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedLocation || "Location"}
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 w-4 h-4 ${activeDropdown === "location" ? "rotate-180 text-neutral-900" : ""}`}
+                        className={`flex-shrink-0 opacity-50 w-3 h-3 sm:w-4 sm:h-4 ${activeDropdown === "location" ? "rotate-180 text-neutral-900" : ""}`}
                       />
                     </div>
                   </div>
 
-                  <div className="w-px h-4 sm:h-6 bg-white/20 flex-shrink-0" />
+                  <div className="w-px h-3 sm:h-6 bg-white/20 flex-shrink-0" />
 
                   <div className="flex-1 min-w-0">
                     <div
@@ -305,22 +305,22 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("budget"))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-2 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-2.5 md:pl-5 md:pr-3 py-1.5 sm:py-3 md:py-3 transition-all cursor-pointer group select-none focus-visible:outline-none ${
                         activeDropdown === "budget"
                           ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-md"
                           : "g-white/5 rounded-full"
                       }`}
                     >
-                      <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
-                        <Wallet className="text-[#2252D6] flex-shrink-0 w-3 h-3 sm:w-4 sm:h-4" />
+                      <div className="flex items-center gap-1 sm:gap-2.5 min-w-0">
+                        <Wallet className="text-[#2252D6] flex-shrink-0 w-2.5 h-2.5 sm:w-4 sm:h-4" />
                         <span
-                          className={`text-xs sm:text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
+                          className={`text-[10px] sm:text-base font-bold ${activeDropdown === "budget" ? "text-neutral-900" : "text-white"}`}
                         >
                           {selectedBudget || "Budget"}
                         </span>
                       </div>
                       <ChevronDown
-                        className={`flex-shrink-0 opacity-50 w-4 h-4 ${activeDropdown === "budget" ? "rotate-180 text-neutral-900" : ""}`}
+                        className={`flex-shrink-0 opacity-50 w-3 h-3 sm:w-4 sm:h-4 ${activeDropdown === "budget" ? "rotate-180 text-neutral-900" : ""}`}
                       />
                     </div>
                   </div>
@@ -348,10 +348,10 @@ export default function Hero({
                       }
                     }}
                     aria-label="Search"
-                    className="bg-[#17294F] p-2.5 sm:p-4 rounded-full transition-all duration-200 shadow-lg ml-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
+                    className="bg-[#17294F] p-1.5 sm:p-4 rounded-full transition-all duration-200 shadow-lg ml-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white flex-shrink-0 flex items-center justify-center cursor-pointer"
                   >
                     <Search
-                      className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px] text-white group-troke-[3px] transition-all"
+                      className="w-3 h-3 sm:w-[22px] sm:h-[22px] text-white group-troke-[3px] transition-all"
                     />
                   </button>
                 </>

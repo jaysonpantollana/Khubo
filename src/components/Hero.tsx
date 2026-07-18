@@ -197,7 +197,7 @@ export default function Hero({
             )}
 
             {/* Pill search bar */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[92vw] max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[800px] relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
               {isSearchActive ? (
                 <>
                   <div className="flex-1 flex items-center pl-3 sm:pl-6 pr-0 py-0 w-full">

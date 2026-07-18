@@ -213,7 +213,7 @@ export default function ListingDetail() {
         
         {/* Desktop Gallery Grid */}
         <div className="hidden md:block relative group mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-2 h-[300px] md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-2 h-64 md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-sm">
             {/* Main Big Image */}
             <div 
               onClick={() => openGallery(0)}

@@ -45,7 +45,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white border-b border-[#ebebeb] h-[80px] flex items-center">
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-[#ebebeb] h-14 sm:h-16 md:h-20 flex items-center">
       <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 w-full">
         <div className="flex flex-row items-center justify-between">
           {/* Logo */}
@@ -70,14 +70,14 @@ export default function Navbar() {
           {/* Search Bar */}
           <button
             aria-label="Open search menu"
-            className="border border-[#dddddd] h-[48px] rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] transition cursor-pointer flex items-center px-2 pl-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+            className="border border-[#dddddd] h-12 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] transition cursor-pointer flex items-center px-2 pl-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
           >
             <div className="flex flex-row items-center justify-between gap-4">
               <div className="text-sm font-semibold pr-4 border-r border-[#dddddd]">Anywhere</div>
               <div className="hidden sm:block text-sm font-semibold px-4 border-r border-[#dddddd]">Any week</div>
               <div className="text-sm pl-4 pr-1 text-[#717171] flex flex-row items-center gap-3">
                 <div className="hidden sm:block">Add guests</div>
-                <div className="w-[32px] h-[32px] bg-[#17294F] rounded-full text-white flex items-center justify-center">
+                <div className="w-8 h-8 bg-[#17294F] rounded-full text-white flex items-center justify-center">
                   <Search size={12} strokeWidth={4} />
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function Navbar() {
               className="p-1 pl-3 border border-[#dddddd] flex flex-row items-center gap-3 rounded-full cursor-pointer transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               <Menu size={18} />
-              <div className={`w-[30px] h-[30px] rounded-full flex items-center justify-center text-white ${user ? 'bg-[#17294F]' : 'bg-[#717171]'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${user ? 'bg-[#17294F]' : 'bg-[#717171]'}`}>
                 <User size={18} />
               </div>
             </button>
@@ -125,7 +125,7 @@ export default function Navbar() {
             {/* Dropdown Menu */}
                 {isMenuOpen && (
                 <div
-                  className="absolute right-0 top-[60px] w-64 bg-white rounded-xl shadow-[0_2px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] py-2 z-50 overflow-hidden"
+                  className="absolute right-0 top-14 sm:top-16 md:top-20 w-64 bg-white rounded-xl shadow-[0_2px_16px_rgba(0,0,0,0.12)] border border-[#ebebeb] py-2 z-50 overflow-hidden"
                 >
                   {user ? (
                     <>

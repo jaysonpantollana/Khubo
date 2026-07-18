@@ -25,7 +25,7 @@ export default function BottomNav() {
       className="fixed bottom-[calc(12px+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-50 pointer-events-none"
     >
       <nav
-        className="inline-flex items-center bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-4 py-1 sm:px-6 sm:py-1.5 md:px-7 md:py-2 gap-x-3 sm:gap-x-6 md:gap-x-7 pointer-events-auto"
+        className="inline-flex items-center bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-5 py-2 sm:px-8 sm:py-2.5 md:px-7 md:py-2 gap-x-5 sm:gap-x-8 md:gap-x-7 pointer-events-auto"
       >
         {items.map((item, idx) => {
           const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '') || (item.path !== '/' && location.pathname.startsWith(item.path));
@@ -37,9 +37,9 @@ export default function BottomNav() {
               className="flex flex-col items-center justify-center py-0.5 group transition-all duration-200 relative"
             >
               <div className={`p-0.5 sm:p-1.5 md:p-2 rounded-xl sm:rounded-2xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-ext-white'}`}>
-                <item.icon className="w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-5 md:h-5" strokeWidth={isActive ? 2.5 : 2} />
+                <item.icon className="w-5 h-5 sm:w-7 sm:h-7 md:w-5 md:h-5" strokeWidth={isActive ? 2.5 : 2} />
               </div>
-              <span className={`text-[5px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-wide text-center transition-colors duration-200 mt-px leading-tight whitespace-nowrap ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-ext-white'}`}>
+              <span className={`text-[10px] sm:text-sm md:text-xs font-bold uppercase tracking-wide text-center transition-colors duration-200 mt-px leading-tight whitespace-nowrap ${isActive ? 'text-[#3b82f6]' : 'text-neutral-200 group-ext-white'}`}>
                 {item.label}
               </span>
             </button>

@@ -98,8 +98,7 @@ export default function RoommateHero({
         <button 
           aria-label="Home" 
           onClick={() => navigate('/')} 
-          className="flex items-center justify-center overflow-hidden flex-shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-          style={{ width: 'clamp(40px, 8vw, 64px)', height: 'clamp(40px, 8vw, 64px)' }}
+          className="flex items-center justify-center overflow-hidden flex-shrink-0 w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           <img 
             src="/khubo Logo.png" 

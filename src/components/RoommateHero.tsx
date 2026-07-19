@@ -49,12 +49,11 @@ export default function RoommateHero({
 
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
-  const budgetScrollRef = React.useRef<HTMLDivElement>(null);
   const locationScrollRef = React.useRef<HTMLDivElement>(null);
 
   const hasSelections = selectedLocation || selectedBudget;
 
-  const budgetRanges = BUDGET_RANGES;
+
 
   useEffect(() => {
     if (suppressDropdown) {
@@ -85,7 +84,7 @@ export default function RoommateHero({
   };
 
   return (
-    <div className="relative min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px] w-full z-50">
+    <div className="relative min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px] w-full z-50 flex flex-col">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -94,31 +93,32 @@ export default function RoommateHero({
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      <div className="relative z-10 max-w-[2520px] mx-auto h-full flex flex-col px-4 md:px-12">
-        {/* Top bar */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between py-4 md:py-6 px-4 md:px-12 gap-4 z-20">
-          <button 
-            aria-label="Home" 
-            onClick={() => navigate('/')} 
-            className="flex items-center justify-center overflow-hidden w-10 h-10 md:w-16 md:h-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 rounded-xl"
-          >
-            <img 
-              src="/khubo Logo.png" 
-              alt="Khubo Logo" 
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-contain"
-              referrerPolicy="no-referrer"
-            />
-          </button>
+      {/* Top bar */}
+      <div className="relative z-10 flex items-center justify-between py-5 sm:py-6" style={{ paddingInline: 'clamp(1.25rem, 4vw, 3rem)' }}>
+        <button 
+          aria-label="Home" 
+          onClick={() => navigate('/')} 
+          className="flex items-center justify-center overflow-hidden flex-shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          style={{ width: 'clamp(40px, 8vw, 64px)', height: 'clamp(40px, 8vw, 64px)' }}
+        >
+          <img 
+            src="/khubo Logo.png" 
+            alt="Khubo Logo" 
+            fetchPriority="high"
+            className="w-full h-full object-contain"
+            referrerPolicy="no-referrer"
+          />
+        </button>
 
-          <button 
-            onClick={() => setIsAnnouncementsOpen(true)}
-            className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 bg-transparent text-white"
-          >
-            <Megaphone className="w-5 h-5 md:w-8 md:h-8" />
-          </button>
-        </div>
+        <button 
+          onClick={() => setIsAnnouncementsOpen(true)}
+          className="flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-transparent text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
+        >
+          <Megaphone className="w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+        </button>
+      </div>
+
+      <div className="relative z-10 max-w-[2520px] mx-auto flex-1 flex flex-col px-4 md:px-12">
 
         {/* Center Content */}
         <div className="flex flex-col items-center justify-center text-center flex-1">
@@ -193,7 +193,7 @@ export default function RoommateHero({
                   className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pr-10"
                 >
                   <div className="grid grid-cols-1 gap-1">
-                    {budgetRanges.map((range) => (
+                    {BUDGET_RANGES.map((range) => (
                       <button 
                         key={range.label}
                         onClick={() => { setSelectedBudget(range.label); setActiveDropdown(null); onBudgetSelect?.(range); }}

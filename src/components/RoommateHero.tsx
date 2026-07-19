@@ -85,7 +85,7 @@ export default function RoommateHero({
   };
 
   return (
-    <div className="relative min-h-[400px] md:h-[500px] w-full z-50">
+    <div className="relative min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px] w-full z-50">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -94,7 +94,7 @@ export default function RoommateHero({
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      <div className="relative z-10 max-w-[2520px] mx-auto h-full px-4 md:px-12">
+      <div className="relative z-10 max-w-[2520px] mx-auto h-full flex flex-col px-4 md:px-12">
         {/* Top bar */}
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between py-4 md:py-6 px-4 md:px-12 gap-4 z-20">
           <button 
@@ -121,7 +121,7 @@ export default function RoommateHero({
         </div>
 
         {/* Center Content */}
-        <div className="flex flex-col items-center justify-center text-center h-full pt-10 md:pt-10">
+        <div className="flex flex-col items-center justify-center text-center flex-1">
           <div 
             className="flex items-baseline gap-2 sm:gap-3 md:gap-4 flex-wrap justify-center"
           >

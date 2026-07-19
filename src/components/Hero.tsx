@@ -213,7 +213,7 @@ export default function Hero({
             )}
 
             {/* Search bar — vertical on mobile, horizontal on md+ (glassmorphism) */}
-            <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-[3px] sm:p-1.5 md:p-2 flex flex-row items-center text-white shadow-2xl w-[95%] max-w-[520px] md:max-w-[720px] rounded-full relative z-[95] transition-all duration-300 pointer-events-auto cursor-default overflow-hidden">
+            <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-[3px] sm:p-1.5 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
               {isSearchActive ? (
                 <>
                   <div className="flex-1 flex flex-col md:flex-row items-stretch md:items-center pl-3 sm:pl-6 pr-0 py-0 w-full min-w-0 gap-2 md:gap-0">
@@ -287,10 +287,10 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("location"))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none rounded-full ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === "location"
-                          ? "bg-white text-[#17294F] relative z-[60] shadow-md"
-                          : "bg-white/5"
+                          ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md"
+                          : "rounded-full"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -309,8 +309,7 @@ export default function Hero({
                     </div>
                   </div>
 
-                  {/* Divider — vertical between Location and Budget (desktop only) */}
-                  <div className="w-px self-stretch bg-white/20 flex-shrink-0" />
+                  <div className="w-[1px] h-3 sm:h-5 md:h-8 bg-white/20" />
 
                   {/* Budget field — no border-bottom (last item before search button) */}
                   <div className="flex-1 min-w-0">
@@ -323,10 +322,10 @@ export default function Hero({
                         (e.key === "Enter" || e.key === " ") &&
                         (e.preventDefault(), toggleDropdown("budget"))
                       }
-                      className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group select-none focus-visible:outline-none rounded-full ${
+                      className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === "budget"
-                          ? "bg-white text-[#17294F] relative z-[60] shadow-md"
-                          : "bg-white/5"
+                          ? "bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md"
+                          : "rounded-full"
                       }`}
                     >
                       <div className="flex items-center gap-1 md:gap-3 min-w-0">

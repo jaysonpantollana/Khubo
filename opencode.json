@@ -5,7 +5,8 @@
     "./.opencode/plugins",
     "./.opencode/plugins/pensyve",
     "compound-engineering@git+https://github.com/EveryInc/compound-engineering-plugin.git",
-    "opencode-skills-collection@latest"
+    "opencode-skills-collection@latest",
+    "superpowers@git+https://github.com/obra/superpowers.git"
   ],
   "model": "opencode/mimo-v2.5-free",
   "small_model": "opencode/mimo-v2.5-free",
@@ -41,7 +42,9 @@
     ".opencode/skills/e2e-testing/SKILL.md",
     ".opencode/skills/verification-loop/SKILL.md",
     ".opencode/skills/api-design/SKILL.md",
-    ".opencode/skills/strategic-compact/SKILL.md"
+    ".opencode/skills/strategic-compact/SKILL.md",
+    ".opencode/skills/ui-rules/SKILL.md",
+    ".opencode/skills/terrashark/SKILL.md"
   ],
   "skills": {
     "paths": [".opencode/../skills"]

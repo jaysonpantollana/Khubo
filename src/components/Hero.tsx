@@ -383,6 +383,7 @@ export default function Hero({
         isOpen={isAnnouncementsOpen}
         onClose={() => setIsAnnouncementsOpen(false)}
       />
+      </div>
     </div>
   );
 }

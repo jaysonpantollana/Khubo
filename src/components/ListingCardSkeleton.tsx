@@ -31,7 +31,7 @@ export default React.memo(function ListingCardSkeleton({ compact }: ListingCardS
   }
 
   return (
-    <div className="col-span-1 bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent group ">
+    <div className="col-span-1 h-full bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent group ">
       <div className="flex flex-col gap-2.5 sm:gap-3 w-full">
         <div className="aspect-[4/3] relative rounded-xl bg-neutral-200"></div>
         <div className="px-1.5 sm:px-1 flex flex-col gap-1">

@@ -699,32 +699,17 @@ export default function RoommateFinder() {
                   </div>
                 </div>
 
-                <div className="hidden md:flex items-center gap-3">
-                  <button
-                    onClick={() => scroll(recommendedRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={() => scroll(recommendedRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
+                {/* Scroll arrows removed — grid layout handles layout */}
               </div>
 
               <div
                 ref={recommendedRef}
-                className="flex gap-4 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
-                style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
+                className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 pb-4"
               >
                 {loading
-                  ? Array.from({ length: 4 }).map((_, i) => (
+                  ? Array.from({ length: 6 }).map((_, i) => (
                       <div
                         key={`skeleton-rec-${i}`}
-                        className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
                       >
                         <RoommateCardSkeleton />
                       </div>
@@ -732,7 +717,6 @@ export default function RoommateFinder() {
                   : filteredRoommates.slice(0, 10).map((roommate) => (
                       <div
                         key={roommate.id}
-                        className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
                       >
                         <RoommateCard
                           roommate={roommate}
@@ -762,32 +746,17 @@ export default function RoommateFinder() {
                   </div>
                 </div>
 
-                <div className="hidden md:flex items-center gap-3">
-                  <button
-                    onClick={() => scroll(nearMsuIitRef, "left")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={() => scroll(nearMsuIitRef, "right")}
-                    className="w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white order-black g-neutral-50 transition-all"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
+                {/* Scroll arrows removed — grid layout handles layout */}
               </div>
 
               <div
                 ref={nearMsuIitRef}
-                className="flex gap-4 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
-                style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
+                className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 pb-4"
               >
                 {loading
-                  ? Array.from({ length: 4 }).map((_, i) => (
+                  ? Array.from({ length: 6 }).map((_, i) => (
                       <div
                         key={`skeleton-msu-${i}`}
-                        className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
                       >
                         <RoommateCardSkeleton />
                       </div>
@@ -799,7 +768,6 @@ export default function RoommateFinder() {
                       .map((roommate) => (
                         <div
                           key={roommate.id}
-                          className="flex-none snap-start w-full [@media(max-height:500px)_and_(orientation:landscape)]:w-[calc(50vw-24px)] sm:w-[320px] md:w-[340px] xl:w-[calc((100%-48px)/4)]"
                         >
                           <RoommateCard
                             roommate={roommate}

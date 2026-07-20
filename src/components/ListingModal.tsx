@@ -23,9 +23,9 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   onAuthRequired,
   onContactOwner,
 }) => {
-  if (!isOpen) return null;
-
   const [copiedContact, setCopiedContact] = useState<string | null>(null);
+
+  if (!isOpen) return null;
 
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);

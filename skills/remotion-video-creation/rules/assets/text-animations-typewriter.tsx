@@ -34,7 +34,7 @@ const getTypedText = ({
 	const preLen =
 		pauseIndex >= 0 ? pauseIndex + pauseAfter.length : fullText.length;
 
-	let typedChars = 0;
+	let typedChars;
 	if (frame < preLen * charFrames) {
 		typedChars = Math.floor(frame / charFrames);
 	} else if (frame < preLen * charFrames + pauseFrames) {

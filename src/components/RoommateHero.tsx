@@ -50,6 +50,7 @@ export default function RoommateHero({
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
   const locationScrollRef = React.useRef<HTMLDivElement>(null);
+  const budgetScrollRef = React.useRef<HTMLDivElement>(null);
 
   const hasSelections = selectedLocation || selectedBudget;
 

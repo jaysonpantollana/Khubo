@@ -87,6 +87,7 @@ const dependencyAnalyzerTool: ToolDefinition = tool({
       return JSON.stringify({
         success: false,
         error: `Failed to analyze dependencies: ${errorMessage}`,
+        cause: error instanceof Error ? error : undefined,
         type: args.type,
       })
     }
@@ -156,7 +157,7 @@ async function analyzeDependencies(
     }
     
   } catch (error) {
-    throw new Error(`Failed to read package.json: ${error}`)
+    throw new Error(`Failed to read package.json: ${error}`, { cause: error })
   }
   
   return dependencies

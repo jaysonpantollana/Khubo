@@ -161,7 +161,7 @@ export function StickySearchBar({
             {/* Pill search bar */}
             <div
               id="2nd-search-bar"
-              className="bg-white border border-neutral-200 p-1 sm:p-2 md:p-2 flex items-center text-neutral-800 shadow-lg w-[calc(100vw-1.5rem)] max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative overflow-hidden"
+              className="bg-white border border-neutral-200 p-3 sm:p-3 md:p-2 flex items-center text-neutral-800 shadow-lg w-[calc(100vw-1.5rem)] max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative overflow-hidden"
             >
               {isStickySearchActive ? (
                 <>

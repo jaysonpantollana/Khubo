@@ -44,7 +44,8 @@
     ".opencode/skills/api-design/SKILL.md",
     ".opencode/skills/strategic-compact/SKILL.md",
     ".opencode/skills/ui-rules/SKILL.md",
-    ".opencode/skills/terrashark/SKILL.md"
+    ".opencode/skills/terrashark/SKILL.md",
+    ".opencode/skills/skill-creator/SKILL.md"
   ],
   "skills": {
     "paths": [".opencode/../skills"]

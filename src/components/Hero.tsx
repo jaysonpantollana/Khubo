@@ -74,7 +74,7 @@ export default function Hero({
       <div className="relative flex flex-col min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
         {/* Top bar — logo and announcements */}
         <div
-          className="flex items-center justify-between py-5 sm:py-6"
+          className="relative z-10 flex items-center justify-between py-5 sm:py-6"
           style={{ paddingInline: "clamp(1.25rem, 4vw, 3rem)" }}
         >
           <button
@@ -100,7 +100,8 @@ export default function Hero({
         </div>
 
         {/* Heading + search bar */}
-        <div className="flex-1 flex flex-col items-center justify-center text-center px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
+        <div className="relative z-10 max-w-[2520px] mx-auto flex-1 flex flex-col px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
+          <div className="flex-1 flex flex-col items-center justify-center text-center">
           <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-2 sm:gap-x-4 md:gap-x-6 text-white w-full px-2">
             <span
               className="font-noto-serif italic opacity-80 break-words"

@@ -15,7 +15,7 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import { DEFAULT_FILTERS } from "../lib/constants";
 
 const CAROUSEL_ITEM_CLASS =
-  "sm:w-[calc((100%-12px)/2)] sm:min-w-[calc((100%-12px)/2)] md:portrait:min-w-[calc((100%-24px)/3)] md:portrait:w-[calc((100%-24px)/3)] md:landscape:min-w-[calc((100%-48px)/5)] md:landscape:w-[calc((100%-48px)/5)] lg:min-w-[calc((100%-48px)/5)] lg:w-[calc((100%-48px)/5)] xl:min-w-[calc((100%-48px)/5)] xl:w-[calc((100%-48px)/5)] snap-center";
+  "min-w-[75vw] w-[75vw] sm:min-w-[calc((100%-12px)/2)] sm:w-[calc((100%-12px)/2)] md:portrait:min-w-[calc((100%-24px)/3)] md:portrait:w-[calc((100%-24px)/3)] md:landscape:min-w-[calc((100%-48px)/5)] md:landscape:w-[calc((100%-48px)/5)] lg:min-w-[calc((100%-48px)/5)] lg:w-[calc((100%-48px)/5)] xl:min-w-[calc((100%-48px)/5)] xl:w-[calc((100%-48px)/5)] snap-center flex-shrink-0";
 
 export default function Home() {
   const { listings: LISTINGS, loading: listingsLoading } = useListings();

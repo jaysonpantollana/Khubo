@@ -117,7 +117,7 @@ export default function RoommateHero({
         </button>
       </div>
 
-      <div className="relative z-10 max-w-[2520px] mx-auto flex-1 flex flex-col px-4 md:px-12">
+      <div className="relative z-10 max-w-[2520px] mx-auto flex-1 flex flex-col px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
 
         {/* Center Content */}
         <div className="flex flex-col items-center justify-center text-center flex-1">
@@ -133,7 +133,8 @@ export default function RoommateHero({
           </div>
 
           <div 
-            className="mt-3 sm:mt-5 md:mt-12 w-full flex justify-center relative dropdown-container"
+            className="w-full flex justify-center relative dropdown-container"
+            style={{ marginTop: "clamp(2rem, 5vw, 3rem)" }}
           >
             {/* Dropdown panels — rendered OUTSIDE the pill so they expand below it */}
             {!isSearchActive && activeDropdown === 'location' && (

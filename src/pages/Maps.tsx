@@ -175,7 +175,7 @@ export default function Maps() {
         el.className = "custom-marker";
         el.setAttribute('tabindex', '0');
         el.setAttribute('role', 'button');
-        el.setAttribute('aria-label', `${listing.title} - ₱${listing.price.toLocaleString()}/mo`);
+        el.setAttribute('aria-label', `${listing.title} - ₱${listing.price.toLocaleString()}/month`);
         el.innerHTML = `
           <div class="marker-pin" style="cursor: pointer; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); display: flex; align-items: center; justify-content: center;">
             <svg width="26" height="34" viewBox="0 0 26 34" fill="none">
@@ -200,7 +200,7 @@ export default function Maps() {
             <img src="${listing.image}" alt="${listing.title}" style="width: 100%; height: 100px; object-fit: cover;" />
             <div style="padding: 6px 8px;">
               <div style="font-size: 11px; font-weight: 600; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${listing.title}</div>
-              <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /mo</div>
+              <div style="font-size: 11px; color: #666;">₱${listing.price.toLocaleString()} /month</div>
             </div>
           </div>
         `);

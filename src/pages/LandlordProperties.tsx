@@ -7,11 +7,12 @@
 
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, Plus } from 'lucide-react';
+import { ArrowLeft, Star, Plus, Pencil } from 'lucide-react';
 import { Listing } from '../types';
 import { useAuth } from '../lib/AuthContext';
 import BottomNav from '../components/BottomNav';
 import { CreateListingModal } from '../components/CreateListingModal';
+import { EditListingModal } from '../components/EditListingModal';
 
 const sampleListings: Listing[] = [
   {
@@ -85,6 +86,7 @@ export default function LandlordProperties() {
   const [myListings, setMyListings] = useState<Listing[]>([]);
   const [loadingListings, setLoadingListings] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [editListing, setEditListing] = useState<Listing | null>(null);
 
   useEffect(() => {
     document.title = "Properties | Khubo";
@@ -164,6 +166,7 @@ export default function LandlordProperties() {
                   <th className="p-4 text-neutral-500 font-bold text-sm">Rating</th>
                   <th className="p-4 text-neutral-500 font-bold text-sm">Status</th>
                   <th className="p-4 text-neutral-500 font-bold text-sm">Vacancy</th>
+                  <th className="p-4 text-neutral-500 font-bold text-sm">Edit</th>
                 </tr>
               </thead>
               <tbody>
@@ -200,6 +203,15 @@ export default function LandlordProperties() {
                           {occupied}/{total}
                         </span>
                       </td>
+                      <td className="p-4 font-medium whitespace-nowrap">
+                        <button
+                          onClick={() => setEditListing(listing)}
+                          className="p-2 text-neutral-400 hover:text-[#17294F] hover:bg-neutral-100 rounded-lg transition-colors"
+                          title="Edit listing"
+                        >
+                          <Pencil size={16} />
+                        </button>
+                      </td>
                     </tr>
                   );
                 })}
@@ -215,6 +227,12 @@ export default function LandlordProperties() {
         isOpen={showCreateModal} 
         onClose={() => setShowCreateModal(false)} 
         onSuccess={fetchMyListings}
+      />
+      <EditListingModal
+        isOpen={!!editListing}
+        onClose={() => setEditListing(null)}
+        onSuccess={fetchMyListings}
+        listing={editListing!}
       />
     </div>
   );

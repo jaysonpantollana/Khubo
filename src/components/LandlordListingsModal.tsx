@@ -108,7 +108,7 @@ export const LandlordListingsModal: React.FC<LandlordListingsModalProps> = ({
                   <h4 className="font-bold text-sm text-[#17294F] truncate">{listing.title}</h4>
                   <p className="text-xs text-neutral-500 truncate mt-0.5">{listing.location}</p>
                   <div className="flex items-center justify-between mt-2">
-                    <span className="font-bold text-[#17294F]">₱{listing.price.toLocaleString()}<span className="text-neutral-400 font-normal text-xs">/mo</span></span>
+                    <span className="font-bold text-[#17294F]">₱{listing.price.toLocaleString()}<span className="text-neutral-400 font-normal text-xs">/month</span></span>
                     <div className="flex items-center gap-1">
                       <Star size={12} className="fill-amber-400 text-amber-400" />
                       <span className="text-xs font-bold">{listing.rating.toFixed(2)}</span>

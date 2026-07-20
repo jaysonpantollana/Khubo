@@ -125,6 +125,8 @@ export default function RoommateFinder() {
   const searchObserverRef = useRef<HTMLDivElement>(null);
   const recommendedRef = useRef<HTMLDivElement>(null);
   const nearMsuIitRef = useRef<HTMLDivElement>(null);
+  const findingScrollRef = useRef<HTMLDivElement>(null);
+  const applyingScrollRef = useRef<HTMLDivElement>(null);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -699,17 +701,41 @@ export default function RoommateFinder() {
                   </div>
                 </div>
 
-                {/* Scroll arrows removed — grid layout handles layout */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      if (findingScrollRef.current) {
+                        findingScrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+                      }
+                    }}
+                    className="w-9 h-9 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 hover:bg-neutral-50 transition shadow-sm"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft size={16} strokeWidth={2} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (findingScrollRef.current) {
+                        findingScrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+                      }
+                    }}
+                    className="w-9 h-9 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 hover:bg-neutral-50 transition shadow-sm"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight size={16} strokeWidth={2} />
+                  </button>
+                </div>
               </div>
 
               <div
-                ref={recommendedRef}
-                className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 pb-4"
+                ref={findingScrollRef}
+                className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-4 snap-x snap-mandatory"
               >
                 {loading
                   ? Array.from({ length: 6 }).map((_, i) => (
                       <div
                         key={`skeleton-rec-${i}`}
+                        className="flex-shrink-0 w-[calc(25%-12px)] min-w-[220px]"
                       >
                         <RoommateCardSkeleton />
                       </div>
@@ -717,6 +743,7 @@ export default function RoommateFinder() {
                   : filteredRoommates.slice(0, 10).map((roommate) => (
                       <div
                         key={roommate.id}
+                        className="flex-shrink-0 w-[calc(25%-12px)] min-w-[220px] snap-start"
                       >
                         <RoommateCard
                           roommate={roommate}
@@ -746,17 +773,41 @@ export default function RoommateFinder() {
                   </div>
                 </div>
 
-                {/* Scroll arrows removed — grid layout handles layout */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      if (applyingScrollRef.current) {
+                        applyingScrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+                      }
+                    }}
+                    className="w-9 h-9 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 hover:bg-neutral-50 transition shadow-sm"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft size={16} strokeWidth={2} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (applyingScrollRef.current) {
+                        applyingScrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+                      }
+                    }}
+                    className="w-9 h-9 flex items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 hover:bg-neutral-50 transition shadow-sm"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight size={16} strokeWidth={2} />
+                  </button>
+                </div>
               </div>
 
               <div
-                ref={nearMsuIitRef}
-                className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 pb-4"
+                ref={applyingScrollRef}
+                className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-4 snap-x snap-mandatory"
               >
                 {loading
                   ? Array.from({ length: 6 }).map((_, i) => (
                       <div
                         key={`skeleton-msu-${i}`}
+                        className="flex-shrink-0 w-[calc(25%-12px)] min-w-[220px]"
                       >
                         <RoommateCardSkeleton />
                       </div>
@@ -768,6 +819,7 @@ export default function RoommateFinder() {
                       .map((roommate) => (
                         <div
                           key={roommate.id}
+                          className="flex-shrink-0 w-[calc(25%-12px)] min-w-[220px] snap-start"
                         >
                           <RoommateCard
                             roommate={roommate}

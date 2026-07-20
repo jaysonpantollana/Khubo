@@ -114,7 +114,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
           <div className="flex items-center justify-between mt-0.5 sm:mt-1">
             <div className="flex items-baseline gap-0.5">
                <div className="font-display font-extrabold text-[#17294F] text-[14px] sm:text-[17px]">P{listing.price}</div>
-               <div className="text-[9px] sm:text-[11px] text-gray-500 font-medium">/mo</div>
+               <div className="text-[9px] sm:text-[11px] text-gray-500 font-medium">/month</div>
             </div>
             <div className="flex items-center gap-0.5">
               <Star size={10} className="fill-amber-400 text-amber-400 sm:w-[13px] sm:h-[13px]" />

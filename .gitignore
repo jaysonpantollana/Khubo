@@ -9,10 +9,16 @@ package-lock.json
 
 # Playwright test artifacts
 .playwright-mcp/
+playwright-report/
+playwright-results.json
+playwright-results.xml
 
 # AI/IDE config
 .gemini/
 .claude/
+.opencode
+.agents/skills/frontend-design-review
+.github/instructions
 
 # Logs
 *.log
@@ -77,3 +83,9 @@ Thumbs.db
 
 # Spartan AI config (contains API keys)
 .spartan/ai.env
+.spartan-packs
+
+# Skills (installed, not project code)
+skills/
+skills-lock.json
+AGENTS.md

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "POST /sync/bootstrap response",
+  "type": "object",
+  "required": [
+    "status",
+    "data"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "ok",
+        "update"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "status",
+        "reasons",
+        "agents",
+        "config",
+        "host_users"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "ok",
+            "update"
+          ]
+        },
+        "engine": {
+          "enum": [
+            "codex",
+            "claude"
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "agents": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "missing",
+                "unchanged",
+                "updated"
+              ]
+            },
+            "content": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "config": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "missing",
+                "unchanged",
+                "updated"
+              ]
+            },
+            "content": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "host_users": {
+          "type": "array"
+        },
+        "auth": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "auth": {
+              "type": "object"
+            },
+            "verification_state": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "verified",
+                "failed",
+                "unknown"
+              ]
+            },
+            "canonical_generation": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "candidate_result": {
+              "enum": [
+                "accepted",
+                "current",
+                "historical_replay",
+                "older_internal"
+              ]
+            },
+            "candidate_rejected_definitive": {
+              "type": "boolean",
+              "description": "True only when a submitted auth candidate was definitively rejected and the response also serves verified canonical auth that may replace it."
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "candidate_rejected_definitive"
+                ],
+                "properties": {
+                  "candidate_rejected_definitive": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "auth",
+                  "verification_state"
+                ],
+                "properties": {
+                  "auth": {
+                    "type": "object"
+                  },
+                  "status": {
+                    "const": "outdated"
+                  },
+                  "verification_state": {
+                    "const": "verified"
+                  }
+                }
+              }
+            }
+          ],
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

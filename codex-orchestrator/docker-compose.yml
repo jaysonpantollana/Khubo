@@ -1,0 +1,173 @@
+name: codex-orchestrator
+
+services:
+  api:
+    build: .
+    env_file:
+      - ${ENV_FILE:-./.env}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      auth-runner:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8488:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8080/healthz || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      APP_ENV: ${APP_ENV:-production}
+      LISTEN_HOST: 0.0.0.0
+      LISTEN_PORT: 8080
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      LOG_PRETTY: ${LOG_PRETTY:-0}
+      STATIC_ROOT: /app/public/admin
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_DATABASE: ${DB_DATABASE:-codex_auth}
+      DB_USERNAME: ${DB_USERNAME:-codex}
+      DB_PASSWORD: ${DB_PASSWORD:-codex-pass}
+      AUTH_RUNNER_URL: ${AUTH_RUNNER_URL:-http://auth-runner:8080/verify}
+      AUTH_RUNNER_CODEX_BASE_URL: ${AUTH_RUNNER_CODEX_BASE_URL:-https://codex-auth.example.com}
+      AUTH_RUNNER_TIMEOUT: ${AUTH_RUNNER_TIMEOUT:-8}
+      AUTH_RUNNER_VERIFY_TTL_SECONDS: ${AUTH_RUNNER_VERIFY_TTL_SECONDS:-900}
+      AUTH_RUNNER_VERIFY_WORKER_INTERVAL_SECONDS: ${AUTH_RUNNER_VERIFY_WORKER_INTERVAL_SECONDS:-300}
+      AUTH_RUNNER_IP_BYPASS: ${AUTH_RUNNER_IP_BYPASS:-0}
+      AUTH_RUNNER_BYPASS_SUBNETS: ${AUTH_RUNNER_BYPASS_SUBNETS:-172.28.0.0/16,172.30.0.0/16}
+      AUTH_RUNNER_SHARED_SECRET: ${AUTH_RUNNER_SHARED_SECRET:-}
+      TRUST_X_FORWARDED: ${TRUST_X_FORWARDED:-0}
+      TRUSTED_PROXY_CIDRS: ${TRUSTED_PROXY_CIDRS:-}
+      MCP_ALLOW_REQUEST_HOST_ORIGIN: ${MCP_ALLOW_REQUEST_HOST_ORIGIN:-0}
+      PUBLIC_BASE_URL_REQUIRED: ${PUBLIC_BASE_URL_REQUIRED:-1}
+      STRICT_HOST_VALIDATION: ${STRICT_HOST_VALIDATION:-1}
+      RUN_MIGRATIONS_ON_BOOT: ${RUN_MIGRATIONS_ON_BOOT:-0}
+      RUN_BACKFILLS_ON_BOOT: ${RUN_BACKFILLS_ON_BOOT:-0}
+      ADMIN_ACCESS_MODE: ${ADMIN_ACCESS_MODE:-mtls}
+      ADMIN_WS_ENABLED: ${ADMIN_WS_ENABLED:-1}
+      DATA_ROOT: /app/storage
+    volumes:
+      - ${DATA_ROOT:-/var/docker_data/codex-auth.example.com}/store:/app/storage
+    networks:
+      - codex_auth
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.4
+    command: ["--mysql-native-password=ON"]
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root-pass}
+      MYSQL_DATABASE: ${DB_DATABASE:-codex_auth}
+      MYSQL_USER: ${DB_USERNAME:-codex}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-codex-pass}
+    volumes:
+      - ${DATA_ROOT:-/var/docker_data/codex-auth.example.com}/mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p${DB_ROOT_PASSWORD:-root-pass}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - codex_auth
+    restart: unless-stopped
+
+  auth-runner:
+    build:
+      context: ./runner
+    environment:
+      RUNNER_PORT: 8080
+      RUNNER_SHARED_SECRET: ${RUNNER_SHARED_SECRET:-}
+    networks:
+      - codex_auth
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=3).status == 200 else 1)\"",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  quota-cron:
+    build: .
+    env_file:
+      - ${ENV_FILE:-./.env}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: ["node", "chatgpt-usage-worker.js"]
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      APP_ENV: ${APP_ENV:-production}
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_DATABASE: ${DB_DATABASE:-codex_auth}
+      DB_USERNAME: ${DB_USERNAME:-codex}
+      DB_PASSWORD: ${DB_PASSWORD:-codex-pass}
+      CHATGPT_USAGE_CRON_INTERVAL: ${CHATGPT_USAGE_CRON_INTERVAL:-3600}
+      CHATGPT_BASE_URL: ${CHATGPT_BASE_URL:-https://chatgpt.com/backend-api}
+      CHATGPT_USAGE_TIMEOUT: ${CHATGPT_USAGE_TIMEOUT:-10}
+      CHATGPT_USAGE_HEALTH_PATH: ${CHATGPT_USAGE_HEALTH_PATH:-/tmp/chatgpt-usage-health.json}
+      CHATGPT_USAGE_HEALTH_MAX_AGE_SECONDS: ${CHATGPT_USAGE_HEALTH_MAX_AGE_SECONDS:-}
+    networks:
+      - codex_auth
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          node -e 'const fs=require("fs"); const path=process.env.CHATGPT_USAGE_HEALTH_PATH||"/tmp/chatgpt-usage-health.json"; const max=Number(process.env.CHATGPT_USAGE_HEALTH_MAX_AGE_SECONDS)||Number(process.env.CHATGPT_USAGE_CRON_INTERVAL||3600)+300; try { process.exit(Date.now()-fs.statSync(path).mtimeMs<=max*1000?0:1); } catch { process.exit(1); }'
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  caddy:
+    profiles: ["caddy"]
+    image: caddy:2
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_DOMAIN: ${CADDY_DOMAIN:-codex-auth.example.com}
+      CADDY_TLS_FRAGMENT: ${CADDY_TLS_FRAGMENT:-/etc/caddy/tls-acme.caddy}
+      CADDY_ACME_EMAIL: ${CADDY_ACME_EMAIL:-ops@example.com}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/tls-acme.caddy:/etc/caddy/tls-acme.caddy:ro
+      - ./caddy/tls-custom.caddy:/etc/caddy/tls-custom.caddy:ro
+      - ${CADDY_MTLS_DIR:-/var/docker_data/codex-auth.example.com/caddy/mtls}:/etc/caddy/mtls:ro
+      - ${CADDY_TLS_DIR:-/var/docker_data/codex-auth.example.com/caddy/tls}:/etc/caddy/tls:ro
+    networks:
+      - codex_auth
+    restart: unless-stopped
+
+networks:
+  codex_auth:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${CODEX_AUTH_SUBNET:-172.30.250.0/24}
+          gateway: ${CODEX_AUTH_GATEWAY:-172.30.250.1}

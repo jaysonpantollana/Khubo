@@ -1,0 +1,96 @@
+import type { FastifyRequest, preHandlerHookHandler } from 'fastify';
+import { ApiError } from '../http/errors.js';
+import type { RateLimiter } from '../http/plugins/rate-limit.js';
+import { ENGINE_CODEX, type Engine } from '../util/engine.js';
+import { OpenAiKeyService } from './openai-keys.js';
+import type { OpenaiApiKey } from '../db/schema.js';
+
+/**
+ * preHandler that authenticates `/v1/*` routes against the
+ * `openai_api_keys` table:
+ *   1. Pull a bearer token from `Authorization: Bearer <key>` (Bearer-only,
+ *      matching OpenAI's public API).
+ *   2. Hash it and look it up scoped to the configured engine.
+ *   3. Enforce the per-key `rate_limit_rpm` via the shared rate limiter,
+ *      keyed on the IP address so a misbehaving caller can't hide behind
+ *      multiple keys.
+ *   4. Bump `use_count` + `last_used_at` (best-effort).
+ *
+ * Errors are thrown as OpenAI-shape `ApiError`s — the envelope plugin
+ * renders them in the right shape because `/v1/*` is in scope.
+ */
+
+const BEARER_RE = /^bearer\s+(\S.*)$/i;
+
+function extractBearer(headers: Record<string, string | string[] | undefined>): string | null {
+  const auth = headers['authorization'];
+  const value = Array.isArray(auth) ? auth[0] : auth;
+  if (typeof value !== 'string') return null;
+  const m = BEARER_RE.exec(value.trim());
+  return m && m[1] ? m[1].trim() : null;
+}
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    openaiKey?: OpenaiApiKey;
+  }
+}
+
+export interface OpenAiKeyResolverDeps {
+  keys: OpenAiKeyService;
+  rateLimiter: RateLimiter;
+  engine?: Engine;
+}
+
+export function makeOpenAiKeyResolver(
+  deps: OpenAiKeyResolverDeps,
+): preHandlerHookHandler {
+  const engine: Engine = deps.engine ?? ENGINE_CODEX;
+  return async function openaiKeyResolver(req: FastifyRequest): Promise<void> {
+    if (req.method === 'OPTIONS') return; // CORS preflight bypasses auth
+
+    const token = extractBearer(req.headers as Record<string, string | string[] | undefined>);
+    if (!token) {
+      throw new ApiError('Incorrect API key provided', {
+        status: 401,
+        code: 'invalid_api_key',
+        type: 'authentication_error',
+      });
+    }
+
+    const record = await deps.keys.findActiveByBearer(token, engine);
+    if (!record) {
+      throw new ApiError('Incorrect API key provided', {
+        status: 401,
+        code: 'invalid_api_key',
+        type: 'authentication_error',
+      });
+    }
+
+    const rpm = record.rateLimitRpm > 0 ? record.rateLimitRpm : 60;
+    const bucket = `openai:${record.id}`;
+    const result = await deps.rateLimiter.hit(req.clientIp || '0.0.0.0', bucket, {
+      limit: rpm,
+      windowSeconds: 60,
+    });
+    if (!result.ok) {
+      const retryAfter = Math.max(
+        1,
+        Math.ceil((new Date(result.resetAt).getTime() - Date.now()) / 1000),
+      );
+      throw new ApiError(
+        `Rate limit exceeded. Please retry after ${retryAfter} seconds.`,
+        {
+          status: 429,
+          code: 'rate_limit_exceeded',
+          type: 'rate_limit_error',
+          headers: { 'Retry-After': String(retryAfter) },
+        },
+      );
+    }
+
+    req.openaiKey = record;
+    // Fire-and-forget touch; never block the request.
+    void deps.keys.touch(record.id);
+  };
+}

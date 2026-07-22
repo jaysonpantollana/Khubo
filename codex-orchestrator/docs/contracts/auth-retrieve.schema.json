@@ -1,0 +1,504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "POST /auth retrieve response",
+  "type": "object",
+  "required": [
+    "status",
+    "data"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "valid",
+        "upload_required",
+        "outdated",
+        "missing"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "status",
+        "canonical_last_refresh",
+        "canonical_digest",
+        "api_calls",
+        "versions",
+        "quota_hard_fail",
+        "quota_limit_percent",
+        "quota_week_partition",
+        "cdx_silent",
+        "engine"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "valid",
+            "upload_required",
+            "outdated",
+            "missing"
+          ]
+        },
+        "canonical_last_refresh": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "canonical_digest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "canonical_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "action": {
+          "const": "store"
+        },
+        "auth": {
+          "type": "object"
+        },
+        "verification_state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "verified",
+            "failed",
+            "unknown"
+          ]
+        },
+        "verification_reason": {
+          "type": "string"
+        },
+        "engine": {
+          "enum": [
+            "codex",
+            "claude"
+          ]
+        },
+        "host": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "fqdn",
+            "status",
+            "api_calls",
+            "allow_roaming_ips",
+            "secure",
+            "vip",
+            "lane_preference",
+            "model_override",
+            "reasoning_effort_override"
+          ],
+          "properties": {
+            "fqdn": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "last_refresh": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "updated_at": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "expires_at": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_version_override": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "claude_client_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "claude_client_version_override": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "wrapper_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "claude_wrapper_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "agents_document_id_override": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "api_calls": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "allow_roaming_ips": {
+              "type": "boolean"
+            },
+            "secure": {
+              "type": "boolean"
+            },
+            "vip": {
+              "type": "boolean"
+            },
+            "insecure_enabled_until": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "insecure_grace_until": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "insecure_window_minutes": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "lane_preference": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "normal",
+                "spark",
+                null
+              ]
+            },
+            "model_override": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reasoning_effort_override": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "claude_model_override": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "claude_reasoning_effort_override": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "api_calls": {
+          "type": "integer"
+        },
+        "versions": {
+          "type": "object",
+          "required": [
+            "client_version",
+            "client_version_override",
+            "client_version_enforce_exact",
+            "wrapper_version",
+            "wrapper_sha256",
+            "wrapper_url",
+            "runner_state",
+            "api_disabled",
+            "cdx_silent",
+            "clx_silent",
+            "auto_update_enabled",
+            "installation_id",
+            "engine"
+          ],
+          "properties": {
+            "client_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_version_override": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_version_checked_at": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_version_source": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_version_enforce_exact": {
+              "type": "boolean"
+            },
+            "wrapper_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "wrapper_sha256": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "wrapper_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reported_client_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reported_wrapper_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "quota_hard_fail": {
+              "type": "boolean"
+            },
+            "quota_limit_percent": {
+              "type": "integer"
+            },
+            "quota_week_partition": {
+              "type": "integer"
+            },
+            "cdx_silent": {
+              "type": "boolean"
+            },
+            "admin_theme": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "auto-pink",
+                "light",
+                "dark",
+                "bright-pink",
+                "dark-pink"
+              ]
+            },
+            "auto_update_enabled": {
+              "type": "boolean"
+            },
+            "api_disabled": {
+              "type": "boolean"
+            },
+            "clx_silent": {
+              "type": "boolean"
+            },
+            "runner_enabled": {
+              "type": "boolean"
+            },
+            "runner_state": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "runner_last_ok": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "runner_last_fail": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "runner_last_check": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "installation_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "engine": {
+              "enum": [
+                "codex",
+                "claude"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "quota_hard_fail": {
+          "type": "boolean"
+        },
+        "quota_limit_percent": {
+          "type": "integer"
+        },
+        "quota_week_partition": {
+          "type": "integer"
+        },
+        "cdx_silent": {
+          "type": "boolean"
+        },
+        "chatgpt": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "engine": {
+                "const": "codex"
+              }
+            },
+            "required": [
+              "engine"
+            ]
+          },
+          "then": {
+            "required": [
+              "chatgpt"
+            ],
+            "properties": {
+              "chatgpt": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "const": "valid"
+            }
+          }
+        },
+        {
+          "required": [
+            "status",
+            "action"
+          ],
+          "properties": {
+            "status": {
+              "const": "upload_required"
+            },
+            "action": {
+              "const": "store"
+            }
+          }
+        },
+        {
+          "required": [
+            "status",
+            "action"
+          ],
+          "properties": {
+            "status": {
+              "const": "missing"
+            },
+            "action": {
+              "const": "store"
+            }
+          }
+        },
+        {
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "const": "outdated"
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "auth"
+              ],
+              "properties": {
+                "auth": {
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "required": [
+                "verification_state"
+              ],
+              "properties": {
+                "verification_state": {
+                  "const": "failed"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,320 @@
+import { describe, expect, it } from 'vitest';
+import {
+  renderClaudeSettingsPartial,
+  renderClaudeSettingsPartialForHost,
+  renderToml,
+  renderTomlForHost,
+} from '../../../src/services/client-config.js';
+import { normalizeSettings } from '../../../src/services/config-normalizer.js';
+import { ENGINE_CLAUDE } from '../../../src/util/engine.js';
+
+describe('client-config: renderToml', () => {
+  it('renders root scalars in the legacy order', () => {
+    const s = normalizeSettings({
+      model: 'gpt-5.4',
+      profile: 'workhorse',
+      personality: 'friendly',
+      approval_policy: 'on-request',
+      sandbox_mode: 'workspace-write',
+      model_reasoning_effort: 'high',
+    });
+    const toml = renderToml(s);
+    const lines = toml.split('\n');
+    expect(lines[0]).toBe('model = "gpt-5.4"');
+    expect(toml).toContain('profile = "workhorse"');
+    expect(toml).toContain('personality = "friendly"');
+    expect(toml).toContain('approval_policy = "on-request"');
+    expect(toml).toContain('sandbox_mode = "workspace-write"');
+    expect(toml).toContain('model_reasoning_effort = "high"');
+  });
+
+  it('emits a [features] section sorted alphabetically', () => {
+    const s = normalizeSettings({
+      features: { zebra: true, apple: false, mango: true },
+    });
+    const toml = renderToml(s);
+    const featuresIdx = toml.indexOf('[features]');
+    expect(featuresIdx).toBeGreaterThan(-1);
+    const after = toml.slice(featuresIdx);
+    const appleIdx = after.indexOf('apple');
+    const mangoIdx = after.indexOf('mango');
+    const zebraIdx = after.indexOf('zebra');
+    expect(appleIdx).toBeLessThan(mangoIdx);
+    expect(mangoIdx).toBeLessThan(zebraIdx);
+  });
+
+  it('emits [security] only when bypass flag is explicitly set', () => {
+    const off = renderToml(normalizeSettings({ security: { dangerously_bypass_approvals_and_sandbox: false } }));
+    expect(off).toContain('[security]');
+    expect(off).toContain('dangerously_bypass_approvals_and_sandbox = false');
+    const none = renderToml(normalizeSettings({}));
+    expect(none).not.toContain('[security]');
+  });
+
+  it('emits named profile tables sorted by name', () => {
+    const s = normalizeSettings({
+      profiles: [
+        { name: 'workhorse', model: 'gpt-5.4', model_reasoning_effort: 'high' },
+        { name: 'fast', model: 'gpt-5.4-mini' },
+      ],
+    });
+    const toml = renderToml(s);
+    expect(toml).toContain('[profiles.fast]');
+    expect(toml).toContain('[profiles.workhorse]');
+    const workhorseIdx = toml.indexOf('[profiles.workhorse]');
+    const fastIdx = toml.indexOf('[profiles.fast]');
+    expect(workhorseIdx).toBeGreaterThan(-1);
+    expect(fastIdx).toBeLessThan(workhorseIdx);
+  });
+
+  it('renders the Terra xhigh profile effort verbatim', () => {
+    const toml = renderToml(normalizeSettings({
+      profiles: [
+        { name: 'max', model: 'gpt-5.6-terra', model_reasoning_effort: 'xhigh' },
+      ],
+    }));
+    expect(toml).toContain('[profiles.max]');
+    expect(toml).toContain('model_reasoning_effort = "xhigh"');
+  });
+
+  it('renders notify lists when present', () => {
+    const s = normalizeSettings({ notify: ['mailto:a@b', 'webhook'] });
+    const toml = renderToml(s);
+    expect(toml).toContain('notify = ["mailto:a@b", "webhook"]');
+  });
+
+  it('escapes strings with quotes and newlines', () => {
+    const s = normalizeSettings({ model: 'has "quotes" and\nnewline' });
+    const toml = renderToml(s);
+    expect(toml).toContain('model = "has \\"quotes\\" and\\nnewline"');
+  });
+
+  it('renders MCP servers as named Codex tables', () => {
+    const s = normalizeSettings({
+      mcp_servers: [
+        {
+          name: 'orchestrator',
+          url: 'https://coord.example/mcp',
+          http_headers: { Authorization: 'Bearer abc123' },
+          startup_timeout_sec: 30,
+        },
+      ],
+    });
+    const toml = renderToml(s);
+    expect(toml).toContain('[mcp_servers.orchestrator]');
+    expect(toml).toContain('url = "https://coord.example/mcp"');
+    expect(toml).toContain('http_headers = { Authorization = "Bearer abc123" }');
+    expect(toml).toContain('startup_timeout_sec = 30');
+  });
+
+  it('bakes managed MCP and trusted project for a host', () => {
+    const rendered = renderTomlForHost({
+      settings: {
+        mcp_servers: [
+          { name: 'codex-memory', command: 'legacy-managed' },
+          { name: 'user-custom', command: '/bin/echo' },
+        ],
+      },
+      host: { id: 7, fqdn: 'host.example', secure: 1 } as never,
+      baseUrl: 'https://coord.example/',
+      apiKey: 'abc123',
+      home: '/home/chris',
+    });
+    expect(rendered.content).toContain('[mcp_servers.cdx]');
+    expect(rendered.content).toContain('url = "https://coord.example/mcp"');
+    expect(rendered.content).toContain('Authorization = "Bearer abc123"');
+    expect(rendered.content).toContain('X-Engine = "codex"');
+    expect(rendered.content).toContain('[mcp_servers.user-custom]');
+    expect(rendered.content).not.toContain('codex-memory');
+    expect(rendered.content).toContain('[projects."/home/chris"]');
+    expect(rendered.content).toContain('trust_level = "trusted"');
+  });
+
+  it('injects BrowserOS MCP only when the Codex host toggle is enabled', () => {
+    const rendered = renderTomlForHost({
+      settings: {
+        mcp_servers: [
+          { name: 'browseros', url: 'http://old.example/mcp' },
+          { name: 'user-custom', command: '/bin/echo' },
+        ],
+      },
+      host: { id: 7, fqdn: 'host.example', secure: 1, browserosMcpEnabled: 1 } as never,
+      baseUrl: 'https://coord.example/',
+      apiKey: 'abc123',
+      home: '/home/chris',
+    });
+    expect(rendered.content).toContain('[mcp_servers.browseros]');
+    expect(rendered.content).toContain('url = "http://127.0.0.1:9000/mcp"');
+    expect(rendered.content).toContain('startup_timeout_sec = 30');
+    expect(rendered.content).not.toContain('http://old.example/mcp');
+    expect(rendered.content).toContain('[mcp_servers.user-custom]');
+  });
+
+  it('revalidates effort when a Codex host overrides the fleet model', () => {
+    const switched = renderTomlForHost({
+      settings: {
+        model: 'gpt-5.6-terra',
+        model_reasoning_effort: 'ultra',
+        profile: 'workhorse',
+        profiles: [
+          { name: 'workhorse', model: 'gpt-5.6-terra', model_reasoning_effort: 'ultra' },
+        ],
+      },
+      host: {
+        modelOverride: 'gpt-5.4',
+        reasoningEffortOverride: null,
+      } as never,
+      baseUrl: null,
+      apiKey: null,
+    });
+    expect(switched.content).toContain('model = "gpt-5.4"');
+    expect(switched.content).toContain('model_reasoning_effort = "medium"');
+    expect(switched.content).not.toContain('model_reasoning_effort = "ultra"');
+    expect(switched.content).toContain('[profiles.workhorse]');
+
+    const inherited = renderTomlForHost({
+      settings: {
+        model: 'gpt-5.6-terra',
+        model_reasoning_effort: 'ultra',
+      },
+      host: {
+        modelOverride: null,
+        reasoningEffortOverride: null,
+      } as never,
+      baseUrl: null,
+      apiKey: null,
+    });
+    expect(inherited.content).toContain('model = "gpt-5.6-terra"');
+    expect(inherited.content).toContain('model_reasoning_effort = "ultra"');
+
+    const inheritedProfileModel = renderTomlForHost({
+      settings: {
+        model: 'gpt-5.4',
+        model_reasoning_effort: 'high',
+        profile: 'work',
+        profiles: [{ name: 'work' }],
+      },
+      host: {
+        modelOverride: null,
+        reasoningEffortOverride: 'ultra',
+      } as never,
+      baseUrl: null,
+      apiKey: null,
+    });
+    expect(inheritedProfileModel.content).toContain('model_reasoning_effort = "high"');
+    expect(inheritedProfileModel.content).not.toContain('model_reasoning_effort = "ultra"');
+  });
+});
+
+describe('client-config: renderClaudeSettingsPartial advisorModel', () => {
+  it('renders advisorModel into the partial and owned_paths when set', () => {
+    const { partial, owned_paths } = renderClaudeSettingsPartial(
+      normalizeSettings({ advisorModel: 'opus' }, { applyCodexDefaults: false }),
+    );
+    expect(partial.advisorModel).toBe('opus');
+    expect(owned_paths).toContain('advisorModel');
+  });
+
+  it('omits advisorModel from partial and owned_paths when off/invalid', () => {
+    const { partial, owned_paths } = renderClaudeSettingsPartial(
+      normalizeSettings({ advisorModel: 'gpt-5' }, { applyCodexDefaults: false }),
+    );
+    expect(partial).not.toHaveProperty('advisorModel');
+    expect(owned_paths).not.toContain('advisorModel');
+  });
+});
+
+describe('client-config: Claude effortLevel rendering', () => {
+  it('renders effortLevel in both the full file and deep-merge ownership contract', () => {
+    const settings = normalizeSettings({
+      model: 'claude-opus-4-7',
+      effortLevel: 'xhigh',
+    }, { applyCodexDefaults: false });
+    const { partial, owned_paths } = renderClaudeSettingsPartial(settings);
+    expect(partial.effortLevel).toBe('xhigh');
+    expect(owned_paths).toContain('effortLevel');
+
+    const rendered = renderTomlForHost({
+      settings,
+      host: null,
+      baseUrl: null,
+      apiKey: null,
+      engine: ENGINE_CLAUDE,
+    });
+    expect(JSON.parse(rendered.content)).toMatchObject({
+      model: 'claude-opus-4-7',
+      effortLevel: 'xhigh',
+    });
+  });
+
+  it('uses the overridden Claude model default and omits unsupported host effort', () => {
+    const opus = renderClaudeSettingsPartialForHost({
+      settings: { model: 'claude-sonnet-4-6', effortLevel: 'high' },
+      host: {
+        claudeModelOverride: 'claude-opus-4-7',
+        claudeReasoningEffortOverride: null,
+      } as never,
+      baseUrl: null,
+      apiKey: null,
+      engine: ENGINE_CLAUDE,
+    });
+    expect(opus.partial).toMatchObject({ model: 'claude-opus-4-7', effortLevel: 'xhigh' });
+    expect(opus.owned_paths).toContain('effortLevel');
+
+    const haiku = renderClaudeSettingsPartialForHost({
+      settings: { model: 'claude-sonnet-4-6', effortLevel: 'high' },
+      host: {
+        claudeModelOverride: 'claude-haiku-4-5-20251001',
+        claudeReasoningEffortOverride: 'high',
+      } as never,
+      baseUrl: null,
+      apiKey: null,
+      engine: ENGINE_CLAUDE,
+    });
+    expect(haiku.partial.model).toBe('claude-haiku-4-5-20251001');
+    expect(haiku.partial).not.toHaveProperty('effortLevel');
+    expect(haiku.owned_paths).not.toContain('effortLevel');
+  });
+});
+
+describe('client-config: renderClaudeSettingsPartial permissions.defaultMode', () => {
+  it('defaults to `auto` and renders it under permissions.defaultMode (never top-level)', () => {
+    const { partial, owned_paths } = renderClaudeSettingsPartial(normalizeSettings({}, { applyCodexDefaults: false }));
+    expect((partial.permissions as Record<string, unknown>).defaultMode).toBe('auto');
+    expect(owned_paths).toContain('permissions.defaultMode');
+    // The top-level key Claude Code ignores must NOT be emitted.
+    expect(partial).not.toHaveProperty('permissionMode');
+    expect(owned_paths).not.toContain('permissionMode');
+  });
+
+  it('honors an operator-pinned mode', () => {
+    const { partial, owned_paths } = renderClaudeSettingsPartial(
+      normalizeSettings({ permissionMode: 'default' }, { applyCodexDefaults: false }),
+    );
+    expect((partial.permissions as Record<string, unknown>).defaultMode).toBe('default');
+    expect(owned_paths).toContain('permissions.defaultMode');
+  });
+
+  it('falls back to the default when the pinned mode is invalid', () => {
+    const { partial } = renderClaudeSettingsPartial(
+      normalizeSettings({ permissionMode: 'autoEdit' }, { applyCodexDefaults: false }),
+    );
+    expect((partial.permissions as Record<string, unknown>).defaultMode).toBe('auto');
+  });
+
+  it('keeps defaultMode alongside allow/ask/deny buckets and owns each leaf', () => {
+    const { partial, owned_paths } = renderClaudeSettingsPartial(
+      normalizeSettings({
+        permissionMode: 'acceptEdits',
+        permissions: { allow: ['Bash(npm run *)'], deny: ['Read(./secrets/**)'] },
+      }, { applyCodexDefaults: false }),
+    );
+    const perms = partial.permissions as Record<string, unknown>;
+    expect(perms.defaultMode).toBe('acceptEdits');
+    expect(perms.allow).toEqual(['Bash(npm run *)']);
+    expect(perms.deny).toEqual(['Read(./secrets/**)']);
+    expect(owned_paths).toEqual(
+      expect.arrayContaining(['permissions.allow', 'permissions.deny', 'permissions.defaultMode']),
+    );
+  });
+});

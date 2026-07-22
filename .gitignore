@@ -89,3 +89,6 @@ Thumbs.db
 skills/
 skills-lock.json
 AGENTS.md
+
+# Codex Orchestrator (Docker service, runtime data)
+codex-orchestrator/

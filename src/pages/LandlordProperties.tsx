@@ -222,7 +222,6 @@ export default function LandlordProperties() {
         </div>
       </div>
 
-      <BottomNav />
       <CreateListingModal 
         isOpen={showCreateModal} 
         onClose={() => setShowCreateModal(false)} 

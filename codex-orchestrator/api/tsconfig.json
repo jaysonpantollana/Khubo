@@ -20,7 +20,6 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./",
-    "baseUrl": ".",
     "types": ["node"]
   },
   "include": ["src/**/*", "test/**/*", "scripts/**/*", "drizzle.config.ts"],

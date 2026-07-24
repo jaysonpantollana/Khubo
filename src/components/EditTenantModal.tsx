@@ -1,41 +1,59 @@
-import React, { useState } from 'react';
-import { User, Mail, Phone, Home, Building, Loader2, Link2, Plus, X } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { User, Mail, Phone, Home, Loader2, Link2, Plus, X } from 'lucide-react';
 import { Modal } from './ui/Modal';
-import { addTenantSchema, isSafeSocialUrl, SOCIAL_PLATFORMS, type SocialLink, type SocialPlatform } from './tenantSchemas';
+import { editTenantSchema, isSafeSocialUrl, SOCIAL_PLATFORMS, type SocialLink, type SocialPlatform } from './tenantSchemas';
 
-interface AddTenantModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess?: (tenant: { name: string; email: string; phone: string; room: string; property: string; socialLinks: SocialLink[] }) => void;
+interface TenantData {
+  id: number;
+  client: string;
+  room: string;
+  email: string;
+  phone: string;
+  social: { instagram: string; x: string; facebook: string };
 }
 
-export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalProps) {
+interface EditTenantModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  tenant: TenantData | null;
+  onSave: (id: number, data: { client: string; room: string; email: string; phone: string; social: { instagram: string; x: string; facebook: string } }) => void;
+}
+
+export function EditTenantModal({ isOpen, onClose, tenant, onSave }: EditTenantModalProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [room, setRoom] = useState('');
-  const [property, setProperty] = useState('');
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const cancelSubmissionRef = useRef(false);
+
+  useEffect(() => {
+    if (tenant) {
+      setName(tenant.client);
+      setEmail(tenant.email);
+      setPhone(tenant.phone);
+      setRoom(tenant.room);
+      const links: SocialLink[] = [];
+      if (tenant.social.instagram) links.push({ platform: 'Instagram', url: tenant.social.instagram });
+      if (tenant.social.x) links.push({ platform: 'X', url: tenant.social.x });
+      if (tenant.social.facebook) links.push({ platform: 'Facebook', url: tenant.social.facebook });
+      setSocialLinks(links);
+    }
+  }, [tenant]);
 
   const usedPlatforms = socialLinks.map((l) => l.platform);
   const availablePlatforms = SOCIAL_PLATFORMS.filter((p) => !usedPlatforms.includes(p));
   const canAddMore = socialLinks.length < 3;
 
-  const resetForm = () => {
-    setName('');
-    setEmail('');
-    setPhone('');
-    setRoom('');
-    setProperty('');
-    setSocialLinks([]);
-    setErrors({});
-  };
-
   const handleClose = () => {
-    if (isSubmitting) return;
-    resetForm();
+    if (isSubmitting) {
+      cancelSubmissionRef.current = true;
+      return;
+    }
+    cancelSubmissionRef.current = false;
+    setErrors({});
     onClose();
   };
 
@@ -67,9 +85,12 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!tenant) return;
+
+    cancelSubmissionRef.current = false;
     setErrors({});
 
-    const result = addTenantSchema.safeParse({ name, email, phone, room, property });
+    const result = editTenantSchema.safeParse({ name, email, phone, room });
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((issue) => {
@@ -87,93 +108,85 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
     }
 
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 800));
-    setIsSubmitting(false);
+    await new Promise((r) => setTimeout(r, 400));
+    if (cancelSubmissionRef.current) {
+      setIsSubmitting(false);
+      return;
+    }
 
-    onSuccess?.({ name, email, phone, room, property, socialLinks });
-    resetForm();
+    const social = { instagram: '', x: '', facebook: '' };
+    socialLinks.forEach((link) => {
+      if (link.platform === 'Instagram') social.instagram = link.url;
+      else if (link.platform === 'X') social.x = link.url;
+      else if (link.platform === 'Facebook') social.facebook = link.url;
+    });
+
+    onSave(tenant.id, { client: name, room, email, phone, social });
+    setIsSubmitting(false);
+    setErrors({});
     onClose();
   };
 
-  const inputClass = (field: string) =>
-    `w-full px-4 py-3 pl-11 rounded-xl border text-sm font-medium transition-colors outline-none ${
-      errors[field]
-        ? 'border-red-400 bg-red-50 text-red-700 focus:ring-2 focus:ring-red-200'
-        : 'border-neutral-200 bg-neutral-50 text-neutral-800 focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F]'
-    }`;
+  const inputClass =
+    'w-full px-4 py-3 pl-11 rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors';
 
-  const iconClass = (field: string) =>
-    `absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 ${
-      errors[field] ? 'text-red-400' : 'text-neutral-400'
-    }`;
+  const iconClass = 'absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400';
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      title="Add Tenant"
-      description="Register a new tenant to your property"
+      title="Edit Tenant"
+      description="Update tenant information"
       size="md"
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="relative">
-          <User className={iconClass('name')} />
+          <User className={iconClass} />
           <input
             type="text"
+            name="client"
             placeholder="Full name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={inputClass('name')}
+            className={inputClass}
           />
-          {errors.name && <p className="mt-1 text-xs text-red-500 font-medium">{errors.name}</p>}
         </div>
 
         <div className="relative">
-          <Mail className={iconClass('email')} />
+          <Mail className={iconClass} />
           <input
             type="email"
+            name="email"
             placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={inputClass('email')}
+            className={inputClass}
           />
-          {errors.email && <p className="mt-1 text-xs text-red-500 font-medium">{errors.email}</p>}
         </div>
 
         <div className="relative">
-          <Phone className={iconClass('phone')} />
+          <Phone className={iconClass} />
           <input
             type="tel"
+            name="phone"
             placeholder="Phone number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className={inputClass('phone')}
+            className={inputClass}
           />
-          {errors.phone && <p className="mt-1 text-xs text-red-500 font-medium">{errors.phone}</p>}
         </div>
 
         <div className="relative">
-          <Home className={iconClass('room')} />
+          <Home className={iconClass} />
           <input
             type="text"
+            name="room"
             placeholder="Room number"
             value={room}
             onChange={(e) => setRoom(e.target.value)}
-            className={inputClass('room')}
+            className={inputClass}
           />
-          {errors.room && <p className="mt-1 text-xs text-red-500 font-medium">{errors.room}</p>}
-        </div>
-
-        <div className="relative">
-          <Building className={iconClass('property')} />
-          <input
-            type="text"
-            placeholder="Property name"
-            value={property}
-            onChange={(e) => setProperty(e.target.value)}
-            className={inputClass('property')}
-          />
-          {errors.property && <p className="mt-1 text-xs text-red-500 font-medium">{errors.property}</p>}
         </div>
 
         <div className="space-y-3">
@@ -186,6 +199,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
             <div key={index} className="flex items-center gap-2">
               <select
                 value={link.platform}
+                name={`social-platform-${index}`}
                 onChange={(e) => updateSocialLink(index, 'platform', e.target.value as SocialPlatform)}
                 className="px-3 py-3 rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
               >
@@ -199,6 +213,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
                 <Link2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
                 <input
                   type="url"
+                  name={`social-url-${index}`}
                   placeholder={`${link.platform} URL`}
                   value={link.url}
                   onChange={(e) => updateSocialLink(index, 'url', e.target.value)}
@@ -245,10 +260,10 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
             {isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Adding...
+                Saving...
               </>
             ) : (
-              'Add Tenant'
+              'Save Changes'
             )}
           </button>
         </div>

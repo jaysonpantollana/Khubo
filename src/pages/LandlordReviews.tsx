@@ -1,7 +1,7 @@
 // @context: Landlord Reviews page — review management for landlord properties
 // @purpose: Shows all reviews across the landlord's listings, grouped by property, with delete capability
 // @behavior: Landlords can delete individual review comments from their specific listings
-// @dependencies: Listing, Review types, useAuth, useNavigate, BottomNav, lucide-react
+// @dependencies: Listing, Review types, useAuth, useNavigate, lucide-react
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { ArrowLeft, Star, Trash2, MessageSquare, MapPin, AlertTriangle, ChevronD
 import { Listing, Review } from '../types';
 import { useAuth } from '../lib/AuthContext';
 import { Modal } from '../components/ui/Modal';
-import BottomNav from '../components/BottomNav';
 
 const sampleListingsWithReviews: Listing[] = [
   {
@@ -120,7 +119,7 @@ export default function LandlordReviews() {
   useEffect(() => {
     if (displayListings.length > 0) {
       const initial: Record<string, boolean> = {};
-      displayListings.forEach(l => { initial[l.id] = true; });
+      displayListings.forEach(l => { initial[l.id] = false; });
       setExpandedListings(initial);
     }
   }, [displayListings.length]);
@@ -192,7 +191,7 @@ export default function LandlordReviews() {
                   : 0;
 
                 return (
-                  <div key={listing.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col lg:flex-row gap-4 md:gap-6 border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+                  <div key={listing.id} className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-3 md:p-4 flex flex-col border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
                     {/* Listing Header */}
                     <div className="w-full flex flex-col lg:flex-row gap-4 md:gap-6 text-left">
                       <img
@@ -225,9 +224,9 @@ export default function LandlordReviews() {
                       </div>
                     </div>
 
-                    {/* Reviews Toggle */}
+                    {/* Reviews Toggle — bottom of card */}
                     {reviewCount > 0 && (
-                      <div className="w-full border-t border-neutral-100">
+                      <div className="w-full border-t border-neutral-100 mt-3">
                         <button
                           onClick={() => toggleListing(listing.id)}
                           className="w-full flex items-center justify-between px-5 py-3.5 text-left g-neutral-50/50 transition-colors cursor-pointer"
@@ -303,8 +302,6 @@ export default function LandlordReviews() {
           )}
         </div>
       </div>
-
-      <BottomNav />
 
       <Modal
         isOpen={confirmDelete !== null}

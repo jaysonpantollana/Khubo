@@ -10,7 +10,7 @@ import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
   Settings, LogOut, Bell, Building, Check, X,
-  MoreVertical, Copy, Users, MessageSquare,
+  MoreVertical, Users, MessageSquare,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import Footer from '../components/Footer';
@@ -19,7 +19,7 @@ import { useLandlord } from '../lib/LandlordContext';
 import { useToast } from '../components/ToastProvider';
 import { updateListing } from '../lib/api/listings';
 import { EditListingModal } from '../components/EditListingModal';
-import { CreateListingModal } from '../components/CreateListingModal';
+
 const PhotoCarouselOverlay = lazy(() => import('../components/PhotoCarouselOverlay').then(m => ({ default: m.PhotoCarouselOverlay })));
 import { AnnouncementsOverlay } from '../components/AnnouncementsOverlay';
 
@@ -53,7 +53,7 @@ export default function Profile() {
   const [myListings, setMyListings] = useState<Listing[]>([]);
   const [loadingListings, setLoadingListings] = useState(false);
   const [editingListing, setEditingListing] = useState<Listing | null>(null);
-  const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
+
   const [listingVisibility, setListingVisibility] = useState<Record<string, boolean>>({});
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
@@ -159,13 +159,11 @@ export default function Profile() {
   };
 
   const isAnyModalOpen = useMemo(() =>
-    isCreateListingOpen ||
     isInquiriesModalOpen ||
     isEditProfileOpen || editingListing !== null ||
     isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
     selectedListingDetail !== null,
-    [isCreateListingOpen,
-     isInquiriesModalOpen, isEditProfileOpen,
+    [isInquiriesModalOpen, isEditProfileOpen,
      editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
      selectedListingDetail]
   );
@@ -349,6 +347,7 @@ export default function Profile() {
             )}
           </div>
 
+          {!isLandlord && (
           <div className="w-full md:w-[45%] lg:w-[40%] text-white/80 md:text-white text-sm md:text-xl lg:text-2xl font-normal md:font-semibold leading-relaxed drop-shadow-sm px-2 pb-0 pt-0 md:p-6 group text-center md:text-left mt-0">
             <div className="relative cursor-pointer g-white/10 p-2 rounded-xl transition" onClick={handleOpenEditProfile} title="Edit Quote/Bio">
               <span className="italic">{profileBio}</span>
@@ -357,6 +356,7 @@ export default function Profile() {
               </button>
             </div>
           </div>
+          )}
         </div>
       </div>
 
@@ -387,14 +387,7 @@ export default function Profile() {
           <h2 className="text-2xl md:text-3xl font-bold text-black">
             {isLandlord ? 'My Properties' : 'My Living Space'}
           </h2>
-          {isLandlord && (
-            <button
-              onClick={() => setIsCreateListingOpen(true)}
-              className="px-6 py-2.5 bg-[#17294F] text-white rounded-full font-bold g-[#1e3466] shadow-md transition text-sm md:text-base whitespace-nowrap"
-            >
-              + Add Listing
-            </button>
-          )}
+
         </div>
 
         {isLandlord ? (
@@ -443,50 +436,7 @@ export default function Profile() {
                       <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
                         6 Available
                       </span>
-                      <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${mockListed ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
-                        {mockListed ? 'Active Listing' : 'Unlisted'}
-                      </span>
-                      <div className="relative" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          onClick={() => setOpenMenuId(openMenuId === 'mock-listing' ? null : 'mock-listing')}
-                          className="p-2 g-neutral-100 rounded-full transition cursor-pointer"
-                        >
-                          <MoreVertical size={18} className="text-neutral-600" />
-                        </button>
-                        {openMenuId === 'mock-listing' && (
-                          <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-neutral-100 py-1 z-50 min-w-[160px]">
-                            <button
-                              onClick={() => {
-                                setEditingListing({
-                                  id: 'mock-listing',
-                                  title: 'Premium Apartment',
-                                  description: 'A beautiful apartment in Tibanga, Iligan City.',
-                                  price: 5000,
-                                  location: 'Tibanga, Iligan City',
-                                  category: 'apartment',
-                                  amenities: ['Wifi', 'AC'],
-                                  image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800',
-                                  gallery: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800'],
-                                  rating: 5,
-                                  reviews: [],
-                                  date: '2026-01-01',
-                                });
-                                setOpenMenuId(null);
-                              }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
-                            >
-                              <Edit2 size={14} /> Edit
-                            </button>
-                            <div className="h-px bg-neutral-100 my-1" />
-                            <button
-                              onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
-                            >
-                              <Copy size={14} /> Copy link
-                            </button>
-                          </div>
-                        )}
-                      </div>
+
                     </div>
                   </div>
                   <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
@@ -568,50 +518,7 @@ export default function Profile() {
                       <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
                         3 Available
                       </span>
-                      <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${(listingVisibility['mock-listing-2'] ?? false) ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
-                        {(listingVisibility['mock-listing-2'] ?? false) ? 'Active Listing' : 'Unlisted'}
-                      </span>
-                      <div className="relative" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          onClick={() => setOpenMenuId(openMenuId === 'mock-listing-2' ? null : 'mock-listing-2')}
-                          className="p-2 g-neutral-100 rounded-full transition cursor-pointer"
-                        >
-                          <MoreVertical size={18} className="text-neutral-600" />
-                        </button>
-                        {openMenuId === 'mock-listing-2' && (
-                          <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-neutral-100 py-1 z-50 min-w-[160px]">
-                            <button
-                              onClick={() => {
-                                setEditingListing({
-                                  id: 'mock-listing-2',
-                                  title: 'Sunset Boarding House',
-                                  description: 'A cozy boarding house in Pala-o, Iligan City.',
-                                  price: 3500,
-                                  location: 'Pala-o, Iligan City',
-                                  category: 'boarding house',
-                                  amenities: ['Wifi', 'Water'],
-                                  image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800',
-                                  gallery: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800'],
-                                  rating: 4.75,
-                                  reviews: [],
-                                  date: '2026-03-01',
-                                });
-                                setOpenMenuId(null);
-                              }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
-                            >
-                              <Edit2 size={14} /> Edit
-                            </button>
-                            <div className="h-px bg-neutral-100 my-1" />
-                            <button
-                              onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
-                              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
-                            >
-                              <Copy size={14} /> Copy link
-                            </button>
-                          </div>
-                        )}
-                      </div>
+
                     </div>
                   </div>
                   <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
@@ -684,34 +591,7 @@ export default function Profile() {
                           <span className="bg-[#4E4F50] text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
                             {listing.date || '6 Available'}
                           </span>
-                          <span className={`text-white text-[9px] md:text-xs font-bold px-2.5 py-1 md:px-3 md:py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap ${isListed ? 'bg-[#4E4F50]' : 'bg-neutral-400'}`}>
-                            {isListed ? 'Active Listing' : 'Unlisted'}
-                          </span>
-                          <div className="relative" onClick={(e) => e.stopPropagation()}>
-                            <button
-                              onClick={() => setOpenMenuId(openMenuId === listing.id ? null : listing.id)}
-                              className="p-2 g-neutral-100 rounded-full transition cursor-pointer"
-                            >
-                              <MoreVertical size={18} className="text-neutral-600" />
-                            </button>
-                            {openMenuId === listing.id && (
-                              <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-neutral-100 py-1 z-50 min-w-[160px]">
-                                <button
-                                  onClick={() => { setEditingListing(listing); setOpenMenuId(null); }}
-                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
-                                >
-                                  <Edit2 size={14} /> Edit
-                                </button>
-                                <div className="h-px bg-neutral-100 my-1" />
-                                <button
-                                  onClick={() => { navigator.clipboard.writeText(window.location.href); showToast('Link copied!', 'success'); setOpenMenuId(null); }}
-                                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-neutral-700 g-neutral-50 transition"
-                                >
-                                  <Copy size={14} /> Copy link
-                                </button>
-                              </div>
-                            )}
-                          </div>
+
                         </div>
                       </div>
                       <p className="text-neutral-500 text-xs md:text-base mb-3 md:mb-4 flex items-center gap-1">
@@ -965,13 +845,7 @@ export default function Profile() {
         />
       )}
 
-      {isCreateListingOpen && (
-        <CreateListingModal
-          isOpen={isCreateListingOpen}
-          onClose={() => setIsCreateListingOpen(false)}
-          onSuccess={() => { fetchMyListings(); setIsCreateListingOpen(false); }}
-        />
-      )}
+
 
       <EditProfileModal
         isOpen={isEditProfileOpen}

@@ -5,7 +5,7 @@
 // @side-effects: Calls createListing on submit; creates portal-based modal
 // @dependencies: useAuth, motion, lucide-react
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { z } from 'zod';
 
 import { X, Upload, XCircle, Loader2 } from 'lucide-react';
@@ -50,12 +50,19 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
   const [images, setImages] = useState<File[]>([]);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const [preContractualDoc, setPreContractualDoc] = useState<File | null>(null);
   const [pinLat, setPinLat] = useState<number | null>(null);
   const [pinLng, setPinLng] = useState<number | null>(null);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      imagePreviewUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [imagePreviewUrls]);
 
   if (!isOpen) return null;
 
@@ -66,12 +73,21 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         setError('Maximum 5 images allowed');
         return;
       }
+      const nextPreviewUrls = newFiles.map((file) => URL.createObjectURL(file));
       setImages(prev => [...prev, ...newFiles]);
+      setImagePreviewUrls(prev => [...prev, ...nextPreviewUrls]);
     }
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages(prev => {
+      const nextImages = prev.filter((_, i) => i !== index);
+      if (index < imagePreviewUrls.length) {
+        URL.revokeObjectURL(imagePreviewUrls[index]);
+        setImagePreviewUrls(prevUrls => prevUrls.filter((_, i) => i !== index));
+      }
+      return nextImages;
+    });
   };
 
   const toggleAmenity = (amenity: string) => {
@@ -111,12 +127,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         throw new Error('Please upload at least one image.');
       }
 
-      const imageUrls: string[] = [];
-
-      // 1. Mock image upload
-      for (const file of images) {
-        imageUrls.push(URL.createObjectURL(file));
-      }
+      const imageUrls = imagePreviewUrls.slice(0, images.length);
 
       // 2. Mock document upload
       const docUrl = preContractualDoc ? URL.createObjectURL(preContractualDoc) : undefined;
@@ -159,6 +170,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
       setAvailableCategories(DEFAULT_CATEGORIES);
       setSelectedAmenities([]);
       setImages([]);
+      setImagePreviewUrls([]);
       setPreContractualDoc(null);
       setPinLat(null);
       setPinLng(null);
@@ -444,21 +456,23 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
               <div>
                 <label className="block text-sm font-semibold text-neutral-800 mb-2">Pre-Contractual Document (optional)</label>
                 <p className="text-xs text-neutral-500 mb-3">Upload the contract or agreement tenants will review before signing.</p>
-                {preContractualDoc ? (
-                  <div className="flex items-center gap-3 px-4 py-3 bg-neutral-50 rounded-xl border border-neutral-200">
-                    <svg className="w-5 h-5 text-[#17294F] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                    <span className="text-sm text-neutral-700 truncate flex-1">{preContractualDoc.name}</span>
-                    <button type="button" onClick={removeDoc} className="text-neutral-400 ext-red-500 transition-colors">
-                      <XCircle size={16} />
-                    </button>
-                  </div>
-                ) : (
-                  <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer g-neutral-50 transition">
-                    <Upload size={24} className="mb-1" />
-                    <span className="text-xs font-medium text-center px-1">Add Document</span>
-                    <input type="file" accept=".pdf,.doc,.docx" onChange={handleDocChange} className="hidden" />
-                  </label>
-                )}
+                <div className="flex justify-center">
+                  {preContractualDoc ? (
+                    <div className="flex items-center gap-3 px-4 py-3 bg-neutral-50 rounded-xl border border-neutral-200">
+                      <svg className="w-5 h-5 text-[#17294F] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                      <span className="text-sm text-neutral-700 truncate flex-1">{preContractualDoc.name}</span>
+                      <button type="button" onClick={removeDoc} className="text-neutral-400 ext-red-500 transition-colors">
+                        <XCircle size={16} />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer g-neutral-50 transition">
+                      <Upload size={24} className="mb-1" />
+                      <span className="text-xs font-medium text-center px-1">Add Document</span>
+                      <input type="file" accept=".pdf,.doc,.docx" onChange={handleDocChange} className="hidden" />
+                    </label>
+                  )}
+                </div>
               </div>
 
             </form>

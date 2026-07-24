@@ -5,9 +5,9 @@
 // @side-effects: Calls updateListing on submit; calls onSuccess on completion
 // @dependencies: useAuth, Listing type, motion, lucide-react
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { X, Upload, XCircle, Loader2, ChevronDown } from 'lucide-react';
+import { X, Upload, XCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { Listing } from '../types';
 import MapPicker from './MapPicker';
@@ -35,9 +35,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
   const [availableAmenities, setAvailableAmenities] = useState<string[]>(AMENITIES);
   const [isAddingAmenity, setIsAddingAmenity] = useState(false);
   const [newAmenityInput, setNewAmenityInput] = useState('');
-  const [advancePaymentMonths, setAdvancePaymentMonths] = useState<number>(1);
-  const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
-  const monthDropdownRef = useRef<HTMLDivElement>(null);
+
   
   // For images, we track existing URL strings and new File objects separately
   const [existingImages, setExistingImages] = useState<string[]>([]);
@@ -56,7 +54,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
       setLocation(listing.location || '');
       setCategory(listing.category || CATEGORIES[0]);
       setSelectedAmenities(listing.amenities || []);
-      setAdvancePaymentMonths(listing.advancePaymentMonths || 1);
+
       
       // Ensure any existing amenities not in the default list are added to availableAmenities
       if (listing.amenities && listing.amenities.length > 0) {
@@ -74,15 +72,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
     }
   }, [isOpen, listing]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (monthDropdownRef.current && !monthDropdownRef.current.contains(event.target as Node)) {
-        setIsMonthDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+
 
   if (!isOpen || !listing) return null;
 
@@ -145,7 +135,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
         location,
         category,
         amenities: selectedAmenities,
-        advance_payment_months: advancePaymentMonths,
+
         image: finalGallery[0], // Main image
         gallery: finalGallery,
         lat: pinLat ?? undefined,
@@ -268,42 +258,6 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       setPinLng(lng);
                     }}
                   />
-                </div>
-
-                {/* Months of Advance Payment */}
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-neutral-800 mb-2">Months of Advance Payment</label>
-                  <div className="relative" ref={monthDropdownRef}>
-                    <button
-                      type="button"
-                      onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
-                      className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 cursor-pointer flex items-center justify-between"
-                    >
-                      <span>{advancePaymentMonths} {advancePaymentMonths === 1 ? 'month' : 'months'}</span>
-                      <ChevronDown size={16} className={`text-neutral-400 transition-transform ${isMonthDropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    {isMonthDropdownOpen && (
-                      <div className="absolute z-50 mt-1 w-full bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden">
-                        {[1, 2, 3, 6, 12].map(months => (
-                          <button
-                            key={months}
-                            type="button"
-                            onClick={() => {
-                              setAdvancePaymentMonths(months);
-                              setIsMonthDropdownOpen(false);
-                            }}
-                            className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
-                              advancePaymentMonths === months
-                                ? 'bg-[#2252D6] text-white'
-                                : 'text-neutral-800 g-neutral-50'
-                            }`}
-                          >
-                            {months} {months === 1 ? 'month' : 'months'}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
                 </div>
 
                 <div className="md:col-span-2">

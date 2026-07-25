@@ -66,7 +66,7 @@ export default function Profile() {
   const [profileName, setProfileName] = useState(() => {
     return localStorage.getItem('user_profile_name') || 'Micheal B. Jordan';
   });
-  const [profileDetails, setProfileDetails] = useState('MSU-IIT | 20yrs old | Female');
+  const [profileDetails, setProfileDetails] = useState('Female');
   const [profileLocation, setProfileLocation] = useState('Tibanga, Iligan City');
   const [profileBio, setProfileBio] = useState('"Clean and organized. Looking for a place near the city center. I cook often and enjoy a shared meal!"');
   const [profileTags, setProfileTags] = useState<string[]>(() => {

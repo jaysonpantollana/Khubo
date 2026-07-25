@@ -75,7 +75,7 @@ export default function EditProfileModal({
           </div>
 
           <div className="space-y-1.5 text-left">
-            <label className="text-xs font-bold text-[#17294F] uppercase tracking-wider block">School, Age, & Gender</label>
+            <label className="text-xs font-bold text-[#17294F] uppercase tracking-wider block">Gender</label>
             <div className="relative">
               <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400">
                 <GraduationCap size={18} />
@@ -84,7 +84,7 @@ export default function EditProfileModal({
                 type="text"
                 value={tempDetails}
                 onChange={(e) => onTempDetailsChange(e.target.value)}
-                placeholder="e.g. MSU-IIT | 20yrs old | Female"
+                placeholder="e.g. Female"
                 className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
               />
             </div>

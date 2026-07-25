@@ -9,22 +9,23 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight, Copy, Phone, Plus, Check, Pencil } from 'lucide-react';
 import { AddTenantModal } from '../components/AddTenantModal';
 import { EditTenantModal } from '../components/EditTenantModal';
+import type { SocialLink } from '../components/tenantSchemas';
 import ConfirmDialog from '../components/ConfirmDialog';
 
 const initialTenants = [
-  { id: 1, client: 'North Studio', room: '101', balance: 'Paid', tenancyStatus: 'Staying', email: 'billing@northstudio.co', phone: '+1 (555) 234-5678', social: { instagram: 'https://instagram.com/northstudio', x: 'https://x.com/northstudio', facebook: 'https://facebook.com/northstudio' } },
-  { id: 2, client: 'Atlas Works', room: '102', balance: 'Unpaid', tenancyStatus: 'Leaving', email: 'accounts@atlasworks.io', phone: '+1 (555) 345-6789', social: { instagram: 'https://instagram.com/atlasworks', x: 'https://x.com/atlasworks', facebook: 'https://facebook.com/atlasworks' } },
-  { id: 3, client: 'Paper Trail', room: '201', balance: 'Unpaid', tenancyStatus: 'Moved out', email: 'hello@papertrail.design', phone: '+1 (555) 456-7890', social: { instagram: 'https://instagram.com/papertrail', x: 'https://x.com/papertrail', facebook: 'https://facebook.com/papertrail' } },
-  { id: 4, client: 'Luma Team', room: '205', balance: 'Paid', tenancyStatus: 'Staying', email: 'finance@luma.team', phone: '+1 (555) 567-8901', social: { instagram: 'https://instagram.com/lumateam', x: 'https://x.com/lumateam', facebook: 'https://facebook.com/lumateam' } },
-  { id: 5, client: 'Mono Labs', room: '302', balance: 'Paid', tenancyStatus: 'Staying', email: 'ops@monolabs.dev', phone: '+1 (555) 678-9012', social: { instagram: 'https://instagram.com/monolabs', x: 'https://x.com/monolabs', facebook: 'https://facebook.com/monolabs' } },
+  { id: 1, client: 'North Studio', room: '101', property: 'Main Building', balance: 'Paid', tenancyStatus: 'Staying', email: 'billing@northstudio.co', phone: '+1 (555) 234-5678', social: { instagram: 'https://instagram.com/northstudio', x: 'https://x.com/northstudio', facebook: 'https://facebook.com/northstudio' } },
+  { id: 2, client: 'Atlas Works', room: '102', property: 'Main Building', balance: 'Unpaid', tenancyStatus: 'Leaving', email: 'accounts@atlasworks.io', phone: '+1 (555) 345-6789', social: { instagram: 'https://instagram.com/atlasworks', x: 'https://x.com/atlasworks', facebook: 'https://facebook.com/atlasworks' } },
+  { id: 3, client: 'Paper Trail', room: '201', property: 'East Wing', balance: 'Unpaid', tenancyStatus: 'Moved out', email: 'hello@papertrail.design', phone: '+1 (555) 456-7890', social: { instagram: 'https://instagram.com/papertrail', x: 'https://x.com/papertrail', facebook: 'https://facebook.com/papertrail' } },
+  { id: 4, client: 'Luma Team', room: '205', property: 'East Wing', balance: 'Paid', tenancyStatus: 'Staying', email: 'finance@luma.team', phone: '+1 (555) 567-8901', social: { instagram: 'https://instagram.com/lumateam', x: 'https://x.com/lumateam', facebook: 'https://facebook.com/lumateam' } },
+  { id: 5, client: 'Mono Labs', room: '302', property: 'North Tower', balance: 'Paid', tenancyStatus: 'Staying', email: 'ops@monolabs.dev', phone: '+1 (555) 678-9012', social: { instagram: 'https://instagram.com/monolabs', x: 'https://x.com/monolabs', facebook: 'https://facebook.com/monolabs' } },
 ];
 
-const roomTags = [...new Set(initialTenants.map(t => t.room))];
+const propertyTags = [...new Set(initialTenants.map(t => t.property))];
 
 export default function LandlordTenants() {
   const navigate = useNavigate();
-  const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
-  const [additionalRooms, setAdditionalRooms] = useState<string[]>([]);
+  const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
+  const [additionalProperties, setAdditionalProperties] = useState<string[]>([]);
   const [isAddingRoom, setIsAddingRoom] = useState(false);
   const [newRoomValue, setNewRoomValue] = useState('');
   const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
@@ -44,7 +45,7 @@ export default function LandlordTenants() {
     document.title = "Tenants | Khubo";
   }, []);
 
-  const allRoomTags = [...new Set([...roomTags, ...additionalRooms])];
+  const allPropertyTags = [...new Set([...propertyTags, ...additionalProperties])];
 
   const scrollLeft = () => {
     scrollContainerRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
@@ -80,8 +81,29 @@ export default function LandlordTenants() {
     setTenants(prev => prev.map(t => t.id === id ? { ...t, ...data } : t));
   };
 
-  const filteredTenants = selectedRoom
-    ? tenants.filter(t => t.room === selectedRoom)
+  const handleAddTenant = (data: { name: string; email: string; phone: string; room: string; property: string; socialLinks: SocialLink[] }) => {
+    const social = { instagram: '', x: '', facebook: '' };
+    data.socialLinks.forEach(link => {
+      if (link.platform === 'Instagram') social.instagram = link.url;
+      else if (link.platform === 'X') social.x = link.url;
+      else if (link.platform === 'Facebook') social.facebook = link.url;
+    });
+    const newTenant = {
+      id: Date.now(),
+      client: data.name,
+      room: data.room,
+      property: data.property,
+      balance: 'Unpaid',
+      tenancyStatus: 'Staying',
+      email: data.email,
+      phone: data.phone,
+      social,
+    };
+    setTenants(prev => [...prev, newTenant]);
+  };
+
+  const filteredTenants = selectedProperty
+    ? tenants.filter(t => t.property === selectedProperty)
     : tenants;
 
   return (
@@ -123,26 +145,26 @@ export default function LandlordTenants() {
                 className="flex items-center gap-2 overflow-x-auto flex-nowrap no-scrollbar px-10"
               >
                 <button
-                  onClick={() => setSelectedRoom(null)}
+                  onClick={() => setSelectedProperty(null)}
                   className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
-                    selectedRoom === null
+                    selectedProperty === null
                       ? 'bg-[#17294F] text-white'
                       : 'bg-neutral-100 text-neutral-600 g-neutral-200'
                   }`}
                 >
-                  All Rooms
+                  All Properties
                 </button>
-                {allRoomTags.map(room => (
+                {allPropertyTags.map(prop => (
                   <button
-                    key={room}
-                    onClick={() => setSelectedRoom(room)}
+                    key={prop}
+                    onClick={() => setSelectedProperty(prop)}
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
-                      selectedRoom === room
+                      selectedProperty === prop
                         ? 'bg-[#17294F] text-white'
                         : 'bg-neutral-100 text-neutral-600 g-neutral-200'
                     }`}
                   >
-                    Room {room}
+                    {prop}
                   </button>
                 ))}
                 {isAddingRoom ? (
@@ -154,8 +176,8 @@ export default function LandlordTenants() {
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && newRoomValue.trim()) {
                         const val = newRoomValue.trim();
-                        if (!allRoomTags.includes(val)) {
-                          setAdditionalRooms(prev => [...prev, val]);
+                        if (!allPropertyTags.includes(val)) {
+                          setAdditionalProperties(prev => [...prev, val]);
                         }
                         setNewRoomValue('');
                         setIsAddingRoom(false);
@@ -168,15 +190,15 @@ export default function LandlordTenants() {
                       setNewRoomValue('');
                       setIsAddingRoom(false);
                     }}
-                    placeholder="Room #"
-                    className="px-3 py-1.5 rounded-full text-xs font-bold border-2 border-[#17294F] outline-none w-24 bg-white text-neutral-700 shrink-0"
+                    placeholder="Property name"
+                    className="px-3 py-1.5 rounded-full text-xs font-bold border-2 border-[#17294F] outline-none w-36 bg-white text-neutral-700 shrink-0"
                   />
                 ) : (
                   <button
                     onClick={() => setIsAddingRoom(true)}
                     className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 order-[#17294F] ext-[#17294F] shrink-0"
                   >
-                    + Add Room
+                    + Add Property
                   </button>
                 )}
               </div>
@@ -196,11 +218,12 @@ export default function LandlordTenants() {
                 <tr className="border-b border-neutral-100 bg-neutral-50/50">
                   <th className="p-4 pl-6 whitespace-nowrap text-neutral-500 font-bold text-sm">Client</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Room No.</th>
-                  <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Balance</th>
+                  <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Property</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Email</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Phone</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Social</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Actions</th>
+                  <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Balance</th>
                 </tr>
               </thead>
               <tbody>
@@ -216,15 +239,8 @@ export default function LandlordTenants() {
                       <td className="p-4 whitespace-nowrap text-neutral-500 font-bold">
                         {tenant.room}
                       </td>
-                      <td className="p-4 text-neutral-500 font-medium whitespace-nowrap">
-                        <button
-                          onClick={() => toggleBalance(tenant.id)}
-                          className={`px-2 py-1 rounded text-xs font-bold cursor-pointer transition-colors ${
-                            tenant.balance === 'Paid' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-red-100 text-red-700 hover:bg-red-200'
-                          }`}
-                        >
-                          {tenant.balance}
-                        </button>
+                      <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">
+                        {tenant.property}
                       </td>
                       <td className="p-4 whitespace-nowrap text-neutral-500 font-medium">
                         <span className="flex items-center gap-1.5">
@@ -271,12 +287,22 @@ export default function LandlordTenants() {
                           <Pencil size={16} />
                         </button>
                       </td>
+                      <td className="p-4 text-neutral-500 font-medium whitespace-nowrap">
+                        <button
+                          onClick={() => toggleBalance(tenant.id)}
+                          className={`px-2 py-1 rounded text-xs font-bold cursor-pointer transition-colors ${
+                            tenant.balance === 'Paid' ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-red-100 text-red-700 hover:bg-red-200'
+                          }`}
+                        >
+                          {tenant.balance}
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} className="p-8 text-center text-neutral-400 font-medium">
-                      No tenants found for this room
+                    <td colSpan={8} className="p-8 text-center text-neutral-400 font-medium">
+                      No tenants found for this property
                     </td>
                   </tr>
                 )}
@@ -289,6 +315,7 @@ export default function LandlordTenants() {
       <AddTenantModal
         isOpen={isAddTenantOpen}
         onClose={() => setIsAddTenantOpen(false)}
+        onSuccess={handleAddTenant}
       />
       <EditTenantModal
         isOpen={!!editingTenant}

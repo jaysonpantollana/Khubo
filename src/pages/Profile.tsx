@@ -229,7 +229,7 @@ export default function Profile() {
     : [
         { title: 'Houses', count: '12', sub: 'Saved' },
         { title: 'Roommate', count: '6', sub: 'Saved' },
-        { title: 'Invitation', count: '0', sub: 'Received' },
+        { title: 'Landlord', count: '0', sub: 'Saved' },
       ];
 
   const mockListed = listingVisibility['mock-listing'] ?? true;

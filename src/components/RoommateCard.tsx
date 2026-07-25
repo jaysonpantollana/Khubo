@@ -12,9 +12,10 @@ interface RoommateCardProps {
   roommate: Roommate;
   onProfileClick: (roommate: Roommate) => void;
   actionLabel?: string;
+  onAuthRequired?: () => void;
 }
 
-export default React.memo(function RoommateCard({ roommate, onProfileClick, actionLabel = "Apply as Roommate" }: RoommateCardProps) {
+export default React.memo(function RoommateCard({ roommate, onProfileClick, actionLabel = "Apply as Roommate", onAuthRequired }: RoommateCardProps) {
   return (
     <div 
       onClick={() => onProfileClick(roommate)}
@@ -79,7 +80,7 @@ export default React.memo(function RoommateCard({ roommate, onProfileClick, acti
       </div>
 
       {/* Action Button */}
-      <button className="w-full py-3.5 bg-[#17294F] text-white rounded-2xl font-black text-xs uppercase tracking-[0.1em] transition-all shadow-md">
+      <button onClick={(e) => { e.stopPropagation(); onAuthRequired?.(); }} className="w-full py-3.5 bg-[#17294F] text-white rounded-2xl font-black text-xs uppercase tracking-[0.1em] transition-all shadow-md">
         {actionLabel}
       </button>
     </div>

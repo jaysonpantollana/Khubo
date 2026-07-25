@@ -12,6 +12,8 @@ import BottomNav from "../components/BottomNav";
 import Footer from "../components/Footer";
 import { ROOMMATES } from "../mocks/roommates";
 import { BUDGET_RANGES, parseBudgetRange } from "../lib/constants";
+import { useAuth } from "../lib/AuthContext";
+import { AuthModal } from "../components/AuthModal";
 import {
   Search,
   ChevronLeft,
@@ -75,6 +77,13 @@ export default function RoommateFinder() {
   const [stickyBudgetScrollIndex, setStickyBudgetScrollIndex] = useState(0);
   const BUDGET_VISIBLE_COUNT = 5;
 
+  const { isAuthenticated } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const requireAuth = (action: () => void) => {
+    if (!isAuthenticated) { setIsAuthModalOpen(true); return; }
+    action();
+  };
+
   const [roommates, setRoommates] = useState<Roommate[]>(() => {
     const saved = localStorage.getItem("custom_roommates");
     if (saved) {
@@ -114,8 +123,10 @@ export default function RoommateFinder() {
   }, [isSticky, isStickySearchActive]);
 
   const openProfile = (roommate: Roommate) => {
-    setSelectedRoommate(roommate);
-    setIsModalOpen(true);
+    requireAuth(() => {
+      setSelectedRoommate(roommate);
+      setIsModalOpen(true);
+    });
   };
 
   const closeProfile = () => {
@@ -656,7 +667,7 @@ export default function RoommateFinder() {
             <div className="flex items-center justify-center w-full pb-2 sm:pb-0">
               <div className="inline-flex bg-white rounded-full p-1 shadow-sm border border-neutral-200">
                 <button
-                  onClick={() => setPostMode("applying")}
+                  onClick={() => requireAuth(() => setPostMode("applying"))}
                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === "applying" ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-500 ext-neutral-900 g-neutral-50"}`}
                 >
                   <UserPlus
@@ -668,7 +679,7 @@ export default function RoommateFinder() {
                   </span>
                 </button>
                 <button
-                  onClick={() => setPostMode("finding")}
+                  onClick={() => requireAuth(() => setPostMode("finding"))}
                   className={`flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full whitespace-nowrap ${postMode === "finding" ? "bg-neutral-900 text-white shadow-sm" : "text-neutral-500 ext-neutral-900 g-neutral-50"}`}
                 >
                   <Search
@@ -689,7 +700,7 @@ export default function RoommateFinder() {
               <div className="flex items-center justify-between">
                 <div
                   className="flex items-center gap-2 group cursor-pointer min-w-0"
-                  onClick={() => setFindingPopupOpen(true)}
+                  onClick={() => requireAuth(() => setFindingPopupOpen(true))}
                 >
                   <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
                     Finding a roommate
@@ -748,6 +759,7 @@ export default function RoommateFinder() {
                         <RoommateCard
                           roommate={roommate}
                           onProfileClick={openProfile}
+                          onAuthRequired={() => setIsAuthModalOpen(true)}
                         />
                       </div>
                     ))}
@@ -761,7 +773,7 @@ export default function RoommateFinder() {
               <div className="flex items-center justify-between">
                 <div
                   className="flex items-center gap-2 group cursor-pointer min-w-0"
-                  onClick={() => setApplyingPopupOpen(true)}
+                  onClick={() => requireAuth(() => setApplyingPopupOpen(true))}
                 >
                   <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-black whitespace-nowrap truncate">
                     Applying as Roommate
@@ -825,6 +837,7 @@ export default function RoommateFinder() {
                             roommate={roommate}
                             onProfileClick={openProfile}
                             actionLabel="Accept as Roommate"
+                            onAuthRequired={() => setIsAuthModalOpen(true)}
                           />
                         </div>
                       ))}
@@ -880,7 +893,7 @@ export default function RoommateFinder() {
         items={filteredRoommates.slice(0, 10)}
         onItemClick={openProfile}
         renderItem={(roommate, onSelect) => (
-          <RoommateCard roommate={roommate} onProfileClick={() => onSelect()} />
+          <RoommateCard roommate={roommate} onProfileClick={() => onSelect()} onAuthRequired={() => setIsAuthModalOpen(true)} />
         )}
         emptyText="No roommates available."
       />
@@ -892,10 +905,12 @@ export default function RoommateFinder() {
         items={filteredRoommates.slice().reverse().slice(0, 10)}
         onItemClick={openProfile}
         renderItem={(roommate, onSelect) => (
-          <RoommateCard roommate={roommate} onProfileClick={() => onSelect()} actionLabel="Accept as Roommate" />
+          <RoommateCard roommate={roommate} onProfileClick={() => onSelect()} actionLabel="Accept as Roommate" onAuthRequired={() => setIsAuthModalOpen(true)} />
         )}
         emptyText="No roommates available."
       />
+
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </div>
   );
 }

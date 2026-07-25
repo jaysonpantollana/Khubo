@@ -29,6 +29,12 @@ import EditProfileModal from '../components/profile/EditProfileModal';
 import ConfirmDialog from '../components/ConfirmDialog';
 import TenantProfileModal from '../components/TenantProfileModal';
 import { reservations } from '../mocks/reservations';
+import { LISTINGS } from '../mocks/listings';
+import { ROOMMATES } from '../mocks/roommates';
+import { ItemsPopup } from '../components/ItemsPopup';
+import ListingCard from '../components/ListingCard';
+import RoommateCard from '../components/RoommateCard';
+import { Roommate } from '../types';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -119,6 +125,7 @@ export default function Profile() {
   const [isAnnouncementsOpen, setIsAnnouncementsOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [showAllProperties, setShowAllProperties] = useState(false);
+  const [activeStatModal, setActiveStatModal] = useState<'houses' | 'roommate' | 'landlord' | null>(null);
 
 
 
@@ -129,6 +136,11 @@ export default function Profile() {
     { id: 't4', name: 'Carlos Garcia', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=CarlosGarcia&backgroundColor=b6e3f4', email: 'carlos@email.com', phone: '09201234567', moveInDate: '2025-04-01', status: 'active', paymentStatus: 'paid' },
     { id: 't5', name: 'Sofia Lim', image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SofiaLim&backgroundColor=b6e3f4', email: 'sofia@email.com', phone: '09211234567', moveInDate: '2025-05-15', status: 'moved_out', paymentStatus: 'overdue' },
   ];
+
+  // ponytail: mock saved data — real app would fetch from API/localStorage
+  const savedHouses = LISTINGS.slice(0, 12);
+  const savedRoommates = ROOMMATES.slice(0, 6);
+  const savedLandlords: { id: string; name: string; image: string; listings: number; rating: number }[] = [];
 
   const getTenantsForListing = useCallback((listingId: string): TenantInfo[] => {
     const hash = listingId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
@@ -162,10 +174,10 @@ export default function Profile() {
     isInquiriesModalOpen ||
     isEditProfileOpen || editingListing !== null ||
     isPhotoGalleryOpen || isAnnouncementsOpen || isLogoutModalOpen ||
-    selectedListingDetail !== null,
+    selectedListingDetail !== null || activeStatModal !== null,
     [isInquiriesModalOpen, isEditProfileOpen,
      editingListing, isPhotoGalleryOpen, isAnnouncementsOpen, isLogoutModalOpen,
-     selectedListingDetail]
+     selectedListingDetail, activeStatModal]
   );
 
   useEffect(() => {
@@ -237,6 +249,9 @@ export default function Profile() {
   const handleStatClick = (title: string) => {
     if (title === 'Tenants') navigate('/landlord/tenants');
     else if (title === 'Properties') navigate('/landlord/properties');
+    else if (title === 'Houses') setActiveStatModal('houses');
+    else if (title === 'Roommate') setActiveStatModal('roommate');
+    else if (title === 'Landlord') setActiveStatModal('landlord');
   };
 
   return (
@@ -894,6 +909,47 @@ export default function Profile() {
         tenants={selectedTenants}
         isOpen={selectedTenants.length > 0}
         onClose={() => setSelectedTenants([])}
+      />
+
+      {/* Stat Card Modals */}
+      <ItemsPopup
+        isOpen={activeStatModal === 'houses'}
+        onClose={() => setActiveStatModal(null)}
+        title="Saved Houses"
+        items={savedHouses}
+        onItemClick={(listing) => setSelectedListingDetail(listing)}
+        emptyText="No saved houses yet."
+        renderItem={(listing) => (
+          <ListingCard listing={listing} onClick={() => {}} />
+        )}
+      />
+
+      <ItemsPopup
+        isOpen={activeStatModal === 'roommate'}
+        onClose={() => setActiveStatModal(null)}
+        title="Saved Roommates"
+        items={savedRoommates}
+        onItemClick={(roommate) => {}}
+        emptyText="No saved roommates yet."
+        renderItem={(roommate) => (
+          <RoommateCard roommate={roommate} onProfileClick={() => {}} />
+        )}
+      />
+
+      <ItemsPopup
+        isOpen={activeStatModal === 'landlord'}
+        onClose={() => setActiveStatModal(null)}
+        title="Saved Landlords"
+        items={savedLandlords}
+        onItemClick={(landlord) => {}}
+        emptyText="No saved landlords yet."
+        renderItem={(landlord) => (
+          <div className="bg-white rounded-2xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col items-center text-center">
+            <img src={landlord.image} alt={landlord.name} className="w-16 h-16 rounded-full object-cover mb-3" />
+            <h3 className="font-bold text-neutral-900">{landlord.name}</h3>
+            <p className="text-sm text-neutral-500">{landlord.listings} listings</p>
+          </div>
+        )}
       />
     </div>
   );

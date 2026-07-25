@@ -55,6 +55,14 @@ export default function ListingDetail() {
   const [reviewToDelete, setReviewToDelete] = useState<string | null>(null);
   const [copiedContact, setCopiedContact] = useState<string | null>(null);
 
+  const requireAuth = (action: () => void) => {
+    if (!isAuthenticated) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+    action();
+  };
+
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
     setCopiedContact(type);
@@ -191,10 +199,10 @@ export default function ListingDetail() {
 
         {/* Save Button - Mobile */}
         <button
-          onClick={() => {
+          onClick={() => requireAuth(() => {
             setIsSaved(!isSaved);
             if (!isSaved) showToast('Listing saved to your wishlist!');
-          }}
+          })}
           className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg g-white transition-all"
         >
           <Heart
@@ -249,10 +257,10 @@ export default function ListingDetail() {
 
           {/* Save Button - Desktop */}
           <button
-            onClick={() => {
+            onClick={() => requireAuth(() => {
               setIsSaved(!isSaved);
               if (!isSaved) showToast('Listing saved to your wishlist!');
-            }}
+            })}
             className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg g-white transition-all"
           >
             <Heart
@@ -333,7 +341,7 @@ export default function ListingDetail() {
                   </div>
                   {listing.amenities.length > 3 && (
                     <button
-                      onClick={() => setShowAllAmenities(!showAllAmenities)}
+                      onClick={() => requireAuth(() => setShowAllAmenities(!showAllAmenities))}
                       className="px-6 py-3 border-2 border-[#17294F] text-[#17294F] rounded-xl font-bold g-[#17294F]/5 transition inline-block"
                     >
                       {showAllAmenities ? 'Show less' : 'Show more'}
@@ -351,7 +359,7 @@ export default function ListingDetail() {
                 Review the terms and conditions before you proceed with booking. This document outlines the house rules, payment schedules, and other important agreements.
               </p>
 
-              <div className="flex items-center justify-between p-5 border border-neutral-200 rounded-2xl bg-neutral-50 g-neutral-100 transition-colors cursor-pointer" onClick={() => window.open('#', '_blank')}>
+              <div className="flex items-center justify-between p-5 border border-neutral-200 rounded-2xl bg-neutral-50 g-neutral-100 transition-colors cursor-pointer" onClick={() => requireAuth(() => window.open('#', '_blank'))}>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm border border-neutral-100 shrink-0">
                     <FileText size={24} className="text-[#17294F]" />
@@ -406,11 +414,11 @@ export default function ListingDetail() {
                              {rev.date}
                           </div>
                        <div className="flex items-center gap-5 text-neutral-400">
-                              <button aria-label="Like review" className="flex items-center gap-1.5 ext-[#2252D6] transition-colors group cursor-pointer pointer-events-auto">
+                              <button aria-label="Like review" onClick={() => requireAuth(() => {})} className="flex items-center gap-1.5 ext-[#2252D6] transition-colors group cursor-pointer pointer-events-auto">
                                  <Heart size={16} className="group-ill-current transition-colors" />
                                  <span className="text-xs font-semibold">{(idx * 7 + 12) % 40 + 10}</span>
                               </button>
-                              <button aria-label="Repeat review" className="flex items-center gap-1.5 ext-green-500 transition-colors cursor-pointer pointer-events-auto">
+                              <button aria-label="Repeat review" onClick={() => requireAuth(() => {})} className="flex items-center gap-1.5 ext-green-500 transition-colors cursor-pointer pointer-events-auto">
                                  <Repeat2 size={16} />
                                  <span className="text-xs font-semibold">{(idx * 3 + 4) % 10 + 1}</span>
                               </button>
@@ -473,7 +481,7 @@ export default function ListingDetail() {
               rating={displayHost.rating}
               hostingDuration={displayHost.hostingDuration}
               tenantCount={displayHost.tenantCount || defaultHost.tenantCount}
-              onClick={() => setIsLandlordListingsOpen(true)}
+              onClick={() => requireAuth(() => setIsLandlordListingsOpen(true))}
             />
 
           </div>
@@ -518,7 +526,7 @@ export default function ListingDetail() {
                       <Phone size={16} className="text-[#17294F]" />
                       <span className="text-sm font-bold text-[#17294F] flex-1">+63 912 345 6789</span>
                       <button
-                        onClick={() => copyToClipboard('+639123456789', 'Phone')}
+                        onClick={() => requireAuth(() => copyToClipboard('+639123456789', 'Phone'))}
                         className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
                       >
                         {copiedContact === 'Phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
@@ -528,7 +536,7 @@ export default function ListingDetail() {
                       <Mail size={16} className="text-[#17294F]" />
                       <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
                       <button
-                        onClick={() => copyToClipboard('layla@khubo.com', 'Email')}
+                        onClick={() => requireAuth(() => copyToClipboard('layla@khubo.com', 'Email'))}
                         className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
                       >
                         {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
@@ -540,15 +548,15 @@ export default function ListingDetail() {
                 <div>
                   <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-3">Social Media</p>
                   <div className="flex gap-3">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl">
+                    <button onClick={() => requireAuth(() => window.open('https://instagram.com', '_blank'))} className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl cursor-pointer">
                       <Instagram size={18} />
-                    </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-xl">
+                    </button>
+                    <button onClick={() => requireAuth(() => window.open('https://facebook.com', '_blank'))} className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-xl cursor-pointer">
                       <Facebook size={18} />
-                    </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-black text-white rounded-xl">
+                    </button>
+                    <button onClick={() => requireAuth(() => window.open('https://twitter.com', '_blank'))} className="flex items-center justify-center w-10 h-10 bg-black text-white rounded-xl cursor-pointer">
                       <Twitter size={18} />
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -52,6 +52,7 @@ const LandlordProperties = lazy(() => import('./pages/LandlordProperties'));
 const LandlordTenants = lazy(() => import('./pages/LandlordTenants'));
 const LandlordReviews = lazy(() => import('./pages/LandlordReviews'));
 const ToRate = lazy(() => import('./pages/ToRate'));
+const LandlordProfile = lazy(() => import('./pages/LandlordProfile'));
 
 // --- Suspense fallback while lazy chunks load ---
 const PageLoader = () => (
@@ -93,6 +94,7 @@ export default function App() {
                       <Route path="/landlord/properties" element={<LandlordProperties />} />
                       <Route path="/landlord/tenants" element={<LandlordTenants />} />
                       <Route path="/landlord/reviews" element={<LandlordReviews />} />
+                      <Route path="/landlord/profile/:name" element={<LandlordProfile />} />
                       <Route path="/to-rate" element={<ToRate />} />
                       <Route path="/manage-listings" element={<ManageListings />} />
                       <Route path="/terms" element={<TermsOfService />} />

@@ -123,8 +123,8 @@ export default function ListingDetail() {
   };
 
   const defaultHost = {
-    name: 'Khubo Resident',
-    image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200',
+    name: 'Layla M. Santos',
+    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Layla88',
     reviews: 12,
     rating: 4.95,
     hostingDuration: '3 months',
@@ -133,6 +133,10 @@ export default function ListingDetail() {
     tenantCount: 15
   };
   const displayHost = listing.host || defaultHost;
+  const hasRealHost = Boolean(listing.host);
+  const handleHostProfileClick = hasRealHost
+    ? () => navigate(`/landlord/profile/${encodeURIComponent(displayHost.name)}`)
+    : undefined;
 
   return (
     <div className="min-h-screen bg-neutral-50 md:bg-white pb-32 text-neutral-900">
@@ -481,7 +485,7 @@ export default function ListingDetail() {
               rating={displayHost.rating}
               hostingDuration={displayHost.hostingDuration}
               tenantCount={displayHost.tenantCount || defaultHost.tenantCount}
-              onClick={() => requireAuth(() => setIsLandlordListingsOpen(true))}
+              onClick={handleHostProfileClick}
             />
 
           </div>

@@ -62,9 +62,10 @@ export default function LandlordProfile() {
           <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
             <button
               onClick={() => navigate(-1)}
-              className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-600"
+              className="flex items-center gap-2 text-neutral-900 transition-colors"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={24} />
+              <span className="font-semibold text-sm hidden sm:block">Back</span>
             </button>
             <div className="h-6 bg-neutral-200 rounded-lg w-48 animate-pulse" />
           </div>
@@ -140,48 +141,75 @@ export default function LandlordProfile() {
 
   return (
     <div className="h-screen flex flex-col bg-[#F9F9F9]">
-      {/* Header */}
-      <div className="bg-white border-b border-neutral-100 shrink-0">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
-          <button
-            onClick={() => navigate(-1)}
-            className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-600"
-          >
-            <ArrowLeft size={20} />
-          </button>
-          <h1 className="text-xl font-bold text-neutral-900">Landlord Profile</h1>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6 md:py-8">
-          {/* Hero Section */}
-          <div className="bg-white rounded-2xl p-6 md:p-8 mb-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-50">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-8">
-              <img
-                src={hostInfo.image}
-                alt={hostInfo.name}
-                loading="lazy"
-                decoding="async"
-                className="w-20 h-20 rounded-full object-cover bg-neutral-100 ring-4 ring-neutral-50 shadow-sm"
-              />
-              <div>
-                <h2 className="text-2xl font-bold text-[#17294F] flex items-center gap-2 font-display">
-                  {hostInfo.name} <BadgeCheck size={20} className="text-[#2252D6]" />
-                </h2>
-                <p className="text-sm text-neutral-500 font-medium mt-1">Landlord</p>
-                {hostInfo.location && (
-                  <p className="text-xs text-neutral-400 mt-1 flex items-center gap-1">
-                    <MapPin size={12} />
-                    {hostInfo.location}
-                  </p>
-                )}
+        {/* Hero Cover */}
+        <div className="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-black">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url("/bg_2.webp")', opacity: 0.6 }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+          {/* Header overlay */}
+          <div className="absolute top-0 left-0 right-0 z-50">
+            <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+              <button
+                onClick={() => navigate(-1)}
+                className="flex items-center gap-2 text-white hover:text-white/70 transition-colors font-semibold text-sm"
+              >
+                <ArrowLeft size={24} />
+                <span className="hidden sm:block">Back</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Profile Card Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 px-4 sm:px-6 md:px-12 pb-6">
+            <div className="max-w-[2520px] mx-auto">
+              <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 max-w-2xl">
+                {/* Avatar */}
+                <div className="relative shrink-0">
+                  <img
+                    src={hostInfo.image}
+                    alt={hostInfo.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover bg-neutral-100 ring-4 ring-white/30 shadow-lg"
+                  />
+                  <div className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 rounded-full border-[3px] border-white/40" />
+                </div>
+
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white font-display truncate">
+                      {hostInfo.name}
+                    </h1>
+                    <BadgeCheck size={22} className="text-[#2252D6] shrink-0" />
+                  </div>
+                  <div className="flex flex-col gap-1.5 mt-2">
+                    <p className="text-white/80 text-sm font-medium flex items-center gap-2">
+                      <Users size={14} />
+                      Landlord
+                    </p>
+                    {hostInfo.location && (
+                      <p className="text-white/80 text-sm font-medium flex items-center gap-2">
+                        <MapPin size={14} />
+                        {hostInfo.location}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-5 border-y border-neutral-100">
+        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6 md:py-8">
+          {/* Stats */}
+          <div className="bg-white rounded-2xl p-5 sm:p-6 mb-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-50">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               <div className="flex flex-col">
                 <span className="font-bold text-xl text-[#17294F]">{hostInfo.reviews}</span>
                 <span className="text-xs font-semibold text-neutral-400 mt-1 uppercase tracking-wider">Reviews</span>

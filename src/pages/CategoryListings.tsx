@@ -53,9 +53,10 @@ export default function CategoryListings() {
       <header className="sticky top-0 z-50 bg-white border-b border-neutral-100 px-4 py-4 md:px-12 flex items-center gap-4">
         <button 
           onClick={() => navigate(-1)}
-          className="p-2 -ml-2 md:ml-0 g-neutral-100 rounded-full transition"
+          className="flex items-center gap-2 -ml-2 md:ml-0 text-neutral-900 transition"
         >
           <ArrowLeft size={24} />
+          <span className="font-semibold text-sm hidden sm:block">Back</span>
         </button>
         <h1 className="text-xl md:text-2xl font-display font-bold">{title}</h1>
       </header>

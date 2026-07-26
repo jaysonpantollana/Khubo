@@ -383,10 +383,11 @@ export default function Maps() {
         <div className="hidden md:flex flex-1 justify-start">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 -ml-1 md:-ml-2 rounded-full g-neutral-100"
+            className="flex items-center gap-2 -ml-2 text-neutral-900 transition-colors"
             aria-label="Go back"
           >
-            <ArrowLeft size={24} className="text-neutral-900" />
+            <ArrowLeft size={24} />
+            <span className="font-semibold text-sm">Back</span>
           </button>
         </div>
 

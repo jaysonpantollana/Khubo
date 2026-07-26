@@ -8,6 +8,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, BadgeCheck, Users, MapPin } from 'lucide-react';
 import { Listing, HostInfo } from '../types';
 import { getListings } from '../lib/api/listings';
+import ListingCard from '../components/ListingCard';
 
 export default function LandlordProfile() {
   const { name } = useParams<{ name: string }>();
@@ -89,8 +90,8 @@ export default function LandlordProfile() {
               </div>
             </div>
             {/* Cards skeleton */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {[1, 2, 3].map((i) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+              {[1, 2, 3, 4, 5].map((i) => (
                 <div key={i} className="bg-white rounded-2xl overflow-hidden animate-pulse">
                   <div className="aspect-[4/3] bg-neutral-200" />
                   <div className="p-4 space-y-3">
@@ -212,53 +213,21 @@ export default function LandlordProfile() {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
               {listings.map((listing) => {
                 const tenantCount = tenantCounts[listing.id] || 0;
                 return (
-                  <div
-                    key={listing.id}
-                    onClick={() => navigate(`/listing/${listing.id}`)}
-                    className="cursor-pointer bg-white rounded-2xl overflow-hidden group border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow"
-                  >
-                    {/* Image */}
-                    <div className="aspect-[4/3] relative overflow-hidden">
-                      <img
-                        src={listing.image}
-                        alt={listing.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute top-2.5 right-2.5 px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded-full text-white text-[10px] font-bold">
-                        {listing.date}
-                      </div>
-                      {/* Tenant count badge */}
-                      <div className="absolute bottom-2.5 left-2.5 flex items-center gap-1.5 bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-full shadow-sm">
-                        <Users size={12} className="text-[#2252D6]" />
-                        <span className="text-[11px] font-bold text-[#17294F]">
-                          {tenantCount} {tenantCount === 1 ? 'tenant' : 'tenants'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Info */}
-                    <div className="p-4">
-                      <h4 className="font-bold text-[15px] text-[#17294F] truncate group-hover:text-[#2252D6] transition-colors">
-                        {listing.title}
-                      </h4>
-                      <p className="text-xs text-neutral-500 truncate mt-1">{listing.location}</p>
-
-                      <div className="flex items-center justify-between mt-3 pt-3 border-t border-neutral-50">
-                        <span className="font-bold text-[#17294F]">
-                          ₱{listing.price.toLocaleString()}
-                          <span className="text-neutral-400 font-normal text-xs">/month</span>
-                        </span>
-                        <div className="flex items-center gap-1">
-                          <Star size={12} className="fill-amber-400 text-amber-400" />
-                          <span className="text-xs font-bold text-neutral-700">{listing.rating.toFixed(2)}</span>
-                        </div>
-                      </div>
+                  <div key={listing.id} className="relative">
+                    <ListingCard
+                      listing={listing}
+                      onClick={() => navigate(`/listing/${listing.id}`)}
+                    />
+                    {/* Tenant count badge */}
+                    <div className="absolute bottom-5 left-5 z-10 flex items-center gap-1.5 bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-full shadow-sm border border-neutral-100">
+                      <Users size={12} className="text-[#2252D6]" />
+                      <span className="text-[11px] font-bold text-[#17294F]">
+                        {tenantCount} {tenantCount === 1 ? 'tenant' : 'tenants'}
+                      </span>
                     </div>
                   </div>
                 );

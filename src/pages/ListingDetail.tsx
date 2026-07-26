@@ -508,7 +508,10 @@ export default function ListingDetail() {
 
               {/* Landlord Profile */}
               <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-neutral-100">
-                <div className="flex items-center gap-3 mb-5">
+                <div
+                  onClick={() => navigate(`/landlord/profile/${encodeURIComponent(listing.host?.name || 'Layla M. Santos')}`)}
+                  className="flex items-center gap-3 mb-5 cursor-pointer hover:bg-neutral-50 -mx-2 px-2 py-1.5 rounded-xl transition-colors"
+                >
                   <img
                     src={listing.host?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Layla88'}
                     alt={listing.host?.name || 'Landlord'}

@@ -5,8 +5,14 @@
 // @dependencies: motion, lucide-react
 
 
-import { Edit2, GraduationCap, MapPin, X } from 'lucide-react';
+import { Edit2, GraduationCap, MapPin, Briefcase, Clock, X } from 'lucide-react';
 import { FocusTrap } from '../ui/FocusTrap';
+
+const occupationOptions = [
+  { value: 'student', label: 'Student', icon: GraduationCap },
+  { value: 'professional', label: 'Professional', icon: Briefcase },
+  { value: 'working-student', label: 'Working Student', icon: Clock },
+] as const;
 
 interface Props {
   isOpen: boolean;
@@ -16,19 +22,21 @@ interface Props {
   tempLocation: string;
   tempBio: string;
   tempIsOnline: boolean;
+  tempOccupation: string;
   onTempNameChange: (v: string) => void;
   onTempDetailsChange: (v: string) => void;
   onTempLocationChange: (v: string) => void;
   onTempBioChange: (v: string) => void;
   onTempIsOnlineChange: (v: boolean) => void;
+  onTempOccupationChange: (v: string) => void;
   onSave: () => void;
 }
 
 export default function EditProfileModal({
   isOpen, onClose,
-  tempName, tempDetails, tempLocation, tempBio, tempIsOnline,
+  tempName, tempDetails, tempLocation, tempBio, tempIsOnline, tempOccupation,
   onTempNameChange, onTempDetailsChange, onTempLocationChange, onTempBioChange,
-  onTempIsOnlineChange, onSave,
+  onTempIsOnlineChange, onTempOccupationChange, onSave,
 }: Props) {
   if (!isOpen) return null;
 
@@ -103,6 +111,24 @@ export default function EditProfileModal({
                 placeholder="e.g. Tibanga, Iligan City"
                 className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
               />
+            </div>
+          </div>
+
+          <div className="space-y-1.5 text-left">
+            <label className="text-xs font-bold text-[#17294F] uppercase tracking-wider block">Occupation</label>
+            <div className="relative">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400">
+                {occupationOptions.find(o => o.value === tempOccupation)?.icon({ size: 18 }) || <Briefcase size={18} />}
+              </div>
+              <select
+                value={tempOccupation}
+                onChange={(e) => onTempOccupationChange(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 focus:bg-white text-sm font-medium text-neutral-800 appearance-none cursor-pointer"
+              >
+                {occupationOptions.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
             </div>
           </div>
 

@@ -10,7 +10,7 @@ import { Listing, TenantInfo } from '../types';
 import {
   Megaphone, GraduationCap, MapPin, Edit2, ArrowUpRight, Star,
   Settings, LogOut, Bell, Building, Check, X,
-  MoreVertical, Users, MessageSquare,
+  MoreVertical, Users, MessageSquare, Briefcase, Clock,
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import Footer from '../components/Footer';
@@ -82,6 +82,25 @@ export default function Profile() {
     return ['Introvert', 'Pet-friendly', 'Night owl', 'Studious', 'Non-smoker'];
   });
 
+  const [profileOccupation, setProfileOccupation] = useState(() => {
+    return localStorage.getItem('user_occupation') || '';
+  });
+
+  const occupationLabel = useMemo(() => {
+    const labels: Record<string, string> = {
+      student: 'Student',
+      professional: 'Professional',
+      'working-student': 'Working Student',
+    };
+    return labels[profileOccupation] || '';
+  }, [profileOccupation]);
+
+  const occupationIcon = useMemo(() => {
+    if (profileOccupation === 'professional') return Briefcase;
+    if (profileOccupation === 'working-student') return Clock;
+    return GraduationCap;
+  }, [profileOccupation]);
+
   useEffect(() => {
     localStorage.setItem('user_profile_tags', JSON.stringify(profileTags));
   }, [profileTags]);
@@ -100,12 +119,14 @@ export default function Profile() {
   const [tempDetails, setTempDetails] = useState('');
   const [tempLocation, setTempLocation] = useState('');
   const [tempBio, setTempBio] = useState('');
+  const [tempOccupation, setTempOccupation] = useState('');
 
   const handleOpenEditProfile = () => {
     setTempName(profileName);
     setTempDetails(profileDetails);
     setTempLocation(profileLocation);
     setTempBio(profileBio);
+    setTempOccupation(profileOccupation);
     setTempIsOnline(isOnline);
     setIsEditProfileOpen(true);
   };
@@ -116,6 +137,8 @@ export default function Profile() {
     setProfileDetails(tempDetails);
     setProfileLocation(tempLocation);
     setProfileBio(tempBio);
+    setProfileOccupation(tempOccupation);
+    localStorage.setItem('user_occupation', tempOccupation);
     setIsOnline(tempIsOnline);
     setIsEditProfileOpen(false);
   };
@@ -299,10 +322,20 @@ export default function Profile() {
                     {profileName || 'Your Name'}
                   </h1>
                 </div>
+                <div className="flex items-center justify-center sm:justify-start gap-2 mt-2 text-sm text-white/90">
+                  <GraduationCap className="w-4 h-4 shrink-0 text-white" />
+                  <span>{isLandlord ? 'Landlord' : 'Tenant'}</span>
+                </div>
                 <div className="flex items-center justify-center sm:justify-start gap-2 mt-3 text-sm text-white/90">
                   <GraduationCap className="w-4 h-4 shrink-0 text-white" />
                   <span>{profileDetails}</span>
                 </div>
+                {occupationLabel && (
+                  <div className="flex items-center justify-center sm:justify-start gap-2 mt-1.5 text-sm text-white/90">
+                    {(() => { const Icon = occupationIcon; return <Icon className="w-4 h-4 shrink-0 text-white" />; })()}
+                    <span>{occupationLabel}</span>
+                  </div>
+                )}
                 <div className="flex items-center justify-center sm:justify-start gap-2 mt-1.5 text-sm text-white/90">
                   <MapPin className="w-4 h-4 shrink-0 text-white" />
                   <span>{profileLocation}</span>
@@ -870,11 +903,13 @@ export default function Profile() {
         tempLocation={tempLocation}
         tempBio={tempBio}
         tempIsOnline={tempIsOnline}
+        tempOccupation={tempOccupation}
         onTempNameChange={setTempName}
         onTempDetailsChange={setTempDetails}
         onTempLocationChange={setTempLocation}
         onTempBioChange={setTempBio}
         onTempIsOnlineChange={setTempIsOnline}
+        onTempOccupationChange={setTempOccupation}
         onSave={handleSaveProfile}
       />
 

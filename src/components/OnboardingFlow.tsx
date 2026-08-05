@@ -121,6 +121,9 @@ export function OnboardingFlow({ isOpen, onClose, onComplete }: OnboardingFlowPr
   };
 
   const handleFlowComplete = () => {
+    if (data.occupation) {
+      localStorage.setItem('user_occupation', data.occupation);
+    }
     onComplete();
     onClose();
     setStep(1);

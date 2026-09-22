@@ -271,7 +271,7 @@ export default function RoommateFinder() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] pb-32">
+    <div className="min-h-screen bg-[#F9F9F9] pb-40">
       <RoommateHero
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

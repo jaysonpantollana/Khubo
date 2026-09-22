@@ -25,7 +25,7 @@ export default function BottomNav() {
       className="fixed bottom-[calc(12px+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-50 pointer-events-none"
     >
       <nav
-        className="inline-flex items-center bg-[#000000]/35 backdrop-blur-xl border border-white/10 rounded-full px-5 py-2 sm:px-8 sm:py-2.5 md:px-7 md:py-2 gap-x-5 sm:gap-x-8 md:gap-x-7 pointer-events-auto"
+        className="inline-flex items-center bg-[#000000]/50 backdrop-blur-xl border border-white/10 rounded-full px-5 py-2 sm:px-8 sm:py-2.5 md:px-7 md:py-2 gap-x-5 sm:gap-x-8 md:gap-x-7 pointer-events-auto"
       >
         {items.map((item, idx) => {
           const isActive = location.pathname === item.path || (item.path === '/' && location.pathname === '') || (item.path !== '/' && location.pathname.startsWith(item.path));

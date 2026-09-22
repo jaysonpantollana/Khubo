@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#F7F7F7] border-t border-neutral-200 py-12 md:py-16 md:pb-16 pb-28">
+    <footer className="bg-[#F7F7F7] border-t border-neutral-200 py-12 md:py-16">
       <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4">
         
         {/* Links Grid / Accordion */}

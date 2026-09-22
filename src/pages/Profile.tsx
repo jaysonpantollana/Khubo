@@ -278,7 +278,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] pb-32 transition-colors duration-300">
+    <div className="min-h-screen bg-[#F9F9F9] pb-40 transition-colors duration-300">
       {/* Hero Section */}
       <div className="relative min-h-[360px] md:min-h-[500px] w-full bg-black flex flex-col justify-end">
         <div

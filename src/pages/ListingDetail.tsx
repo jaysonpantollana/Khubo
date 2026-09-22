@@ -139,7 +139,7 @@ export default function ListingDetail() {
     : undefined;
 
   return (
-    <div className="min-h-screen bg-neutral-50 md:bg-white pb-32 text-neutral-900">
+    <div className="min-h-screen bg-neutral-50 md:bg-white pb-40 text-neutral-900">
       {/* Desktop Header */}
       <div className="hidden md:block sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 h-16 flex items-center justify-between">

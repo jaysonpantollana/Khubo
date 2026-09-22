@@ -61,7 +61,7 @@ export default function CategoryListings() {
         <h1 className="text-xl md:text-2xl font-display font-bold">{title}</h1>
       </header>
 
-      <main className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 pt-8 pb-32">
+      <main className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 pt-8 pb-40">
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
             {Array.from({ length: 12 }).map((_, i) => (

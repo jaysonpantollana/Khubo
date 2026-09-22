@@ -71,7 +71,7 @@ export default function Hero({
     >
       <div className="absolute inset-0 bg-black/40 z-0" />
 
-      <div className="relative flex flex-col min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:min-h-[520px]">
+      <div className="relative flex flex-col min-h-[280px] sm:min-h-[360px] md:min-h-[420px] lg:min-h-[480px]">
         {/* Top bar — logo and announcements */}
         <div
           className="relative z-10 flex items-center justify-between py-5 sm:py-6"
@@ -104,7 +104,7 @@ export default function Hero({
           <div className="flex-1 flex flex-col items-center justify-center text-center">
           <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-2 sm:gap-x-4 md:gap-x-6 text-white w-full px-2">
             <span
-              className="font-noto-serif italic opacity-80 break-words"
+              className="font-noto-serif opacity-80 break-words sm:italic"
               style={{
                 fontSize: "clamp(0.95rem, 4vw, 2.2rem)",
                 letterSpacing: "clamp(0.05em, 1.5vw, 0.3em)",

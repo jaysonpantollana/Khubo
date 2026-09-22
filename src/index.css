@@ -23,6 +23,8 @@
   --radius-button: 0.5rem;
   --radius-input: 0.5rem;
   --radius-dropdown: 0.75rem;
+
+  --bottom-nav-height: 5rem;
 }
 
 @layer base {

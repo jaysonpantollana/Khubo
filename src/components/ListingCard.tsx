@@ -116,9 +116,9 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
                <div className="font-display font-extrabold text-[#17294F] text-[14px] sm:text-[17px]">P{listing.price}</div>
                <div className="text-[9px] sm:text-[11px] text-gray-500 font-medium">/month</div>
             </div>
-            <div className="flex items-center gap-0.5">
-              <Star size={10} className="fill-amber-400 text-amber-400 sm:w-[13px] sm:h-[13px]" />
-              <span className="text-[11px] sm:text-[13px] font-bold text-gray-700">{listing.rating.toFixed(2)}</span>
+            <div className="flex items-center gap-1">
+              <Star size={14} className="fill-amber-400 text-amber-400" />
+              <span className="text-[13px] sm:text-[15px] font-bold text-gray-700">{listing.rating.toFixed(2)}</span>
             </div>
           </div>
           

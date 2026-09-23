@@ -17,7 +17,7 @@
 // @error-codes: ERR_UPDATE_NOT_FOUND — listing to update not found (listings.ts returns 'Listing not found')
 // @error-codes: ERR_RENDER_PURITY — Math.random() called during render (known issue)
 //
-// @migration-history: v0.0.0 — Initial scaffold (Staybnb → Khubo rename, mock data, React 19, Vite 6)
+// @migration-history: v0.0.0 — Initial scaffold (Staybnb → CITADEL rename, mock data, React 19, Vite 6)
 
 export interface Listing {
   id: string;

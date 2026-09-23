@@ -102,8 +102,8 @@ export default function RoommateHero({
           className="flex items-center justify-center overflow-hidden flex-shrink-0 w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           <img 
-            src="/khubo Logo.png" 
-            alt="Khubo Logo" 
+            src="/citadel Logo.png" 
+            alt="CITADEL Logo" 
             fetchPriority="high"
             className="w-full h-full object-contain"
             referrerPolicy="no-referrer"
@@ -129,7 +129,7 @@ export default function RoommateHero({
               The Smarter Way to Share
             </h1>
             <p className="text-white/70 font-roboto font-bold text-[9px] sm:text-[10px] md:text-base tracking-[0.15em] sm:tracking-[0.3em] uppercase">
-              by <span className="text-white">KHUBO</span>
+              by <span className="text-white">CITADEL</span>
             </p>
           </div>
 

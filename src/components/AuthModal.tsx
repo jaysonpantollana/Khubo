@@ -50,7 +50,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
       signIn(email);
       if (onLogin) onLogin();
       onClose();
-      showToast('Hey there! Thanks for choosing Khubo!');
+      showToast('Hey there! Thanks for choosing CITADEL!');
     }, 1000);
   };
 
@@ -157,7 +157,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
         isOpen={true}
         onClose={() => { setShowOnboarding(false); onClose(); }}
         onComplete={() => {
-          showToast('Welcome to Khubo! Your profile has been created.');
+          showToast('Welcome to CITADEL! Your profile has been created.');
           setShowOnboarding(false);
           onClose();
         }}

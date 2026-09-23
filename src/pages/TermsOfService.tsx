@@ -6,7 +6,7 @@ export default function TermsOfService() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'Terms of Service | Khubo';
+    document.title = 'Terms of Service | CITADEL';
   }, []);
 
   return (
@@ -26,14 +26,14 @@ export default function TermsOfService() {
         <section className="mb-6">
           <h2 className="text-base font-bold mb-2">1. Acceptance of Terms</h2>
           <p className="text-sm text-neutral-700 leading-relaxed">
-            By accessing or using Khubo ("the App"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the App.
+            By accessing or using CITADEL ("the App"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the App.
           </p>
         </section>
 
         <section className="mb-6">
           <h2 className="text-base font-bold mb-2">2. Description of Service</h2>
           <p className="text-sm text-neutral-700 leading-relaxed">
-            Khubo is a platform that connects tenants with landlords for room and apartment rentals. The App provides search, listing, messaging, and booking features.
+            CITADEL is a platform that connects tenants with landlords for room and apartment rentals. The App provides search, listing, messaging, and booking features.
           </p>
         </section>
 
@@ -54,21 +54,21 @@ export default function TermsOfService() {
         <section className="mb-6">
           <h2 className="text-base font-bold mb-2">5. Listings and Transactions</h2>
           <p className="text-sm text-neutral-700 leading-relaxed">
-            Khubo is not a party to any rental agreement between tenants and landlords. We do not guarantee the accuracy of listings or the conduct of users. All transactions are between users.
+            CITADEL is not a party to any rental agreement between tenants and landlords. We do not guarantee the accuracy of listings or the conduct of users. All transactions are between users.
           </p>
         </section>
 
         <section className="mb-6">
           <h2 className="text-base font-bold mb-2">6. Intellectual Property</h2>
           <p className="text-sm text-neutral-700 leading-relaxed">
-            All content, trademarks, and materials in the App are owned by Khubo or its licensors. You may not copy, modify, or distribute any content without prior written consent.
+            All content, trademarks, and materials in the App are owned by CITADEL or its licensors. You may not copy, modify, or distribute any content without prior written consent.
           </p>
         </section>
 
         <section className="mb-6">
           <h2 className="text-base font-bold mb-2">7. Limitation of Liability</h2>
           <p className="text-sm text-neutral-700 leading-relaxed">
-            Khubo is provided "as is" without warranties. We are not liable for any damages arising from your use of the App, including but not limited to loss of data or property.
+            CITADEL is provided "as is" without warranties. We are not liable for any damages arising from your use of the App, including but not limited to loss of data or property.
           </p>
         </section>
 
@@ -89,7 +89,7 @@ export default function TermsOfService() {
         <section className="mb-6">
           <h2 className="text-base font-bold mb-2">10. Contact Us</h2>
           <p className="text-sm text-neutral-700 leading-relaxed">
-            For questions about these Terms, please contact us at support@khubo.com.
+            For questions about these Terms, please contact us at support@citadel.com.
           </p>
         </section>
       </div>

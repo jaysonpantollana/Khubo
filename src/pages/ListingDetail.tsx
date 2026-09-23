@@ -34,7 +34,7 @@ export default function ListingDetail() {
 
   useEffect(() => {
     if (listing) {
-      document.title = `${listing.title} | Khubo`;
+      document.title = `${listing.title} | CITADEL`;
     }
   }, [listing]);
 
@@ -541,10 +541,10 @@ export default function ListingDetail() {
                     </div>
                     <div className="flex items-center gap-2 p-2 bg-neutral-50 rounded-lg">
                       <Mail size={16} className="text-[#17294F]" />
-                      <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
+                      <span className="text-sm font-bold text-[#17294F] flex-1">layla@citadel.com</span>
                       <button
-                        onClick={() => requireAuth(() => copyToClipboard('layla@khubo.com', 'Email'))}
-                        className="p-1.5 bg-neutral-200 rounded-lg transition-colors text-neutral-500 text-[#17294F]"
+                        onClick={() => requireAuth(() => copyToClipboard('layla@citadel.com', 'Email'))}
+                        className="p-1.5 bg-neutral-200 rounded-lg transition-colors text-[#17294F]"
                       >
                         {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                       </button>

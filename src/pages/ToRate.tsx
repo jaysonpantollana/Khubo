@@ -83,7 +83,7 @@ export default function ToRate() {
   const realAvatarUrl = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200';
 
   useEffect(() => {
-    document.title = 'To Rate | Khubo';
+    document.title = 'To Rate | CITADEL';
   }, []);
 
   const handleRatingChange = (propertyId: string, value: number) => {

@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
       args:
         - VITE_MAPTILER_API_KEY=${VITE_MAPTILER_API_KEY:-}
-    container_name: khubo
+    container_name: citadel
     restart: unless-stopped
     ports:
       - "8080:80"

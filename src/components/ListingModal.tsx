@@ -125,7 +125,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
               <span className="text-sm font-bold text-[#17294F] flex-1">+63 912 345 6789</span>
               <button
                 onClick={() => copyToClipboard('+639123456789', 'Phone')}
-                className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
+                className="p-1.5 bg-neutral-200 rounded-lg transition-colors text-[#17294F]"
               >
                 {copiedContact === 'Phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
               </button>
@@ -134,10 +134,10 @@ export const ListingModal: React.FC<ListingModalProps> = ({
               <div className="w-8 h-8 rounded-full bg-[#17294F]/10 flex items-center justify-center">
                 <Mail size={14} className="text-[#17294F]" />
               </div>
-              <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
+              <span className="text-sm font-bold text-[#17294F] flex-1">layla@citadel.com</span>
               <button
-                onClick={() => copyToClipboard('layla@khubo.com', 'Email')}
-                className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
+                onClick={() => copyToClipboard('layla@citadel.com', 'Email')}
+                className="p-1.5 bg-neutral-200 rounded-lg transition-colors text-[#17294F]"
               >
                 {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
               </button>

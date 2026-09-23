@@ -46,7 +46,7 @@ export default function Profile() {
   const [selectedTenants, setSelectedTenants] = useState<TenantInfo[]>([]);
 
   useEffect(() => {
-    document.title = "Profile | Khubo";
+    document.title = "Profile | CITADEL";
   }, []);
 
   const menuItems = [

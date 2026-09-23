@@ -16,7 +16,7 @@ interface AnnouncementsOverlayProps {
 const MOCK_ANNOUNCEMENTS = [
   {
     id: 1,
-    title: "Welcome to Khubo!",
+    title: "Welcome to CITADEL!",
     message: "We are excited to have you on board. Start exploring properties today.",
     date: "2026-06-01",
     isNew: true

@@ -70,7 +70,7 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
             </p>
             <h2 className="text-2xl font-bold text-[#17294F]">Thank You!</h2>
             <p className="text-sm text-neutral-500 font-medium mt-1">
-              You're now part of the Khubo community.
+              You're now part of the CITADEL community.
             </p>
           </div>
 
@@ -80,9 +80,9 @@ function AlmostDoneStep({ onBack, onClose, onComplete }: { onBack?: () => void; 
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <p className="text-base font-bold text-[#17294F] mb-2">Welcome to Khubo!</p>
+            <p className="text-base font-bold text-[#17294F] mb-2">Welcome to CITADEL!</p>
             <p className="text-sm text-neutral-500 font-medium max-w-md leading-relaxed">
-              Thank you for choosing Khubo and for taking the time to complete your profile.
+              Thank you for choosing CITADEL and for taking the time to complete your profile.
               We're excited to have you on board! Start exploring properties and find your perfect roommate today.
             </p>
           </div>

@@ -1,8 +1,8 @@
 <div align="center">
 
-![Khubo Home Page](public/homepage-screenshot.png)
+![CITADEL Home Page](public/homepage-screenshot.png)
 
-# KHUBO
+# CITADEL
 
 **Accommodation & Roommate Finder Platform**
 
@@ -83,7 +83,7 @@ Built with React 19, TypeScript 5.8, Tailwind CSS 4.1, and Vite 6.2.
 
    ```bash
    git clone <repository-url>
-   cd khubo
+   cd CITADEL
    ```
 
 2. **Install dependencies**
@@ -197,7 +197,7 @@ docker compose up --build
 ## Project Structure
 
 ```
-khubo/
+CITADEL/
 ├── public/                        # Static assets
 ├── src/
 │   ├── components/               # Reusable UI components

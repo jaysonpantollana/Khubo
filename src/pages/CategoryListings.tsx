@@ -17,7 +17,7 @@ export default function CategoryListings() {
   const { listings: LISTINGS, loading } = useListings();
 
   useEffect(() => {
-    document.title = `${categoryId ? categoryId.charAt(0).toUpperCase() + categoryId.slice(1).replace('-', ' ') : 'Category'} | Khubo`;
+    document.title = `${categoryId ? categoryId.charAt(0).toUpperCase() + categoryId.slice(1).replace('-', ' ') : 'Category'} | CITADEL`;
   }, [categoryId]);
 
   const filteredListings = useMemo(() => {

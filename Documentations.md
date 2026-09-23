@@ -1,4 +1,4 @@
-# Khubo — Comprehensive Project Documentation
+# CITADEL — Comprehensive Project Documentation
 
 **Accommodation & Roommate Finder Platform for Iligan City, Philippines**
 
@@ -38,7 +38,7 @@
 
 ## 1. Project Overview
 
-**Khubo** is a full-featured web application designed to help users in Iligan City, Philippines find short-term accommodations, long-term rentals, and compatible roommates. The platform serves three user roles:
+**CITADEL** is a full-featured web application designed to help users in Iligan City, Philippines find short-term accommodations, long-term rentals, and compatible roommates. The platform serves three user roles:
 
 - **Travelers/Renters**: Browse and filter property listings, view detailed property information, interact with maps, and contact landlords.
 - **Roommate Seekers**: Find compatible roommates based on university, budget, location, and lifestyle preferences. Create and manage roommate posts.
@@ -201,9 +201,9 @@ Specific flows:
 ## 4. Project Structure
 
 ```
-khubo/
+CITADEL/
 ├── public/                          # Static assets
-│   ├── khubo Logo.png              # App favicon/logo
+│   ├── citadel Logo.png              # App favicon/logo
 │   ├── homepage-screenshot.png     # OG image
 │   ├── bg_1.png, bg_2.png, bg_3.png # Background images
 │
@@ -611,7 +611,7 @@ Static legal page with 10 numbered sections:
 7. Limitation of Liability
 8. Termination
 9. Changes to Terms
-10. Contact Us (support@khubo.com)
+10. Contact Us (support@citadel.com)
 
 ### 6.13 Privacy Policy Page (`src/pages/PrivacyPolicy.tsx` — 91 lines)
 
@@ -624,7 +624,7 @@ Static legal page with 9 numbered sections:
 6. Cookies and Tracking
 7. Children's Privacy
 8. Changes to This Policy
-9. Contact Us (privacy@khubo.com)
+9. Contact Us (privacy@citadel.com)
 
 ---
 
@@ -820,7 +820,7 @@ interface MockSession { user: MockUser; }
 **Behavior:**
 - `signIn(email)`: Sets mock user with provided email
 - `signOut()`: Clears session and user to null
-- Auto-signs in `demo@khubo.ph` on mount
+- Auto-signs in `demo@citadel.ph` on mount
 
 ### ThemeContext (`src/lib/ThemeContext.tsx`)
 
@@ -835,7 +835,7 @@ interface ThemeContextType {
 
 **Behavior:**
 - Toggles `dark` class on `document.documentElement`
-- Stores preference in localStorage key `khubo-theme`
+- Stores preference in localStorage key `citadel-theme`
 - Default: system preference, fallback to light
 
 ### LandlordContext (`src/lib/LandlordContext.tsx`)
@@ -1230,7 +1230,7 @@ resetMapPreload(): void                                   // Reset for next cycl
 | Context | State | Persistence |
 |---|---|---|
 | `AuthContext` | user, session, isLoading | None (in-memory) |
-| `ThemeContext` | theme | localStorage (`khubo-theme`) |
+| `ThemeContext` | theme | localStorage (`citadel-theme`) |
 | `LandlordContext` | isLandlord | None (in-memory) |
 | `ToastContext` | toasts[] | None (in-memory) |
 
@@ -1247,7 +1247,7 @@ Most components use `useState` and `useReducer` for local state. Key patterns:
 
 | Key | Type | Purpose |
 |---|---|---|
-| `khubo-theme` | `'light' \| 'dark'` | Theme preference |
+| `citadel-theme` | `'light' \| 'dark'` | Theme preference |
 | `home_search_history` | `string[]` | Recent search queries (max 5) |
 | `user_profile_name` | `string` | User's display name |
 | `user_profile_tags` | `string[]` | User's personality tags |
@@ -1300,7 +1300,7 @@ npm run test:watch  # Run tests in watch mode (vitest)
 
 ### `package.json`
 
-- **Name**: khubo
+- **Name**: CITADEL
 - **Version**: 0.0.0
 - **Type**: ES modules
 - **Scripts**: dev, build, preview, test, test:watch, clean, lint, lint:eslint, typecheck, format
@@ -1325,7 +1325,7 @@ npm run test:watch  # Run tests in watch mode (vitest)
 ### `tailwind.config.ts`
 
 - **Dark mode**: Class-based (`'class'`)
-- **Custom colors**: primary, accent, khubo, semantic, neutral
+- **Custom colors**: primary, accent, CITADEL, semantic, neutral
 - **Custom shadows**: card, card-hover, dropdown, modal, toast, focus
 - **Custom z-index scale**: dropdown (100) through toast (700)
 - **Safelist**: Primary/accent/semantic color utilities
@@ -1365,7 +1365,7 @@ services:
       dockerfile: Dockerfile
       args:
         - VITE_MAPTILER_API_KEY=${VITE_MAPTILER_API_KEY:-}
-    container_name: khubo
+    container_name: citadel
     restart: unless-stopped
     ports:
       - "8080:80"

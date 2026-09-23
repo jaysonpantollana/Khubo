@@ -60,7 +60,7 @@ export default function Maps() {
   ];
 
   useEffect(() => {
-    document.title = "Maps | Khubo";
+    document.title = "Maps | CITADEL";
   }, []);
 
   const hasSelections = selectedLocation || selectedBudget;

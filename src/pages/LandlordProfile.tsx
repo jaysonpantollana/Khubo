@@ -18,7 +18,7 @@ export default function LandlordProfile() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    document.title = name ? `${decodeURIComponent(name)} | Khubo` : 'Landlord | Khubo';
+    document.title = name ? `${decodeURIComponent(name)} | CITADEL` : 'Landlord | CITADEL';
   }, [name]);
 
   useEffect(() => {

@@ -89,7 +89,7 @@ export default function LandlordProperties() {
   const [editListing, setEditListing] = useState<Listing | null>(null);
 
   useEffect(() => {
-    document.title = "Properties | Khubo";
+    document.title = "Properties | CITADEL";
   }, []);
 
   const fetchMyListings = useCallback(async () => {

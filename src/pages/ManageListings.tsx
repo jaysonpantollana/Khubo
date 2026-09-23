@@ -17,7 +17,7 @@ export default function ManageListings() {
   const [listings, setListings] = useState<Listing[]>([]);
 
   useEffect(() => {
-    document.title = "Manage Listings | Khubo";
+    document.title = "Manage Listings | CITADEL";
   }, []);
   const [loading, setLoading] = useState(true);
   const [editingListing, setEditingListing] = useState<Listing | null>(null);

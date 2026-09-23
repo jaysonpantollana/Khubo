@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'Privacy Policy | Khubo';
+    document.title = 'Privacy Policy | CITADEL';
   }, []);
 
   return (
@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
         <section className="mb-6">
           <h2 className="text-base font-bold mb-2">9. Contact Us</h2>
           <p className="text-sm text-neutral-700 leading-relaxed">
-            If you have questions about this Privacy Policy, please contact us at privacy@khubo.com.
+            If you have questions about this Privacy Policy, please contact us at privacy@citadel.com.
           </p>
         </section>
       </div>

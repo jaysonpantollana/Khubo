@@ -107,7 +107,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
             <div>
               <p className="text-sm font-bold text-amber-800">Why do we ask for this?</p>
               <p className="text-xs text-amber-700/90 mt-0.5 leading-relaxed">
-                Khubo verifies real users to protect both tenants and landlords. Your ID is only
+                CITADEL verifies real users to protect both tenants and landlords. Your ID is only
                 used for one-time verification and is never shared publicly.
               </p>
             </div>
@@ -142,8 +142,8 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                       className="absolute top-2 right-2"
                     >
                       <img
-                        src="/khubo Logo.png"
-                        alt="Khubo"
+                        src="/citadel Logo.png"
+                        alt="CITADEL"
                         className="w-5 h-5 object-contain"
                       />
                     </motion.div>

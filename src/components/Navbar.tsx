@@ -1,5 +1,5 @@
 // @context: Top navigation bar — logo, search, user menu, notifications
-// @purpose: Main navigation with logo link, "Khubo your home" CTA, notifications bell, user profile menu
+// @purpose: Main navigation with logo link, "CITADEL your home" CTA, notifications bell, user profile menu
 // @behavior: Click-outside to close user menu dropdown; AuthModal for unauthenticated users
 // @behavior: Notifications bell shows unread count and opens NotificationDialog via ToastProvider
 // @behavior: User menu shows profile link, notifications, and logout options
@@ -35,7 +35,7 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleKhuboYourHome = () => {
+  const handleCITADELYourHome = () => {
     if (!user) {
       setIsAuthModalOpen(true);
     } else {
@@ -51,7 +51,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            aria-label="Khubo Home"
+            aria-label="CITADEL Home"
             className="flex items-center gap-1 text-[#17294F] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] rounded-lg px-2"
           >
             <svg
@@ -64,7 +64,7 @@ export default function Navbar() {
             >
               <path d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.01.415.001.228c0 4.062-2.877 6.478-6.357 6.478-2.224 0-4.556-1.258-6.709-3.386l-.257-.26-.172-.179h-.011l-.176.185c-2.044 2.1-4.392 3.42-6.72 3.42-3.481 0-6.358-2.416-6.358-6.478 0-4.062 2.877-6.478 6.358-6.478.435 0 .867.042 1.288.125l.443.096c1.378.328 2.628 1.157 3.593 2.139l.257.27.172.179c.143-.146.12-.132.176-.185 1.144-1.168 2.39-2.003 3.69-2.457l.519-.168c.452-.128.917-.193 1.393-.193.18 0 .363.01.547.03h.011c2.252 0 4.095 1.843 4.095 4.095 0 2.253-1.843 4.096-4.095 4.096.184 0 .367.01.551.03l.011.002.547.03c.476 0 .941-.065 1.393-.193l.519-.168c1.3-.454 2.546-1.29 3.69-2.457.054-.053.033-.039.176-.185l.172.179.257.27c.965.982 2.215 1.811 3.593 2.139l.443.096c.421.083.853.125 1.288.125 3.481 0 6.358-2.416 6.358-6.478 0-4.062-2.877-6.478-6.358-6.478-2.328 0-4.676 1.32-6.72 3.42l-.176.185h-.011l-.172-.179-.257-.26c-2.153-2.128-4.485-3.386-6.709-3.386-3.48 0-6.357-2.416-6.357-6.478l.001-.228c.005-.142.008-.283.01-.415.05-.924.293-1.805.96-3.396l.145-.353c.986-2.296 5.146-11.006 7.1-14.836l.533-1.025C12.537 1.963 13.992 1 16 1z" />
             </svg>
-            <span className="hidden lg:block font-extrabold text-2xl tracking-tighter">khubo</span>
+            <span className="hidden lg:block font-extrabold text-2xl tracking-tighter">CITADEL</span>
           </Link>
 
           {/* Search Bar */}
@@ -87,10 +87,10 @@ export default function Navbar() {
           {/* User Menu */}
           <div className="flex flex-row items-center gap-3 relative" ref={menuRef}>
             <button
-              onClick={handleKhuboYourHome}
+              onClick={handleCITADELYourHome}
               className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full g-neutral-100 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
-              Khubo your home
+              CITADEL your home
             </button>
             <button
               onClick={openNotifications}
@@ -143,10 +143,10 @@ export default function Navbar() {
                       </div>
                       <div className="py-2 border-t border-neutral-100">
                         <button 
-                          onClick={handleKhuboYourHome}
+                          onClick={handleCITADELYourHome}
                           className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
                         >
-                          Khubo your home
+                          CITADEL your home
                         </button>
                         <Link to="/manage-listings" className="block w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition" onClick={() => setIsMenuOpen(false)}>
                           Manage listings
@@ -187,10 +187,10 @@ export default function Navbar() {
                       </button>
                       <div className="my-2 border-t border-neutral-100"></div>
                       <button 
-                        onClick={handleKhuboYourHome}
+                        onClick={handleCITADELYourHome}
                         className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
                       >
-                        Khubo your home
+                        CITADEL your home
                       </button>
                       <button className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition">
                         Help
@@ -212,7 +212,7 @@ export default function Navbar() {
         isOpen={isOnboardingOpen}
         onClose={() => setIsOnboardingOpen(false)}
         onComplete={() => {
-          showToast('Welcome to Khubo! Your profile has been created.');
+          showToast('Welcome to CITADEL! Your profile has been created.');
         }}
       />
       <CreateListingModal 

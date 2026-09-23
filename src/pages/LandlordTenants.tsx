@@ -42,7 +42,7 @@ export default function LandlordTenants() {
   };
 
   useEffect(() => {
-    document.title = "Tenants | Khubo";
+    document.title = "Tenants | CITADEL";
   }, []);
 
   const allPropertyTags = [...new Set([...propertyTags, ...additionalProperties])];

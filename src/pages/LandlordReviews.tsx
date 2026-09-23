@@ -95,7 +95,7 @@ export default function LandlordReviews() {
   const [confirmDelete, setConfirmDelete] = useState<{ listingId: string; reviewId: string; reviewName: string } | null>(null);
 
   useEffect(() => {
-    document.title = "Reviews | Khubo";
+    document.title = "Reviews | CITADEL";
   }, []);
 
   const fetchMyListings = useCallback(async () => {

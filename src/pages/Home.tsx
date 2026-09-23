@@ -30,7 +30,7 @@ export default function Home() {
   const [selectedStickyBudget, setSelectedStickyBudget] = useState<string | null>(null);
 
   React.useEffect(() => {
-    document.title = "Home | Khubo";
+    document.title = "Home | CITADEL";
   }, []);
 
   React.useEffect(() => {

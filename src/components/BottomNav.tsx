@@ -1,8 +1,8 @@
 // @context: Bottom navigation bar — fixed mobile navigation
-// @purpose: Four-tab bottom nav (Home, Roommate, Maps, Profile) with active state
+// @purpose: Three-tab bottom nav (Home, Maps, Profile) with active state
 // @dependencies: react-router-dom, lucide-react, useAuth
 
-import { Home, Users, Map, User } from 'lucide-react';
+import { Home, Map, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useIsAnyModalOpen } from '../hooks/useIsAnyModalOpen';
 
@@ -13,7 +13,6 @@ export default function BottomNav() {
 
   const items = [
     { icon: Home, label: 'Home', path: '/' },
-    { icon: Users, label: 'Roommate', path: '/roommate' },
     { icon: Map, label: 'Maps', path: '/maps' },
     { icon: User, label: 'Profile', path: '/profile' },
   ];

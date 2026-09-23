@@ -1,6 +1,6 @@
 // @context: App root — routing and global layout
 // @purpose: HashRouter with lazy-loaded routes for all pages; wraps app in providers (Auth, Theme, Toast, ErrorBoundary)
-// @behavior: Route definitions for /, /category/:categoryId, /listing/:id, /maps, /profile, /manage-listings, /roommate
+// @behavior: Route definitions for /, /category/:categoryId, /listing/:id, /maps, /profile, /manage-listings
 // @dependencies: react-router-dom, AuthProvider, ThemeProvider, ToastProvider, ErrorBoundary, ScrollToTop
 //
 // @adr: ADR-001 — HashRouter over BrowserRouter: chosen for static hosting without server URL rewriting
@@ -11,7 +11,6 @@
 // @dataflow: User Action → Route Match → Lazy Load Page → Hook Fetch → API Layer → Mock Data → Render
 // @dataflow: Listing Search: Home.tsx → useListings({search, category}) → getListings() → MOCK_LISTINGS.filter() → ListingCard[]
 // @dataflow: Auth Flow: AuthModal → AuthContext.signIn(email) → {user, session} → Conditional UI render
-// @dataflow: Roommate Search: RoommateFinder → client-side filter → RoommateCard[]
 // @dataflow: Map View: Maps.tsx → MapTilerView with markers from mock listing coordinates
 // @dataflow: Booking: ListingCard → ListingModal → DateScrollPicker → Toast notification (no real booking)
 //
@@ -43,7 +42,6 @@ const Home = lazy(() => import('./pages/Home'));
 const ListingDetail = lazy(() => import('./pages/ListingDetail'));
 const CategoryListings = lazy(() => import('./pages/CategoryListings'));
 const Maps = lazy(() => import('./pages/Maps'));
-const RoommateFinder = lazy(() => import('./pages/RoommateFinder'));
 const Profile = lazy(() => import('./pages/Profile'));
 const ManageListings = lazy(() => import('./pages/ManageListings'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
@@ -89,7 +87,6 @@ export default function App() {
                       <Route path="/listing/:id" element={<ListingDetail />} />
                       <Route path="/category/:categoryId" element={<CategoryListings />} />
                       <Route path="/maps" element={<Maps />} />
-                      <Route path="/roommate" element={<RoommateFinder />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/landlord/properties" element={<LandlordProperties />} />
                       <Route path="/landlord/tenants" element={<LandlordTenants />} />

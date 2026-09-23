@@ -531,10 +531,10 @@ export default function ListingDetail() {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 p-2 bg-neutral-50 rounded-lg">
                       <Phone size={16} className="text-[#17294F]" />
-                      <span className="text-sm font-bold text-[#17294F] flex-1">+63 912 345 6789</span>
+                      <span className="text-sm font-bold text-[#17294F] flex-1 cursor-pointer" onClick={() => requireAuth(() => { window.location.href = 'tel:+639123456789'; })}>+63 912 345 6789</span>
                       <button
                         onClick={() => requireAuth(() => copyToClipboard('+639123456789', 'Phone'))}
-                        className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
+                        className="p-1.5 bg-neutral-200 rounded-lg transition-colors text-neutral-500 text-[#17294F]"
                       >
                         {copiedContact === 'Phone' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                       </button>
@@ -544,7 +544,7 @@ export default function ListingDetail() {
                       <span className="text-sm font-bold text-[#17294F] flex-1">layla@khubo.com</span>
                       <button
                         onClick={() => requireAuth(() => copyToClipboard('layla@khubo.com', 'Email'))}
-                        className="p-1.5 g-neutral-200 rounded-lg transition-colors text-neutral-500 ext-[#17294F]"
+                        className="p-1.5 bg-neutral-200 rounded-lg transition-colors text-neutral-500 text-[#17294F]"
                       >
                         {copiedContact === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                       </button>

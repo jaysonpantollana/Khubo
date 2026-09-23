@@ -66,9 +66,10 @@ export default function Hero({
 
   return (
     <div
-      className="relative w-full bg-cover bg-center overflow-hidden"
+      className="relative w-full bg-cover bg-center"
       style={{ backgroundImage: "url('/bg_1.webp')" }}
     >
+      {/* ponytail: no overflow-hidden on this root — it clipped the open dropdown at the hero's bottom edge */}
       <div className="absolute inset-0 bg-black/40 z-0" />
 
       <div className="relative flex flex-col min-h-[280px] sm:min-h-[360px] md:min-h-[420px] lg:min-h-[480px]">
@@ -100,7 +101,7 @@ export default function Hero({
         </div>
 
         {/* Heading + search bar */}
-        <div className="relative z-10 max-w-[2520px] mx-auto flex-1 flex flex-col px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
+        {/* ponytail: z-[60] beats sticky bar z-40 and BottomNav z-50 so the open search dropdown renders in front */}        <div className="relative z-[60] max-w-[2520px] mx-auto flex-1 flex flex-col px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
           <div className="flex-1 flex flex-col items-center justify-center text-center">
           <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-2 sm:gap-x-4 md:gap-x-6 text-white w-full px-2">
             <span

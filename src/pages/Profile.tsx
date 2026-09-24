@@ -345,7 +345,7 @@ export default function Profile() {
             {!isLandlord && (
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2">
                 {profileTags.map(tag => (
-                  <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-transparent text-white bg-white/10 transition cursor-default group relative">
+                  <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-base md:text-xs font-semibold bg-transparent text-white bg-white/10 transition cursor-default group relative">
                     {tag}
                     <button
                       onClick={() => setProfileTags(profileTags.filter(t => t !== tag))}
@@ -380,13 +380,13 @@ export default function Profile() {
                         setIsEditingTags(false);
                       }}
                       placeholder="Add tag..."
-                      className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-white/20 text-white outline-none w-24 placeholder:text-neutral-400"
+                      className="px-4 py-1.5 rounded-full border border-white/50 text-base md:text-xs font-semibold bg-white/20 text-white outline-none w-24 placeholder:text-neutral-400"
                     />
                   </form>
                 ) : (
                   <button
                     onClick={() => setIsEditingTags(true)}
-                    className="px-4 py-1.5 rounded-full border border-white/50 border-dashed text-[11px] md:text-xs font-semibold bg-black/40 text-white g-black/60 transition cursor-pointer"
+                    className="px-4 py-1.5 rounded-full border border-white/50 border-dashed text-base md:text-xs font-semibold bg-black/40 text-white hover:bg-black/60 transition cursor-pointer"
                   >
                     + Add tag
                   </button>
@@ -509,7 +509,7 @@ export default function Profile() {
                       {MOCK_TENANTS.slice(0, 4).map((t, i) => (
                         <div
                           key={t.id}
-                          className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ing-2 ing-[#2252D6] ing-offset-1 transition-all overflow-hidden"
+                          className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
                           style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: MOCK_TENANTS.length - i }}
                           onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                         >
@@ -522,7 +522,7 @@ export default function Profile() {
                       ))}
                       {MOCK_TENANTS.length > 4 && (
                         <span
-                          className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer g-[#3a3b3c] transition-colors"
+                          className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                           style={{ marginLeft: '-8px', zIndex: 0 }}
                           onClick={(e) => { e.stopPropagation(); setSelectedTenants(MOCK_TENANTS); }}
                         >
@@ -629,7 +629,7 @@ export default function Profile() {
                       alt={listing.title}
                       className="w-full h-full object-cover shrink-0"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-g-black/10 transition-colors pointer-events-none" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
                   </div>
                   <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
                     <div>
@@ -681,7 +681,7 @@ export default function Profile() {
                               {visible.map((tenant, i) => (
                                 <div
                                   key={tenant.id}
-                                    className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ing-2 ing-[#2252D6] ing-offset-1 transition-all overflow-hidden"
+                                    className="w-8 h-8 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:ring-2 hover:ring-[#2252D6] hover:ring-offset-1 transition-all overflow-hidden"
                                     style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: listingTenants.length - i }}
                                    title={tenant.name}
                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
@@ -695,7 +695,7 @@ export default function Profile() {
                                ))}
                                {remaining > 0 && (
                                  <span
-                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer g-[#3a3b3c] transition-colors"
+                                    className="w-8 h-8 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                                     style={{ marginLeft: '-8px', zIndex: 0 }}
                                    onClick={(e) => { e.stopPropagation(); setSelectedTenants(listingTenants); }}
                                 >
@@ -760,7 +760,7 @@ export default function Profile() {
                       alt={res.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-g-black/10 transition-colors pointer-events-none" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
                   </div>
                   <div className="flex-1 flex flex-col justify-between py-1 px-1 md:py-2 md:px-2 md:pr-4">
                     <div>
@@ -794,7 +794,7 @@ export default function Profile() {
                           {res.tenants.slice(0, 4).map((t, i) => (
                             <div
                               key={t.id}
-                              className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ing-2 ing-[#2252D6] ing-offset-1 transition-all overflow-hidden"
+                              className="w-9 h-9 rounded-full bg-[#b6e3f4] flex items-center justify-center border-2 border-white shadow-sm cursor-pointer ring-2 ring-[#2252D6] ring-offset-1 transition-all overflow-hidden"
                               style={{ marginLeft: i > 0 ? '-8px' : '0', zIndex: res.tenants.length - i }}
                               title={t.name}
                               onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
@@ -808,7 +808,7 @@ export default function Profile() {
                           ))}
                           {res.tenants.length > 4 && (
                             <span
-                              className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer g-[#3a3b3c] transition-colors"
+                              className="w-9 h-9 rounded-full bg-[#4E4F50] text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:bg-[#3a3b3c] transition-colors"
                               style={{ marginLeft: '-8px', zIndex: 0 }}
                               onClick={(e) => { e.stopPropagation(); setSelectedTenants(res.tenants); }}
                             >
@@ -836,10 +836,10 @@ export default function Profile() {
           <div className="flex flex-col gap-6 md:gap-7 my-2 pl-2">
             <div className="flex items-center justify-between w-full group cursor-pointer" onClick={() => setIsLandlord(!isLandlord)}>
               <div className="flex items-center gap-5">
-                <div className={`transition-colors duration-200 ${isLandlord ? 'text-[#2252D6]' : 'text-neutral-800 group-ext-[#2252D6]'}`}>
+                <div className={`transition-colors duration-200 ${isLandlord ? 'text-[#2252D6]' : 'text-neutral-800 group-hover:text-[#2252D6]'}`}>
                   <Building className="w-6 h-6 stroke-[1.8]" />
                 </div>
-                <span className={`text-lg font-medium transition-colors duration-200 ${isLandlord ? 'text-neutral-950' : 'text-neutral-800 group-ext-neutral-950'}`}>
+                <span className={`text-lg font-medium transition-colors duration-200 ${isLandlord ? 'text-neutral-950' : 'text-neutral-800 group-hover:text-neutral-950'}`}>
                   Landlord Mode
                 </span>
               </div>
@@ -854,10 +854,10 @@ export default function Profile() {
 
             {menuItems.map((item) => (
               <button key={item.title} onClick={item.action} className="flex items-center gap-5 text-left w-full group cursor-pointer">
-                <div className="text-neutral-800 group-ext-[#2252D6] transition-colors duration-200">
+                <div className="text-neutral-800 group-hover:text-[#2252D6] transition-colors duration-200">
                   <item.icon className="w-6 h-6 stroke-[1.8]" />
                 </div>
-                <span className="text-lg font-medium text-neutral-800 group-ext-neutral-950 transition-colors duration-200">
+                <span className="text-lg font-medium text-neutral-800 group-hover:text-neutral-950 transition-colors duration-200">
                   {item.title}
                 </span>
               </button>
@@ -869,10 +869,10 @@ export default function Profile() {
               onClick={() => setIsLogoutModalOpen(true)}
               className="flex items-center gap-5 text-left w-full group cursor-pointer"
             >
-              <div className="text-red-500 group-ext-red-600 transition-colors duration-200">
+              <div className="text-red-500 group-hover:text-red-600 transition-colors duration-200">
                 <LogOut className="w-6 h-6 stroke-[1.8]" />
               </div>
-              <span className="text-lg font-semibold text-red-500 group-ext-red-600 transition-colors duration-200">
+              <span className="text-lg font-semibold text-red-500 group-hover:text-red-600 transition-colors duration-200">
                 Log out
               </span>
             </button>

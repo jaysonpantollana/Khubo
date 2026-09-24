@@ -1,4 +1,4 @@
-// @context: Create listing modal — form for new property listing
+﻿// @context: Create listing modal â€” form for new property listing
 // @purpose: Multi-field form (title, description, price, category, image, amenities); submits to mock
 // @behavior: Fields include title, description, price, category select, image upload, amenity checkboxes
 // @behavior: Image upload via URL input; form validation on required fields; loading spinner during submit
@@ -192,7 +192,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
         <FocusTrap
           onClose={onClose}
           ariaLabel="Create Listing"
-          className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+          className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90dvh] flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100">
             <h2 className="text-xl font-bold text-neutral-800">Add new listing</h2>
@@ -244,25 +244,25 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Title</label>
-                  <input required value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder="e.g. Cozy Boarding House Room" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                  <input required value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder="e.g. Cozy Boarding House Room" className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Price (₱ / month)</label>
-                  <input required value={price} onChange={e => setPrice(e.target.value)} type="number" min="0" step="0.01" placeholder="e.g. 2500" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                  <input required value={price} onChange={e => setPrice(e.target.value)} type="number" min="0" step="0.01" placeholder="e.g. 2500" className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Location</label>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-xs text-neutral-500 mb-1">City</label>
-                      <select required value={city} onChange={e => setCity(e.target.value)} className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] bg-white">
+                      <select required value={city} onChange={e => setCity(e.target.value)} className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] bg-white">
                         <option value="">Select City</option>
                         <option value="Iligan City">Iligan City</option>
                       </select>
                     </div>
                     <div>
                       <label className="block text-xs text-neutral-500 mb-1">Barangay</label>
-                      <select required value={barangay} onChange={e => setBarangay(e.target.value)} className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] bg-white">
+                      <select required value={barangay} onChange={e => setBarangay(e.target.value)} className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] bg-white">
                         <option value="">Select Barangay</option>
                         <option value="Abuno">Abuno</option>
                         <option value="Acmac">Acmac</option>
@@ -312,7 +312,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     </div>
                     <div>
                       <label className="block text-xs text-neutral-500 mb-1">Street</label>
-                      <input required value={street} onChange={e => setStreet(e.target.value)} type="text" placeholder="e.g. Tibanga Highway" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                      <input required value={street} onChange={e => setStreet(e.target.value)} type="text" placeholder="e.g. Tibanga Highway" className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                     </div>
                   </div>
                 </div>
@@ -332,7 +332,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
 
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Description</label>
-                  <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the listing..." className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] resize-none" />
+                  <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the listing..." className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] resize-none" />
                 </div>
               </div>
 
@@ -345,7 +345,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       key={cat}
                       type="button"
                       onClick={() => setCategory(cat)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 bg-neutral-200'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-200 text-neutral-600'}`}
                     >
                       {cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
@@ -386,7 +386,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     <button
                       type="button"
                       onClick={() => setIsAddingCategory(true)}
-                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 text-neutral-700 bg-neutral-50"
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-700 bg-neutral-50"
                     >
                       + Add
                     </button>
@@ -403,7 +403,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       key={amenity}
                       type="button"
                       onClick={() => toggleAmenity(amenity)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 border-neutral-300'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-300 text-neutral-600'}`}
                     >
                       {amenity}
                     </button>
@@ -444,7 +444,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     <button
                       type="button"
                       onClick={() => setIsAddingAmenity(true)}
-                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 text-neutral-700 bg-neutral-50"
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-700 bg-neutral-50"
                     >
                       + Add
                     </button>
@@ -461,7 +461,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     <div className="flex items-center gap-3 px-4 py-3 bg-neutral-50 rounded-xl border border-neutral-200">
                       <svg className="w-5 h-5 text-[#17294F] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                       <span className="text-sm text-neutral-700 truncate flex-1">{preContractualDoc.name}</span>
-                      <button type="button" onClick={removeDoc} className="text-neutral-400 text-red-500 transition-colors">
+                      <button type="button" onClick={removeDoc} className="text-red-500 transition-colors">
                         <XCircle size={16} />
                       </button>
                     </div>
@@ -483,7 +483,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
               type="submit"
               form="create-listing-form"
               disabled={isSubmitting}
-              className="flex items-center justify-center gap-2 bg-[#17294F] text-white px-8 py-3.5 rounded-xl font-bold g-[#1e3466] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center justify-center gap-2 bg-[#17294F] text-white px-8 py-3.5 rounded-xl font-bold hover:bg-[#1e3466] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? (
                 <>

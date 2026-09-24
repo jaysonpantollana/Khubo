@@ -11,6 +11,7 @@ import { AddTenantModal } from '../components/AddTenantModal';
 import { EditTenantModal } from '../components/EditTenantModal';
 import type { SocialLink } from '../components/tenantSchemas';
 import ConfirmDialog from '../components/ConfirmDialog';
+import { copyText } from '../lib/utils';
 
 const initialTenants = [
   { id: 1, client: 'North Studio', room: '101', property: 'Main Building', balance: 'Paid', tenancyStatus: 'Staying', email: 'billing@northstudio.co', phone: '+1 (555) 234-5678', social: { instagram: 'https://instagram.com/northstudio', x: 'https://x.com/northstudio', facebook: 'https://facebook.com/northstudio' } },
@@ -36,9 +37,11 @@ export default function LandlordTenants() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const copyToClipboard = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 1500);
+    void copyText(text).then((ok) => {
+      if (!ok) return;
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 1500);
+    });
   };
 
   useEffect(() => {
@@ -150,7 +153,7 @@ export default function LandlordTenants() {
                   className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
                     selectedProperty === null
                       ? 'bg-[#17294F] text-white'
-                      : 'bg-neutral-100 text-neutral-600 bg-neutral-200'
+                      : 'bg-neutral-200 text-neutral-600'
                   }`}
                 >
                   All Properties
@@ -162,7 +165,7 @@ export default function LandlordTenants() {
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
                       selectedProperty === prop
                         ? 'bg-[#17294F] text-white'
-                        : 'bg-neutral-100 text-neutral-600 bg-neutral-200'
+                        : 'bg-neutral-200 text-neutral-600'
                     }`}
                   >
                     {prop}
@@ -197,7 +200,7 @@ export default function LandlordTenants() {
                 ) : (
                   <button
                     onClick={() => setIsAddingRoom(true)}
-                    className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 border-[#17294F] ext-[#17294F] shrink-0"
+                    className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 border-[#17294F] hover:text-[#17294F] shrink-0"
                   >
                     + Add Property
                   </button>
@@ -206,7 +209,7 @@ export default function LandlordTenants() {
             </div>
             <button
               onClick={() => setIsAddTenantOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2 bg-[#17294F] text-white text-sm font-bold rounded-full g-[#1a3058] transition-colors shrink-0"
+              className="flex items-center gap-1.5 px-4 py-2 bg-[#17294F] text-white text-sm font-bold rounded-full hover:bg-[#1a3058] transition-colors shrink-0"
             >
               <Plus size={16} />
               Add Tenant

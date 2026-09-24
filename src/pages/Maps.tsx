@@ -1,4 +1,4 @@
-// @context: Maps page — map-based listing discovery
+﻿// @context: Maps page â€” map-based listing discovery
 // @purpose: Sidebar listing panel + MapTiler map view with interactive filtering and card selection
 // @behavior: Left panel shows filterable listing cards; map shows markers for visible listings; card hover syncs with map
 // @dependencies: useListings, useListingsFilter, ListingCard, MapTilerView, Filters, BottomNav, Footer, lucide-react
@@ -79,7 +79,7 @@ export default function Maps() {
   };
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(event: PointerEvent) {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -89,8 +89,8 @@ export default function Maps() {
         setIsSearchActive(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, []);
 
   const toggleDropdown = (
@@ -207,7 +207,7 @@ export default function Maps() {
 
         mapPopups.current[listing.id] = popup;
 
-        popup.getElement()?.addEventListener('click', (e: MouseEvent) => {
+        popup.getElement()?.addEventListener('click', (e: PointerEvent) => {
           e.stopPropagation();
           if (selectedListingRef.current === listing.id) {
             setSelectedListing(null);
@@ -404,7 +404,7 @@ export default function Maps() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search rooms, location..."
-                    className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
+                    className="w-full bg-transparent border-none outline-none text-base font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
                     autoFocus
                   />
                   {searchQuery && (
@@ -703,7 +703,7 @@ export default function Maps() {
                   href="https://cloud.maptiler.com/account/keys/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 px-5 py-2.5 bg-[#17294F] text-white text-xs font-bold uppercase tracking-wider rounded-xl g-[#2252D6]"
+                  className="mt-2 px-5 py-2.5 bg-[#17294F] text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-[#2252D6]"
                 >
                   Get a free key
                 </a>
@@ -726,7 +726,7 @@ export default function Maps() {
                 className="p-3 bg-neutral-50 font-bold text-neutral-600"
                 onClick={() => map.current?.zoomOut()}
               >
-                −
+                âˆ’
               </button>
             </div>
           </div>

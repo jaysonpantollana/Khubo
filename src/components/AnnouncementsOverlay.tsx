@@ -35,7 +35,7 @@ export function AnnouncementsOverlay({ isOpen, onClose }: AnnouncementsOverlayPr
           <FocusTrap
             onClose={onClose}
             ariaLabel="Announcements"
-            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl z-10 overflow-hidden flex flex-col max-h-[90vh]"
+            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl z-10 overflow-hidden flex flex-col max-h-[90dvh]"
           >
             <div className="flex items-center justify-between p-6 border-b border-neutral-100 shrink-0">
               <h3 className="text-xl font-bold font-display flex items-center gap-2">

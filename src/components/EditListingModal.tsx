@@ -1,4 +1,4 @@
-// @context: Edit listing modal — update existing property listing
+﻿// @context: Edit listing modal â€” update existing property listing
 // @purpose: Pre-filled form with existing listing data; updates mock on submit
 // @behavior: Pre-populates all fields from listing prop; same field set as CreateListingModal
 // @behavior: Image shows current URL with preview; loading state during submit
@@ -168,7 +168,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
         <FocusTrap
           onClose={onClose}
           ariaLabel="Edit Listing"
-          className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+          className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90dvh] flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-neutral-100">
             <h2 className="text-xl font-bold text-neutral-800">Edit Listing</h2>
@@ -236,15 +236,15 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Title</label>
-                  <input required value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder="e.g. Cozy Boarding House Room" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                  <input required value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder="e.g. Cozy Boarding House Room" className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Price (₱ / month)</label>
-                  <input required value={price} onChange={e => setPrice(e.target.value)} type="number" min="0" step="0.01" placeholder="e.g. 2500" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                  <input required value={price} onChange={e => setPrice(e.target.value)} type="number" min="0" step="0.01" placeholder="e.g. 2500" className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Location</label>
-                  <input required value={location} onChange={e => setLocation(e.target.value)} type="text" placeholder="e.g. Tibanga, Iligan City" className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
+                  <input required value={location} onChange={e => setLocation(e.target.value)} type="text" placeholder="e.g. Tibanga, Iligan City" className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F]"/>
                 </div>
 
                 {/* Map Pin Location */}
@@ -262,7 +262,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
 
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-neutral-800 mb-2">Description</label>
-                  <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the listing..." className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] resize-none" />
+                  <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the listing..." className="w-full px-4 py-3 text-base border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] resize-none" />
                 </div>
               </div>
 
@@ -275,7 +275,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       key={cat}
                       type="button"
                       onClick={() => setCategory(cat)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 bg-neutral-200'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-200 text-neutral-600'}`}
                     >
                       {cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
@@ -292,7 +292,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       key={amenity}
                       type="button"
                       onClick={() => toggleAmenity(amenity)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 border-neutral-300'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-300 text-neutral-600'}`}
                     >
                       {amenity}
                     </button>
@@ -333,7 +333,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                     <button
                       type="button"
                       onClick={() => setIsAddingAmenity(true)}
-                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 text-neutral-700 bg-neutral-50"
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-700 bg-neutral-50"
                     >
                       + Add
                     </button>
@@ -349,7 +349,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
               type="submit"
               form="edit-listing-form"
               disabled={isSubmitting}
-              className="flex items-center justify-center gap-2 bg-[#17294F] text-white px-8 py-3.5 rounded-xl font-bold g-[#1e3466] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center justify-center gap-2 bg-[#17294F] text-white px-8 py-3.5 rounded-xl font-bold hover:bg-[#1e3466] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? (
                 <>

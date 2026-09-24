@@ -128,7 +128,7 @@ export function EditTenantModal({ isOpen, onClose, tenant, onSave }: EditTenantM
   };
 
   const inputClass =
-    'w-full px-4 py-3 pl-11 rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors';
+    'w-full px-4 py-3 pl-11 rounded-xl border border-neutral-200 bg-neutral-50 text-base font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors';
 
   const iconClass = 'absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400';
 
@@ -201,7 +201,7 @@ export function EditTenantModal({ isOpen, onClose, tenant, onSave }: EditTenantM
                 value={link.platform}
                 name={`social-platform-${index}`}
                 onChange={(e) => updateSocialLink(index, 'platform', e.target.value as SocialPlatform)}
-                className="px-3 py-3 rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
+                className="px-3 py-3 rounded-xl border border-neutral-200 bg-neutral-50 text-base font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
               >
                 {SOCIAL_PLATFORMS.map((p) => (
                   <option key={p} value={p} disabled={usedPlatforms.includes(p) && p !== link.platform}>
@@ -217,7 +217,7 @@ export function EditTenantModal({ isOpen, onClose, tenant, onSave }: EditTenantM
                   placeholder={`${link.platform} URL`}
                   value={link.url}
                   onChange={(e) => updateSocialLink(index, 'url', e.target.value)}
-                  className="w-full px-4 py-3 pl-11 rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
+                  className="w-full px-4 py-3 pl-11 rounded-xl border border-neutral-200 bg-neutral-50 text-base font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
                 />
               </div>
               <button

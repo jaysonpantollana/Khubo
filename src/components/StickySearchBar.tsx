@@ -76,7 +76,7 @@ export function StickySearchBar({
                 {!locationAtTop && (
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -85,7 +85,7 @@ export function StickySearchBar({
                 {!locationAtBottom && (
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -120,7 +120,7 @@ export function StickySearchBar({
                 {!budgetAtTop && (
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -129,7 +129,7 @@ export function StickySearchBar({
                 {!budgetAtBottom && (
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -161,7 +161,7 @@ export function StickySearchBar({
             {/* Pill search bar */}
             <div
               id="2nd-search-bar"
-              className="bg-white border border-neutral-200 p-3 sm:p-3 md:p-2 flex items-center text-neutral-800 shadow-lg w-[calc(100vw-1.5rem)] max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative overflow-hidden"
+              className="bg-white border border-neutral-200 p-3 sm:p-3 md:p-2 flex items-center text-neutral-800 shadow-lg w-full max-w-[750px] z-40 rounded-full pointer-events-auto cursor-default relative overflow-hidden"
             >
               {isStickySearchActive ? (
                 <>
@@ -179,7 +179,7 @@ export function StickySearchBar({
                         }
                       }}
                       placeholder="Search rooms, location..."
-                      className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
+                      className="w-full bg-transparent border-none outline-none text-base font-bold text-neutral-800 placeholder:text-neutral-400 focus:ring-0 p-0"
                       autoFocus
                     />
                     {searchQuery && (

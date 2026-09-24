@@ -137,7 +137,7 @@ export default function LandlordProperties() {
           <div className="flex justify-end mb-4">
             <button
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center gap-2 bg-[#17294F] text-white px-5 py-2.5 rounded-xl font-bold g-[#1e3466] transition-colors text-sm"
+              className="flex items-center gap-2 bg-[#17294F] text-white px-5 py-2.5 rounded-xl font-bold hover:bg-[#1e3466] transition-colors text-sm"
             >
               <Plus size={18} />
               Add Listing

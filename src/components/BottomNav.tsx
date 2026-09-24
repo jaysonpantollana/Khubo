@@ -33,7 +33,7 @@ export default function BottomNav() {
             <button 
               key={idx}
               onClick={() => navigate(item.path)}
-              className="flex flex-col items-center justify-center py-0.5 group transition-all duration-200 relative"
+              className="flex flex-col items-center justify-center min-h-11 min-w-11 px-1 py-1 group transition-all duration-200 relative"
             >
               <div className={`p-1 rounded-xl transition-all duration-300 relative ${isActive ? 'text-[#3b82f6]' : 'text-white'}`}>
                 <item.icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={isActive ? 2.5 : 2} />

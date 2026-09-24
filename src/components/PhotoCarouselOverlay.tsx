@@ -1,12 +1,12 @@
-// @context: Photo gallery overlay — full-screen image carousel
-// @purpose: Full-screen image viewer with left/right navigation, keyboard controls, and image counter
+// @context: Photo gallery overlay — fullscreen image carousel
+// @purpose: Fullscreen image viewer with left/right navigation, keyboard controls, and image counter
 // @behavior: Opens with specified initialIndex; left/right arrows navigate; keyboard arrows + Escape supported
-// @behavior: Image counter display (e.g. "3 / 10"); click outside to close
-// @side-effects: useEffect for keyboard event listener
-// @dependencies: motion, lucide-react
+// @behavior: Touch swipe left/right navigates on mobile; image counter display (e.g. "3 / 10"); click outside to close
+// @side-effects: useEffect for keyboard + touch state
+// @dependencies: lucide-react, FocusTrap
 // @known-issues: useEffect deps may miss nextImage/prevImage/onClose (stale closure risk)
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FocusTrap } from './ui/FocusTrap';
@@ -18,6 +18,8 @@ interface PhotoCarouselOverlayProps {
   onClose: () => void;
 }
 
+const SWIPE_THRESHOLD_PX = 50;
+
 export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
   isOpen,
   images,
@@ -25,6 +27,7 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
   onClose,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const touchStartX = useRef<number | null>(null);
 
   // Sync currentIndex with initialIndex when gallery opens
   React.useEffect(() => {
@@ -54,85 +57,101 @@ export const PhotoCarouselOverlay: React.FC<PhotoCarouselOverlayProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, nextImage, prevImage, onClose]);
 
+  // Touch swipe navigation (mobile)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < SWIPE_THRESHOLD_PX) return;
+    if (dx < 0) nextImage();
+    else prevImage();
+  };
+
   if (!isOpen) return null;
 
   return (
-      <FocusTrap
-        onClose={onClose}
-        ariaLabel="Photo Gallery"
-        className="fixed inset-0 z-[200] bg-black/0 backdrop-blur-sm flex flex-col"
+    <FocusTrap
+      onClose={onClose}
+      ariaLabel="Photo Gallery"
+      className="fixed inset-0 z-[200] bg-black/0 backdrop-blur-sm flex flex-col"
+    >
+      {/* Header */}
+      <div className="flex justify-between items-center px-6 py-2 text-white z-20">
+        <button
+          onClick={onClose}
+          className="flex items-center gap-2 bg-black/40 hover:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full transition text-sm"
+        >
+          <X size={18} />
+          <span className="font-medium hidden sm:block">Close</span>
+        </button>
+
+        <div className="text-xs font-bold tracking-widest bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
+          {currentIndex + 1} / {images.length}
+        </div>
+
+        <div className="w-[60px]" /> {/* Spacer for balance */}
+      </div>
+
+      {/* Main Content */}
+      <div
+        className="flex-1 relative flex items-center justify-center overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
-        {/* Header */}
-        <div className="flex justify-between items-center px-6 py-2 text-white z-20">
-          <button
-            onClick={onClose}
-            className="flex items-center gap-2 bg-black/40 g-black/60 backdrop-blur-md px-3 py-1.5 rounded-full transition text-sm"
-          >
-            <X size={18} />
-            <span className="font-medium hidden sm:block">Close</span>
-          </button>
-          
-          <div className="text-xs font-bold tracking-widest bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
-            {currentIndex + 1} / {images.length}
-          </div>
+        {/* Controls */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={prevImage}
+              className="absolute left-4 sm:left-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={28} />
+            </button>
 
-          <div className="w-[60px]" /> {/* Spacer for balance */}
-        </div>
+            <button
+              onClick={nextImage}
+              className="absolute right-4 sm:right-10 z-10 w-14 h-14 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
+              aria-label="Next image"
+            >
+              <ChevronRight size={28} />
+            </button>
+          </>
+        )}
 
-        {/* Main Content */}
-        <div className="flex-1 relative flex items-center justify-center overflow-hidden">
-          {/* Controls */}
-          {images.length > 1 && (
-            <>
-              <button
-                onClick={prevImage}
-                className="absolute left-4 sm:left-10 z-10 w-14 h-14 bg-black/40 g-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={28} />
-              </button>
-
-              <button
-                onClick={nextImage}
-                className="absolute right-4 sm:right-10 z-10 w-14 h-14 bg-black/40 g-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all shadow-lg"
-                aria-label="Next image"
-              >
-                <ChevronRight size={28} />
-              </button>
-            </>
-          )}
-
-          {/* Image Container */}
-          <div className="flex-1 flex items-center justify-center p-5">
-              <div
-                className="shadow-2xl rounded-[2.5rem] overflow-hidden"
-              >
-                <img
-                  src={images[currentIndex]}
-                  alt={`Image ${currentIndex + 1}`}
-                  className="max-w-[90vw] max-h-[75vh] w-auto h-auto object-contain pointer-events-none select-none"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
+        {/* Image Container */}
+        <div className="flex-1 flex items-center justify-center p-5">
+          <div className="shadow-2xl rounded-[2.5rem] overflow-hidden">
+            <img
+              src={images[currentIndex]}
+              alt={`Image ${currentIndex + 1}`}
+              className="max-w-[90vw] max-h-[75vh] w-auto h-auto object-contain pointer-events-none select-none"
+              referrerPolicy="no-referrer"
+            />
           </div>
         </div>
+      </div>
 
-        {/* Footer / Thumbnail strip */}
-        <div className="py-2 bg-gradient-to-t from-black/40 to-transparent flex justify-center z-20">
-           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-              {images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`w-16 h-12 rounded-md overflow-hidden border-2 transition-all flex-shrink-0 ${
-                    idx === currentIndex ? 'border-white scale-110' : 'border-transparent opacity-50'
-                  }`}
-                >
-                   <img src={img} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={`Gallery photo ${idx}`} referrerPolicy="no-referrer" />
-                </button>
-              ))}
-           </div>
+      {/* Footer / Thumbnail strip */}
+      <div className="py-2 bg-gradient-to-t from-black/40 to-transparent flex justify-center z-20">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+          {images.map((img, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`w-16 h-12 rounded-md overflow-hidden border-2 transition-all flex-shrink-0 ${
+                idx === currentIndex ? 'border-white scale-110' : 'border-transparent opacity-50'
+              }`}
+            >
+              <img src={img} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={`Gallery photo ${idx}`} referrerPolicy="no-referrer" />
+            </button>
+          ))}
         </div>
-      </FocusTrap>
+      </div>
+    </FocusTrap>
   );
 };

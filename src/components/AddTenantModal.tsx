@@ -96,7 +96,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
   };
 
   const inputClass = (field: string) =>
-    `w-full px-4 py-3 pl-11 rounded-xl border text-sm font-medium transition-colors outline-none ${
+    `w-full px-4 py-3 pl-11 rounded-xl border text-base font-medium transition-colors outline-none ${
       errors[field]
         ? 'border-red-400 bg-red-50 text-red-700 focus:ring-2 focus:ring-red-200'
         : 'border-neutral-200 bg-neutral-50 text-neutral-800 focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F]'
@@ -187,7 +187,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
               <select
                 value={link.platform}
                 onChange={(e) => updateSocialLink(index, 'platform', e.target.value as SocialPlatform)}
-                className="px-3 py-3 rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
+                className="px-3 py-3 rounded-xl border border-neutral-200 bg-neutral-50 text-base font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
               >
                 {SOCIAL_PLATFORMS.map((p) => (
                   <option key={p} value={p} disabled={usedPlatforms.includes(p) && p !== link.platform}>
@@ -202,7 +202,7 @@ export function AddTenantModal({ isOpen, onClose, onSuccess }: AddTenantModalPro
                   placeholder={`${link.platform} URL`}
                   value={link.url}
                   onChange={(e) => updateSocialLink(index, 'url', e.target.value)}
-                  className="w-full px-4 py-3 pl-11 rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
+                  className="w-full px-4 py-3 pl-11 rounded-xl border border-neutral-200 bg-neutral-50 text-base font-medium text-neutral-800 outline-none focus:ring-2 focus:ring-[#17294F]/20 focus:border-[#17294F] transition-colors"
                 />
               </div>
               <button

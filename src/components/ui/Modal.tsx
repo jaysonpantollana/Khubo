@@ -53,14 +53,24 @@ export function Modal({
 
   useFocusTrap(isOpen, contentRef, closeOnEscape ? onClose : undefined);
 
+  // iOS Safari: overflow:hidden alone doesn't stop background rubber-band;
+  // pin body with position:fixed and restore scroll position on close.
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (!isOpen) return;
+    const scrollY = window.scrollY;
+    const body = document.body;
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = '';
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      body.style.overflow = '';
+      window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
 
@@ -79,7 +89,7 @@ export function Modal({
   const modalContent = (
       <div
         className={cn(
-          'fixed inset-0 flex items-center justify-center p-4',
+          'fixed inset-0 flex items-center justify-center p-0 sm:p-4',
           'bg-black/60 backdrop-blur-sm transition-opacity duration-200',
           overlayClassName
         )}
@@ -96,8 +106,13 @@ export function Modal({
         onClick={handleContentClick}
         style={{ zIndex: 301 }}
         className={cn(
-          'relative w-full bg-white rounded-modal shadow-modal',
+          // Mobile: full-screen sheet; sm+: centered card
+          'relative w-full bg-white shadow-modal',
+          'sm:rounded-modal sm:shadow-modal sm:max-h-[calc(100dvh-3rem)]',
+          'h-[100dvh] sm:h-auto rounded-none sm:rounded-modal',
+          'sm:w-auto sm:max-w-full',
           'transform transition-all duration-200',
+          'flex flex-col overflow-hidden',
           sizeStyles[size],
           maxWidth,
           contentClassName,
@@ -105,7 +120,7 @@ export function Modal({
         )}
       >
         {(title || showCloseButton) && (
-          <div className="flex items-start justify-between p-6 border-b border-neutral-100">
+          <div className="flex items-start justify-between p-4 sm:p-6 border-b border-neutral-100 shrink-0">
             <div className="flex-1 pr-4">
               {title && !hideTitle && (
                 <h2
@@ -136,7 +151,7 @@ export function Modal({
             )}
           </div>
         )}
-        <div className={cn("p-4 sm:p-6 max-h-[calc(100dvh-200px)] overflow-y-auto", bodyClassName)}>
+        <div className={cn("p-4 sm:p-6 flex-1 overflow-y-auto", bodyClassName)}>
           {children}
         </div>
       </div>

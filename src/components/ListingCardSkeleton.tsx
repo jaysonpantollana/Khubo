@@ -14,7 +14,7 @@ interface ListingCardSkeletonProps {
 export default React.memo(function ListingCardSkeleton({ compact }: ListingCardSkeletonProps) {
   if (compact) {
     return (
-      <div className="col-span-1 bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 flex flex-row gap-3 h-[96px] sm:h-[104px] ">
+      <div className="col-span-1 bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 flex flex-row gap-3 h-[112px] sm:h-[120px] ">
         <div className="aspect-[4/3] h-full relative rounded-lg bg-neutral-200 flex-shrink-0"></div>
         <div className="flex-1 py-0.5 flex flex-col justify-between">
           <div>

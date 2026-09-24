@@ -70,14 +70,14 @@ export default function RoommateHero({
   }, [isSearchActive]);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClickOutside = (e: PointerEvent) => {
       const target = e.target as HTMLElement;
       if (!target.closest('.dropdown-container')) {
         setActiveDropdown(null);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, []);
 
   const toggleDropdown = (dropdown: 'location' | 'budget' | 'general') => {
@@ -142,14 +142,14 @@ export default function RoommateHero({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: 'smooth' })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: 'smooth' })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -177,14 +177,14 @@ export default function RoommateHero({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: 'smooth' })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: 'smooth' })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -209,7 +209,7 @@ export default function RoommateHero({
             )}
             
             {/* Pill search bar */}
-            <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-[7px] sm:p-3 md:p-2 rounded-full flex items-center text-white shadow-2xl w-[calc(100vw-1.5rem)] max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
+            <div className="bg-white/20 backdrop-blur-xl border border-white/30 p-[7px] sm:p-3 md:p-2 rounded-full flex items-center text-white shadow-2xl w-full max-w-[820px] relative z-[95] pointer-events-auto cursor-default">
             {isSearchActive ? (
               <>
                 <div className="flex-1 flex items-center pl-4 md:pl-6 pr-0 py-0 w-full">
@@ -226,7 +226,7 @@ export default function RoommateHero({
                       }
                     }}
                     placeholder="what are you looking for?"
-                    className="w-full bg-transparent border-none outline-none text-xs sm:text-sm md:text-base font-bold text-white placeholder:text-white/50 focus:ring-0 p-0"
+                    className="w-full bg-transparent border-none outline-none text-base sm:text-base md:text-base font-bold text-white placeholder:text-white/50 focus:ring-0 p-0"
                     autoFocus
                   />
                   {searchQuery && (

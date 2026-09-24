@@ -333,7 +333,7 @@ export default function LandlordReviews() {
                   setConfirmDelete(null);
                 }
               }}
-              className="px-5 py-2.5 rounded-xl bg-red-500 text-white font-semibold text-sm bg-red-600 transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-red-600 text-white font-semibold text-sm transition-colors cursor-pointer"
             >
               Delete
             </button>

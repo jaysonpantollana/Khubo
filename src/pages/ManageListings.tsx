@@ -48,7 +48,7 @@ export default function ManageListings() {
     return (
       <div className="min-h-dvh flex flex-col bg-[#F9F9F9]">
         <Navbar />
-        <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 py-12 animate-pulse">
+        <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 animate-pulse">
           <div className="h-10 bg-neutral-200 rounded w-64 mb-8"></div>
           <div className="flex flex-col gap-6">
             {[1, 2, 3].map(i => (
@@ -88,7 +88,7 @@ export default function ManageListings() {
     <div className="min-h-dvh flex flex-col bg-[#F9F9F9]">
       <Navbar />
       
-      <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 py-12">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-3xl font-bold text-neutral-800 mb-8">Manage Listings</h1>
         
         {listings.length === 0 ? (
@@ -146,7 +146,7 @@ export default function ManageListings() {
                         <Edit size={18} />
                         Edit Listing
                       </button>
-                      <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#4CB051] text-white font-bold g-[#3f9443] transition">
+                      <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#4CB051] text-white font-bold hover:bg-[#3f9443] transition">
                         <Users size={18} />
                         Manage Tenants
                       </button>

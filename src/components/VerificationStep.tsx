@@ -67,7 +67,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
-      <FocusTrap onClose={onClose} ariaLabel="Verification" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]">
+      <FocusTrap onClose={onClose} ariaLabel="Verification" className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90dvh]">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
@@ -198,7 +198,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                       <CloudUpload size={26} className="text-[#2252D6]" />
                     </div>
                     <div className="text-center">
-                      <p className="text-sm font-bold text-neutral-700 group-ext-[#2252D6] transition-colors duration-200">
+                      <p className="text-sm font-bold text-neutral-700 group-hover:text-[#2252D6] transition-colors duration-200">
                         <span className="text-[#2252D6]">Click to upload</span> or drag and drop
                       </p>
                       <p className="text-xs text-neutral-400 mt-1">
@@ -208,7 +208,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
-                      className="px-5 py-2 bg-neutral-100 bg-neutral-200 text-neutral-700 text-xs font-bold rounded-full transition-colors cursor-pointer"
+                      className="px-5 py-2 bg-neutral-200 text-neutral-700 text-xs font-bold rounded-full transition-colors cursor-pointer"
                     >
                       Browse Files
                     </button>
@@ -268,7 +268,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Back
           </button>
@@ -281,7 +281,7 @@ export function VerificationStep({ onBack, onClose, onContinue }: VerificationSt
               className={cn(
                 'px-8 py-2.5 font-bold rounded-full transition text-sm cursor-pointer',
                 isReady
-                  ? 'bg-[#2252D6] g-[#1a41aa] text-white shadow-md shadow-[#2252D6]/20'
+                  ? 'bg-[#2252D6] hover:bg-[#1a41aa] text-white shadow-md shadow-[#2252D6]/20'
                   : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
               )}
             >

@@ -1,4 +1,4 @@
-// @context: Create roommate post modal — form for roommate listing
+﻿// @context: Create roommate post modal â€” form for roommate listing
 // @purpose: Form to create roommate post (applying or finding mode); includes personality traits/tags selection
 // @behavior: Loads user profile tags from localStorage; lets user write description and select traits
 // @behavior: Custom tag input with add functionality; creates Roommate-compatible post object
@@ -139,14 +139,14 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
         <FocusTrap
           onClose={onClose}
           ariaLabel="Create Post"
-          className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden max-h-[90vh]"
+          className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-neutral-200 relative shrink-0">
             <h2 className="text-xl font-bold text-neutral-900 text-center w-full">Create post</h2>
             <button
               onClick={onClose}
-              className="absolute right-4 p-2 bg-neutral-100 bg-neutral-200 text-neutral-600 rounded-full transition-colors"
+              className="absolute right-4 p-2 bg-neutral-200 text-neutral-600 rounded-full transition-colors"
             >
               <X size={20} />
             </button>
@@ -196,7 +196,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                         setSelectedTraits(updated);
                         localStorage.setItem('user_profile_tags', JSON.stringify(updated));
                       }}
-                      className="bg-neutral-250 p-0.5 rounded-full transition-colors flex items-center justify-center shrink-0 text-neutral-400 text-neutral-700"
+                      className="bg-neutral-250 p-0.5 rounded-full transition-colors flex items-center justify-center shrink-0 text-neutral-700"
                       title={`Remove ${trait}`}
                     >
                       <X size={10} className="stroke-[3]" />
@@ -246,7 +246,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                   <button
                     type="button"
                     onClick={() => setIsAddingTag(true)}
-                    className="inline-flex items-center justify-center px-3 py-1 bg-neutral-50 bg-neutral-100 border border-dashed border-neutral-300 border-neutral-400 text-neutral-650 text-neutral-800 rounded-full text-xs font-semibold cursor-pointer shrink-0 transition-colors"
+                    className="inline-flex items-center justify-center px-3 py-1 bg-neutral-100 border border-dashed border-neutral-400 text-neutral-800 rounded-full text-xs font-semibold cursor-pointer shrink-0 transition-colors"
                   >
                     + Add tag
                   </button>
@@ -269,7 +269,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                 <label className="flex items-center justify-between cursor-pointer group py-1">
                   <div className="flex items-center gap-2.5">
                     <Phone size={16} className="text-neutral-400" />
-                    <span className="text-sm text-neutral-700 group-ext-neutral-900 transition-colors font-medium">{phoneNumber}</span>
+                    <span className="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">{phoneNumber}</span>
                   </div>
                   <div className="relative">
                     <input
@@ -287,7 +287,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                 <label className="flex items-center justify-between cursor-pointer group py-1">
                   <div className="flex items-center gap-2.5">
                     <Mail size={16} className="text-neutral-400" />
-                    <span className="text-sm text-neutral-700 group-ext-neutral-900 transition-colors font-medium">{emailAddress}</span>
+                    <span className="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">{emailAddress}</span>
                   </div>
                   <div className="relative">
                     <input
@@ -312,7 +312,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                         return null;
                       })}
                     </div>
-                    <span className="text-sm text-neutral-700 group-ext-neutral-900 transition-colors font-medium">Social links</span>
+                    <span className="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">Social links</span>
                   </div>
                   <div className="relative">
                     <input
@@ -334,7 +334,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
               disabled={!content.trim()}
               className={`w-full py-2.5 rounded-lg font-bold text-[15px] transition-colors mt-2 shrink-0 ${
                 content.trim() 
-                  ? 'bg-neutral-900 text-white bg-neutral-800' 
+                  ? 'bg-neutral-800 text-white' 
                   : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
               }`}
             >

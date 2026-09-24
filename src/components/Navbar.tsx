@@ -26,13 +26,13 @@ export default function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(event: PointerEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, []);
 
   const handleCITADELYourHome = () => {
@@ -67,8 +67,9 @@ export default function Navbar() {
             <span className="hidden lg:block font-extrabold text-2xl tracking-tighter">CITADEL</span>
           </Link>
 
-          {/* Search Bar */}
-          <button
+          {/* Search Bar → home (Hero search lives there) */}
+          <Link
+            to="/"
             aria-label="Open search menu"
             className="border border-[#dddddd] h-12 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] transition cursor-pointer flex items-center px-2 pl-6 min-w-0 max-w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
           >
@@ -82,7 +83,7 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-          </button>
+          </Link>
 
           {/* User Menu */}
           <div className="flex flex-row items-center gap-3 relative" ref={menuRef}>

@@ -57,7 +57,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = React.memo(({
           {onRetry && (
             <button 
               onClick={onRetry}
-              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#17294F] dark:bg-[#2252D6] g-[#1a2d55] dark:g-[#1e49c0] text-white rounded-full font-medium transition-colors w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#17294F] dark:bg-[#2252D6] hover:bg-[#1a2d55] dark:hover:bg-[#1e49c0] text-white rounded-full font-medium transition-colors w-full sm:w-auto"
             >
               <RefreshCw className="w-4 h-4" />
               <span>Try Again</span>

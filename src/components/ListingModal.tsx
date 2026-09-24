@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { X, Star, BadgeCheck, Instagram, Facebook, Twitter, Phone, Mail, MessageCircle, Copy, Check } from 'lucide-react';
 import { HostInfo } from '../types';
 import { FocusTrap } from './ui/FocusTrap';
+import { copyText } from '../lib/utils';
 
 interface ListingModalProps {
   isOpen: boolean;
@@ -28,9 +29,11 @@ export const ListingModal: React.FC<ListingModalProps> = ({
   if (!isOpen) return null;
 
   const copyToClipboard = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedContact(type);
-    setTimeout(() => setCopiedContact(null), 1500);
+    void copyText(text).then((ok) => {
+      if (!ok) return;
+      setCopiedContact(type);
+      setTimeout(() => setCopiedContact(null), 1500);
+    });
   };
 
   const handleContact = () => {
@@ -167,7 +170,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
         {/* Contact Button */}
         <button
           onClick={handleContact}
-          className="w-full py-3 bg-[#17294F] text-white text-sm font-bold rounded-xl shadow-lg g-[#1e3566] transition flex items-center justify-center gap-2"
+          className="w-full py-3 bg-[#17294F] text-white text-sm font-bold rounded-xl shadow-lg hover:bg-[#1e3566] transition flex items-center justify-center gap-2"
         >
           <MessageCircle size={18} />
           Contact Owner

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
 import { X, Camera, MapPin, ChevronDown, User, Mail, Phone, BookOpen } from 'lucide-react';
 import type { OnboardingData } from './OnboardingFlow';
 import { FocusTrap } from './ui/FocusTrap';
@@ -82,7 +82,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
       <FocusTrap
         onClose={onClose}
         ariaLabel="Onboarding"
-        className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-3xl bg-white rounded-[2rem] overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90dvh]"
       >
         <button
           onClick={onClose}
@@ -117,7 +117,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
 
           <div className="flex flex-col items-center mb-8">
             <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-              <div className="w-24 h-24 rounded-full overflow-hidden bg-neutral-100 border-[3px] border-white shadow-lg ring-2 ring-[#2252D6]/20 group-ing-[#2252D6]/40 transition-all">
+              <div className="w-24 h-24 rounded-full overflow-hidden bg-neutral-100 border-[3px] border-white shadow-lg ring-2 ring-[#2252D6]/20 group-hover:ring-[#2252D6]/40 transition-all">
                 {profilePhoto ? (
                   <img src={profilePhoto} alt="Profile" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 ) : (
@@ -126,7 +126,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   </div>
                 )}
               </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#2252D6] rounded-full flex items-center justify-center shadow-md border-2 border-white group-g-[#1a41aa] transition-colors">
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#2252D6] rounded-full flex items-center justify-center shadow-md border-2 border-white group-hover:bg-[#1a41aa] transition-colors">
                 <Camera size={14} className="text-white" />
               </div>
               <input
@@ -154,7 +154,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="e.g. juan_delacruz"
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-100 focus:bg-white text-base font-medium text-neutral-800"
                 />
               </div>
             </div>
@@ -172,7 +172,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. juan@email.com"
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-100 focus:bg-white text-base font-medium text-neutral-800"
                 />
               </div>
             </div>
@@ -190,7 +190,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="e.g. +63 912 345 6789"
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-100 focus:bg-white text-base font-medium text-neutral-800"
                 />
               </div>
             </div>
@@ -203,7 +203,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-100 focus:bg-white text-base font-medium text-neutral-800 appearance-none cursor-pointer"
                 >
                   <option value="">Select gender</option>
                   <option value="male">Male</option>
@@ -228,8 +228,8 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   rows={3}
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
-                  placeholder="Tell us a bit about yourself — your interests, what you're looking for in a place, and what kind of roommate you are..."
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 resize-none"
+                  placeholder="Tell us a bit about yourself â€” your interests, what you're looking for in a place, and what kind of roommate you are..."
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-100 focus:bg-white text-base font-medium text-neutral-800 resize-none"
                 />
               </div>
             </div>
@@ -255,7 +255,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                     readOnly
                     value={city}
                     placeholder="Select city"
-                    className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 text-sm font-medium text-neutral-800 cursor-pointer"
+                    className="w-full px-4 py-3 text-base border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 font-medium text-neutral-800 cursor-pointer"
                   />
                   <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
                     <ChevronDown size={16} />
@@ -267,7 +267,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                       <button
                         key={c}
                         type="button"
-                        className={`w-full text-left px-4 py-2.5 text-sm font-medium g-[#2252D6]/5 transition-colors ${
+                        className={`w-full text-left px-4 py-2.5 text-sm font-medium hover:bg-[#2252D6]/5 transition-colors ${
                           city === c ? 'bg-[#2252D6]/10 text-[#2252D6]' : 'text-neutral-700'
                         }`}
                         onClick={() => { setCity(c); setBarangay(''); setShowCityDropdown(false); }}
@@ -292,7 +292,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                     readOnly
                     value={barangay}
                     placeholder={city ? 'Select barangay' : 'Select city first'}
-                    className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 text-sm font-medium text-neutral-800 cursor-pointer disabled:opacity-50"
+                    className="w-full px-4 py-3 text-base border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 font-medium text-neutral-800 cursor-pointer disabled:opacity-50"
                   />
                   <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
                     <ChevronDown size={16} />
@@ -304,7 +304,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                       <button
                         key={b}
                         type="button"
-                        className={`w-full text-left px-4 py-2.5 text-sm font-medium g-[#2252D6]/5 transition-colors ${
+                        className={`w-full text-left px-4 py-2.5 text-sm font-medium hover:bg-[#2252D6]/5 transition-colors ${
                           barangay === b ? 'bg-[#2252D6]/10 text-[#2252D6]' : 'text-neutral-700'
                         }`}
                         onClick={() => { setBarangay(b); setShowBarangayDropdown(false); }}
@@ -329,7 +329,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                     value={streetAddress}
                     onChange={(e) => setStreetAddress(e.target.value)}
                     placeholder="e.g. 123 Rizal St."
-                    className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                    className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-100 focus:bg-white text-base font-medium text-neutral-800"
                   />
                 </div>
               </div>
@@ -342,7 +342,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Cancel
           </button>
@@ -351,7 +351,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
             <button
               type="button"
               onClick={handleContinue}
-              className="px-8 py-2.5 bg-[#2252D6] g-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
+              className="px-8 py-2.5 bg-[#2252D6] hover:bg-[#1a41aa] text-white font-bold rounded-full transition text-sm shadow-md shadow-[#2252D6]/20 cursor-pointer"
             >
               Continue
             </button>

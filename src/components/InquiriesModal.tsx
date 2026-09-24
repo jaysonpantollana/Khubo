@@ -113,7 +113,7 @@ export function InquiriesModal({ isOpen, onClose }: InquiriesModalProps) {
                     className={`relative flex items-center justify-center px-4 py-2 rounded-full text-sm font-bold transition-colors ${
                       filter === f 
                         ? 'bg-neutral-900 text-white' 
-                        : 'bg-neutral-100 text-neutral-600 bg-neutral-200'
+                        : 'bg-neutral-200 text-neutral-600'
                     }`}
                   >
                     {f}

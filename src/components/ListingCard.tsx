@@ -28,7 +28,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
         }}
         tabIndex={0}
         role="button"
-        className="col-span-1 cursor-pointer bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] flex flex-row gap-3 h-[96px] sm:h-[104px]"
+        className="col-span-1 cursor-pointer bg-white rounded-xl p-2 sm:p-2.5 shadow-sm border border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] flex flex-row gap-3 h-[112px] sm:h-[120px]"
       >
         <div className="aspect-[4/3] h-full relative overflow-hidden rounded-lg flex-shrink-0">
           <img
@@ -84,7 +84,7 @@ export default React.memo(function ListingCard({ listing, onClick, compact }: Li
       tabIndex={0}
       role="button"
       aria-label={`View details for ${listing.title} at ${listing.location}. Price P${listing.price} per month. Rating ${listing.rating.toFixed(2)} stars.`}
-      className="col-span-1 h-full cursor-pointer bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent order-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] focus-visible:ring-offset-2"
+      className="col-span-1 h-full cursor-pointer bg-white rounded-2xl p-2 sm:p-3 shadow-md border border-transparent border-gray-100 group outline-none focus-visible:ring-2 focus-visible:ring-[#17294F] focus-visible:ring-offset-2"
     >
       <div className="flex flex-col gap-2 sm:gap-2.5 w-full">
         <div className="aspect-[4/3] relative overflow-hidden rounded-xl">

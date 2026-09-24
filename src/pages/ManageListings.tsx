@@ -46,7 +46,7 @@ export default function ManageListings() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#F9F9F9]">
+      <div className="min-h-dvh flex flex-col bg-[#F9F9F9]">
         <Navbar />
         <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 py-12 animate-pulse">
           <div className="h-10 bg-neutral-200 rounded w-64 mb-8"></div>
@@ -85,7 +85,7 @@ export default function ManageListings() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F9F9F9]">
+    <div className="min-h-dvh flex flex-col bg-[#F9F9F9]">
       <Navbar />
       
       <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 py-12">
@@ -141,7 +141,7 @@ export default function ManageListings() {
                     <div className="flex gap-3 w-full sm:w-auto">
                       <button 
                         onClick={() => setEditingListing(listing)}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-neutral-300 text-neutral-800 font-bold g-neutral-50 transition"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-neutral-300 text-neutral-800 font-bold bg-neutral-50 transition"
                       >
                         <Edit size={18} />
                         Edit Listing

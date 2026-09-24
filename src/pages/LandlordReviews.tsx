@@ -145,12 +145,13 @@ export default function LandlordReviews() {
   const totalReviews = displayListings.reduce((acc, l) => acc + l.reviews.length, 0);
 
   return (
-    <div className="h-screen flex flex-col bg-[#F9F9F9]">
+    <div className="h-dvh flex flex-col bg-[#F9F9F9]">
       <div className="bg-white border-b border-neutral-100 shrink-0">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate('/profile')}
-            className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-600 ext-neutral-900"
+            className="p-2 -m-1 min-h-11 min-w-11 flex items-center justify-center rounded-full hover:bg-neutral-100 transition-colors text-neutral-600 hover:text-neutral-900"
+            aria-label="Back to profile"
           >
             <ArrowLeft size={20} />
           </button>
@@ -162,7 +163,7 @@ export default function LandlordReviews() {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {loadingListings ? (
             <div className="flex flex-col gap-4">
               {[1, 2, 3].map((i) => (
@@ -229,7 +230,7 @@ export default function LandlordReviews() {
                       <div className="w-full border-t border-neutral-100 mt-3">
                         <button
                           onClick={() => toggleListing(listing.id)}
-                          className="w-full flex items-center justify-between px-5 py-3.5 text-left g-neutral-50/50 transition-colors cursor-pointer"
+                          className="w-full flex items-center justify-between px-5 py-3.5 text-left bg-neutral-50/50 transition-colors cursor-pointer"
                         >
                           <div className="flex items-center gap-2">
                             <MessageSquare size={16} className="text-neutral-600" />
@@ -276,7 +277,7 @@ export default function LandlordReviews() {
                                 <button
                                   onClick={() => setConfirmDelete({ listingId: listing.id, reviewId: review.id, reviewName: review.userName })}
                                   disabled={deletingReview === review.id}
-                                  className="shrink-0 p-2 text-neutral-400 ext-red-500 g-red-50 rounded-lg transition-colors self-start cursor-pointer disabled:cursor-not-allowed"
+                                  className="shrink-0 p-2 text-neutral-400 text-red-500 bg-red-50 rounded-lg transition-colors self-start cursor-pointer disabled:cursor-not-allowed"
                                   title="Delete review"
                                 >
                                   <Trash2 size={16} />
@@ -321,7 +322,7 @@ export default function LandlordReviews() {
           <div className="flex gap-3 justify-center">
             <button
               onClick={() => setConfirmDelete(null)}
-              className="px-5 py-2.5 rounded-xl border border-neutral-200 text-neutral-700 font-semibold text-sm g-neutral-50 transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-xl border border-neutral-200 text-neutral-700 font-semibold text-sm bg-neutral-50 transition-colors cursor-pointer"
             >
               Cancel
             </button>
@@ -332,7 +333,7 @@ export default function LandlordReviews() {
                   setConfirmDelete(null);
                 }
               }}
-              className="px-5 py-2.5 rounded-xl bg-red-500 text-white font-semibold text-sm g-red-600 transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-red-500 text-white font-semibold text-sm bg-red-600 transition-colors cursor-pointer"
             >
               Delete
             </button>

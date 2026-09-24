@@ -73,7 +73,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({
           <h2 className="text-xl md:text-2xl font-extrabold text-[#17294F]">Landlord Profile</h2>
           <button
             onClick={onClose}
-            className="p-2 g-neutral-100 rounded-full transition-colors"
+            className="p-2 bg-neutral-100 rounded-full transition-colors"
           >
             <X size={20} />
           </button>

@@ -118,7 +118,7 @@ export default function RoommateHero({
         </button>
       </div>
 
-      <div className="relative z-10 max-w-[2520px] mx-auto flex-1 flex flex-col px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
+      <div className="relative z-10 max-w-7xl mx-auto flex-1 flex flex-col w-full min-w-0 px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
 
         {/* Center Content */}
         <div className="flex flex-col items-center justify-center text-center flex-1">
@@ -142,14 +142,14 @@ export default function RoommateHero({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: 'smooth' })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: 'smooth' })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -163,7 +163,7 @@ export default function RoommateHero({
                       <button
                         key={loc}
                         onClick={() => { setSelectedLocation(loc); setActiveDropdown(null); }}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent bg-neutral-100 transition-all text-left w-full"
                       >
                         <MapPin size={14} className="text-[#2252D6] flex-shrink-0" />
                         <span className="font-medium text-neutral-900 text-sm">{loc}</span>
@@ -177,14 +177,14 @@ export default function RoommateHero({
               <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[98%] max-w-[450px] md:max-w-[700px] lg:max-w-[820px] bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-xl border border-neutral-100 p-4 z-[100] text-left pointer-events-auto">
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: 'smooth' })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
                 </button>
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: 'smooth' })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -198,7 +198,7 @@ export default function RoommateHero({
                       <button 
                         key={range.label}
                         onClick={() => { setSelectedBudget(range.label); setActiveDropdown(null); onBudgetSelect?.(range); }}
-                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent bg-neutral-100 transition-all text-left w-full"
                       >
                         <span className="font-medium text-neutral-900 text-sm">{range.label}</span>
                       </button>
@@ -235,7 +235,7 @@ export default function RoommateHero({
                         setSearchQuery('');
                         setHideDropdown(true);
                       }} 
-                      className="p-1 g-white/10 rounded-full transition-colors flex-shrink-0"
+                      className="p-1 bg-white/10 rounded-full transition-colors flex-shrink-0"
                       aria-label="Clear search"
                     >
                       <X className="w-4 h-4 text-white/80" />
@@ -282,7 +282,7 @@ export default function RoommateHero({
                     className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'location' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
-                        : 'g-white/5 rounded-full'
+                        : 'bg-white/5 rounded-full'
                       }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -308,7 +308,7 @@ export default function RoommateHero({
                     className={`w-full flex items-center justify-between px-1 sm:px-1.5 md:pl-6 md:pr-4 py-1.5 md:py-3.5 transition-all cursor-pointer group focus-visible:outline-none ${
                         activeDropdown === 'budget' 
                         ? 'bg-white rounded-full text-[#17294F] relative z-[60] shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:shadow-md' 
-                        : 'g-white/5 rounded-full'
+                        : 'bg-white/5 rounded-full'
                       }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">

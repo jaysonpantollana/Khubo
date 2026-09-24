@@ -98,7 +98,6 @@ export function Modal({
         className={cn(
           'relative w-full bg-white rounded-modal shadow-modal',
           'transform transition-all duration-200',
-          'animate-in fade-in-0 zoom-in-95',
           sizeStyles[size],
           maxWidth,
           contentClassName,
@@ -129,7 +128,7 @@ export function Modal({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-shrink-0 p-2 g-neutral-100 rounded-full transition-colors text-neutral-400 ext-neutral-600"
+                className="flex-shrink-0 p-2 min-h-11 min-w-11 flex items-center justify-center bg-neutral-100 rounded-full transition-colors text-neutral-400 hover:text-neutral-600"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -137,7 +136,7 @@ export function Modal({
             )}
           </div>
         )}
-        <div className={cn("p-6 max-h-[calc(100vh-200px)] overflow-y-auto", bodyClassName)}>
+        <div className={cn("p-4 sm:p-6 max-h-[calc(100dvh-200px)] overflow-y-auto", bodyClassName)}>
           {children}
         </div>
       </div>

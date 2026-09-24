@@ -70,13 +70,13 @@ export default function Categories({ selectedCategory, onSelect }: CategoriesPro
   };
 
   return (
-    <div className="py-2 sm:py-4 bg-white w-full relative">
+    <div className="py-3 sm:py-4 bg-white w-full relative">
       <div className="hidden md:block absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
       <div className="hidden md:block absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
       
       <button 
         onClick={() => scroll('left')}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm ext-neutral-800 order-neutral-300 transition-all hidden md:flex"
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
         aria-label="Scroll left"
       >
         <Icons.ChevronLeft size={16} strokeWidth={2} />
@@ -84,7 +84,7 @@ export default function Categories({ selectedCategory, onSelect }: CategoriesPro
 
       <button 
         onClick={() => scroll('right')}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm ext-neutral-800 order-neutral-300 transition-all hidden md:flex"
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 items-center justify-center bg-white border border-neutral-200 rounded-full text-neutral-500 shadow-sm hover:text-neutral-800 hover:border-neutral-300 transition-all hidden md:flex"
         aria-label="Scroll right"
       >
         <Icons.ChevronRight size={16} strokeWidth={2} />
@@ -102,10 +102,10 @@ export default function Categories({ selectedCategory, onSelect }: CategoriesPro
               key={category.label}
               onClick={() => handleChipClick(category.label)}
               className={cn(
-                "px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border text-[10px] sm:text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 cursor-pointer",
+                "px-3 py-2 sm:px-4 sm:py-2 rounded-full border text-xs font-bold sm:tracking-wider uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 cursor-pointer min-h-11",
                 isSelected 
                    ? "bg-neutral-900 text-white border-neutral-900 shadow-sm" 
-                   : "bg-white text-neutral-700 border-neutral-200 order-neutral-800 ext-neutral-900"
+                   : "bg-white text-neutral-700 border-neutral-200 hover:border-neutral-800 hover:text-neutral-900"
               )}
             >
               {category.label}

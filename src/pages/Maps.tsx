@@ -368,7 +368,7 @@ export default function Maps() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white relative">
+    <div className="flex flex-col h-dvh bg-white relative">
       <button
         onClick={() => navigate(-1)}
         className="md:hidden absolute top-14 left-3 z-30 w-10 h-10 flex items-center justify-center bg-white shadow-md pointer-events-auto rounded-full border border-neutral-100"
@@ -410,7 +410,7 @@ export default function Maps() {
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery("")}
-                      className="p-1 g-neutral-100 rounded-full flex-shrink-0 mr-2"
+                      className="p-1 bg-neutral-100 rounded-full flex-shrink-0 mr-2"
                       aria-label="Clear search"
                     >
                       <X className="w-3.5 h-3.5 text-neutral-500" />
@@ -446,7 +446,7 @@ export default function Maps() {
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group text-black focus-visible:outline-none ${
                       activeDropdown === "location"
                         ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
-                        : "g-neutral-50 rounded-full"
+                        : "bg-neutral-50 rounded-full"
                     }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -497,7 +497,7 @@ export default function Maps() {
                                    setActiveDropdown(null);
                                    setDropdownPosition(null);
                                  }}
-                                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-transparent bg-neutral-100 transition-all text-left w-full"
                                >
                                   <MapPin size={14} className="text-[#2252D6] flex-shrink-0" />
                                  <span className="font-medium text-neutral-900 text-sm">
@@ -523,7 +523,7 @@ export default function Maps() {
                     className={`w-full min-w-0 flex items-center justify-between px-1.5 sm:px-3 md:pl-5 md:pr-3 py-1.5 md:py-2 cursor-pointer group text-black focus-visible:outline-none ${
                       activeDropdown === "budget"
                         ? "bg-neutral-100 rounded-full text-[#17294F] shadow-sm relative z-[60]"
-                        : "g-neutral-50 rounded-full"
+                        : "bg-neutral-50 rounded-full"
                     }`}
                   >
                     <div className="flex items-center gap-1 md:gap-3 min-w-0">
@@ -573,7 +573,7 @@ export default function Maps() {
                                 setActiveDropdown(null);
                                 setDropdownPosition(null);
                               }}
-                              className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 text-left w-full"
+                              className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent bg-neutral-100 text-left w-full"
                             >
                               <span className="font-bold text-neutral-900 text-sm">
                                 {range.label}
@@ -663,7 +663,7 @@ export default function Maps() {
                     onClick={() => {
                       setSearchQuery("");
                     }}
-                    className="px-6 py-3 bg-black text-white rounded-full font-bold g-neutral-800 text-sm"
+                    className="px-6 py-3 bg-black text-white rounded-full font-bold bg-neutral-800 text-sm"
                   >
                     Clear all filters
                   </button>
@@ -678,7 +678,7 @@ export default function Maps() {
         {/* Desktop Collapse Toggle Button */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className={`hidden md:flex items-center justify-center absolute top-1/2 z-30 bg-white border border-neutral-200 w-6 h-14 rounded-r-xl shadow-md g-neutral-50 -translate-y-1/2 transform ${isSidebarCollapsed ? "left-0" : "md:portrait:left-[330px] md:landscape:left-[420px] lg:left-[480px]"}`}
+          className={`hidden md:flex items-center justify-center absolute top-1/2 z-30 bg-white border border-neutral-200 w-6 h-14 rounded-r-xl shadow-md bg-neutral-50 -translate-y-1/2 transform ${isSidebarCollapsed ? "left-0" : "md:portrait:left-[330px] md:landscape:left-[420px] lg:left-[480px]"}`}
         >
           {isSidebarCollapsed ? (
             <ChevronRight size={16} className="text-neutral-500" />
@@ -716,14 +716,14 @@ export default function Maps() {
             <div className="bg-white rounded-2xl shadow-xl border border-neutral-100 overflow-hidden divide-y divide-neutral-100 flex flex-col">
               <button
                 aria-label="Zoom in"
-                className="p-3 g-neutral-50 font-bold text-neutral-600"
+                className="p-3 bg-neutral-50 font-bold text-neutral-600"
                 onClick={() => map.current?.zoomIn()}
               >
                 +
               </button>
               <button
                 aria-label="Zoom out"
-                className="p-3 g-neutral-50 font-bold text-neutral-600"
+                className="p-3 bg-neutral-50 font-bold text-neutral-600"
                 onClick={() => map.current?.zoomOut()}
               >
                 −

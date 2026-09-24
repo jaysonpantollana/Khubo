@@ -46,7 +46,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-[#ebebeb] h-14 sm:h-16 md:h-20 flex items-center">
-      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 w-full">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex flex-row items-center justify-between">
           {/* Logo */}
           <Link
@@ -70,9 +70,9 @@ export default function Navbar() {
           {/* Search Bar */}
           <button
             aria-label="Open search menu"
-            className="border border-[#dddddd] h-12 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] transition cursor-pointer flex items-center px-2 pl-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+            className="border border-[#dddddd] h-12 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] transition cursor-pointer flex items-center px-2 pl-6 min-w-0 max-w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
           >
-            <div className="flex flex-row items-center justify-between gap-4">
+            <div className="flex flex-row items-center justify-between gap-4 min-w-0">
               <div className="text-sm font-semibold pr-4 border-r border-[#dddddd]">Anywhere</div>
               <div className="hidden sm:block text-sm font-semibold px-4 border-r border-[#dddddd]">Any week</div>
               <div className="text-sm pl-4 pr-1 text-[#717171] flex flex-row items-center gap-3">
@@ -88,14 +88,14 @@ export default function Navbar() {
           <div className="flex flex-row items-center gap-3 relative" ref={menuRef}>
             <button
               onClick={handleCITADELYourHome}
-              className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full g-neutral-100 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+              className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full bg-neutral-100 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               CITADEL your home
             </button>
             <button
               onClick={openNotifications}
               aria-label="Notifications"
-              className="hidden sm:flex relative p-3 g-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+              className="hidden sm:flex relative p-3 bg-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               <Bell size={18} />
               {notifications.length > 0 && (
@@ -106,7 +106,7 @@ export default function Navbar() {
             </button>
             <button
               aria-label="Choose language"
-              className="hidden sm:block p-3 g-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
+              className="hidden sm:block p-3 bg-neutral-100 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17294F]"
             >
               <Globe size={18} />
             </button>
@@ -134,21 +134,21 @@ export default function Navbar() {
                         <p className="text-xs text-neutral-500 mt-0.5">Signed in</p>
                       </div>
                       <div className="py-2">
-                        <button className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition">
+                        <button className="w-full text-left px-4 py-2.5 text-sm bg-neutral-50 text-neutral-700 transition">
                           Trips
                         </button>
-                        <button className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition">
+                        <button className="w-full text-left px-4 py-2.5 text-sm bg-neutral-50 text-neutral-700 transition">
                           Wishlists
                         </button>
                       </div>
                       <div className="py-2 border-t border-neutral-100">
                         <button 
                           onClick={handleCITADELYourHome}
-                          className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
+                          className="w-full text-left px-4 py-2.5 text-sm bg-neutral-50 text-neutral-700 transition"
                         >
                           CITADEL your home
                         </button>
-                        <Link to="/manage-listings" className="block w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition" onClick={() => setIsMenuOpen(false)}>
+                        <Link to="/manage-listings" className="block w-full text-left px-4 py-2.5 text-sm bg-neutral-50 text-neutral-700 transition" onClick={() => setIsMenuOpen(false)}>
                           Manage listings
                         </Link>
                       </div>
@@ -158,7 +158,7 @@ export default function Navbar() {
                             signOut();
                             setIsMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-2 text-left px-4 py-2.5 text-sm g-neutral-50 text-[#17294F] font-medium transition"
+                          className="w-full flex items-center gap-2 text-left px-4 py-2.5 text-sm bg-neutral-50 text-[#17294F] font-medium transition"
                         >
                           <LogOut size={16} />
                           Log out
@@ -172,7 +172,7 @@ export default function Navbar() {
                           setIsAuthModalOpen(true);
                           setIsMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm font-semibold g-neutral-50 text-neutral-800 transition"
+                        className="w-full text-left px-4 py-2.5 text-sm font-semibold bg-neutral-50 text-neutral-800 transition"
                       >
                         Sign up
                       </button>
@@ -181,18 +181,18 @@ export default function Navbar() {
                           setIsAuthModalOpen(true);
                           setIsMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
+                        className="w-full text-left px-4 py-2.5 text-sm bg-neutral-50 text-neutral-700 transition"
                       >
                         Log in
                       </button>
                       <div className="my-2 border-t border-neutral-100"></div>
                       <button 
                         onClick={handleCITADELYourHome}
-                        className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition"
+                        className="w-full text-left px-4 py-2.5 text-sm bg-neutral-50 text-neutral-700 transition"
                       >
                         CITADEL your home
                       </button>
-                      <button className="w-full text-left px-4 py-2.5 text-sm g-neutral-50 text-neutral-700 transition">
+                      <button className="w-full text-left px-4 py-2.5 text-sm bg-neutral-50 text-neutral-700 transition">
                         Help
                       </button>
                     </>

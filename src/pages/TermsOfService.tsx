@@ -10,10 +10,10 @@ export default function TermsOfService() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-dvh bg-white">
       <div className="sticky top-0 z-50 bg-white border-b border-neutral-100">
         <div className="flex items-center gap-3 px-4 py-3">
-          <button onClick={() => navigate(-1)} className="p-1">
+          <button onClick={() => navigate(-1)} className="p-2 -m-1 min-h-11 min-w-11 flex items-center justify-center rounded-full hover:bg-neutral-100 transition-colors" aria-label="Go back">
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h1 className="text-lg font-bold">Terms of Service</h1>

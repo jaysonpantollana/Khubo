@@ -144,13 +144,13 @@ export default function ToRate() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0f2f5] pb-24">
+    <div className="min-h-dvh bg-[#f0f2f5] pb-24">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-neutral-100">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 -ml-2 g-neutral-100 rounded-full transition-colors"
+            className="p-2 -ml-2 bg-neutral-100 rounded-full transition-colors"
           >
             <ArrowLeft size={20} className="text-neutral-700" />
           </button>
@@ -159,7 +159,7 @@ export default function ToRate() {
       </div>
 
       {/* Property list */}
-      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6 space-y-5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
         {reservations.slice(0, 1).map((res) => {
           const submitted = ratings[res.id]?.rating > 0 && ratings[res.id]?.comment;
           const anon = isAnonymous[res.id] || false;

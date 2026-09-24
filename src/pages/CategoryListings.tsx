@@ -48,28 +48,28 @@ export default function CategoryListings() {
   }, [categoryId, LISTINGS]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-dvh bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-neutral-100 px-4 py-4 md:px-12 flex items-center gap-4">
+      <header className="sticky top-0 z-50 bg-white border-b border-neutral-100 px-4 py-4 sm:px-6 lg:px-8 flex items-center gap-4">
         <button 
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 -ml-2 md:ml-0 text-neutral-900 transition"
+          className="flex items-center gap-2 -ml-2 md:ml-0 text-neutral-900 transition min-h-11 min-w-11 -my-1"
         >
           <ArrowLeft size={24} />
           <span className="font-semibold text-sm hidden sm:block">Back</span>
         </button>
-        <h1 className="text-xl md:text-2xl font-display font-bold">{title}</h1>
+        <h1 className="text-xl md:text-2xl font-display font-bold min-w-0 truncate">{title}</h1>
       </header>
 
-      <main className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 pt-8 pb-40">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {Array.from({ length: 12 }).map((_, i) => (
               <ListingCardSkeleton key={`skeleton-${i}`} />
             ))}
           </div>
         ) : filteredListings.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {filteredListings.map((listing) => (
               <ListingCard 
                 key={listing.id} 

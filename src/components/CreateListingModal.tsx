@@ -198,7 +198,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
             <h2 className="text-xl font-bold text-neutral-800">Add new listing</h2>
             <button 
               onClick={onClose}
-              className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-500"
+              className="p-2 bg-neutral-100 rounded-full transition-colors text-neutral-500"
             >
               <X size={20} />
             </button>
@@ -231,7 +231,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                   ))}
                   
                   {images.length < 5 && (
-                    <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer g-neutral-50 transition">
+                    <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer bg-neutral-50 transition">
                       <Upload size={24} className="mb-1" />
                       <span className="text-xs font-medium">Add Photo</span>
                       <input type="file" multiple accept="image/*" onChange={handleImageChange} className="hidden" />
@@ -345,7 +345,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       key={cat}
                       type="button"
                       onClick={() => setCategory(cat)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 g-neutral-200'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 bg-neutral-200'}`}
                     >
                       {cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
@@ -386,7 +386,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     <button
                       type="button"
                       onClick={() => setIsAddingCategory(true)}
-                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 ext-neutral-700 g-neutral-50"
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 text-neutral-700 bg-neutral-50"
                     >
                       + Add
                     </button>
@@ -403,7 +403,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                       key={amenity}
                       type="button"
                       onClick={() => toggleAmenity(amenity)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 order-neutral-300'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 border-neutral-300'}`}
                     >
                       {amenity}
                     </button>
@@ -444,7 +444,7 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     <button
                       type="button"
                       onClick={() => setIsAddingAmenity(true)}
-                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 ext-neutral-700 g-neutral-50"
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 text-neutral-700 bg-neutral-50"
                     >
                       + Add
                     </button>
@@ -461,12 +461,12 @@ export function CreateListingModal({ isOpen, onClose, onSuccess }: CreateListing
                     <div className="flex items-center gap-3 px-4 py-3 bg-neutral-50 rounded-xl border border-neutral-200">
                       <svg className="w-5 h-5 text-[#17294F] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                       <span className="text-sm text-neutral-700 truncate flex-1">{preContractualDoc.name}</span>
-                      <button type="button" onClick={removeDoc} className="text-neutral-400 ext-red-500 transition-colors">
+                      <button type="button" onClick={removeDoc} className="text-neutral-400 text-red-500 transition-colors">
                         <XCircle size={16} />
                       </button>
                     </div>
                   ) : (
-                    <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer g-neutral-50 transition">
+                    <label className="w-32 h-32 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer bg-neutral-50 transition">
                       <Upload size={24} className="mb-1" />
                       <span className="text-xs font-medium text-center px-1">Add Document</span>
                       <input type="file" accept=".pdf,.doc,.docx" onChange={handleDocChange} className="hidden" />

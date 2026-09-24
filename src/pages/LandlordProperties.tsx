@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, Plus, Pencil } from 'lucide-react';
 import { Listing } from '../types';
 import { useAuth } from '../lib/AuthContext';
-import BottomNav from '../components/BottomNav';
 import { CreateListingModal } from '../components/CreateListingModal';
 import { EditListingModal } from '../components/EditListingModal';
 
@@ -119,12 +118,13 @@ export default function LandlordProperties() {
   );
 
   return (
-    <div className="h-screen flex flex-col bg-[#F9F9F9]">
+    <div className="h-dvh flex flex-col bg-[#F9F9F9]">
       <div className="bg-white border-b border-neutral-100 shrink-0">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate('/profile')}
-            className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-600 ext-neutral-900"
+            className="p-2 -m-1 min-h-11 min-w-11 flex items-center justify-center rounded-full hover:bg-neutral-100 transition-colors text-neutral-600 hover:text-neutral-900"
+            aria-label="Back to profile"
           >
             <ArrowLeft size={20} />
           </button>
@@ -133,7 +133,7 @@ export default function LandlordProperties() {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-end mb-4">
             <button
               onClick={() => setShowCreateModal(true)}
@@ -176,7 +176,7 @@ export default function LandlordProperties() {
                   return (
                     <tr 
                       key={listing.id} 
-                      className={`${index !== displayListings.length - 1 ? 'border-b border-neutral-50' : ''} g-neutral-50/50 transition-colors`}
+                      className={`${index !== displayListings.length - 1 ? 'border-b border-neutral-50' : ''} bg-neutral-50/50 transition-colors`}
                     >
                       <td className="p-4 pl-6 text-neutral-500 font-medium">{index + 1}</td>
                       <td className="p-4 font-bold text-[#0A2B4E] whitespace-nowrap">{listing.title}</td>

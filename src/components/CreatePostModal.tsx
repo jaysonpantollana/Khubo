@@ -146,7 +146,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
             <h2 className="text-xl font-bold text-neutral-900 text-center w-full">Create post</h2>
             <button
               onClick={onClose}
-              className="absolute right-4 p-2 bg-neutral-100 g-neutral-200 text-neutral-600 rounded-full transition-colors"
+              className="absolute right-4 p-2 bg-neutral-100 bg-neutral-200 text-neutral-600 rounded-full transition-colors"
             >
               <X size={20} />
             </button>
@@ -196,7 +196,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                         setSelectedTraits(updated);
                         localStorage.setItem('user_profile_tags', JSON.stringify(updated));
                       }}
-                      className="g-neutral-250 p-0.5 rounded-full transition-colors flex items-center justify-center shrink-0 text-neutral-400 ext-neutral-700"
+                      className="bg-neutral-250 p-0.5 rounded-full transition-colors flex items-center justify-center shrink-0 text-neutral-400 text-neutral-700"
                       title={`Remove ${trait}`}
                     >
                       <X size={10} className="stroke-[3]" />
@@ -246,7 +246,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
                   <button
                     type="button"
                     onClick={() => setIsAddingTag(true)}
-                    className="inline-flex items-center justify-center px-3 py-1 bg-neutral-50 g-neutral-100 border border-dashed border-neutral-300 order-neutral-400 text-neutral-650 ext-neutral-800 rounded-full text-xs font-semibold cursor-pointer shrink-0 transition-colors"
+                    className="inline-flex items-center justify-center px-3 py-1 bg-neutral-50 bg-neutral-100 border border-dashed border-neutral-300 border-neutral-400 text-neutral-650 text-neutral-800 rounded-full text-xs font-semibold cursor-pointer shrink-0 transition-colors"
                   >
                     + Add tag
                   </button>
@@ -334,7 +334,7 @@ export default function CreatePostModal({ isOpen, onClose, postMode, onPostCreat
               disabled={!content.trim()}
               className={`w-full py-2.5 rounded-lg font-bold text-[15px] transition-colors mt-2 shrink-0 ${
                 content.trim() 
-                  ? 'bg-neutral-900 text-white g-neutral-800' 
+                  ? 'bg-neutral-900 text-white bg-neutral-800' 
                   : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
               }`}
             >

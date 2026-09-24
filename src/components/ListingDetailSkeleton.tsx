@@ -8,10 +8,10 @@ import React from 'react';
 
 export default function ListingDetailSkeleton() {
   return (
-    <div className="min-h-screen bg-neutral-50 md:bg-white pb-32 ">
+    <div className="min-h-dvh bg-neutral-50 md:bg-white pb-32">
        {/* Desktop Header Skeleton */}
        <div className="hidden md:block sticky top-0 z-50 bg-white/80 border-b border-gray-100">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div className="w-10 h-10 bg-neutral-200 rounded-full"></div>
             <div className="flex items-center gap-4"></div>
         </div>
@@ -20,7 +20,7 @@ export default function ListingDetailSkeleton() {
        {/* Mobile Header Image Skeleton */}
        <div className="md:hidden relative h-[55vh] w-full overflow-hidden bg-neutral-200"></div>
 
-      <main className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 pb-24 md:pb-12 relative md:static mt-0">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 md:pb-12 relative md:static mt-0">
         <div className="px-4 sm:px-0">
           
           {/* Desktop Gallery Grid Skeleton */}

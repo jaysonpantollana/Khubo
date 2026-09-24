@@ -278,7 +278,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] pb-40 transition-colors duration-300">
+    <div className="min-h-dvh bg-[#F9F9F9] pb-40 transition-colors duration-300">
       {/* Hero Section */}
       <div className="relative min-h-[360px] md:min-h-[500px] w-full bg-black flex flex-col justify-end">
         <div
@@ -297,9 +297,9 @@ export default function Profile() {
           </button>
         </div>
 
-        <div className="relative md:absolute md:inset-0 max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 flex flex-col md:flex-row items-center justify-between z-10 pt-16 pb-2 md:pt-24 md:pb-12 gap-4 md:gap-0">
+        <div className="relative md:absolute md:inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between z-10 pt-16 pb-2 md:pt-24 md:pb-12 gap-4 md:gap-0">
           <div className="bg-black/30 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 md:p-8 w-full md:w-[60%] lg:w-[45%] text-white shadow-2xl relative">
-            <button onClick={handleOpenEditProfile} className="absolute top-4 right-4 g-white/20 p-2 rounded-full transition cursor-pointer" title="Edit Profile Details">
+            <button onClick={handleOpenEditProfile} className="absolute top-4 right-4 bg-white/20 p-2 rounded-full transition cursor-pointer" title="Edit Profile Details">
               <MoreVertical className="w-5 h-5 text-white" />
             </button>
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
@@ -345,7 +345,7 @@ export default function Profile() {
             {!isLandlord && (
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2">
                 {profileTags.map(tag => (
-                  <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-transparent text-white g-white/10 transition cursor-default group relative">
+                  <span key={tag} className="px-4 py-1.5 rounded-full border border-white/50 text-[11px] md:text-xs font-semibold bg-transparent text-white bg-white/10 transition cursor-default group relative">
                     {tag}
                     <button
                       onClick={() => setProfileTags(profileTags.filter(t => t !== tag))}
@@ -397,9 +397,9 @@ export default function Profile() {
 
           {!isLandlord && (
           <div className="w-full md:w-[45%] lg:w-[40%] text-white/80 md:text-white text-sm md:text-xl lg:text-2xl font-normal md:font-semibold leading-relaxed drop-shadow-sm px-2 pb-0 pt-0 md:p-6 group text-center md:text-left mt-0">
-            <div className="relative cursor-pointer g-white/10 p-2 rounded-xl transition" onClick={handleOpenEditProfile} title="Edit Quote/Bio">
+            <div className="relative cursor-pointer bg-white/10 p-2 rounded-xl transition" onClick={handleOpenEditProfile} title="Edit Quote/Bio">
               <span className="italic">{profileBio}</span>
-              <button className="absolute -top-4 right-0 opacity-0 transition p-1 g-white/20 rounded-full cursor-pointer md:block hidden">
+              <button className="absolute -top-4 right-0 opacity-0 transition p-1 bg-white/20 rounded-full cursor-pointer md:block hidden">
                 <Edit2 size={16} className="text-white" />
               </button>
             </div>
@@ -409,7 +409,7 @@ export default function Profile() {
       </div>
 
       {/* Main Content Body */}
-      <div className="max-w-[2520px] mx-auto px-4 md:px-12 xl:px-20 relative z-20 mt-2 md:mt-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 mt-2 md:mt-8">
         {/* Stat Cards */}
         <div className={`grid ${isLandlord ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'} gap-4 md:gap-6 drop-shadow-sm`}>
           {statCards.map((stat) => (
@@ -611,7 +611,7 @@ export default function Profile() {
               <div className="flex justify-center mb-8">
               <button
                 onClick={() => setShowAllProperties(!showAllProperties)}
-                  className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold g-neutral-100 transition text-sm"
+                  className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold bg-neutral-100 transition text-sm"
               >
                 {showAllProperties ? 'Show Less' : 'Show All'}
               </button>
@@ -713,7 +713,7 @@ export default function Profile() {
                         <span className="text-sm md:text-base font-medium text-neutral-500">/month</span>
                       </div>
                       <div className="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto">
-                        <button onClick={(e) => { e.stopPropagation(); setEditingListing(listing); }} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold g-neutral-50 transition text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
+                        <button onClick={(e) => { e.stopPropagation(); setEditingListing(listing); }} className="flex-1 md:flex-none px-6 py-3 border-[1.5px] border-neutral-600 text-neutral-700 rounded-full font-bold bg-neutral-50 transition text-sm md:text-base whitespace-nowrap flex items-center justify-center gap-2">
                           <Edit2 size={16} className="text-neutral-600" /> Edit
                         </button>
                         <div className="relative flex items-center" onClick={(e) => e.stopPropagation()}>
@@ -736,7 +736,7 @@ export default function Profile() {
             <div className="flex justify-center mb-8">
                 <button
                   onClick={() => setShowAllProperties(!showAllProperties)}
-                className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold g-neutral-100 transition text-sm"
+                className="px-6 py-2.5 border-[1.5px] border-neutral-300 text-neutral-600 rounded-full font-bold bg-neutral-100 transition text-sm"
                 >
                   {showAllProperties ? 'Show Less' : 'Show All'}
                 </button>

@@ -107,12 +107,13 @@ export default function LandlordTenants() {
     : tenants;
 
   return (
-    <div className="h-screen flex flex-col bg-[#F9F9F9]">
+    <div className="h-dvh flex flex-col bg-[#F9F9F9]">
       <div className="bg-white border-b border-neutral-100 shrink-0">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate('/profile')}
-            className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-600 ext-neutral-900"
+            className="p-2 -m-1 min-h-11 min-w-11 flex items-center justify-center rounded-full hover:bg-neutral-100 transition-colors text-neutral-600 hover:text-neutral-900"
+            aria-label="Back to profile"
           >
             <ArrowLeft size={20} />
           </button>
@@ -121,20 +122,20 @@ export default function LandlordTenants() {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="relative flex items-center flex-1 min-w-0">
               {!isAddTenantOpen && (
                 <>
                   <button
                     onClick={scrollLeft}
-                    className="absolute left-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm g-neutral-50 transition-colors text-neutral-600"
+                    className="absolute left-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm bg-neutral-50 transition-colors text-neutral-600"
                   >
                     <ChevronLeft size={16} />
                   </button>
                   <button
                     onClick={scrollRight}
-                    className="absolute right-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm g-neutral-50 transition-colors text-neutral-600"
+                    className="absolute right-0 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-neutral-200 shadow-sm bg-neutral-50 transition-colors text-neutral-600"
                   >
                     <ChevronRight size={16} />
                   </button>
@@ -149,7 +150,7 @@ export default function LandlordTenants() {
                   className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
                     selectedProperty === null
                       ? 'bg-[#17294F] text-white'
-                      : 'bg-neutral-100 text-neutral-600 g-neutral-200'
+                      : 'bg-neutral-100 text-neutral-600 bg-neutral-200'
                   }`}
                 >
                   All Properties
@@ -161,7 +162,7 @@ export default function LandlordTenants() {
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors shrink-0 ${
                       selectedProperty === prop
                         ? 'bg-[#17294F] text-white'
-                        : 'bg-neutral-100 text-neutral-600 g-neutral-200'
+                        : 'bg-neutral-100 text-neutral-600 bg-neutral-200'
                     }`}
                   >
                     {prop}
@@ -196,7 +197,7 @@ export default function LandlordTenants() {
                 ) : (
                   <button
                     onClick={() => setIsAddingRoom(true)}
-                    className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 order-[#17294F] ext-[#17294F] shrink-0"
+                    className="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border-2 border-dashed border-neutral-300 text-neutral-500 border-[#17294F] ext-[#17294F] shrink-0"
                   >
                     + Add Property
                   </button>

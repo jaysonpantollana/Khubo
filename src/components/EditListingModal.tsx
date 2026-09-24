@@ -174,7 +174,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
             <h2 className="text-xl font-bold text-neutral-800">Edit Listing</h2>
             <button 
               onClick={onClose}
-              className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-500"
+              className="p-2 bg-neutral-100 rounded-full transition-colors text-neutral-500"
             >
               <X size={20} />
             </button>
@@ -223,7 +223,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                   ))}
                   
                   {(existingImages.length + newImages.length) < 5 && (
-                    <label className="w-24 h-24 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer g-neutral-50 transition">
+                    <label className="w-24 h-24 rounded-lg border-2 border-dashed border-neutral-300 flex flex-col items-center justify-center text-neutral-500 cursor-pointer bg-neutral-50 transition">
                       <Upload size={24} className="mb-1" />
                       <span className="text-xs font-medium">Add Photo</span>
                       <input type="file" multiple accept="image/*" onChange={handleImageChange} className="hidden" />
@@ -275,7 +275,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       key={cat}
                       type="button"
                       onClick={() => setCategory(cat)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 g-neutral-200'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition ${category === cat ? 'bg-[#17294F] text-white' : 'bg-neutral-100 text-neutral-600 bg-neutral-200'}`}
                     >
                       {cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
@@ -292,7 +292,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                       key={amenity}
                       type="button"
                       onClick={() => toggleAmenity(amenity)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 order-neutral-300'}`}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition border ${selectedAmenities.includes(amenity) ? 'border-[#17294F] bg-blue-50 text-[#17294F]' : 'border-neutral-200 text-neutral-600 border-neutral-300'}`}
                     >
                       {amenity}
                     </button>
@@ -333,7 +333,7 @@ export function EditListingModal({ isOpen, onClose, onSuccess, listing }: EditLi
                     <button
                       type="button"
                       onClick={() => setIsAddingAmenity(true)}
-                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 ext-neutral-700 g-neutral-50"
+                      className="px-4 py-2 rounded-full text-sm font-medium transition border border-dashed border-neutral-300 text-neutral-500 text-neutral-700 bg-neutral-50"
                     >
                       + Add
                     </button>

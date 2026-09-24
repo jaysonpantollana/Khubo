@@ -17,10 +17,10 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#F7F7F7] border-t border-neutral-200 py-12 md:py-16">
-      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Links Grid / Accordion */}
-        <div className="mx-auto w-fit grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-40 mt-2 lg:mt-0 border-t border-neutral-200 md:border-t-0">
+        <div className="mx-auto w-full max-w-4xl grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-10 mt-2 lg:mt-0 border-t border-neutral-200 md:border-t-0">
           
           <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
             <button 

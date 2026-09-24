@@ -92,3 +92,6 @@ AGENTS.md
 
 # Codex Orchestrator (Docker service, runtime data)
 codex-orchestrator/
+
+.vercel
+.env*

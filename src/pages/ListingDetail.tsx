@@ -91,7 +91,7 @@ export default function ListingDetail() {
 
   if (!listing) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-dvh flex items-center justify-center">
         <div className="text-center">
            <h1 className="text-2xl font-bold">Listing not found</h1>
            <button 
@@ -139,13 +139,13 @@ export default function ListingDetail() {
     : undefined;
 
   return (
-    <div className="min-h-screen bg-neutral-50 md:bg-white pb-40 text-neutral-900">
+    <div className="min-h-dvh bg-neutral-50 md:bg-white pb-16 text-neutral-900">
       {/* Desktop Header */}
       <div className="hidden md:block sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button 
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 g-neutral-100 p-2 pr-4 -ml-2 rounded-full transition text-neutral-900 cursor-pointer pointer-events-auto"
+            className="flex items-center gap-2 bg-neutral-100 p-2 pr-4 -ml-2 rounded-full transition text-neutral-900 cursor-pointer pointer-events-auto"
           >
             <ArrowLeft size={24} />
             <span className="font-semibold text-sm hidden sm:block">Back</span>
@@ -207,7 +207,7 @@ export default function ListingDetail() {
             setIsSaved(!isSaved);
             if (!isSaved) showToast('Listing saved to your wishlist!');
           })}
-          className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg g-white transition-all"
+          className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg bg-white transition-all"
         >
           <Heart
             size={24}
@@ -218,10 +218,10 @@ export default function ListingDetail() {
       </div>
 
       <main className={cn(
-        "max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 pb-24 md:pb-12",
+        "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 md:pb-12",
         "relative md:static mt-0"
       )}>
-        <div className="px-4 sm:px-0">
+        <div className="">
         
         {/* Desktop Gallery Grid */}
         <div className="hidden md:block relative group mb-8">
@@ -245,7 +245,7 @@ export default function ListingDetail() {
               <div 
                 key={idx} 
                 onClick={() => openGallery(idx + 1)}
-                className="hidden md:block relative overflow-hidden bg-neutral-100 cursor-zoom-in group-irst:opacity-100"
+                className="hidden md:block relative overflow-hidden bg-neutral-100 cursor-zoom-in group-first:opacity-100"
               >
                 <img
                   src={img}
@@ -265,7 +265,7 @@ export default function ListingDetail() {
               setIsSaved(!isSaved);
               if (!isSaved) showToast('Listing saved to your wishlist!');
             })}
-            className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg g-white transition-all"
+            className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-xl shadow-lg bg-white transition-all"
           >
             <Heart
               size={24}
@@ -280,7 +280,7 @@ export default function ListingDetail() {
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-neutral-900 tracking-tight leading-tight">{listing.title}</h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 pb-32">
           {/* Main Info */}
           <div className="lg:col-span-2">
             <div className="flex justify-between items-center pb-8 border-b border-gray-100">
@@ -363,7 +363,7 @@ export default function ListingDetail() {
                 Review the terms and conditions before you proceed with booking. This document outlines the house rules, payment schedules, and other important agreements.
               </p>
 
-              <div className="flex items-center justify-between p-5 border border-neutral-200 rounded-2xl bg-neutral-50 g-neutral-100 transition-colors cursor-pointer" onClick={() => requireAuth(() => window.open('#', '_blank'))}>
+              <div className="flex items-center justify-between p-5 border border-neutral-200 rounded-2xl bg-neutral-50 bg-neutral-100 transition-colors cursor-pointer" onClick={() => requireAuth(() => window.open('#', '_blank'))}>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm border border-neutral-100 shrink-0">
                     <FileText size={24} className="text-[#17294F]" />
@@ -402,7 +402,7 @@ export default function ListingDetail() {
                             <button
                               aria-label="Delete review"
                               onClick={(e) => { e.stopPropagation(); setReviewToDelete(rev.id); }}
-                              className="p-1.5 text-neutral-400 ext-red-500 g-red-50 rounded-lg transition-colors cursor-pointer pointer-events-auto"
+                              className="p-1.5 text-neutral-400 text-red-500 bg-red-50 rounded-lg transition-colors cursor-pointer pointer-events-auto"
                             >
                               <Trash2 size={16} />
                             </button>
@@ -675,7 +675,7 @@ export default function ListingDetail() {
                 {isLandlord && (
                   <button
                     onClick={(e) => { e.stopPropagation(); setReviewToDelete(selectedReview.id); }}
-                    className="p-2 text-neutral-400 ext-red-500 g-red-50 rounded-full transition-colors focus:outline-none cursor-pointer"
+                    className="p-2 text-neutral-400 text-red-500 bg-red-50 rounded-full transition-colors focus:outline-none cursor-pointer"
                     aria-label="Delete review"
                   >
                     <Trash2 size={20} />
@@ -686,7 +686,7 @@ export default function ListingDetail() {
                     e.stopPropagation();
                     setSelectedReview(null);
                   }}
-                  className="p-2 bg-neutral-100 g-neutral-200 rounded-full transition-colors focus:outline-none"
+                  className="p-2 bg-neutral-100 bg-neutral-200 rounded-full transition-colors focus:outline-none"
                 >
                   <X size={20} className="text-neutral-600" />
                 </button>
@@ -712,13 +712,13 @@ export default function ListingDetail() {
             <div className="flex gap-3">
               <button
                 onClick={() => setReviewToDelete(null)}
-                className="flex-1 px-4 py-2.5 border border-neutral-200 rounded-xl font-semibold text-neutral-700 g-neutral-50 transition cursor-pointer"
+                className="flex-1 px-4 py-2.5 border border-neutral-200 rounded-xl font-semibold text-neutral-700 bg-neutral-50 transition cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDeleteReview(reviewToDelete)}
-                className="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-xl font-semibold g-red-600 transition cursor-pointer"
+                className="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-xl font-semibold bg-red-600 transition cursor-pointer"
               >
                 Delete
               </button>

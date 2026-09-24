@@ -86,7 +86,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
       >
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 g-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
+          className="absolute top-5 right-5 p-2 bg-neutral-100 rounded-full transition-colors z-20 cursor-pointer"
         >
           <X size={20} className="text-neutral-500" />
         </button>
@@ -154,7 +154,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="e.g. juan_delacruz"
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
                 />
               </div>
             </div>
@@ -172,7 +172,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. juan@email.com"
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
                 />
               </div>
             </div>
@@ -190,7 +190,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="e.g. +63 912 345 6789"
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
                 />
               </div>
             </div>
@@ -203,7 +203,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 appearance-none cursor-pointer"
                 >
                   <option value="">Select gender</option>
                   <option value="male">Male</option>
@@ -229,7 +229,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="Tell us a bit about yourself — your interests, what you're looking for in a place, and what kind of roommate you are..."
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 resize-none"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 resize-none"
                 />
               </div>
             </div>
@@ -329,7 +329,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
                     value={streetAddress}
                     onChange={(e) => setStreetAddress(e.target.value)}
                     placeholder="e.g. 123 Rizal St."
-                    className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                    className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
                   />
                 </div>
               </div>
@@ -342,7 +342,7 @@ export function OnboardingModal({ isOpen, data, onClose, onComplete }: Onboardin
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 order-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-200 border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Cancel
           </button>

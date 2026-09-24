@@ -57,9 +57,9 @@ export default function LandlordProfile() {
 
   if (loading) {
     return (
-      <div className="h-screen flex flex-col bg-[#F9F9F9]">
+      <div className="h-dvh flex flex-col bg-[#F9F9F9]">
         <div className="bg-white border-b border-neutral-100 shrink-0">
-          <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
             <button
               onClick={() => navigate(-1)}
               className="flex items-center gap-2 text-neutral-900 transition-colors"
@@ -71,7 +71,7 @@ export default function LandlordProfile() {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto">
-          <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Hero skeleton */}
             <div className="bg-white rounded-2xl p-6 md:p-8 mb-6 animate-pulse">
               <div className="flex items-center gap-5 mb-8">
@@ -91,7 +91,7 @@ export default function LandlordProfile() {
               </div>
             </div>
             {/* Cards skeleton */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {[1, 2, 3, 4, 5].map((i) => (
                 <div key={i} className="bg-white rounded-2xl overflow-hidden animate-pulse">
                   <div className="aspect-[4/3] bg-neutral-200" />
@@ -111,9 +111,9 @@ export default function LandlordProfile() {
 
   if (notFound || !hostInfo) {
     return (
-      <div className="h-screen flex flex-col bg-[#F9F9F9]">
+      <div className="h-dvh flex flex-col bg-[#F9F9F9]">
         <div className="bg-white border-b border-neutral-100 shrink-0">
-          <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
             <button
               onClick={() => navigate(-1)}
               className="p-2 hover:bg-neutral-100 rounded-full transition-colors text-neutral-600"
@@ -140,7 +140,7 @@ export default function LandlordProfile() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-[#F9F9F9]">
+    <div className="h-dvh flex flex-col bg-[#F9F9F9]">
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
         {/* Hero Cover */}
@@ -153,7 +153,7 @@ export default function LandlordProfile() {
 
           {/* Header overlay */}
           <div className="absolute top-0 left-0 right-0 z-50">
-            <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-4 flex items-center gap-4">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
               <button
                 onClick={() => navigate(-1)}
                 className="flex items-center gap-2 text-white hover:text-white/70 transition-colors font-semibold text-sm"
@@ -166,7 +166,7 @@ export default function LandlordProfile() {
 
           {/* Profile Card Overlay */}
           <div className="absolute bottom-0 left-0 right-0 px-4 sm:px-6 md:px-12 pb-6">
-            <div className="max-w-[2520px] mx-auto">
+            <div className="max-w-7xl mx-auto">
               <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 max-w-2xl">
                 {/* Avatar */}
                 <div className="relative shrink-0">
@@ -206,7 +206,7 @@ export default function LandlordProfile() {
           </div>
         </div>
 
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 py-6 md:py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
           {/* Stats */}
           <div className="bg-white rounded-2xl p-5 sm:p-6 mb-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-50">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
@@ -241,7 +241,7 @@ export default function LandlordProfile() {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {listings.map((listing) => {
                 const tenantCount = tenantCounts[listing.id] || 0;
                 return (

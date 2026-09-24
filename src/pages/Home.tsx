@@ -103,7 +103,7 @@ export default function Home() {
   }, [addSearch]);
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] pb-40">
+    <div className="min-h-dvh bg-[#F9F9F9] pb-40">
       <Hero
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -113,7 +113,7 @@ export default function Home() {
       />
 
       {history.length > 0 && (
-        <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 mt-4 mb-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 mb-4">
           <SearchHistory
             history={history}
             onSelect={(q) => {
@@ -147,7 +147,7 @@ export default function Home() {
         />
       ) : (
         <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm">
-          <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-16">
+          <div className="max-w-7xl mx-auto px-0 flex items-center justify-between min-h-16">
             <div className="flex items-center justify-between w-full">
               <div className="flex-1 min-w-0 relative group/cat pl-2 sm:pl-0">
                 <Categories selectedCategory={selectedCategory} onSelect={setSelectedCategory} />
@@ -159,7 +159,7 @@ export default function Home() {
 
       <div ref={searchObserverRef} className="w-full h-[1px] invisible pointer-events-none" />
 
-      <main className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-4 pt-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <div className="flex flex-col gap-8">
           {listingsLoading || filteredListings.length > 0 ? (
             <>
@@ -189,7 +189,7 @@ export default function Home() {
                 setIsStickySearchActive(false);
                 setHideStickyDropdown(true);
               }}
-              className="px-6 py-3 bg-black text-white rounded-full font-bold g-neutral-800"
+              className="px-6 py-3 bg-black text-white rounded-full font-bold bg-neutral-800"
             >
               Clear all filters & search
             </button>

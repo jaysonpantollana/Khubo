@@ -101,7 +101,7 @@ export default function Hero({
         </div>
 
         {/* Heading + search bar */}
-        {/* ponytail: z-[60] beats sticky bar z-40 and BottomNav z-50 so the open search dropdown renders in front */}        <div className="relative z-[60] max-w-[2520px] mx-auto flex-1 flex flex-col px-3 sm:px-8 lg:px-12 pb-8 sm:pb-10">
+        {/* ponytail: z-[60] beats sticky bar z-40 and BottomNav z-50 so the open search dropdown renders in front */}        <div className="relative z-[60] max-w-7xl mx-auto flex-1 flex flex-col w-full min-w-0 px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
           <div className="flex-1 flex flex-col items-center justify-center text-center">
           <h1 className="flex flex-col sm:flex-row items-center justify-center gap-y-1 sm:gap-y-0 gap-x-2 sm:gap-x-4 md:gap-x-6 text-white w-full px-2">
             <span

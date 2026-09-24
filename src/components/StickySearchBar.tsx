@@ -63,7 +63,7 @@ export function StickySearchBar({
 
   return (
     <div className="bg-white sticky top-0 z-40 border-b border-gray-100 shadow-sm">
-      <div className="max-w-[2520px] mx-auto xl:px-12 md:px-12 sm:px-4 px-0 flex items-center justify-between min-h-[70px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between min-h-[70px]">
         <div className="flex items-center justify-between w-full py-3 px-2 sm:px-0">
           <div className="hidden md:block flex-1 min-w-0"></div>
           <div
@@ -76,7 +76,7 @@ export function StickySearchBar({
                 {!locationAtTop && (
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -85,7 +85,7 @@ export function StickySearchBar({
                 {!locationAtBottom && (
                 <button
                   onClick={() => locationScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -104,7 +104,7 @@ export function StickySearchBar({
                           setSelectedStickyLocation(loc);
                           setStickyActiveDropdown(null);
                         }}
-                        className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 transition-all text-left w-full"
+                        className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-transparent bg-neutral-100 transition-all text-left w-full"
                       >
                         <MapPin size={12} className="text-[#2252D6] flex-shrink-0" />
                         <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">{loc}</span>
@@ -120,7 +120,7 @@ export function StickySearchBar({
                 {!budgetAtTop && (
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: -40, behavior: "smooth" })}
-                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll up"
                 >
                   <ChevronUp size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -129,7 +129,7 @@ export function StickySearchBar({
                 {!budgetAtBottom && (
                 <button
                   onClick={() => budgetScrollRef.current?.scrollBy({ top: 40, behavior: "smooth" })}
-                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 g-neutral-200 rounded-full transition-all shadow-sm z-10"
+                  className="absolute bottom-3 right-3 w-10 h-10 flex items-center justify-center bg-neutral-100 bg-neutral-200 rounded-full transition-all shadow-sm z-10"
                   aria-label="Scroll down"
                 >
                   <ChevronDown size={18} strokeWidth={2.5} className="text-neutral-500" />
@@ -148,7 +148,7 @@ export function StickySearchBar({
                           setSelectedStickyBudget(range.label);
                           setStickyActiveDropdown(null);
                         }}
-                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent g-neutral-100 text-left w-full"
+                        className="flex flex-col px-3 py-2.5 rounded-lg bg-transparent bg-neutral-100 text-left w-full"
                       >
                         <span className="font-medium text-neutral-900 text-xs whitespace-nowrap">{range.label}</span>
                       </button>
@@ -188,7 +188,7 @@ export function StickySearchBar({
                           setSearchQuery("");
                           setHideStickyDropdown(true);
                         }}
-                        className="p-1 g-neutral-100 rounded-full mr-2 flex-shrink-0"
+                        className="p-1 bg-neutral-100 rounded-full mr-2 flex-shrink-0"
                         aria-label="Clear search"
                       >
                         <X className="w-3.5 h-3.5 text-neutral-500" />

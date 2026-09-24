@@ -63,7 +63,7 @@ export default function EditProfileModal({
           </div>
           <button
             onClick={onClose}
-            className="p-2 g-neutral-100 rounded-full transition-colors text-neutral-400 ext-neutral-900 cursor-pointer"
+            className="p-2 bg-neutral-100 rounded-full transition-colors text-neutral-400 text-neutral-900 cursor-pointer"
           >
             <X size={20} />
           </button>
@@ -78,7 +78,7 @@ export default function EditProfileModal({
               onChange={(e) => onTempNameChange(e.target.value)}
               required
               placeholder="Enter your name"
-              className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+              className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
             />
           </div>
 
@@ -93,7 +93,7 @@ export default function EditProfileModal({
                 value={tempDetails}
                 onChange={(e) => onTempDetailsChange(e.target.value)}
                 placeholder="e.g. Female"
-                className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
               />
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function EditProfileModal({
                 value={tempLocation}
                 onChange={(e) => onTempLocationChange(e.target.value)}
                 placeholder="e.g. Tibanga, Iligan City"
-                className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
+                className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800"
               />
             </div>
           </div>
@@ -139,11 +139,11 @@ export default function EditProfileModal({
               value={tempBio}
               onChange={(e) => onTempBioChange(e.target.value)}
               placeholder="Add a bio or personal housing quote..."
-              className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 resize-none"
+              className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2252D6] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium text-neutral-800 resize-none"
             />
           </div>
 
-          <div className="flex items-center justify-between p-4 border border-neutral-200 rounded-2xl bg-neutral-50 g-neutral-100/70 transition-all text-left">
+          <div className="flex items-center justify-between p-4 border border-neutral-200 rounded-2xl bg-neutral-50 bg-neutral-100/70 transition-all text-left">
             <div>
               <span className="text-xs font-bold text-[#17294F] uppercase tracking-wider block">Online Status</span>
               <p className="text-xs text-neutral-500 font-medium mt-0.5">Show roommates whether you are currently active</p>
@@ -164,7 +164,7 @@ export default function EditProfileModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-2.5 border-[1.5px] border-neutral-200 order-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
+            className="px-6 py-2.5 border-[1.5px] border-neutral-200 border-neutral-300 text-neutral-600 font-bold rounded-full transition text-sm cursor-pointer"
           >
             Cancel
           </button>

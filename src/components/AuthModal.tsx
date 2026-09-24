@@ -67,7 +67,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
         >
           <button 
              onClick={onClose}
-             className="absolute top-4 right-4 p-2 g-neutral-100 rounded-full transition-colors z-20"
+             className="absolute top-4 right-4 p-2 bg-neutral-100 rounded-full transition-colors z-20"
           >
              <X size={20} className="text-neutral-500" />
           </button>
@@ -97,7 +97,7 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
                      value={email}
                      onChange={(e) => setEmail(e.target.value)}
                      required
-                     className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium"
+                     className="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium"
                    />
                  </div>
                  <div className="relative">
@@ -110,12 +110,12 @@ export function AuthModal({ isOpen, onClose, onLogin, onSignUp }: { isOpen: bool
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                     className="w-full pl-10 pr-12 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 g-neutral-100 focus:bg-white text-sm font-medium"
+                     className="w-full pl-10 pr-12 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#17294F] focus:border-transparent transition-all bg-neutral-50 bg-neutral-100 focus:bg-white text-sm font-medium"
                    />
                    <button 
                      type="button" 
                      onClick={() => setShowPassword(!showPassword)}
-                     className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 ext-neutral-600 focus:outline-none p-1"
+                     className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 text-neutral-600 focus:outline-none p-1"
                      aria-label={showPassword ? "Hide password" : "Show password"}
                    >
                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}

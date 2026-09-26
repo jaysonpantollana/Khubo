@@ -27,12 +27,11 @@
 16. [State Management](#16-state-management)
 17. [Testing](#17-testing)
 18. [Configuration Files](#18-configuration-files)
-19. [Docker Setup](#19-docker-setup)
-20. [Environment Variables](#20-environment-variables)
-21. [Build & Scripts](#21-build--scripts)
-22. [Known Issues & Technical Debt](#22-known-issues--technical-debt)
-23. [Development Guidelines](#23-development-guidelines)
-24. [Troubleshooting](#24-troubleshooting)
+19. [Environment Variables](#19-environment-variables)
+20. [Build & Scripts](#20-build--scripts)
+21. [Known Issues & Technical Debt](#21-known-issues--technical-debt)
+22. [Development Guidelines](#22-development-guidelines)
+23. [Troubleshooting](#23-troubleshooting)
 
 ---
 
@@ -58,7 +57,6 @@
 - Toast notification system with 4 severity levels
 - Focus trap for accessible modal navigation
 - Responsive design from mobile to ultra-wide desktop
-- Docker deployment with multi-stage build
 
 ### Data Strategy
 
@@ -119,13 +117,6 @@ The application uses a **mock-first architecture** (ADR-002). All API calls fall
 | @testing-library/jest-dom | 6.9 | Custom DOM matchers |
 | @testing-library/user-event | 14.6 | User interaction simulation |
 | jsdom | 29.1 | Browser environment simulation for tests |
-
-### Deployment
-
-| Technology | Version | Purpose |
-|---|---|---|
-| Docker | - | Multi-stage container build |
-| nginx | 1.27 | Production web server with SPA fallback |
 
 ---
 
@@ -336,10 +327,7 @@ CITADEL/
 ├── vite.config.ts                   # Vite + Vitest configuration
 ├── tailwind.config.ts               # Tailwind CSS theme configuration
 ├── eslint.config.js                 # ESLint configuration
-├── Dockerfile                       # Multi-stage Docker build
-├── docker-compose.yml               # Docker Compose configuration
 ├── .gitignore                       # Git ignore rules
-├── .dockerignore                    # Docker ignore rules
 ├── .env                             # Environment variables (gitignored)
 ├── README.md                        # User-facing documentation
 ├── AGENTS.md                        # AI agent instructions
@@ -1338,79 +1326,7 @@ npm run test:watch  # Run tests in watch mode (vitest)
 
 ---
 
-## 19. Docker Setup
-
-### Multi-Stage Build
-
-**Build Stage** (`node:20-alpine`):
-1. Copies `package.json` and `package-lock.json`
-2. Runs `npm ci --ignore-scripts --no-audit --no-fund`
-3. Copies source code
-4. Runs `npm run build` to produce `dist/`
-
-**Production Stage** (`nginx:1.27-alpine`):
-1. Copies built `dist/` into Nginx container
-2. Configures SPA fallback (`try_files $uri $uri/ /index.html`)
-3. Static asset caching (6 months)
-4. Security headers (X-Frame-Options, X-Content-Type-Options)
-5. Health check (wget every 30s)
-
-### Docker Compose
-
-```yaml
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - VITE_MAPTILER_API_KEY=${VITE_MAPTILER_API_KEY:-}
-    container_name: citadel
-    restart: unless-stopped
-    ports:
-      - "8080:80"
-    env_file:
-      - .env
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
-      interval: 30s
-      timeout: 5s
-      start_period: 15s
-      retries: 3
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-```
-
-### Quick Start
-
-```bash
-# Create .env with MapTiler API key
-echo "VITE_MAPTILER_API_KEY=your_key_here" > .env
-
-# Build and start
-docker compose up -d
-
-# Access at http://localhost:8080
-```
-
-### Common Commands
-
-| Action | Command |
-|---|---|
-| Build & start | `docker compose up -d` |
-| Stop (keep data) | `docker compose stop` |
-| Stop & remove | `docker compose down` |
-| View logs | `docker compose logs -f` |
-| Rebuild after changes | `docker compose up -d --build` |
-| Shell into container | `docker compose exec app sh` |
-| Verify health | `docker compose ps` |
-
----
-
-## 20. Environment Variables
+## 19. Environment Variables
 
 | Variable | Required | Description |
 |---|---|---|
@@ -1422,7 +1338,7 @@ All `VITE_*` variables are exposed client-side. Do not put secrets in these vari
 
 ---
 
-## 21. Build & Scripts
+## 20. Build & Scripts
 
 ### Development
 
@@ -1461,7 +1377,7 @@ npm run clean  # Remove dist/ directory
 
 ---
 
-## 22. Known Issues & Technical Debt
+## 21. Known Issues & Technical Debt
 
 ### Critical Bugs
 
@@ -1491,7 +1407,7 @@ npm run clean  # Remove dist/ directory
 
 ---
 
-## 23. Development Guidelines
+## 22. Development Guidelines
 
 ### Code Style
 
@@ -1558,7 +1474,7 @@ git commit -m "feat(roommate): add budget filter to roommate search"
 
 ---
 
-## 24. Troubleshooting
+## 23. Troubleshooting
 
 ### Common Issues
 
@@ -1583,11 +1499,6 @@ git commit -m "feat(roommate): add budget filter to roommate search"
 5. **Test Failures**
    - Run `npm run typecheck` to verify types
    - Check `src/test/setup.ts` for missing imports
-
-6. **Docker Issues**
-   - Ensure `.env` file exists with `VITE_MAPTILER_API_KEY`
-   - Check port 8080 is not in use
-   - Run `docker compose up -d --build` for fresh rebuild
 
 ---
 

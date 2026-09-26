@@ -1,5 +1,5 @@
 // @context: Site footer — links, newsletter signup, mobile accordion
-// @purpose: Footer with newsletter signup, site links (Support, Community, Hosting, CITADEL), copyright
+// @purpose: Footer with newsletter signup, site links (Support, Community, Legal), copyright
 // @behavior: Mobile: accordion sections (click to expand/collapse); Desktop: all sections visible inline
 // @behavior: Newsletter email input with submit button
 // @dependencies: lucide-react (ArrowRight, ChevronDown)
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Links Grid / Accordion */}
-        <div className="mx-auto w-full max-w-4xl grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-10 mt-2 lg:mt-0 border-t border-neutral-200 md:border-t-0">
+        <div className="mx-auto w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-10 mt-2 lg:mt-0 border-t border-neutral-200 md:border-t-0">
           
           <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
             <button 
@@ -31,7 +31,6 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'support' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'support' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition">Help Center</a>
               <a href="#" className="hover:text-[#17294F] transition">Contact Us</a>
               <a href="https://forms.gle/QLdAfaUjVyNFoKSr6" target="_blank" rel="noopener noreferrer" className="hover:text-[#17294F] transition">Report an Issue</a>
             </div>
@@ -46,25 +45,8 @@ const Footer: React.FC = () => {
               <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'community' ? 'rotate-180' : ''}`} size={18} />
             </button>
             <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'community' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition">Reviews</a>
               <a href="#" className="hover:text-[#17294F] transition">Stories</a>
               <a href="https://forms.gle/khaEHq6xsEfWnKeq8" target="_blank" rel="noopener noreferrer" className="hover:text-[#17294F] transition">Suggest a Feature</a>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:gap-6 border-b border-neutral-200 md:border-b-0">
-            <button 
-              onClick={() => toggleSection('hosting')}
-              className="flex justify-between items-center py-4 md:py-0 w-full text-left md:cursor-default focus:outline-none"
-            >
-              <h4 className="font-bold text-[#17294F] tracking-wide uppercase text-sm">Tutorials</h4>
-              <ChevronDown className={`md:hidden text-[#17294F] transition-transform ${openSection === 'hosting' ? 'rotate-180' : ''}`} size={18} />
-            </button>
-            <div className={`flex-col gap-4 text-sm text-neutral-600 font-medium pb-4 md:pb-0 ${openSection === 'hosting' ? 'flex' : 'hidden md:flex'}`}>
-              <a href="#" className="hover:text-[#17294F] transition">List Your Property</a>
-              <a href="#" className="hover:text-[#17294F] transition">Host Resources</a>
-              <a href="#" className="hover:text-[#17294F] transition">Community Forum</a>
-              <a href="#" className="hover:text-[#17294F] transition">Hosting Tips</a>
             </div>
           </div>
 

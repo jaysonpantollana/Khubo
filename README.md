@@ -110,17 +110,6 @@ Built with React 19, TypeScript 5.8, Tailwind CSS 4.1, and Vite 6.2.
 
    Navigate to `http://localhost:3002`
 
-### Docker
-
-Alternatively, run with Docker:
-
-```bash
-# Build and start
-docker compose up --build
-
-# Access at http://localhost:8080
-```
-
 ---
 
 ## Pages & Routes
@@ -188,10 +177,6 @@ docker compose up --build
 - **React Testing Library** - React component testing utilities
 - **jsdom** - DOM environment for tests
 
-### Deployment
-- **Docker** - Multi-stage build with nginx for production serving
-- **nginx 1.27** - Production web server with SPA fallback and caching
-
 ---
 
 ## Project Structure
@@ -234,8 +219,6 @@ CITADEL/
 │   ├── types.ts                  # TypeScript type definitions
 │   ├── App.tsx                   # Root component with routing
 │   └── main.tsx                  # Application entry point
-├── Dockerfile                    # Multi-stage Docker build
-├── docker-compose.yml            # Docker Compose configuration
 ├── index.html                    # HTML template
 ├── package.json                  # Dependencies and scripts
 ├── tsconfig.json                 # TypeScript configuration

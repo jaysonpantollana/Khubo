@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight, Copy, Phone, Plus, Check, Pencil } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Copy, Phone, Plus, Check, MoreVertical, Pencil } from 'lucide-react';
 import { AddTenantModal } from '../components/AddTenantModal';
 import { EditTenantModal } from '../components/EditTenantModal';
 import type { SocialLink } from '../components/tenantSchemas';
@@ -34,6 +34,7 @@ export default function LandlordTenants() {
   const [confirmBalance, setConfirmBalance] = useState<{ id: number; newStatus: string } | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [editingTenant, setEditingTenant] = useState<typeof initialTenants[number] | null>(null);
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const copyToClipboard = (text: string, id: string) => {
@@ -78,6 +79,7 @@ export default function LandlordTenants() {
   const startEditing = (id: number) => {
     const tenant = tenants.find(t => t.id === id);
     if (tenant) setEditingTenant(tenant);
+    setOpenMenuId(null);
   };
 
   const saveEditing = (id: number, data: { client: string; room: string; email: string; phone: string; social: { instagram: string; x: string; facebook: string } }) => {
@@ -226,8 +228,8 @@ export default function LandlordTenants() {
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Email</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Phone</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Social</th>
-                  <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Actions</th>
                   <th className="p-4 whitespace-nowrap text-neutral-500 font-bold text-sm">Balance</th>
+                  <th className="p-4 pr-6"><span className="sr-only">Actions</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -282,15 +284,6 @@ export default function LandlordTenants() {
                           </a>
                         </div>
                       </td>
-                      <td className="p-4 whitespace-nowrap font-medium">
-                        <button
-                          onClick={() => startEditing(tenant.id)}
-                          className="p-1.5 rounded text-neutral-400 hover:text-[#17294F] hover:bg-neutral-100 transition-colors"
-                          title="Edit tenant"
-                        >
-                          <Pencil size={16} />
-                        </button>
-                      </td>
                       <td className="p-4 text-neutral-500 font-medium whitespace-nowrap">
                         <button
                           onClick={() => toggleBalance(tenant.id)}
@@ -300,6 +293,31 @@ export default function LandlordTenants() {
                         >
                           {tenant.balance}
                         </button>
+                      </td>
+                      <td className="p-4 pr-6 whitespace-nowrap relative text-neutral-400">
+                        <button
+                          onClick={() => setOpenMenuId(openMenuId === tenant.id ? null : tenant.id)}
+                          className="p-1.5 rounded hover:text-[#17294F] hover:bg-neutral-100 transition-colors"
+                          aria-label={`Actions for ${tenant.client}`}
+                          aria-haspopup="menu"
+                          aria-expanded={openMenuId === tenant.id}
+                        >
+                          <MoreVertical size={16} />
+                        </button>
+                        {openMenuId === tenant.id && (
+                          <>
+                            <div className="fixed inset-0 z-10" onClick={() => setOpenMenuId(null)} />
+                            <div className="absolute right-0 top-full mt-1 z-20 min-w-32 bg-white border border-neutral-200 rounded-lg shadow-lg py-1">
+                              <button
+                                onClick={() => startEditing(tenant.id)}
+                                className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-[#17294F] transition-colors"
+                              >
+                                <Pencil size={14} />
+                                Edit
+                              </button>
+                            </div>
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))

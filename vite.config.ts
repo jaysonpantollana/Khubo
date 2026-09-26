@@ -1,13 +1,13 @@
-// @context: Vite build configuration — container architecture + CI/CD config
+// @context: Vite build configuration — build + dev server config
 // @purpose: Build tool config for React 19 SPA + TypeScript 5.8 + Tailwind CSS v4
-// @purpose: Containerized via Vite dev server (port 3000); no Docker/k8s manifests yet
+// @purpose: Vite dev server (port 3000); static build output, no deployment manifests
 // @config: @ alias → project root (NOT src/ — potential mismatch with tsconfig @/* → src/* — ADR-005)
 // @config: Dev server: port 3000, host 0.0.0.0 (accessible on LAN), HMR toggle via DISABLE_HMR env var
 // @config: Manual chunk splitting strategy: maptiler (~500KB), lucide, motion, vendor (rest)
 // @config: chunkSizeWarningLimit: 2000KB — adjusted up from default 500KB for chunk splitting
 // @cicd: Build step: npm run build → vite build → outputs to dist/
 // @cicd: Preview step: npm run preview → vite preview → serves dist/ locally
-// @cicd: No CI/CD pipeline configured — no GitHub Actions, no Docker, no deployment script
+// @cicd: No CI/CD pipeline configured — no GitHub Actions, no deployment script
 // @cicd: Deployment target: static hosting (Netlify/Vercel/GitHub Pages compatible)
 // @capacity: Total bundle ~650KB gzipped (estimated), split across 5+ chunks
 // @capacity: chunkSizeWarningLimit: 2000KB allows large chunks without warnings during dev
